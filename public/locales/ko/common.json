@@ -1,0 +1,32 @@
+{
+  "header": {
+    "title": "Korea Starter Pack",
+    "subtitle": "한국 생활 필수 앱 모음"
+  },
+  "hero": {
+    "tagline": "한국 생활의 시작, 앱 하나로",
+    "description": "한국에서 생활하는 외국인을 위한 필수 앱을 카테고리별로 정리했습니다."
+  },
+  "download": {
+    "getOnAppStore": "App Store",
+    "getOnPlayStore": "Play Store",
+    "visitWebsite": "웹사이트",
+    "download": "다운로드"
+  },
+  "badges": {
+    "government": "정부 추천",
+    "local-essential": "필수 앱",
+    "foreigner-friendly": "외국인 친화"
+  },
+  "install": {
+    "addToHomeScreen": "앱 설치",
+    "iosInstruction": "공유 버튼을 눌러 '홈 화면에 추가'를 선택하세요"
+  },
+  "footer": {
+    "disclaimer": "본 사이트는 나열된 앱과 제휴 관계가 없습니다.",
+    "madeWith": "한국의 외국인을 위해 제작"
+  },
+  "nav": {
+    "allCategories": "전체"
+  }
+}

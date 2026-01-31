@@ -1,0 +1,90 @@
+{
+  "categories": {
+    "mapsNavigation": "지도 & 내비게이션",
+    "mapsNavigationDesc": "한국에서는 구글맵 대신 이 앱들을 사용하세요.",
+    "transportation": "교통",
+    "transportationDesc": "택시와 지하철로 편리하게 이동하세요.",
+    "translationLanguage": "번역 & 언어",
+    "translationLanguageDesc": "한국 최고의 번역 도구로 언어 장벽을 허무세요.",
+    "foodDelivery": "음식 배달",
+    "foodDeliveryDesc": "한국의 배달 문화를 경험하세요.",
+    "shoppingLiving": "쇼핑 & 생활",
+    "shoppingLivingDesc": "생필품부터 중고 가구까지 무엇이든 구매하세요.",
+    "travelActivities": "여행 & 액티비티",
+    "travelActivitiesDesc": "한국 곳곳의 숨은 명소를 발견하고 체험을 예약하세요.",
+    "safetyUtility": "안전 & 유틸리티",
+    "safetyUtilityDesc": "안전하게 생활하고 재정을 관리하세요."
+  },
+  "apps": {
+    "naverMap": {
+      "name": "네이버 지도",
+      "description": "도보, 자동차, 대중교통 길안내와 다국어 지원을 제공하는 한국 최고의 지도 앱.",
+      "tagline": "최고의 내비게이션"
+    },
+    "kakaomap": {
+      "name": "카카오맵",
+      "description": "직관적인 UI에 상세한 길안내, 실시간 교통 정보, 3D 거리뷰를 제공합니다.",
+      "tagline": "최고의 길안내"
+    },
+    "kakaoT": {
+      "name": "카카오 T",
+      "description": "한국어를 몰라도 택시를 부를 수 있어요. 목적지를 입력하고 자동으로 결제하세요.",
+      "tagline": "택시 호출"
+    },
+    "subwayKorea": {
+      "name": "지하철 노선도",
+      "description": "서울, 부산, 대구, 대전, 광주의 다국어 지하철 노선도를 제공합니다.",
+      "tagline": "지하철 안내"
+    },
+    "papago": {
+      "name": "파파고",
+      "description": "네이버의 AI 번역기. 한국어 뉘앙스, 존칭, 이미지 번역까지 지원합니다.",
+      "tagline": "최고의 번역기"
+    },
+    "naverDictionary": {
+      "name": "네이버 사전",
+      "description": "예문, 활용 표, 발음 오디오를 포함한 종합 사전입니다.",
+      "tagline": "단어 검색"
+    },
+    "coupangEats": {
+      "name": "쿠팡이츠",
+      "description": "실시간 배달 추적과 간편한 결제를 지원하는 외국인 친화 배달 앱.",
+      "tagline": "음식 배달"
+    },
+    "shuttleDelivery": {
+      "name": "셔틀",
+      "description": "영어 UI, 해외 카드 결제, 할랄/비건 옵션을 지원하는 외국인 전용 배달 앱.",
+      "tagline": "외국인 배달"
+    },
+    "coupang": {
+      "name": "쿠팡",
+      "description": "한국 최대 온라인 쇼핑몰. 로켓배송으로 다음 날 배송받으세요.",
+      "tagline": "온라인 쇼핑"
+    },
+    "karrot": {
+      "name": "당근",
+      "description": "검증된 이웃과 중고 거래를 하세요. 정착할 때 특히 유용합니다.",
+      "tagline": "중고 거래"
+    },
+    "creatrip": {
+      "name": "크리에이트립",
+      "description": "외국인을 위한 여행 플랫폼. 예약, 가이드, 환전 혜택을 제공합니다.",
+      "tagline": "여행 가이드"
+    },
+    "waug": {
+      "name": "와그",
+      "description": "한국 전역의 관광지, 액티비티, 투어를 할인가에 예약하세요.",
+      "tagline": "액티비티 & 티켓"
+    },
+    "emergencyReady": {
+      "name": "안전디딤돌",
+      "description": "다국어 재난 알림, 대피소 위치, 긴급 연락처를 제공하는 정부 앱.",
+      "tagline": "안전 알림"
+    },
+    "xeCurrency": {
+      "name": "XE Currency",
+      "description": "실시간 환율 정보와 환율 계산기로 해외 생활비를 관리하세요.",
+      "tagline": "환율 정보"
+    }
+  }
+}

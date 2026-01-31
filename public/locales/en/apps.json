@@ -1,0 +1,90 @@
+{
+  "categories": {
+    "mapsNavigation": "Maps & Navigation",
+    "mapsNavigationDesc": "Google Maps has limited coverage in Korea. Use these local alternatives for accurate navigation.",
+    "transportation": "Transportation",
+    "transportationDesc": "Get around Korea by taxi and subway with ease.",
+    "translationLanguage": "Translation & Language",
+    "translationLanguageDesc": "Break the language barrier with Korea's best translation tools.",
+    "foodDelivery": "Food Delivery",
+    "foodDeliveryDesc": "Experience Korea's world-class delivery culture.",
+    "shoppingLiving": "Shopping & Living",
+    "shoppingLivingDesc": "Buy anything from groceries to secondhand furniture.",
+    "travelActivities": "Travel & Activities",
+    "travelActivitiesDesc": "Book experiences and discover hidden gems across Korea.",
+    "safetyUtility": "Safety & Utility",
+    "safetyUtilityDesc": "Stay safe and manage your finances abroad."
+  },
+  "apps": {
+    "naverMap": {
+      "name": "Naver Map",
+      "description": "Korea's most accurate map with walking, driving, transit directions and multilingual support.",
+      "tagline": "Best for Navigation"
+    },
+    "kakaomap": {
+      "name": "KakaoMap",
+      "description": "Intuitive UI with detailed directions, real-time traffic info, and 3D street views.",
+      "tagline": "Best for Directions"
+    },
+    "kakaoT": {
+      "name": "Kakao T",
+      "description": "Call a taxi without speaking Korean. Set your destination and pay automatically.",
+      "tagline": "Best for Taxi"
+    },
+    "subwayKorea": {
+      "name": "Subway Korea",
+      "description": "Multilingual subway maps for Seoul, Busan, Daegu, Daejeon, and Gwangju.",
+      "tagline": "Subway Navigator"
+    },
+    "papago": {
+      "name": "Papago",
+      "description": "Naver's AI translator with superior Korean nuance, honorifics, and image translation.",
+      "tagline": "Best Translator"
+    },
+    "naverDictionary": {
+      "name": "Naver Dictionary",
+      "description": "Comprehensive dictionary with example sentences, conjugation tables, and audio pronunciation.",
+      "tagline": "Word Lookup"
+    },
+    "coupangEats": {
+      "name": "Coupang Eats",
+      "description": "Foreigner-friendly food delivery with live tracking and easy payment setup.",
+      "tagline": "Food Delivery"
+    },
+    "shuttleDelivery": {
+      "name": "Shuttle Delivery",
+      "description": "Built for foreigners with English UI, international cards, halal and vegan options.",
+      "tagline": "Foreigner Delivery"
+    },
+    "coupang": {
+      "name": "Coupang",
+      "description": "Korea's largest online store. Next-day Rocket Delivery for essentials and electronics.",
+      "tagline": "Online Shopping"
+    },
+    "karrot": {
+      "name": "Karrot",
+      "description": "Buy and sell secondhand with verified local neighbors. Great for settling in.",
+      "tagline": "Secondhand Market"
+    },
+    "creatrip": {
+      "name": "Creatrip",
+      "description": "Travel platform for foreigners with bookings, guides, and currency exchange deals.",
+      "tagline": "Travel Guide"
+    },
+    "waug": {
+      "name": "WAUG",
+      "description": "Book attractions, activities, and tours at discounted prices across Korea.",
+      "tagline": "Activities & Tickets"
+    },
+    "emergencyReady": {
+      "name": "Emergency Ready",
+      "description": "Government disaster app with multilingual alerts, shelter locations, and emergency numbers.",
+      "tagline": "Safety Alerts"
+    },
+    "xeCurrency": {
+      "name": "XE Currency",
+      "description": "Live exchange rates and currency converter for managing your money abroad.",
+      "tagline": "Currency Rates"
+    }
+  }
+}

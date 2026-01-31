@@ -1,0 +1,32 @@
+{
+  "header": {
+    "title": "Korea Starter Pack",
+    "subtitle": "韩国生活必备应用合集"
+  },
+  "hero": {
+    "tagline": "开启韩国生活，从一个应用开始",
+    "description": "为在韩外国人精选的必备应用，按类别整理，助你畅行韩国。"
+  },
+  "download": {
+    "getOnAppStore": "App Store",
+    "getOnPlayStore": "Play Store",
+    "visitWebsite": "网站",
+    "download": "下载"
+  },
+  "badges": {
+    "government": "政府推荐",
+    "local-essential": "必备应用",
+    "foreigner-friendly": "外国人友好"
+  },
+  "install": {
+    "addToHomeScreen": "安装应用",
+    "iosInstruction": "点击分享按钮，然后选择"添加到主屏幕""
+  },
+  "footer": {
+    "disclaimer": "本网站与所列应用无任何关联。",
+    "madeWith": "为在韩外国人制作"
+  },
+  "nav": {
+    "allCategories": "全部"
+  }
+}

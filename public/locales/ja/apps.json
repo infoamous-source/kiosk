@@ -1,0 +1,90 @@
+{
+  "categories": {
+    "mapsNavigation": "地図＆ナビ",
+    "mapsNavigationDesc": "韓国ではGoogleマップの対応が限定的です。こちらの現地アプリをご利用ください。",
+    "transportation": "交通",
+    "transportationDesc": "タクシーと地下鉄で楽に移動しましょう。",
+    "translationLanguage": "翻訳＆言語",
+    "translationLanguageDesc": "韓国最高の翻訳ツールで言葉の壁を超えましょう。",
+    "foodDelivery": "フードデリバリー",
+    "foodDeliveryDesc": "韓国の世界トップクラスの配達文化を体験しましょう。",
+    "shoppingLiving": "ショッピング＆生活",
+    "shoppingLivingDesc": "日用品から中古家具まで何でも購入できます。",
+    "travelActivities": "旅行＆アクティビティ",
+    "travelActivitiesDesc": "韓国各地の隠れた名所を発見し、体験を予約しましょう。",
+    "safetyUtility": "安全＆ユーティリティ",
+    "safetyUtilityDesc": "安全を確保し、海外での財務を管理しましょう。"
+  },
+  "apps": {
+    "naverMap": {
+      "name": "Naver Map",
+      "description": "徒歩・車・公共交通機関のナビと多言語対応を備えた韓国最高の地図アプリ。",
+      "tagline": "最高のナビ"
+    },
+    "kakaomap": {
+      "name": "KakaoMap",
+      "description": "直感的なUIで詳細なルート案内、リアルタイム交通情報、3Dストリートビューを提供。",
+      "tagline": "最高の道案内"
+    },
+    "kakaoT": {
+      "name": "Kakao T",
+      "description": "韓国語が分からなくてもタクシーを呼べます。目的地を入力して自動決済。",
+      "tagline": "タクシー配車"
+    },
+    "subwayKorea": {
+      "name": "Subway Korea",
+      "description": "ソウル、釜山、大邱、大田、光州の多言語地下鉄路線図。",
+      "tagline": "地下鉄ガイド"
+    },
+    "papago": {
+      "name": "Papago",
+      "description": "NaverのAI翻訳アプリ。韓国語のニュアンスや敬語、画像翻訳に対応。",
+      "tagline": "最高の翻訳"
+    },
+    "naverDictionary": {
+      "name": "Naver Dictionary",
+      "description": "例文、活用表、発音音声を含む総合辞書。",
+      "tagline": "単語検索"
+    },
+    "coupangEats": {
+      "name": "Coupang Eats",
+      "description": "リアルタイム追跡と簡単決済に対応した外国人に優しいデリバリーアプリ。",
+      "tagline": "フードデリバリー"
+    },
+    "shuttleDelivery": {
+      "name": "Shuttle Delivery",
+      "description": "外国人向けに設計。英語UI、海外カード決済、ハラル・ビーガンオプション対応。",
+      "tagline": "外国人向けデリバリー"
+    },
+    "coupang": {
+      "name": "Coupang",
+      "description": "韓国最大のオンラインショッピング。ロケット配送で翌日届きます。",
+      "tagline": "ネットショッピング"
+    },
+    "karrot": {
+      "name": "Karrot",
+      "description": "認証された近所の人と中古品を取引。韓国生活の立ち上げに最適。",
+      "tagline": "フリマアプリ"
+    },
+    "creatrip": {
+      "name": "Creatrip",
+      "description": "外国人向け旅行プラットフォーム。予約、ガイド、両替特典を提供。",
+      "tagline": "旅行ガイド"
+    },
+    "waug": {
+      "name": "WAUG",
+      "description": "韓国各地の観光地、アクティビティ、ツアーを割引価格で予約。",
+      "tagline": "アクティビティ＆チケット"
+    },
+    "emergencyReady": {
+      "name": "Emergency Ready",
+      "description": "多言語対応の災害アラート、避難所の位置、緊急連絡先を提供する政府アプリ。",
+      "tagline": "安全アラート"
+    },
+    "xeCurrency": {
+      "name": "XE Currency",
+      "description": "リアルタイム為替レートと通貨換算で海外生活費を管理。",
+      "tagline": "為替レート"
+    }
+  }
+}

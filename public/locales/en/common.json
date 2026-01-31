@@ -1,0 +1,32 @@
+{
+  "header": {
+    "title": "Korea Starter Pack",
+    "subtitle": "Essential apps for life in Korea"
+  },
+  "hero": {
+    "tagline": "Your gateway to Korea, one app at a time",
+    "description": "Curated essential apps that every foreigner needs for navigating, communicating, and thriving in Korea."
+  },
+  "download": {
+    "getOnAppStore": "App Store",
+    "getOnPlayStore": "Play Store",
+    "visitWebsite": "Website",
+    "download": "Download"
+  },
+  "badges": {
+    "government": "Government",
+    "local-essential": "Essential",
+    "foreigner-friendly": "Foreigner Friendly"
+  },
+  "install": {
+    "addToHomeScreen": "Install App",
+    "iosInstruction": "Tap Share then 'Add to Home Screen'"
+  },
+  "footer": {
+    "disclaimer": "Not affiliated with any listed applications.",
+    "madeWith": "Made for foreigners in Korea"
+  },
+  "nav": {
+    "allCategories": "All"
+  }
+}
