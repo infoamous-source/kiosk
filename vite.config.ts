@@ -9,12 +9,12 @@ export default defineConfig({
     tailwindcss(),
     VitePWA({
       registerType: 'autoUpdate',
-      includeAssets: ['favicon.svg', 'app-icons/*.png'],
+      includeAssets: ['favicon.svg'],
       manifest: {
-        name: 'Korea Starter Pack',
-        short_name: 'KStarterPack',
-        description: 'Essential Korean apps for foreigners',
-        theme_color: '#1d4ed8',
+        name: 'Kiosk Seven - 이주민 교육 플랫폼',
+        short_name: 'KioskSeven',
+        description: '이주민과 유학생을 위한 디지털 교육, 마케팅 실무, 취업 역량 강화 플랫폼',
+        theme_color: '#3B82F6',
         background_color: '#ffffff',
         display: 'standalone',
         start_url: '/',
