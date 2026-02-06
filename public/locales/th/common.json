@@ -1,0 +1,290 @@
+{
+  "header": {
+    "title": "Kiosk Seven",
+    "subtitle": "แพลตฟอร์มการศึกษาสำหรับผู้อพยพและนักศึกษาต่างชาติ",
+    "login": "เข้าสู่ระบบ",
+    "register": "สมัครสมาชิก",
+    "logout": "ออกจากระบบ",
+    "dashboard": "แดชบอร์ด",
+    "instructor": "ผู้สอน",
+    "student": "นักเรียน"
+  },
+  "gateway": {
+    "subtitle": "Education Platform",
+    "badge": "การศึกษาสำหรับผู้อพยพและนักศึกษาต่างชาติ",
+    "title": "เติบโตไปด้วยกัน",
+    "description": "จากทักษะดิจิทัลพื้นฐานไปจนถึงทักษะอาชีพ ทุกสิ่งที่คุณต้องการสำหรับชีวิตในเกาหลี",
+    "selectPrompt": "เลือกเส้นทางการเรียนรู้",
+    "modules": "โมดูล",
+    "footer": "© 2024 Kiosk Seven. แพลตฟอร์มการศึกษาสำหรับผู้อพยพและนักศึกษาต่างชาติ"
+  },
+  "sidebar": {
+    "home": "หน้าแรก",
+    "digitalBasics": "ทักษะดิจิทัลพื้นฐาน",
+    "marketing": "การตลาดปฏิบัติ",
+    "career": "ทักษะอาชีพ",
+    "resources": "แหล่งข้อมูล",
+    "help": "ช่วยเหลือ",
+    "settings": "ตั้งค่า",
+    "dashboard": "แดชบอร์ดผู้สอน"
+  },
+  "tracks": {
+    "digitalBasics": {
+      "name": "ทักษะดิจิทัลพื้นฐาน",
+      "description": "จากคอมพิวเตอร์และสมาร์ทโฟนพื้นฐานไปจนถึงแอปที่จำเป็นในเกาหลี",
+      "modules": {
+        "computerBasics": "คอมพิวเตอร์พื้นฐาน",
+        "computerBasicsDesc": "เปิดคอมพิวเตอร์ ใช้เมาส์และคีย์บอร์ด จัดการไฟล์",
+        "internet": "อินเทอร์เน็ตพื้นฐาน",
+        "internetDesc": "ใช้เว็บเบราว์เซอร์ ค้นหา เขียนและจัดการอีเมล",
+        "smartphone": "ทักษะสมาร์ทโฟน",
+        "smartphoneDesc": "ติดตั้งแอป จัดการรูปภาพ ใช้แอปส่งข้อความ",
+        "koreaApps": "แอปที่จำเป็นในเกาหลี",
+        "koreaAppsDesc": "KakaoTalk, Naver, แอปส่งอาหาร, แอปแผนที่และอื่นๆ"
+      }
+    },
+    "marketing": {
+      "name": "การตลาดปฏิบัติ",
+      "description": "การตลาดโซเชียล สร้างเนื้อหา และขายออนไลน์",
+      "modules": {
+        "socialMedia": "การตลาดโซเชียล",
+        "socialMediaDesc": "จัดการช่อง Instagram, YouTube, TikTok และกลยุทธ์การตลาด",
+        "contentCreation": "สร้างเนื้อหา",
+        "contentCreationDesc": "แก้ไขรูปภาพ ผลิตวิดีโอ สร้างการ์ดข่าว",
+        "ecommerce": "ขายออนไลน์",
+        "ecommerceDesc": "Smart Store, Coupang, แพลตฟอร์มขายต่างประเทศ",
+        "analytics": "วิเคราะห์ข้อมูล",
+        "analyticsDesc": "วัดผลการตลาด, Google Analytics พื้นฐาน"
+      }
+    },
+    "career": {
+      "name": "ทักษะอาชีพ",
+      "description": "เขียน Resume เตรียมสัมภาษณ์ และเข้าใจวัฒนธรรมที่ทำงานเกาหลี",
+      "modules": {
+        "resume": "เขียน Resume",
+        "resumeDesc": "วิธีเขียน Resume และจดหมายแนะนำตัวแบบเกาหลี",
+        "interview": "เตรียมสัมภาษณ์",
+        "interviewDesc": "คำถามสัมภาษณ์ กลยุทธ์ตอบ สัมภาษณ์จำลอง",
+        "jobSearch": "หางาน",
+        "jobSearchDesc": "เว็บไซต์จ้างงานต่างชาติ ข้อมูลวีซ่า",
+        "workplace": "วัฒนธรรมที่ทำงาน",
+        "workplaceDesc": "มารยาทที่ทำงานเกาหลี การสื่อสาร แก้ไขความขัดแย้ง"
+      }
+    }
+  },
+  "track": {
+    "modules": "โมดูล",
+    "totalTime": "เวลารวม",
+    "curriculum": "หลักสูตร"
+  },
+  "banners": {
+    "digital": {
+      "title": "สร้างรากฐานดิจิทัลที่แข็งแกร่ง!",
+      "description": "เรียนใช้คอมพิวเตอร์และสมาร์ทโฟนอย่างง่ายดาย"
+    },
+    "marketing": {
+      "title": "ทักษะการตลาดผ่านโซเชียล",
+      "description": "เชี่ยวชาญการจัดการช่อง Instagram และ YouTube"
+    },
+    "career": {
+      "title": "ก้าวแรกสู่ความสำเร็จในอาชีพ",
+      "description": "จาก Resume ถึงสัมภาษณ์ เตรียมงานครบวงจร"
+    }
+  },
+  "auth": {
+    "loginTitle": "เข้าสู่ระบบ",
+    "loginSubtitle": "เข้าสู่ระบบบัญชีของคุณ",
+    "registerTitle": "สมัครสมาชิก",
+    "registerSubtitle": "สร้างบัญชีเพื่อเริ่มเรียน",
+    "email": "อีเมล",
+    "password": "รหัสผ่าน",
+    "name": "ชื่อ",
+    "namePlaceholder": "สมชาย ใจดี",
+    "organization": "องค์กร",
+    "organizationPlaceholder": "โรงเรียน ศูนย์ บริษัท ฯลฯ",
+    "refCode": "รหัสแนะนำ",
+    "refCodePlaceholder": "ใส่รหัสจากองค์กรของคุณ",
+    "learningPurpose": "วัตถุประสงค์การเรียน",
+    "selectPurpose": "เลือกวัตถุประสงค์การเรียน",
+    "purpose": {
+      "employment": "เตรียมหางาน",
+      "skillUp": "พัฒนาทักษะ",
+      "dailyLife": "ชีวิตประจำวัน",
+      "other": "อื่นๆ"
+    },
+    "loginButton": "เข้าสู่ระบบ",
+    "registerButton": "สมัครสมาชิก",
+    "rememberMe": "จำฉันไว้ (อยู่ในระบบบนอุปกรณ์นี้)",
+    "noAccount": "ยังไม่มีบัญชี?",
+    "hasAccount": "มีบัญชีแล้ว?",
+    "registerLink": "สมัครสมาชิก",
+    "loginLink": "เข้าสู่ระบบ",
+    "backToHome": "กลับหน้าแรก",
+    "testAccounts": "บัญชีทดสอบ",
+    "loginError": "เข้าสู่ระบบล้มเหลว กรุณาลองอีกครั้ง",
+    "registerError": "สมัครสมาชิกล้มเหลว กรุณาลองอีกครั้ง"
+  },
+  "admin": {
+    "title": "แดชบอร์ดผู้สอน",
+    "welcome": "ยินดีต้อนรับ, {{name}}",
+    "refCode": "รหัสองค์กร",
+    "totalStudents": "นักเรียนทั้งหมด",
+    "avgProgress": "ความคืบหน้าเฉลี่ย",
+    "completedModules": "โมดูลที่เสร็จ",
+    "completedStudents": "นักเรียนที่เรียนจบ",
+    "weeklyGrowth": "การเติบโตรายสัปดาห์",
+    "weeklyActivity": "กิจกรรมรายสัปดาห์",
+    "trackDistribution": "การกระจายตามเส้นทาง",
+    "studentList": "รายชื่อนักเรียน",
+    "studentCount": " คน",
+    "organizationOverview": "ภาพรวมองค์กร",
+    "viewAll": "ดูทั้งหมด",
+    "backToDashboard": "กลับแดชบอร์ด",
+    "searchPlaceholder": {
+      "name": "ค้นหาตามชื่อ",
+      "email": "ค้นหาตามอีเมล",
+      "refCode": "ค้นหาตามรหัสหรือองค์กร"
+    },
+    "searchBy": {
+      "name": "ชื่อ",
+      "email": "อีเมล",
+      "refCode": "รหัส"
+    },
+    "sortBy": {
+      "name": "ชื่อ (ก-ฮ)",
+      "email": "อีเมล (A-Z)",
+      "organization": "องค์กร",
+      "progress": "ความคืบหน้า",
+      "lastActive": "ใช้งานล่าสุด"
+    },
+    "ascending": "เรียงจากน้อยไปมาก",
+    "descending": "เรียงจากมากไปน้อย",
+    "realTimeMonitoring": "ติดตามแบบเรียลไทม์",
+    "lastUpdate": "อัปเดตล่าสุด",
+    "noResults": "ไม่พบผลลัพธ์",
+    "allTracks": "ทุกเส้นทาง",
+    "exportExcel": "ส่งออก Excel",
+    "exportStarted": "กำลังสร้างไฟล์ Excel...",
+    "table": {
+      "name": "ชื่อ",
+      "organization": "องค์กร",
+      "track": "เส้นทาง",
+      "progress": "ความคืบหน้า",
+      "lastActive": "ใช้งานล่าสุด",
+      "actions": "การดำเนินการ"
+    }
+  },
+  "koreaApps": {
+    "title": "แอปที่จำเป็นในเกาหลี",
+    "subtitle": "แอปทั้งหมดที่คุณต้องการสำหรับชีวิตในเกาหลี! ติดตั้งและเรียนใช้แผนที่ การเดินทาง ส่งอาหาร และแอปช้อปปิ้ง",
+    "backToTrack": "กลับทักษะดิจิทัลพื้นฐาน",
+    "searchPlaceholder": "ค้นหาตามชื่อแอป",
+    "allCategories": "ทั้งหมด",
+    "download": "ดาวน์โหลด",
+    "noResults": "ไม่พบผลลัพธ์",
+    "clearSearch": "ล้างการค้นหา",
+    "installed": "ติดตั้งแล้ว",
+    "markInstalled": "+ทำเครื่องหมายติดตั้ง",
+    "installedCount": "ติดตั้งแล้ว",
+    "progress": "ความคืบหน้าการติดตั้ง",
+    "badges": {
+      "localEssential": "จำเป็น",
+      "foreignerFriendly": "เป็นมิตรกับต่างชาติ",
+      "government": "รัฐบาล"
+    },
+    "tips": {
+      "title": "เคล็ดลับใช้แอป",
+      "tip1": "แอปส่วนใหญ่รองรับเกาหลี อังกฤษ และจีน คุณสามารถเปลี่ยนภาษาในการตั้งค่า",
+      "tip2": "บัญชี Kakao เดียวให้คุณเข้าถึงบริการ Kakao หลายอย่าง (KakaoTalk, KakaoMap, Kakao T)",
+      "tip3": "หากบัตรต่างประเทศใช้ไม่ได้ ลงทะเบียน KakaoPay หรือ NaverPay เพื่อชำระเงิน"
+    }
+  },
+  "categories": {
+    "mapsNavigation": "แผนที่และนำทาง",
+    "mapsNavigationDesc": "จำเป็นสำหรับหาทางในเกาหลี!",
+    "transportation": "การเดินทาง",
+    "transportationDesc": "แท็กซี่ รถไฟใต้ดิน และรถบัส",
+    "translationLanguage": "แปลภาษาและภาษา",
+    "translationLanguageDesc": "ช่วยแปลเกาหลี",
+    "foodDelivery": "ส่งอาหาร",
+    "foodDeliveryDesc": "อาหารอร่อยถึงประตูบ้าน",
+    "shoppingLiving": "ช้อปปิ้งและใช้ชีวิต",
+    "shoppingLivingDesc": "ช้อปออนไลน์และซื้อขายมือสอง",
+    "travelActivities": "ท่องเที่ยวและกิจกรรม",
+    "travelActivitiesDesc": "ข้อมูลท่องเที่ยวเกาหลีและจอง",
+    "safetyUtility": "ความปลอดภัยและสาธารณูปโภค",
+    "safetyUtilityDesc": "แจ้งเตือนฉุกเฉินและเครื่องมือที่เป็นประโยชน์"
+  },
+  "apps": {
+    "naverMap": {
+      "name": "Naver Map",
+      "description": "แผนที่เกาหลีที่แม่นยำที่สุด ขนส่งสาธารณะ เดินเท้า และขับรถพร้อมข้อมูลจราจรเรียลไทม์",
+      "tagline": "แอปแผนที่ที่ดีที่สุดของเกาหลี"
+    },
+    "kakaomap": {
+      "name": "KakaoMap",
+      "description": "แอปแผนที่ที่เชื่อมต่อกับ Kakao เรียกแท็กซี่ได้ง่ายด้วย Kakao Taxi",
+      "tagline": "เชื่อมต่อกับระบบนิเวศ Kakao"
+    },
+    "kakaoT": {
+      "name": "Kakao T",
+      "description": "แท็กซี่ คนขับรถแทน ที่จอดรถ จักรยาน - ทั้งหมดในแอปเดียว จำเป็นสำหรับแท็กซี่ในเกาหลี!",
+      "tagline": "เรียกแท็กซี่แตะเดียว"
+    },
+    "subwayKorea": {
+      "name": "Subway Korea",
+      "description": "แผนที่รถไฟใต้ดินทั่วประเทศและข้อมูลถึงสถานีเรียลไทม์ รองรับอังกฤษ จีน ญี่ปุ่น",
+      "tagline": "แอปรถไฟใต้ดินหลายภาษา"
+    },
+    "papago": {
+      "name": "Papago",
+      "description": "แอปแปลภาษา AI ของ Naver รองรับแปลข้อความ เสียง รูปภาพ และบทสนทนา",
+      "tagline": "มาตรฐานการแปลเกาหลี"
+    },
+    "naverDictionary": {
+      "name": "Naver Dictionary",
+      "description": "จำเป็นสำหรับเรียนเกาหลี! พจนานุกรมครบถ้วนมีความหมาย ตัวอย่าง และการออกเสียง",
+      "tagline": "ช่วยเรียนเกาหลี"
+    },
+    "coupangEats": {
+      "name": "Coupang Eats",
+      "description": "ผู้เชี่ยวชาญส่งอาหารคนเดียว! ส่งเร็วและร้านหลากหลาย รองรับอังกฤษ",
+      "tagline": "ส่งอาหารเร็ว"
+    },
+    "shuttleDelivery": {
+      "name": "Shuttle Delivery",
+      "description": "แอปส่งอาหารสำหรับต่างชาติ สั่งเป็นอังกฤษและจ่ายด้วยบัตรต่างประเทศ",
+      "tagline": "ส่งอาหารเป็นมิตรกับต่างชาติ"
+    },
+    "coupang": {
+      "name": "Coupang",
+      "description": "ห้างออนไลน์ใหญ่สุดของเกาหลีที่มีชื่อเสียงเรื่อง Rocket Delivery ส่งเช้าตรู่และวันเดียวกัน",
+      "tagline": "ห้างออนไลน์อันดับหนึ่งของเกาหลี"
+    },
+    "karrot": {
+      "name": "Karrot",
+      "description": "แอปซื้อขายมือสองในละแวก ซื้อขายปลอดภัยกับเพื่อนบ้าน",
+      "tagline": "ซื้อขายมือสองในท้องถิ่น"
+    },
+    "creatrip": {
+      "name": "Creatrip",
+      "description": "ข้อมูลท่องเที่ยวเกาหลีสำหรับนักท่องเที่ยวต่างชาติ คูปองส่วนลดและบริการจอง",
+      "tagline": "จำเป็นสำหรับนักท่องเที่ยวต่างชาติ"
+    },
+    "waug": {
+      "name": "Waug",
+      "description": "จองกิจกรรม ทัวร์ และตั๋วในเกาหลี ประสบการณ์หลากหลายได้ง่าย",
+      "tagline": "จองกิจกรรม"
+    },
+    "emergencyReady": {
+      "name": "Emergency Ready",
+      "description": "แอปแจ้งเตือนภัยพิบัติอย่างเป็นทางการของรัฐบาล ข้อมูลฉุกเฉินเกี่ยวกับแผ่นดินไหว ไต้ฝุ่น คุณภาพอากาศ",
+      "tagline": "แจ้งเตือนภัยพิบัติรัฐบาล"
+    },
+    "xeCurrency": {
+      "name": "XE Currency",
+      "description": "อัตราแลกเปลี่ยนเรียลไทม์ แอปสกุลเงินโลกที่มีประโยชน์สำหรับแลกเป็นวอนเกาหลี",
+      "tagline": "อัตราแลกเปลี่ยนเรียลไทม์"
+    }
+  }
+}

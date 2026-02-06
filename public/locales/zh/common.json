@@ -1,37 +1,290 @@
 {
   "header": {
-    "title": "Korea Starter Pack",
-    "subtitle": "韩国生活必备应用合集"
+    "title": "Kiosk Seven",
+    "subtitle": "移民与留学生教育平台",
+    "login": "登录",
+    "register": "注册",
+    "logout": "退出",
+    "dashboard": "管理面板",
+    "instructor": "讲师",
+    "student": "学生"
   },
-  "hero": {
-    "tagline": "开启韩国生活，从一个应用开始",
-    "description": "为在韩外国人精选的必备应用，按类别整理，助你畅行韩国。"
+  "gateway": {
+    "subtitle": "Education Platform",
+    "badge": "移民与留学生教育",
+    "title": "与您共同成长",
+    "description": "从数字基础到就业能力，韩国生活所需的所有教育一站式提供",
+    "selectPrompt": "请选择学习课程",
+    "modules": "个模块",
+    "footer": "© 2024 Kiosk Seven. 移民与留学生教育平台"
   },
-  "download": {
-    "getOnAppStore": "App Store",
-    "getOnPlayStore": "Play Store",
-    "visitWebsite": "网站",
-    "download": "下载"
+  "sidebar": {
+    "home": "首页",
+    "digitalBasics": "数字基础",
+    "marketing": "营销实务",
+    "career": "就业能力",
+    "resources": "学习资料",
+    "help": "帮助",
+    "settings": "设置",
+    "dashboard": "讲师仪表板"
   },
-  "badges": {
-    "government": "政府推荐",
-    "local-essential": "必备应用",
-    "foreigner-friendly": "外国人友好"
+  "tracks": {
+    "digitalBasics": {
+      "name": "数字基础",
+      "description": "从电脑和智能手机使用到韩国必备应用",
+      "modules": {
+        "computerBasics": "电脑基础",
+        "computerBasicsDesc": "开机、使用鼠标键盘、文件管理基础",
+        "internet": "互联网基础",
+        "internetDesc": "使用浏览器、搜索、邮件编写和管理",
+        "smartphone": "智能手机使用",
+        "smartphoneDesc": "安装应用、管理照片、使用通讯软件",
+        "koreaApps": "韩国必备应用",
+        "koreaAppsDesc": "KakaoTalk、Naver、外卖应用、地图应用等"
+      }
+    },
+    "marketing": {
+      "name": "营销实务",
+      "description": "SNS营销、内容制作、线上销售实务能力",
+      "modules": {
+        "socialMedia": "SNS营销",
+        "socialMediaDesc": "Instagram、YouTube、TikTok频道运营与营销策略",
+        "contentCreation": "内容制作",
+        "contentCreationDesc": "照片编辑、视频制作、卡片新闻制作",
+        "ecommerce": "线上销售",
+        "ecommerceDesc": "智能商店、Coupang、海外销售平台",
+        "analytics": "数据分析",
+        "analyticsDesc": "营销效果评估、Google Analytics基础"
+      }
+    },
+    "career": {
+      "name": "就业能力",
+      "description": "简历撰写、面试准备、了解韩国职场文化",
+      "modules": {
+        "resume": "简历撰写",
+        "resumeDesc": "韩式简历和自我介绍撰写方法",
+        "interview": "面试准备",
+        "interviewDesc": "预期面试问题、回答策略、模拟面试",
+        "jobSearch": "求职信息",
+        "jobSearchDesc": "外国人招聘网站、签证信息",
+        "workplace": "职场文化",
+        "workplaceDesc": "韩国职场礼仪、沟通、冲突解决"
+      }
+    }
   },
-  "install": {
-    "addToHomeScreen": "安装应用",
-    "iosInstruction": "点击分享按钮，然后选择"添加到主屏幕""
+  "track": {
+    "modules": "个模块",
+    "totalTime": "总学习时间",
+    "curriculum": "课程"
   },
-  "footer": {
-    "disclaimer": "本网站与所列应用无任何关联。",
-    "madeWith": "为在韩外国人制作"
+  "banners": {
+    "digital": {
+      "title": "数字时代，从基础做起！",
+      "description": "轻松学习电脑和智能手机使用方法"
+    },
+    "marketing": {
+      "title": "从SNS开始的营销实务",
+      "description": "传授Instagram、YouTube频道运营秘诀"
+    },
+    "career": {
+      "title": "就业成功的第一步",
+      "description": "从简历到面试，求职准备A到Z"
+    }
   },
-  "nav": {
-    "allCategories": "全部"
+  "auth": {
+    "loginTitle": "登录",
+    "loginSubtitle": "登录您的账户",
+    "registerTitle": "注册",
+    "registerSubtitle": "创建账户开始学习",
+    "email": "邮箱",
+    "password": "密码",
+    "name": "姓名",
+    "namePlaceholder": "张三",
+    "organization": "所属机构",
+    "organizationPlaceholder": "学校、中心、公司名称等",
+    "refCode": "推荐码",
+    "refCodePlaceholder": "输入机构提供的代码",
+    "learningPurpose": "学习目的",
+    "selectPurpose": "选择学习目的",
+    "purpose": {
+      "employment": "求职准备",
+      "skillUp": "技能提升",
+      "dailyLife": "日常生活",
+      "other": "其他"
+    },
+    "loginButton": "登录",
+    "registerButton": "注册",
+    "rememberMe": "记住我（在此设备保持登录）",
+    "noAccount": "没有账户？",
+    "hasAccount": "已有账户？",
+    "registerLink": "注册",
+    "loginLink": "登录",
+    "backToHome": "返回首页",
+    "testAccounts": "测试账户",
+    "loginError": "登录失败，请重试。",
+    "registerError": "注册失败，请重试。"
   },
-  "installed": {
-    "label": "已安装",
-    "markInstalled": "标记安装",
-    "openApp": "打开应用"
+  "admin": {
+    "title": "讲师仪表板",
+    "welcome": "欢迎，{{name}}",
+    "refCode": "机构代码",
+    "totalStudents": "总学生数",
+    "avgProgress": "平均进度",
+    "completedModules": "完成模块",
+    "completedStudents": "结业学生",
+    "weeklyGrowth": "周增长",
+    "weeklyActivity": "周活动",
+    "trackDistribution": "课程分布",
+    "studentList": "学生列表",
+    "studentCount": "人",
+    "organizationOverview": "机构概况",
+    "viewAll": "查看全部",
+    "backToDashboard": "返回仪表板",
+    "searchPlaceholder": {
+      "name": "搜索姓名",
+      "email": "搜索邮箱",
+      "refCode": "搜索代码或机构"
+    },
+    "searchBy": {
+      "name": "姓名",
+      "email": "邮箱",
+      "refCode": "代码"
+    },
+    "sortBy": {
+      "name": "姓名 (A-Z)",
+      "email": "邮箱 (A-Z)",
+      "organization": "机构",
+      "progress": "进度",
+      "lastActive": "最近活动"
+    },
+    "ascending": "升序",
+    "descending": "降序",
+    "realTimeMonitoring": "实时监控",
+    "lastUpdate": "最后更新",
+    "noResults": "未找到结果",
+    "allTracks": "所有课程",
+    "exportExcel": "导出Excel",
+    "exportStarted": "开始生成Excel文件...",
+    "table": {
+      "name": "姓名",
+      "organization": "机构",
+      "track": "课程",
+      "progress": "进度",
+      "lastActive": "最近活动",
+      "actions": "操作"
+    }
+  },
+  "koreaApps": {
+    "title": "韩国必备应用",
+    "subtitle": "韩国生活必需的所有应用！安装并学习使用地图、交通、外卖、购物应用。",
+    "backToTrack": "返回数字基础",
+    "searchPlaceholder": "按应用名称搜索",
+    "allCategories": "全部",
+    "download": "下载",
+    "noResults": "未找到结果",
+    "clearSearch": "清除搜索",
+    "installed": "已安装",
+    "markInstalled": "+标记已安装",
+    "installedCount": "已安装",
+    "progress": "安装进度",
+    "badges": {
+      "localEssential": "必备",
+      "foreignerFriendly": "外国人友好",
+      "government": "政府"
+    },
+    "tips": {
+      "title": "应用使用提示",
+      "tip1": "大多数应用支持韩语、英语和中文。可以在设置中更改语言。",
+      "tip2": "一个Kakao账户可以使用多项Kakao服务（KakaoTalk、KakaoMap、Kakao T）。",
+      "tip3": "如果外国卡不能用，可以注册KakaoPay或NaverPay进行支付。"
+    }
+  },
+  "categories": {
+    "mapsNavigation": "地图与导航",
+    "mapsNavigationDesc": "在韩国找路必备！",
+    "transportation": "交通",
+    "transportationDesc": "出租车、地铁、公交",
+    "translationLanguage": "翻译与语言",
+    "translationLanguageDesc": "韩语翻译助手",
+    "foodDelivery": "外卖",
+    "foodDeliveryDesc": "美食送到家门口",
+    "shoppingLiving": "购物与生活",
+    "shoppingLivingDesc": "网购和二手交易",
+    "travelActivities": "旅游与活动",
+    "travelActivitiesDesc": "韩国旅游信息与预订",
+    "safetyUtility": "安全与实用",
+    "safetyUtilityDesc": "紧急警报和实用工具"
+  },
+  "apps": {
+    "naverMap": {
+      "name": "Naver地图",
+      "description": "最准确的韩国地图。公共交通、步行、驾车导航和实时交通信息。",
+      "tagline": "韩国最佳地图应用"
+    },
+    "kakaomap": {
+      "name": "KakaoMap",
+      "description": "与Kakao集成的地图应用。可以轻松通过Kakao Taxi叫车。",
+      "tagline": "连接Kakao生态系统"
+    },
+    "kakaoT": {
+      "name": "Kakao T",
+      "description": "出租车、代驾、停车、自行车一应俱全。在韩国打车必备！",
+      "tagline": "一键叫车"
+    },
+    "subwayKorea": {
+      "name": "韩国地铁",
+      "description": "全国地铁图和实时到站信息。支持英语、中文、日语。",
+      "tagline": "多语言地铁应用"
+    },
+    "papago": {
+      "name": "Papago",
+      "description": "Naver的AI翻译应用。支持文字、语音、图片、对话翻译。",
+      "tagline": "韩语翻译标准"
+    },
+    "naverDictionary": {
+      "name": "Naver词典",
+      "description": "学习韩语必备！包含词义、例句、发音的综合词典。",
+      "tagline": "韩语学习助手"
+    },
+    "coupangEats": {
+      "name": "Coupang Eats",
+      "description": "单人送餐专家！快速送达和各种餐厅。支持英语。",
+      "tagline": "快速外卖"
+    },
+    "shuttleDelivery": {
+      "name": "Shuttle Delivery",
+      "description": "外国人专用外卖应用。可以用英语订餐并使用外国卡支付。",
+      "tagline": "外国人友好外卖"
+    },
+    "coupang": {
+      "name": "Coupang",
+      "description": "以火箭配送闻名的韩国最大购物平台。支持凌晨和当日送达。",
+      "tagline": "韩国顶级购物平台"
+    },
+    "karrot": {
+      "name": "当根",
+      "description": "社区二手交易应用。与邻居安全买卖。",
+      "tagline": "本地二手交易"
+    },
+    "creatrip": {
+      "name": "Creatrip",
+      "description": "外国游客韩国旅游信息。折扣优惠券和预订服务。",
+      "tagline": "外国游客必备"
+    },
+    "waug": {
+      "name": "Waug",
+      "description": "预订韩国活动、旅游和门票。轻松体验各种活动。",
+      "tagline": "活动预订"
+    },
+    "emergencyReady": {
+      "name": "紧急准备",
+      "description": "政府官方灾害警报应用。地震、台风、空气质量紧急信息。",
+      "tagline": "政府灾害警报"
+    },
+    "xeCurrency": {
+      "name": "XE汇率",
+      "description": "实时汇率信息。换算韩元时有用的全球货币应用。",
+      "tagline": "实时汇率"
+    }
   }
 }

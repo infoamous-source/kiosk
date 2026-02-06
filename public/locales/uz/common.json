@@ -1,0 +1,290 @@
+{
+  "header": {
+    "title": "Kiosk Seven",
+    "subtitle": "Muhojirlar va talabalar uchun ta'lim platformasi",
+    "login": "Kirish",
+    "register": "Ro'yxatdan o'tish",
+    "logout": "Chiqish",
+    "dashboard": "Boshqaruv paneli",
+    "instructor": "O'qituvchi",
+    "student": "Talaba"
+  },
+  "gateway": {
+    "subtitle": "Education Platform",
+    "badge": "Muhojirlar va talabalar uchun ta'lim",
+    "title": "Siz bilan birga o'samiz",
+    "description": "Raqamli asoslardan martaba ko'nikmalarigacha, Koreyada yashash uchun zarur bo'lgan barcha ta'lim",
+    "selectPrompt": "O'quv yo'nalishini tanlang",
+    "modules": "Modul",
+    "footer": "© 2024 Kiosk Seven. Muhojirlar va xalqaro talabalar uchun ta'lim platformasi"
+  },
+  "sidebar": {
+    "home": "Bosh sahifa",
+    "digitalBasics": "Raqamli asoslar",
+    "marketing": "Marketing ko'nikmalari",
+    "career": "Martaba ko'nikmalari",
+    "resources": "O'quv materiallari",
+    "help": "Yordam",
+    "settings": "Sozlamalar",
+    "dashboard": "O'qituvchi paneli"
+  },
+  "tracks": {
+    "digitalBasics": {
+      "name": "Raqamli asoslar",
+      "description": "Kompyuter va smartfon asoslaridan Koreya muhim ilovalarigacha",
+      "modules": {
+        "computerBasics": "Kompyuter asoslari",
+        "computerBasicsDesc": "Kompyuterni yoqish, sichqoncha va klaviatura, fayl boshqaruvi",
+        "internet": "Internet asoslari",
+        "internetDesc": "Veb-brauzerdan foydalanish, qidirish, elektron pochta yozish va boshqarish",
+        "smartphone": "Smartfon ko'nikmalari",
+        "smartphoneDesc": "Ilovalarni o'rnatish, suratlarni boshqarish, messenjerlardan foydalanish",
+        "koreaApps": "Koreya muhim ilovalari",
+        "koreaAppsDesc": "KakaoTalk, Naver, yetkazib berish ilovalari, xarita ilovalari va boshqalar"
+      }
+    },
+    "marketing": {
+      "name": "Marketing ko'nikmalari",
+      "description": "Ijtimoiy tarmoq marketingi, kontent yaratish va onlayn savdo",
+      "modules": {
+        "socialMedia": "Ijtimoiy tarmoq marketingi",
+        "socialMediaDesc": "Instagram, YouTube, TikTok kanal boshqaruvi va marketing strategiyalari",
+        "contentCreation": "Kontent yaratish",
+        "contentCreationDesc": "Surat tahrirlash, video ishlab chiqarish, karta yangiliklari yaratish",
+        "ecommerce": "Onlayn savdo",
+        "ecommerceDesc": "Smart Store, Coupang, xalqaro savdo platformalari",
+        "analytics": "Ma'lumotlar tahlili",
+        "analyticsDesc": "Marketing samaradorligini o'lchash, Google Analytics asoslari"
+      }
+    },
+    "career": {
+      "name": "Martaba ko'nikmalari",
+      "description": "Rezyume yozish, intervyuga tayyorgarlik va Koreya ish madaniyatini tushunish",
+      "modules": {
+        "resume": "Rezyume yozish",
+        "resumeDesc": "Koreya uslubidagi rezyume va motivatsion xat yozish",
+        "interview": "Intervyuga tayyorgarlik",
+        "interviewDesc": "Intervyu savollari, javob strategiyalari, mashq intervyusi",
+        "jobSearch": "Ish qidirish",
+        "jobSearchDesc": "Chet elliklar uchun ish saytlari, viza ma'lumotlari",
+        "workplace": "Ish madaniyati",
+        "workplaceDesc": "Koreya ish odobi, muloqot, nizolarni hal qilish"
+      }
+    }
+  },
+  "track": {
+    "modules": "Modul",
+    "totalTime": "Jami vaqt",
+    "curriculum": "O'quv dasturi"
+  },
+  "banners": {
+    "digital": {
+      "title": "Mustahkam raqamli poydevor quring!",
+      "description": "Kompyuter va smartfon ko'nikmalarini oson o'rganing"
+    },
+    "marketing": {
+      "title": "Ijtimoiy tarmoq orqali marketing ko'nikmalari",
+      "description": "Instagram va YouTube kanal boshqaruvini o'zlashtiring"
+    },
+    "career": {
+      "title": "Martaba muvaffaqiyatiga birinchi qadam",
+      "description": "Rezyumedan intervyugacha, ishga tayyorgarlik A dan Z gacha"
+    }
+  },
+  "auth": {
+    "loginTitle": "Kirish",
+    "loginSubtitle": "Hisobingizga kiring",
+    "registerTitle": "Ro'yxatdan o'tish",
+    "registerSubtitle": "O'qishni boshlash uchun hisob yarating",
+    "email": "Elektron pochta",
+    "password": "Parol",
+    "name": "Ism",
+    "namePlaceholder": "Aziz Karimov",
+    "organization": "Tashkilot",
+    "organizationPlaceholder": "Maktab, markaz, kompaniya va h.k.",
+    "refCode": "Tavsiya kodi",
+    "refCodePlaceholder": "Tashkilotingizdan olingan kodni kiriting",
+    "learningPurpose": "O'qish maqsadi",
+    "selectPurpose": "O'qish maqsadingizni tanlang",
+    "purpose": {
+      "employment": "Ishga tayyorgarlik",
+      "skillUp": "Ko'nikma rivojlantirish",
+      "dailyLife": "Kundalik hayot",
+      "other": "Boshqa"
+    },
+    "loginButton": "Kirish",
+    "registerButton": "Ro'yxatdan o'tish",
+    "rememberMe": "Meni eslab qol (Bu qurilmada tizimda qoling)",
+    "noAccount": "Hisobingiz yo'qmi?",
+    "hasAccount": "Hisobingiz bormi?",
+    "registerLink": "Ro'yxatdan o'tish",
+    "loginLink": "Kirish",
+    "backToHome": "Bosh sahifaga qaytish",
+    "testAccounts": "Test hisoblar",
+    "loginError": "Kirish muvaffaqiyatsiz. Qayta urinib ko'ring.",
+    "registerError": "Ro'yxatdan o'tish muvaffaqiyatsiz. Qayta urinib ko'ring."
+  },
+  "admin": {
+    "title": "O'qituvchi paneli",
+    "welcome": "Xush kelibsiz, {{name}}",
+    "refCode": "Tashkilot kodi",
+    "totalStudents": "Jami talabalar",
+    "avgProgress": "O'rtacha progress",
+    "completedModules": "Tugallangan modullar",
+    "completedStudents": "Bitirgan talabalar",
+    "weeklyGrowth": "Haftalik o'sish",
+    "weeklyActivity": "Haftalik faoliyat",
+    "trackDistribution": "Yo'nalish taqsimoti",
+    "studentList": "Talabalar ro'yxati",
+    "studentCount": " talaba",
+    "organizationOverview": "Tashkilot sharhi",
+    "viewAll": "Barchasini ko'rish",
+    "backToDashboard": "Panelga qaytish",
+    "searchPlaceholder": {
+      "name": "Ism bo'yicha qidirish",
+      "email": "Email bo'yicha qidirish",
+      "refCode": "Kod yoki tashkilot bo'yicha qidirish"
+    },
+    "searchBy": {
+      "name": "Ism",
+      "email": "Email",
+      "refCode": "Kod"
+    },
+    "sortBy": {
+      "name": "Ism (A-Z)",
+      "email": "Email (A-Z)",
+      "organization": "Tashkilot",
+      "progress": "Progress",
+      "lastActive": "So'nggi faoliyat"
+    },
+    "ascending": "Ortish",
+    "descending": "Kamayish",
+    "realTimeMonitoring": "Real vaqt monitoringi",
+    "lastUpdate": "So'nggi yangilanish",
+    "noResults": "Natija topilmadi",
+    "allTracks": "Barcha yo'nalishlar",
+    "exportExcel": "Excel eksport",
+    "exportStarted": "Excel fayl yaratilmoqda...",
+    "table": {
+      "name": "Ism",
+      "organization": "Tashkilot",
+      "track": "Yo'nalish",
+      "progress": "Progress",
+      "lastActive": "So'nggi faoliyat",
+      "actions": "Amallar"
+    }
+  },
+  "koreaApps": {
+    "title": "Koreya muhim ilovalari",
+    "subtitle": "Koreyada yashash uchun kerak bo'lgan barcha ilovalar! Xarita, transport, yetkazib berish va savdo ilovalarini o'rnating.",
+    "backToTrack": "Raqamli asoslarga qaytish",
+    "searchPlaceholder": "Ilova nomi bo'yicha qidirish",
+    "allCategories": "Barchasi",
+    "download": "Yuklab olish",
+    "noResults": "Natija topilmadi",
+    "clearSearch": "Qidiruvni tozalash",
+    "installed": "O'rnatilgan",
+    "markInstalled": "+O'rnatilgan deb belgilash",
+    "installedCount": "o'rnatilgan",
+    "progress": "O'rnatish jarayoni",
+    "badges": {
+      "localEssential": "Muhim",
+      "foreignerFriendly": "Chet elliklarga qulay",
+      "government": "Hukumat"
+    },
+    "tips": {
+      "title": "Ilova maslahatlari",
+      "tip1": "Ko'pchilik ilovalar koreys, ingliz va xitoy tillarini qo'llab-quvvatlaydi. Sozlamalarda tilni o'zgartirishingiz mumkin.",
+      "tip2": "Bitta Kakao hisobi bilan bir nechta Kakao xizmatlaridan (KakaoTalk, KakaoMap, Kakao T) foydalanish mumkin.",
+      "tip3": "Chet el kartasi ishlamasa, to'lov uchun KakaoPay yoki NaverPay-ga ro'yxatdan o'ting."
+    }
+  },
+  "categories": {
+    "mapsNavigation": "Xaritalar va navigatsiya",
+    "mapsNavigationDesc": "Koreyada yo'l topish uchun muhim!",
+    "transportation": "Transport",
+    "transportationDesc": "Taksi, metro va avtobuslar",
+    "translationLanguage": "Tarjima va til",
+    "translationLanguageDesc": "Koreys tilini tarjima qilish yordamchisi",
+    "foodDelivery": "Ovqat yetkazib berish",
+    "foodDeliveryDesc": "Mazali ovqat eshigingizga",
+    "shoppingLiving": "Savdo va hayot",
+    "shoppingLivingDesc": "Onlayn savdo va ikkinchi qo'l narsalar",
+    "travelActivities": "Sayohat va tadbirlar",
+    "travelActivitiesDesc": "Koreya sayohat ma'lumotlari va bron qilish",
+    "safetyUtility": "Xavfsizlik va foydali",
+    "safetyUtilityDesc": "Favqulodda ogohlantirishlar va foydali vositalar"
+  },
+  "apps": {
+    "naverMap": {
+      "name": "Naver Map",
+      "description": "Koreyaning eng aniq xaritasi. Jamoat transporti, piyoda va haydash yo'nalishlari real vaqt traffic bilan.",
+      "tagline": "Koreyaning eng yaxshi xarita ilovasi"
+    },
+    "kakaomap": {
+      "name": "KakaoMap",
+      "description": "Kakao bilan bog'langan xarita ilovasi. Kakao Taxi bilan taksi chaqirish oson.",
+      "tagline": "Kakao ekotizimiga ulangan"
+    },
+    "kakaoT": {
+      "name": "Kakao T",
+      "description": "Taksi, vakillik haydovchi, avtoturargoh, velosiped - barchasi bitta ilovada. Koreyada taksi uchun muhim!",
+      "tagline": "Bir bosishda taksi chaqirish"
+    },
+    "subwayKorea": {
+      "name": "Subway Korea",
+      "description": "Butun mamlakat bo'ylab metro xaritasi va real vaqt kelish ma'lumotlari. Ingliz, xitoy, yapon tillarini qo'llab-quvvatlaydi.",
+      "tagline": "Ko'p tilli metro ilovasi"
+    },
+    "papago": {
+      "name": "Papago",
+      "description": "Naver AI tarjima ilovasi. Matn, ovoz, rasm va suhbat tarjimasini qo'llab-quvvatlaydi.",
+      "tagline": "Koreys tarjimasi standarti"
+    },
+    "naverDictionary": {
+      "name": "Naver Dictionary",
+      "description": "Koreys tilini o'rganish uchun muhim! Ta'riflar, misollar va talaffuz bilan to'liq lug'at.",
+      "tagline": "Koreys tilini o'rganish yordamchisi"
+    },
+    "coupangEats": {
+      "name": "Coupang Eats",
+      "description": "Bir kishilik yetkazib berish mutaxassisi! Tez yetkazib berish va turli restoranlar. Ingliz tilini qo'llab-quvvatlaydi.",
+      "tagline": "Tez ovqat yetkazib berish"
+    },
+    "shuttleDelivery": {
+      "name": "Shuttle Delivery",
+      "description": "Chet elliklar uchun yetkazib berish ilovasi. Ingliz tilida buyurtma va chet el kartasi bilan to'lov.",
+      "tagline": "Chet elliklarga qulay yetkazib berish"
+    },
+    "coupang": {
+      "name": "Coupang",
+      "description": "Rocket Delivery bilan mashhur Koreyaning eng katta savdo markazi. Erta tonggi va kunlik yetkazib berish.",
+      "tagline": "Koreyaning top savdo markazi"
+    },
+    "karrot": {
+      "name": "Karrot",
+      "description": "Mahallaga asoslangan ikkinchi qo'l savdo ilovasi. Qo'shnilar bilan xavfsiz savdo.",
+      "tagline": "Mahalliy ikkinchi qo'l savdo"
+    },
+    "creatrip": {
+      "name": "Creatrip",
+      "description": "Chet ellik turistlar uchun Koreya sayohat ma'lumotlari. Chegirma kuponlari va bron xizmatlari.",
+      "tagline": "Chet ellik sayohatchilar uchun muhim"
+    },
+    "waug": {
+      "name": "Waug",
+      "description": "Koreya tadbirlari, turlar va chiptalarni bron qilish. Turli tajribalar oson.",
+      "tagline": "Tadbir bron qilish"
+    },
+    "emergencyReady": {
+      "name": "Emergency Ready",
+      "description": "Hukumatning rasmiy ofat ogohlantirish ilovasi. Zilzila, to'fon, havo sifati haqida favqulodda ma'lumot.",
+      "tagline": "Hukumat ofat ogohlantirishlari"
+    },
+    "xeCurrency": {
+      "name": "XE Currency",
+      "description": "Real vaqt valyuta kurslari. Koreya voniga konvertatsiya qilish uchun foydali global valyuta ilovasi.",
+      "tagline": "Real vaqt valyuta kurslari"
+    }
+  }
+}

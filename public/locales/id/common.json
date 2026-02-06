@@ -1,0 +1,290 @@
+{
+  "header": {
+    "title": "Kiosk Seven",
+    "subtitle": "Platform Pendidikan untuk Migran & Mahasiswa",
+    "login": "Masuk",
+    "register": "Daftar",
+    "logout": "Keluar",
+    "dashboard": "Dasbor",
+    "instructor": "Instruktur",
+    "student": "Siswa"
+  },
+  "gateway": {
+    "subtitle": "Education Platform",
+    "badge": "Pendidikan untuk Migran & Mahasiswa",
+    "title": "Tumbuh Bersama Anda",
+    "description": "Dari dasar digital hingga keterampilan karir, semua pendidikan yang Anda butuhkan untuk hidup di Korea",
+    "selectPrompt": "Pilih jalur pembelajaran",
+    "modules": "Modul",
+    "footer": "© 2024 Kiosk Seven. Platform pendidikan untuk migran dan mahasiswa internasional"
+  },
+  "sidebar": {
+    "home": "Beranda",
+    "digitalBasics": "Dasar Digital",
+    "marketing": "Keterampilan Marketing",
+    "career": "Keterampilan Karir",
+    "resources": "Sumber Belajar",
+    "help": "Bantuan",
+    "settings": "Pengaturan",
+    "dashboard": "Dasbor Instruktur"
+  },
+  "tracks": {
+    "digitalBasics": {
+      "name": "Dasar Digital",
+      "description": "Dari komputer dan smartphone dasar hingga aplikasi penting Korea",
+      "modules": {
+        "computerBasics": "Dasar Komputer",
+        "computerBasicsDesc": "Menyalakan komputer, menggunakan mouse dan keyboard, manajemen file",
+        "internet": "Dasar Internet",
+        "internetDesc": "Menggunakan browser, pencarian, menulis dan mengelola email",
+        "smartphone": "Keterampilan Smartphone",
+        "smartphoneDesc": "Menginstal aplikasi, mengelola foto, menggunakan messenger",
+        "koreaApps": "Aplikasi Penting Korea",
+        "koreaAppsDesc": "KakaoTalk, Naver, aplikasi delivery, aplikasi peta dan lainnya"
+      }
+    },
+    "marketing": {
+      "name": "Keterampilan Marketing",
+      "description": "Marketing media sosial, pembuatan konten, dan penjualan online",
+      "modules": {
+        "socialMedia": "Marketing Media Sosial",
+        "socialMediaDesc": "Manajemen channel Instagram, YouTube, TikTok dan strategi marketing",
+        "contentCreation": "Pembuatan Konten",
+        "contentCreationDesc": "Edit foto, produksi video, membuat berita kartu",
+        "ecommerce": "Penjualan Online",
+        "ecommerceDesc": "Smart Store, Coupang, platform penjualan internasional",
+        "analytics": "Analisis Data",
+        "analyticsDesc": "Pengukuran performa marketing, dasar Google Analytics"
+      }
+    },
+    "career": {
+      "name": "Keterampilan Karir",
+      "description": "Penulisan resume, persiapan wawancara, dan memahami budaya kerja Korea",
+      "modules": {
+        "resume": "Penulisan Resume",
+        "resumeDesc": "Penulisan resume dan surat lamaran gaya Korea",
+        "interview": "Persiapan Wawancara",
+        "interviewDesc": "Pertanyaan wawancara, strategi jawaban, wawancara simulasi",
+        "jobSearch": "Pencarian Kerja",
+        "jobSearchDesc": "Situs rekrutmen asing, informasi visa",
+        "workplace": "Budaya Kerja",
+        "workplaceDesc": "Etika kerja Korea, komunikasi, resolusi konflik"
+      }
+    }
+  },
+  "track": {
+    "modules": "Modul",
+    "totalTime": "Total Waktu",
+    "curriculum": "Kurikulum"
+  },
+  "banners": {
+    "digital": {
+      "title": "Bangun Fondasi Digital yang Kuat!",
+      "description": "Pelajari keterampilan komputer dan smartphone dengan mudah"
+    },
+    "marketing": {
+      "title": "Keterampilan Marketing Melalui Media Sosial",
+      "description": "Kuasai manajemen channel Instagram dan YouTube"
+    },
+    "career": {
+      "title": "Langkah Pertama Menuju Sukses Karir",
+      "description": "Dari resume hingga wawancara, persiapan kerja lengkap A sampai Z"
+    }
+  },
+  "auth": {
+    "loginTitle": "Masuk",
+    "loginSubtitle": "Masuk ke akun Anda",
+    "registerTitle": "Daftar",
+    "registerSubtitle": "Buat akun untuk mulai belajar",
+    "email": "Email",
+    "password": "Kata Sandi",
+    "name": "Nama",
+    "namePlaceholder": "Budi Santoso",
+    "organization": "Organisasi",
+    "organizationPlaceholder": "Sekolah, pusat, perusahaan, dll.",
+    "refCode": "Kode Referral",
+    "refCodePlaceholder": "Masukkan kode dari organisasi Anda",
+    "learningPurpose": "Tujuan Belajar",
+    "selectPurpose": "Pilih tujuan belajar Anda",
+    "purpose": {
+      "employment": "Persiapan Kerja",
+      "skillUp": "Pengembangan Keterampilan",
+      "dailyLife": "Kehidupan Sehari-hari",
+      "other": "Lainnya"
+    },
+    "loginButton": "Masuk",
+    "registerButton": "Daftar",
+    "rememberMe": "Ingat saya (Tetap masuk di perangkat ini)",
+    "noAccount": "Belum punya akun?",
+    "hasAccount": "Sudah punya akun?",
+    "registerLink": "Daftar",
+    "loginLink": "Masuk",
+    "backToHome": "Kembali ke Beranda",
+    "testAccounts": "Akun Uji Coba",
+    "loginError": "Gagal masuk. Silakan coba lagi.",
+    "registerError": "Gagal daftar. Silakan coba lagi."
+  },
+  "admin": {
+    "title": "Dasbor Instruktur",
+    "welcome": "Selamat datang, {{name}}",
+    "refCode": "Kode Organisasi",
+    "totalStudents": "Total Siswa",
+    "avgProgress": "Rata-rata Progres",
+    "completedModules": "Modul Selesai",
+    "completedStudents": "Siswa Lulus",
+    "weeklyGrowth": "Pertumbuhan Mingguan",
+    "weeklyActivity": "Aktivitas Mingguan",
+    "trackDistribution": "Distribusi Jalur",
+    "studentList": "Daftar Siswa",
+    "studentCount": " siswa",
+    "organizationOverview": "Ikhtisar Organisasi",
+    "viewAll": "Lihat Semua",
+    "backToDashboard": "Kembali ke Dasbor",
+    "searchPlaceholder": {
+      "name": "Cari berdasarkan nama",
+      "email": "Cari berdasarkan email",
+      "refCode": "Cari berdasarkan kode atau organisasi"
+    },
+    "searchBy": {
+      "name": "Nama",
+      "email": "Email",
+      "refCode": "Kode"
+    },
+    "sortBy": {
+      "name": "Nama (A-Z)",
+      "email": "Email (A-Z)",
+      "organization": "Organisasi",
+      "progress": "Progres",
+      "lastActive": "Terakhir Aktif"
+    },
+    "ascending": "Naik",
+    "descending": "Turun",
+    "realTimeMonitoring": "Pemantauan Real-time",
+    "lastUpdate": "Update terakhir",
+    "noResults": "Tidak ada hasil",
+    "allTracks": "Semua Jalur",
+    "exportExcel": "Ekspor Excel",
+    "exportStarted": "Membuat file Excel...",
+    "table": {
+      "name": "Nama",
+      "organization": "Organisasi",
+      "track": "Jalur",
+      "progress": "Progres",
+      "lastActive": "Terakhir Aktif",
+      "actions": "Aksi"
+    }
+  },
+  "koreaApps": {
+    "title": "Aplikasi Penting Korea",
+    "subtitle": "Semua aplikasi yang Anda butuhkan untuk hidup di Korea! Instal dan pelajari peta, transportasi, delivery, dan aplikasi belanja.",
+    "backToTrack": "Kembali ke Dasar Digital",
+    "searchPlaceholder": "Cari berdasarkan nama aplikasi",
+    "allCategories": "Semua",
+    "download": "Unduh",
+    "noResults": "Tidak ada hasil",
+    "clearSearch": "Hapus pencarian",
+    "installed": "Terinstal",
+    "markInstalled": "+Tandai Terinstal",
+    "installedCount": "terinstal",
+    "progress": "Progres Instalasi",
+    "badges": {
+      "localEssential": "Penting",
+      "foreignerFriendly": "Ramah Asing",
+      "government": "Pemerintah"
+    },
+    "tips": {
+      "title": "Tips Aplikasi",
+      "tip1": "Sebagian besar aplikasi mendukung Korea, Inggris, dan Cina. Anda bisa mengubah bahasa di pengaturan.",
+      "tip2": "Satu akun Kakao memungkinkan Anda mengakses beberapa layanan Kakao (KakaoTalk, KakaoMap, Kakao T).",
+      "tip3": "Jika kartu asing tidak berfungsi, daftarkan ke KakaoPay atau NaverPay untuk pembayaran."
+    }
+  },
+  "categories": {
+    "mapsNavigation": "Peta & Navigasi",
+    "mapsNavigationDesc": "Penting untuk menemukan jalan di Korea!",
+    "transportation": "Transportasi",
+    "transportationDesc": "Taksi, kereta bawah tanah, dan bus",
+    "translationLanguage": "Terjemahan & Bahasa",
+    "translationLanguageDesc": "Pembantu terjemahan Korea",
+    "foodDelivery": "Delivery Makanan",
+    "foodDeliveryDesc": "Makanan lezat ke pintu Anda",
+    "shoppingLiving": "Belanja & Kehidupan",
+    "shoppingLivingDesc": "Belanja online dan barang bekas",
+    "travelActivities": "Wisata & Aktivitas",
+    "travelActivitiesDesc": "Info wisata Korea dan pemesanan",
+    "safetyUtility": "Keamanan & Utilitas",
+    "safetyUtilityDesc": "Peringatan darurat dan alat berguna"
+  },
+  "apps": {
+    "naverMap": {
+      "name": "Naver Map",
+      "description": "Peta Korea paling akurat. Transportasi umum, jalan kaki, dan mengemudi dengan info lalu lintas real-time.",
+      "tagline": "Aplikasi peta terbaik Korea"
+    },
+    "kakaomap": {
+      "name": "KakaoMap",
+      "description": "Aplikasi peta terintegrasi dengan Kakao. Mudah panggil taksi dengan Kakao Taxi.",
+      "tagline": "Terhubung ke ekosistem Kakao"
+    },
+    "kakaoT": {
+      "name": "Kakao T",
+      "description": "Taksi, pengemudi pengganti, parkir, sepeda - semua dalam satu aplikasi. Penting untuk taksi di Korea!",
+      "tagline": "Panggil taksi sekali sentuh"
+    },
+    "subwayKorea": {
+      "name": "Subway Korea",
+      "description": "Peta kereta bawah tanah nasional dan info kedatangan real-time. Mendukung Inggris, Cina, Jepang.",
+      "tagline": "Aplikasi kereta bawah tanah multibahasa"
+    },
+    "papago": {
+      "name": "Papago",
+      "description": "Aplikasi terjemahan AI Naver. Mendukung terjemahan teks, suara, gambar, dan percakapan.",
+      "tagline": "Standar terjemahan Korea"
+    },
+    "naverDictionary": {
+      "name": "Naver Dictionary",
+      "description": "Penting untuk belajar Korea! Kamus lengkap dengan definisi, contoh, dan pengucapan.",
+      "tagline": "Pembantu belajar Korea"
+    },
+    "coupangEats": {
+      "name": "Coupang Eats",
+      "description": "Spesialis delivery satu orang! Pengiriman cepat dan berbagai restoran. Mendukung Inggris.",
+      "tagline": "Delivery makanan cepat"
+    },
+    "shuttleDelivery": {
+      "name": "Shuttle Delivery",
+      "description": "Aplikasi delivery untuk orang asing. Pesan dalam bahasa Inggris dan bayar dengan kartu asing.",
+      "tagline": "Delivery ramah asing"
+    },
+    "coupang": {
+      "name": "Coupang",
+      "description": "Mal belanja terbesar Korea terkenal dengan Rocket Delivery. Pengiriman dini hari dan hari yang sama.",
+      "tagline": "Mal belanja top Korea"
+    },
+    "karrot": {
+      "name": "Karrot",
+      "description": "Aplikasi jual beli bekas berbasis lingkungan. Jual beli aman dengan tetangga.",
+      "tagline": "Jual beli bekas lokal"
+    },
+    "creatrip": {
+      "name": "Creatrip",
+      "description": "Info wisata Korea untuk turis asing. Kupon diskon dan layanan pemesanan.",
+      "tagline": "Penting untuk wisatawan asing"
+    },
+    "waug": {
+      "name": "Waug",
+      "description": "Pesan aktivitas, tur, dan tiket Korea. Berbagai pengalaman dengan mudah.",
+      "tagline": "Pemesanan aktivitas"
+    },
+    "emergencyReady": {
+      "name": "Emergency Ready",
+      "description": "Aplikasi peringatan bencana resmi pemerintah. Info darurat gempa, topan, kualitas udara.",
+      "tagline": "Peringatan bencana pemerintah"
+    },
+    "xeCurrency": {
+      "name": "XE Currency",
+      "description": "Nilai tukar real-time. Aplikasi mata uang global berguna untuk konversi ke Won Korea.",
+      "tagline": "Nilai tukar real-time"
+    }
+  }
+}

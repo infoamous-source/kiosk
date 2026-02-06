@@ -1,0 +1,290 @@
+{
+  "header": {
+    "title": "Kiosk Seven",
+    "subtitle": "Platform ng Edukasyon para sa Migrante at Estudyante",
+    "login": "Mag-login",
+    "register": "Mag-sign Up",
+    "logout": "Mag-logout",
+    "dashboard": "Dashboard",
+    "instructor": "Instructor",
+    "student": "Estudyante"
+  },
+  "gateway": {
+    "subtitle": "Education Platform",
+    "badge": "Edukasyon para sa Migrante at Estudyante",
+    "title": "Lumago Kasama Namin",
+    "description": "Mula sa digital basics hanggang career skills, lahat ng edukasyon na kailangan mo para sa buhay sa Korea",
+    "selectPrompt": "Pumili ng learning track sa ibaba",
+    "modules": "Module",
+    "footer": "© 2024 Kiosk Seven. Platform ng edukasyon para sa migrante at international students"
+  },
+  "sidebar": {
+    "home": "Home",
+    "digitalBasics": "Digital Basics",
+    "marketing": "Marketing Skills",
+    "career": "Career Skills",
+    "resources": "Resources",
+    "help": "Tulong",
+    "settings": "Settings",
+    "dashboard": "Instructor Dashboard"
+  },
+  "tracks": {
+    "digitalBasics": {
+      "name": "Digital Basics",
+      "description": "Mula sa computer at smartphone basics hanggang sa essential na Korean apps",
+      "modules": {
+        "computerBasics": "Computer Basics",
+        "computerBasicsDesc": "Pag-on ng computer, paggamit ng mouse at keyboard, file management",
+        "internet": "Internet Basics",
+        "internetDesc": "Paggamit ng web browser, paghahanap, pagsulat at pamamahala ng email",
+        "smartphone": "Smartphone Skills",
+        "smartphoneDesc": "Pag-install ng apps, pamamahala ng photos, paggamit ng messengers",
+        "koreaApps": "Essential Korean Apps",
+        "koreaAppsDesc": "KakaoTalk, Naver, delivery apps, map apps at iba pa"
+      }
+    },
+    "marketing": {
+      "name": "Marketing Skills",
+      "description": "SNS marketing, paggawa ng content, at online sales skills",
+      "modules": {
+        "socialMedia": "SNS Marketing",
+        "socialMediaDesc": "Instagram, YouTube, TikTok channel management at marketing strategies",
+        "contentCreation": "Content Creation",
+        "contentCreationDesc": "Photo editing, video production, paggawa ng card news",
+        "ecommerce": "Online Sales",
+        "ecommerceDesc": "Smart Store, Coupang, international selling platforms",
+        "analytics": "Data Analytics",
+        "analyticsDesc": "Marketing performance measurement, Google Analytics basics"
+      }
+    },
+    "career": {
+      "name": "Career Skills",
+      "description": "Pagsulat ng resume, paghahanda sa interview, at pag-unawa sa Korean workplace culture",
+      "modules": {
+        "resume": "Pagsulat ng Resume",
+        "resumeDesc": "Korean-style resume at cover letter writing",
+        "interview": "Interview Prep",
+        "interviewDesc": "Expected interview questions, answer strategies, mock interviews",
+        "jobSearch": "Job Search",
+        "jobSearchDesc": "Foreigner hiring sites, visa information",
+        "workplace": "Workplace Culture",
+        "workplaceDesc": "Korean workplace etiquette, communication, conflict resolution"
+      }
+    }
+  },
+  "track": {
+    "modules": "Module",
+    "totalTime": "Kabuuang Oras",
+    "curriculum": "Curriculum"
+  },
+  "banners": {
+    "digital": {
+      "title": "Bumuo ng Malakas na Digital Foundation!",
+      "description": "Matutong gumamit ng computer at smartphone nang madali"
+    },
+    "marketing": {
+      "title": "Marketing Skills sa pamamagitan ng SNS",
+      "description": "Master ang Instagram at YouTube channel management"
+    },
+    "career": {
+      "title": "Unang Hakbang sa Career Success",
+      "description": "Mula resume hanggang interview, complete job prep A to Z"
+    }
+  },
+  "auth": {
+    "loginTitle": "Mag-login",
+    "loginSubtitle": "Mag-sign in sa iyong account",
+    "registerTitle": "Mag-sign Up",
+    "registerSubtitle": "Gumawa ng account para magsimulang matuto",
+    "email": "Email",
+    "password": "Password",
+    "name": "Pangalan",
+    "namePlaceholder": "Juan dela Cruz",
+    "organization": "Organisasyon",
+    "organizationPlaceholder": "School, center, company, atbp.",
+    "refCode": "Referral Code",
+    "refCodePlaceholder": "Ilagay ang code mula sa iyong organisasyon",
+    "learningPurpose": "Layunin ng Pag-aaral",
+    "selectPurpose": "Piliin ang iyong layunin sa pag-aaral",
+    "purpose": {
+      "employment": "Paghahanda sa Trabaho",
+      "skillUp": "Pagpapaunlad ng Kasanayan",
+      "dailyLife": "Pang-araw-araw na Buhay",
+      "other": "Iba Pa"
+    },
+    "loginButton": "Mag-login",
+    "registerButton": "Mag-sign Up",
+    "rememberMe": "Tandaan ako (Manatiling naka-sign in sa device na ito)",
+    "noAccount": "Walang account?",
+    "hasAccount": "May account na?",
+    "registerLink": "Mag-sign Up",
+    "loginLink": "Mag-login",
+    "backToHome": "Bumalik sa Home",
+    "testAccounts": "Test Accounts",
+    "loginError": "Nabigo ang pag-login. Pakisubukang muli.",
+    "registerError": "Nabigo ang pagpaparehistro. Pakisubukang muli."
+  },
+  "admin": {
+    "title": "Instructor Dashboard",
+    "welcome": "Maligayang pagdating, {{name}}",
+    "refCode": "Organization Code",
+    "totalStudents": "Kabuuang Estudyante",
+    "avgProgress": "Average Progress",
+    "completedModules": "Natapos na Module",
+    "completedStudents": "Nakatapos na Estudyante",
+    "weeklyGrowth": "Weekly Growth",
+    "weeklyActivity": "Weekly Activity",
+    "trackDistribution": "Track Distribution",
+    "studentList": "Listahan ng Estudyante",
+    "studentCount": " estudyante",
+    "organizationOverview": "Organization Overview",
+    "viewAll": "Tingnan Lahat",
+    "backToDashboard": "Bumalik sa Dashboard",
+    "searchPlaceholder": {
+      "name": "Maghanap ayon sa pangalan",
+      "email": "Maghanap ayon sa email",
+      "refCode": "Maghanap ayon sa code o organisasyon"
+    },
+    "searchBy": {
+      "name": "Pangalan",
+      "email": "Email",
+      "refCode": "Code"
+    },
+    "sortBy": {
+      "name": "Pangalan (A-Z)",
+      "email": "Email (A-Z)",
+      "organization": "Organisasyon",
+      "progress": "Progress",
+      "lastActive": "Huling Aktibo"
+    },
+    "ascending": "Pataas",
+    "descending": "Pababa",
+    "realTimeMonitoring": "Real-time Monitoring",
+    "lastUpdate": "Huling update",
+    "noResults": "Walang resulta",
+    "allTracks": "Lahat ng Track",
+    "exportExcel": "I-export sa Excel",
+    "exportStarted": "Gumagawa ng Excel file...",
+    "table": {
+      "name": "Pangalan",
+      "organization": "Organisasyon",
+      "track": "Track",
+      "progress": "Progress",
+      "lastActive": "Huling Aktibo",
+      "actions": "Actions"
+    }
+  },
+  "koreaApps": {
+    "title": "Essential Korean Apps",
+    "subtitle": "Lahat ng apps na kailangan mo para sa buhay sa Korea! Mag-install at matutong gumamit ng maps, transit, delivery, at shopping apps.",
+    "backToTrack": "Bumalik sa Digital Basics",
+    "searchPlaceholder": "Maghanap ayon sa pangalan ng app",
+    "allCategories": "Lahat",
+    "download": "Download",
+    "noResults": "Walang resulta",
+    "clearSearch": "I-clear ang search",
+    "installed": "Naka-install",
+    "markInstalled": "+Markahan bilang Installed",
+    "installedCount": "naka-install",
+    "progress": "Install Progress",
+    "badges": {
+      "localEssential": "Essential",
+      "foreignerFriendly": "Foreigner Friendly",
+      "government": "Government"
+    },
+    "tips": {
+      "title": "App Tips",
+      "tip1": "Karamihan sa apps ay sumusuporta sa Korean, English, at Chinese. Maaari mong baguhin ang wika sa settings.",
+      "tip2": "Isang Kakao account lang ang kailangan para ma-access ang maraming Kakao services (KakaoTalk, KakaoMap, Kakao T).",
+      "tip3": "Kung hindi gumagana ang foreign card mo, mag-register sa KakaoPay o NaverPay para makabayad."
+    }
+  },
+  "categories": {
+    "mapsNavigation": "Maps at Navigation",
+    "mapsNavigationDesc": "Essential para makahanap ng daan sa Korea!",
+    "transportation": "Transportation",
+    "transportationDesc": "Taxi, subway, at bus",
+    "translationLanguage": "Translation at Language",
+    "translationLanguageDesc": "Korean translation helpers",
+    "foodDelivery": "Food Delivery",
+    "foodDeliveryDesc": "Masarap na pagkain sa iyong pinto",
+    "shoppingLiving": "Shopping at Living",
+    "shoppingLivingDesc": "Online shopping at secondhand trading",
+    "travelActivities": "Travel at Activities",
+    "travelActivitiesDesc": "Korea travel info at bookings",
+    "safetyUtility": "Safety at Utility",
+    "safetyUtilityDesc": "Emergency alerts at useful tools"
+  },
+  "apps": {
+    "naverMap": {
+      "name": "Naver Map",
+      "description": "Pinakatumpak na Korean map. Public transit, walking, at driving directions na may real-time traffic.",
+      "tagline": "Pinakamahusay na map app ng Korea"
+    },
+    "kakaomap": {
+      "name": "KakaoMap",
+      "description": "Map app na konektado sa Kakao. Madaling tumawag ng taxi gamit ang Kakao Taxi integration.",
+      "tagline": "Konektado sa Kakao ecosystem"
+    },
+    "kakaoT": {
+      "name": "Kakao T",
+      "description": "Taxi, designated driver, parking, bike - lahat sa isang app. Essential para sa taxi sa Korea!",
+      "tagline": "One-touch taxi calling"
+    },
+    "subwayKorea": {
+      "name": "Subway Korea",
+      "description": "Nationwide subway map at real-time arrival info. Sumusuporta sa English, Chinese, Japanese.",
+      "tagline": "Multilingual subway app"
+    },
+    "papago": {
+      "name": "Papago",
+      "description": "AI translation app ng Naver. Text, voice, image, at conversation translation lahat supported.",
+      "tagline": "Standard para sa Korean translation"
+    },
+    "naverDictionary": {
+      "name": "Naver Dictionary",
+      "description": "Essential para sa pag-aaral ng Korean! Comprehensive dictionary na may definitions, examples, at pronunciation.",
+      "tagline": "Korean learning helper"
+    },
+    "coupangEats": {
+      "name": "Coupang Eats",
+      "description": "Single-person delivery specialist! Mabilis na delivery at iba't ibang restaurants. English supported.",
+      "tagline": "Mabilis na food delivery"
+    },
+    "shuttleDelivery": {
+      "name": "Shuttle Delivery",
+      "description": "Delivery app para sa foreigners. Mag-order sa English at magbayad gamit ang foreign cards.",
+      "tagline": "Foreigner-friendly delivery"
+    },
+    "coupang": {
+      "name": "Coupang",
+      "description": "Pinakamalaking shopping mall ng Korea na kilala sa Rocket Delivery. Dawn at same-day delivery available.",
+      "tagline": "Top shopping mall ng Korea"
+    },
+    "karrot": {
+      "name": "Karrot",
+      "description": "Neighborhood-based secondhand trading app. Ligtas na bumili at magbenta sa mga kapitbahay.",
+      "tagline": "Local secondhand trading"
+    },
+    "creatrip": {
+      "name": "Creatrip",
+      "description": "Korea travel info para sa foreign tourists. Discount coupons at reservation services.",
+      "tagline": "Essential para sa foreign travelers"
+    },
+    "waug": {
+      "name": "Waug",
+      "description": "Mag-book ng Korean activities, tours, at tickets. Iba't ibang experiences na madali.",
+      "tagline": "Activity bookings"
+    },
+    "emergencyReady": {
+      "name": "Emergency Ready",
+      "description": "Official government disaster alert app. Emergency info sa earthquakes, typhoons, air quality.",
+      "tagline": "Government disaster alerts"
+    },
+    "xeCurrency": {
+      "name": "XE Currency",
+      "description": "Real-time exchange rates. Useful na global currency app para sa converting to Korean Won.",
+      "tagline": "Real-time exchange rates"
+    }
+  }
+}

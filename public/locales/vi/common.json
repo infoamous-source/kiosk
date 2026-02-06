@@ -1,0 +1,290 @@
+{
+  "header": {
+    "title": "Kiosk Seven",
+    "subtitle": "Nền tảng giáo dục cho người di cư và du học sinh",
+    "login": "Đăng nhập",
+    "register": "Đăng ký",
+    "logout": "Đăng xuất",
+    "dashboard": "Bảng điều khiển",
+    "instructor": "Giảng viên",
+    "student": "Học viên"
+  },
+  "gateway": {
+    "subtitle": "Education Platform",
+    "badge": "Giáo dục cho người di cư và du học sinh",
+    "title": "Cùng bạn phát triển",
+    "description": "Từ kỹ năng số cơ bản đến kỹ năng nghề nghiệp, tất cả những gì bạn cần cho cuộc sống ở Hàn Quốc",
+    "selectPrompt": "Chọn lộ trình học tập",
+    "modules": "Mô-đun",
+    "footer": "© 2024 Kiosk Seven. Nền tảng giáo dục cho người di cư và du học sinh"
+  },
+  "sidebar": {
+    "home": "Trang chủ",
+    "digitalBasics": "Kỹ năng số cơ bản",
+    "marketing": "Marketing thực hành",
+    "career": "Kỹ năng nghề nghiệp",
+    "resources": "Tài liệu học tập",
+    "help": "Trợ giúp",
+    "settings": "Cài đặt",
+    "dashboard": "Bảng điều khiển giảng viên"
+  },
+  "tracks": {
+    "digitalBasics": {
+      "name": "Kỹ năng số cơ bản",
+      "description": "Từ máy tính và điện thoại cơ bản đến các ứng dụng thiết yếu tại Hàn Quốc",
+      "modules": {
+        "computerBasics": "Máy tính cơ bản",
+        "computerBasicsDesc": "Khởi động máy, sử dụng chuột và bàn phím, quản lý tệp",
+        "internet": "Internet cơ bản",
+        "internetDesc": "Sử dụng trình duyệt, tìm kiếm, viết và quản lý email",
+        "smartphone": "Sử dụng điện thoại",
+        "smartphoneDesc": "Cài đặt ứng dụng, quản lý ảnh, sử dụng tin nhắn",
+        "koreaApps": "Ứng dụng thiết yếu Hàn Quốc",
+        "koreaAppsDesc": "KakaoTalk, Naver, ứng dụng giao hàng, bản đồ và nhiều hơn"
+      }
+    },
+    "marketing": {
+      "name": "Marketing thực hành",
+      "description": "Marketing mạng xã hội, tạo nội dung và bán hàng trực tuyến",
+      "modules": {
+        "socialMedia": "Marketing mạng xã hội",
+        "socialMediaDesc": "Quản lý kênh Instagram, YouTube, TikTok và chiến lược marketing",
+        "contentCreation": "Tạo nội dung",
+        "contentCreationDesc": "Chỉnh sửa ảnh, làm video, tạo tin tức hình ảnh",
+        "ecommerce": "Bán hàng trực tuyến",
+        "ecommerceDesc": "Smart Store, Coupang, nền tảng bán hàng quốc tế",
+        "analytics": "Phân tích dữ liệu",
+        "analyticsDesc": "Đo lường hiệu suất marketing, Google Analytics cơ bản"
+      }
+    },
+    "career": {
+      "name": "Kỹ năng nghề nghiệp",
+      "description": "Viết CV, chuẩn bị phỏng vấn và hiểu văn hóa công sở Hàn Quốc",
+      "modules": {
+        "resume": "Viết CV",
+        "resumeDesc": "Cách viết CV và thư giới thiệu theo phong cách Hàn Quốc",
+        "interview": "Chuẩn bị phỏng vấn",
+        "interviewDesc": "Câu hỏi phỏng vấn, chiến lược trả lời, phỏng vấn thử",
+        "jobSearch": "Tìm việc",
+        "jobSearchDesc": "Trang web tuyển dụng người nước ngoài, thông tin visa",
+        "workplace": "Văn hóa công sở",
+        "workplaceDesc": "Phép tắc công sở Hàn Quốc, giao tiếp, giải quyết xung đột"
+      }
+    }
+  },
+  "track": {
+    "modules": "Mô-đun",
+    "totalTime": "Tổng thời gian",
+    "curriculum": "Chương trình"
+  },
+  "banners": {
+    "digital": {
+      "title": "Xây dựng nền tảng số vững chắc!",
+      "description": "Học sử dụng máy tính và điện thoại dễ dàng"
+    },
+    "marketing": {
+      "title": "Kỹ năng marketing qua mạng xã hội",
+      "description": "Thành thạo quản lý kênh Instagram và YouTube"
+    },
+    "career": {
+      "title": "Bước đầu tiên đến thành công nghề nghiệp",
+      "description": "Từ CV đến phỏng vấn, chuẩn bị việc làm từ A đến Z"
+    }
+  },
+  "auth": {
+    "loginTitle": "Đăng nhập",
+    "loginSubtitle": "Đăng nhập vào tài khoản của bạn",
+    "registerTitle": "Đăng ký",
+    "registerSubtitle": "Tạo tài khoản để bắt đầu học",
+    "email": "Email",
+    "password": "Mật khẩu",
+    "name": "Họ tên",
+    "namePlaceholder": "Nguyễn Văn A",
+    "organization": "Tổ chức",
+    "organizationPlaceholder": "Trường, trung tâm, công ty, v.v.",
+    "refCode": "Mã giới thiệu",
+    "refCodePlaceholder": "Nhập mã từ tổ chức của bạn",
+    "learningPurpose": "Mục đích học tập",
+    "selectPurpose": "Chọn mục đích học tập",
+    "purpose": {
+      "employment": "Chuẩn bị việc làm",
+      "skillUp": "Nâng cao kỹ năng",
+      "dailyLife": "Đời sống hàng ngày",
+      "other": "Khác"
+    },
+    "loginButton": "Đăng nhập",
+    "registerButton": "Đăng ký",
+    "rememberMe": "Ghi nhớ đăng nhập (Duy trì đăng nhập trên thiết bị này)",
+    "noAccount": "Chưa có tài khoản?",
+    "hasAccount": "Đã có tài khoản?",
+    "registerLink": "Đăng ký",
+    "loginLink": "Đăng nhập",
+    "backToHome": "Quay lại trang chủ",
+    "testAccounts": "Tài khoản thử nghiệm",
+    "loginError": "Đăng nhập thất bại. Vui lòng thử lại.",
+    "registerError": "Đăng ký thất bại. Vui lòng thử lại."
+  },
+  "admin": {
+    "title": "Bảng điều khiển giảng viên",
+    "welcome": "Chào mừng, {{name}}",
+    "refCode": "Mã tổ chức",
+    "totalStudents": "Tổng học viên",
+    "avgProgress": "Tiến độ trung bình",
+    "completedModules": "Mô-đun hoàn thành",
+    "completedStudents": "Học viên hoàn thành",
+    "weeklyGrowth": "Tăng trưởng tuần",
+    "weeklyActivity": "Hoạt động hàng tuần",
+    "trackDistribution": "Phân bố theo lộ trình",
+    "studentList": "Danh sách học viên",
+    "studentCount": " học viên",
+    "organizationOverview": "Tổng quan tổ chức",
+    "viewAll": "Xem tất cả",
+    "backToDashboard": "Quay lại bảng điều khiển",
+    "searchPlaceholder": {
+      "name": "Tìm theo tên",
+      "email": "Tìm theo email",
+      "refCode": "Tìm theo mã hoặc tổ chức"
+    },
+    "searchBy": {
+      "name": "Tên",
+      "email": "Email",
+      "refCode": "Mã"
+    },
+    "sortBy": {
+      "name": "Tên (A-Z)",
+      "email": "Email (A-Z)",
+      "organization": "Tổ chức",
+      "progress": "Tiến độ",
+      "lastActive": "Hoạt động gần nhất"
+    },
+    "ascending": "Tăng dần",
+    "descending": "Giảm dần",
+    "realTimeMonitoring": "Giám sát thời gian thực",
+    "lastUpdate": "Cập nhật cuối",
+    "noResults": "Không tìm thấy kết quả",
+    "allTracks": "Tất cả lộ trình",
+    "exportExcel": "Xuất Excel",
+    "exportStarted": "Đang tạo file Excel...",
+    "table": {
+      "name": "Tên",
+      "organization": "Tổ chức",
+      "track": "Lộ trình",
+      "progress": "Tiến độ",
+      "lastActive": "Hoạt động gần nhất",
+      "actions": "Thao tác"
+    }
+  },
+  "koreaApps": {
+    "title": "Ứng dụng thiết yếu Hàn Quốc",
+    "subtitle": "Tất cả ứng dụng bạn cần cho cuộc sống ở Hàn Quốc! Cài đặt và học sử dụng bản đồ, giao thông, giao hàng và mua sắm.",
+    "backToTrack": "Quay lại Kỹ năng số cơ bản",
+    "searchPlaceholder": "Tìm theo tên ứng dụng",
+    "allCategories": "Tất cả",
+    "download": "Tải xuống",
+    "noResults": "Không tìm thấy kết quả",
+    "clearSearch": "Xóa tìm kiếm",
+    "installed": "Đã cài đặt",
+    "markInstalled": "+Đánh dấu đã cài",
+    "installedCount": "đã cài",
+    "progress": "Tiến độ cài đặt",
+    "badges": {
+      "localEssential": "Thiết yếu",
+      "foreignerFriendly": "Thân thiện với người nước ngoài",
+      "government": "Chính phủ"
+    },
+    "tips": {
+      "title": "Mẹo sử dụng ứng dụng",
+      "tip1": "Hầu hết ứng dụng hỗ trợ tiếng Hàn, Anh và Trung. Bạn có thể đổi ngôn ngữ trong cài đặt.",
+      "tip2": "Một tài khoản Kakao cho phép bạn truy cập nhiều dịch vụ Kakao (KakaoTalk, KakaoMap, Kakao T).",
+      "tip3": "Nếu thẻ nước ngoài không hoạt động, đăng ký KakaoPay hoặc NaverPay để thanh toán."
+    }
+  },
+  "categories": {
+    "mapsNavigation": "Bản đồ & Chỉ đường",
+    "mapsNavigationDesc": "Thiết yếu để tìm đường ở Hàn Quốc!",
+    "transportation": "Giao thông",
+    "transportationDesc": "Taxi, tàu điện ngầm và xe buýt",
+    "translationLanguage": "Dịch thuật & Ngôn ngữ",
+    "translationLanguageDesc": "Trợ giúp dịch tiếng Hàn",
+    "foodDelivery": "Giao đồ ăn",
+    "foodDeliveryDesc": "Đồ ăn ngon giao tận cửa",
+    "shoppingLiving": "Mua sắm & Sinh hoạt",
+    "shoppingLivingDesc": "Mua sắm online và đồ cũ",
+    "travelActivities": "Du lịch & Hoạt động",
+    "travelActivitiesDesc": "Thông tin du lịch Hàn Quốc và đặt chỗ",
+    "safetyUtility": "An toàn & Tiện ích",
+    "safetyUtilityDesc": "Cảnh báo khẩn cấp và công cụ hữu ích"
+  },
+  "apps": {
+    "naverMap": {
+      "name": "Naver Map",
+      "description": "Bản đồ chính xác nhất Hàn Quốc. Giao thông công cộng, đi bộ và lái xe với thông tin giao thông thời gian thực.",
+      "tagline": "Ứng dụng bản đồ tốt nhất Hàn Quốc"
+    },
+    "kakaomap": {
+      "name": "KakaoMap",
+      "description": "Ứng dụng bản đồ tích hợp với Kakao. Dễ dàng gọi taxi với Kakao Taxi.",
+      "tagline": "Kết nối với hệ sinh thái Kakao"
+    },
+    "kakaoT": {
+      "name": "Kakao T",
+      "description": "Taxi, lái xe hộ, đỗ xe, xe đạp - tất cả trong một ứng dụng. Thiết yếu cho taxi ở Hàn Quốc!",
+      "tagline": "Gọi taxi một chạm"
+    },
+    "subwayKorea": {
+      "name": "Subway Korea",
+      "description": "Bản đồ tàu điện ngầm toàn quốc và thông tin đến ga thời gian thực. Hỗ trợ tiếng Anh, Trung, Nhật.",
+      "tagline": "Ứng dụng tàu điện đa ngôn ngữ"
+    },
+    "papago": {
+      "name": "Papago",
+      "description": "Ứng dụng dịch AI của Naver. Hỗ trợ dịch văn bản, giọng nói, hình ảnh và hội thoại.",
+      "tagline": "Tiêu chuẩn dịch tiếng Hàn"
+    },
+    "naverDictionary": {
+      "name": "Naver Dictionary",
+      "description": "Thiết yếu cho học tiếng Hàn! Từ điển toàn diện với định nghĩa, ví dụ và phát âm.",
+      "tagline": "Trợ giúp học tiếng Hàn"
+    },
+    "coupangEats": {
+      "name": "Coupang Eats",
+      "description": "Chuyên giao hàng một người! Giao nhanh và nhiều nhà hàng. Hỗ trợ tiếng Anh.",
+      "tagline": "Giao đồ ăn nhanh"
+    },
+    "shuttleDelivery": {
+      "name": "Shuttle Delivery",
+      "description": "Ứng dụng giao hàng cho người nước ngoài. Đặt hàng bằng tiếng Anh và thanh toán bằng thẻ nước ngoài.",
+      "tagline": "Giao hàng thân thiện với người nước ngoài"
+    },
+    "coupang": {
+      "name": "Coupang",
+      "description": "Trang mua sắm lớn nhất Hàn Quốc nổi tiếng với Rocket Delivery. Giao sáng sớm và trong ngày.",
+      "tagline": "Trang mua sắm hàng đầu Hàn Quốc"
+    },
+    "karrot": {
+      "name": "Karrot",
+      "description": "Ứng dụng mua bán đồ cũ theo khu vực. Mua bán an toàn với hàng xóm.",
+      "tagline": "Mua bán đồ cũ địa phương"
+    },
+    "creatrip": {
+      "name": "Creatrip",
+      "description": "Thông tin du lịch Hàn Quốc cho du khách nước ngoài. Phiếu giảm giá và dịch vụ đặt chỗ.",
+      "tagline": "Thiết yếu cho du khách nước ngoài"
+    },
+    "waug": {
+      "name": "Waug",
+      "description": "Đặt hoạt động, tour và vé tại Hàn Quốc. Nhiều trải nghiệm dễ dàng.",
+      "tagline": "Đặt hoạt động"
+    },
+    "emergencyReady": {
+      "name": "Emergency Ready",
+      "description": "Ứng dụng cảnh báo thiên tai chính thức của chính phủ. Thông tin khẩn cấp về động đất, bão, chất lượng không khí.",
+      "tagline": "Cảnh báo thiên tai chính phủ"
+    },
+    "xeCurrency": {
+      "name": "XE Currency",
+      "description": "Tỷ giá hối đoái thời gian thực. Ứng dụng tiền tệ toàn cầu hữu ích khi đổi sang Won Hàn Quốc.",
+      "tagline": "Tỷ giá thời gian thực"
+    }
+  }
+}

@@ -1,37 +1,290 @@
 {
   "header": {
-    "title": "Korea Starter Pack",
-    "subtitle": "韓国生活に必須のアプリ集"
+    "title": "Kiosk Seven",
+    "subtitle": "移民・留学生教育プラットフォーム",
+    "login": "ログイン",
+    "register": "会員登録",
+    "logout": "ログアウト",
+    "dashboard": "ダッシュボード",
+    "instructor": "講師",
+    "student": "学生"
   },
-  "hero": {
-    "tagline": "韓国生活のスタート、アプリひとつで",
-    "description": "韓国で暮らす外国人のために厳選した必須アプリをカテゴリー別にまとめました。"
+  "gateway": {
+    "subtitle": "Education Platform",
+    "badge": "移民・留学生のための教育",
+    "title": "あなたの成長をサポートします",
+    "description": "デジタル基礎から就職スキルまで、韓国生活に必要なすべての教育を一箇所で",
+    "selectPrompt": "学習トラックを選んでください",
+    "modules": "モジュール",
+    "footer": "© 2024 Kiosk Seven. 移民・留学生のための教育プラットフォーム"
   },
-  "download": {
-    "getOnAppStore": "App Store",
-    "getOnPlayStore": "Play Store",
-    "visitWebsite": "ウェブサイト",
-    "download": "ダウンロード"
+  "sidebar": {
+    "home": "ホーム",
+    "digitalBasics": "デジタル基礎",
+    "marketing": "マーケティング実務",
+    "career": "就職スキル",
+    "resources": "学習資料",
+    "help": "ヘルプ",
+    "settings": "設定",
+    "dashboard": "講師ダッシュボード"
   },
-  "badges": {
-    "government": "政府推奨",
-    "local-essential": "必須アプリ",
-    "foreigner-friendly": "外国人向け"
+  "tracks": {
+    "digitalBasics": {
+      "name": "デジタル基礎",
+      "description": "パソコンとスマホの活用から韓国必須アプリまで",
+      "modules": {
+        "computerBasics": "パソコン基礎",
+        "computerBasicsDesc": "パソコンの起動、マウスとキーボードの使い方、ファイル管理の基礎",
+        "internet": "インターネット基礎",
+        "internetDesc": "ブラウザの使い方、検索、メールの作成と管理",
+        "smartphone": "スマホ活用",
+        "smartphoneDesc": "アプリのインストール、写真管理、メッセンジャーの使い方",
+        "koreaApps": "韓国必須アプリ",
+        "koreaAppsDesc": "カカオトーク、Naver、デリバリーアプリ、地図アプリなど"
+      }
+    },
+    "marketing": {
+      "name": "マーケティング実務",
+      "description": "SNSマーケティング、コンテンツ制作、オンライン販売の実務スキル",
+      "modules": {
+        "socialMedia": "SNSマーケティング",
+        "socialMediaDesc": "Instagram、YouTube、TikTokチャンネル運営とマーケティング戦略",
+        "contentCreation": "コンテンツ制作",
+        "contentCreationDesc": "写真編集、動画制作、カードニュース作成",
+        "ecommerce": "オンライン販売",
+        "ecommerceDesc": "スマートストア、Coupang、海外販売プラットフォーム",
+        "analytics": "データ分析",
+        "analyticsDesc": "マーケティング効果測定、Google Analytics基礎"
+      }
+    },
+    "career": {
+      "name": "就職スキル",
+      "description": "履歴書作成、面接準備、韓国の職場文化理解まで",
+      "modules": {
+        "resume": "履歴書作成",
+        "resumeDesc": "韓国式履歴書と自己紹介書の書き方",
+        "interview": "面接準備",
+        "interviewDesc": "予想質問、回答戦略、模擬面接",
+        "jobSearch": "就職情報",
+        "jobSearchDesc": "外国人採用サイト、ビザ関連情報",
+        "workplace": "職場文化",
+        "workplaceDesc": "韓国の職場マナー、コミュニケーション、紛争解決"
+      }
+    }
   },
-  "install": {
-    "addToHomeScreen": "アプリをインストール",
-    "iosInstruction": "共有ボタンをタップし「ホーム画面に追加」を選択"
+  "track": {
+    "modules": "モジュール",
+    "totalTime": "総学習時間",
+    "curriculum": "カリキュラム"
   },
-  "footer": {
-    "disclaimer": "本サイトは掲載アプリとは一切提携していません。",
-    "madeWith": "韓国の外国人のために制作"
+  "banners": {
+    "digital": {
+      "title": "デジタル時代、基礎からしっかり！",
+      "description": "パソコンとスマホの使い方を簡単に学びましょう"
+    },
+    "marketing": {
+      "title": "SNSで始めるマーケティング実務",
+      "description": "Instagram、YouTubeチャンネル運営のノウハウをお伝えします"
+    },
+    "career": {
+      "title": "就職成功への第一歩",
+      "description": "履歴書から面接まで、就活準備A to Z"
+    }
   },
-  "nav": {
-    "allCategories": "すべて"
+  "auth": {
+    "loginTitle": "ログイン",
+    "loginSubtitle": "アカウントにログインしてください",
+    "registerTitle": "会員登録",
+    "registerSubtitle": "新しいアカウントを作成して学習を始めましょう",
+    "email": "メール",
+    "password": "パスワード",
+    "name": "名前",
+    "namePlaceholder": "山田太郎",
+    "organization": "所属機関",
+    "organizationPlaceholder": "学校、センター、会社名など",
+    "refCode": "紹介コード",
+    "refCodePlaceholder": "機関から受け取ったコードを入力",
+    "learningPurpose": "学習目的",
+    "selectPurpose": "学習目的を選んでください",
+    "purpose": {
+      "employment": "就職準備",
+      "skillUp": "スキルアップ",
+      "dailyLife": "日常生活",
+      "other": "その他"
+    },
+    "loginButton": "ログイン",
+    "registerButton": "登録する",
+    "rememberMe": "自動ログイン（このデバイスでログイン状態を維持）",
+    "noAccount": "アカウントをお持ちでないですか？",
+    "hasAccount": "すでにアカウントをお持ちですか？",
+    "registerLink": "会員登録",
+    "loginLink": "ログイン",
+    "backToHome": "ホームに戻る",
+    "testAccounts": "テストアカウント",
+    "loginError": "ログインに失敗しました。もう一度お試しください。",
+    "registerError": "会員登録に失敗しました。もう一度お試しください。"
   },
-  "installed": {
-    "label": "インストール済",
-    "markInstalled": "インストール済",
-    "openApp": "アプリを開く"
+  "admin": {
+    "title": "講師ダッシュボード",
+    "welcome": "{{name}}さん、ようこそ",
+    "refCode": "機関コード",
+    "totalStudents": "総学生数",
+    "avgProgress": "平均進捗",
+    "completedModules": "完了モジュール",
+    "completedStudents": "修了学生",
+    "weeklyGrowth": "週間成長",
+    "weeklyActivity": "週間活動状況",
+    "trackDistribution": "トラック別分布",
+    "studentList": "学生リスト",
+    "studentCount": "人",
+    "organizationOverview": "機関別状況",
+    "viewAll": "すべて見る",
+    "backToDashboard": "ダッシュボードに戻る",
+    "searchPlaceholder": {
+      "name": "名前で検索",
+      "email": "メールで検索",
+      "refCode": "コードまたは機関で検索"
+    },
+    "searchBy": {
+      "name": "名前",
+      "email": "メール",
+      "refCode": "コード"
+    },
+    "sortBy": {
+      "name": "名前 (あいうえお)",
+      "email": "メール (A-Z)",
+      "organization": "機関",
+      "progress": "進捗",
+      "lastActive": "最終活動"
+    },
+    "ascending": "昇順",
+    "descending": "降順",
+    "realTimeMonitoring": "リアルタイムモニタリング",
+    "lastUpdate": "最終更新",
+    "noResults": "結果が見つかりません",
+    "allTracks": "すべてのトラック",
+    "exportExcel": "Excelダウンロード",
+    "exportStarted": "Excelファイルの生成を開始します...",
+    "table": {
+      "name": "名前",
+      "organization": "所属機関",
+      "track": "トラック",
+      "progress": "進捗",
+      "lastActive": "最終活動",
+      "actions": "管理"
+    }
+  },
+  "koreaApps": {
+    "title": "韓国必須アプリ",
+    "subtitle": "韓国生活に必要なすべてのアプリ！地図、交通、デリバリー、ショッピングアプリをインストールして使ってみましょう。",
+    "backToTrack": "デジタル基礎に戻る",
+    "searchPlaceholder": "アプリ名で検索",
+    "allCategories": "すべて",
+    "download": "ダウンロード",
+    "noResults": "結果が見つかりません",
+    "clearSearch": "検索をクリア",
+    "installed": "インストール済",
+    "markInstalled": "+インストール済にする",
+    "installedCount": "インストール済",
+    "progress": "インストール進捗",
+    "badges": {
+      "localEssential": "必須",
+      "foreignerFriendly": "外国人向け",
+      "government": "政府"
+    },
+    "tips": {
+      "title": "アプリ使用のヒント",
+      "tip1": "ほとんどのアプリは韓国語、英語、中国語に対応しています。設定で言語を変更できます。",
+      "tip2": "1つのカカオアカウントで複数のカカオサービス（カカオトーク、カカオマップ、カカオT）を利用できます。",
+      "tip3": "外国のカードが使えない場合、カカオペイやNaverペイに登録すると決済可能です。"
+    }
+  },
+  "categories": {
+    "mapsNavigation": "地図・ナビ",
+    "mapsNavigationDesc": "韓国で道を探す時に必須！",
+    "transportation": "交通・移動",
+    "transportationDesc": "タクシー、地下鉄、バスを利用",
+    "translationLanguage": "翻訳・言語",
+    "translationLanguageDesc": "韓国語翻訳ヘルパー",
+    "foodDelivery": "フードデリバリー",
+    "foodDeliveryDesc": "美味しい料理を自宅で",
+    "shoppingLiving": "ショッピング・生活",
+    "shoppingLivingDesc": "ネットショッピングと中古取引",
+    "travelActivities": "旅行・アクティビティ",
+    "travelActivitiesDesc": "韓国旅行情報と予約",
+    "safetyUtility": "安全・ユーティリティ",
+    "safetyUtilityDesc": "災害警報と便利ツール"
+  },
+  "apps": {
+    "naverMap": {
+      "name": "Naverマップ",
+      "description": "最も正確な韓国の地図。公共交通、徒歩、車のルート検索とリアルタイム交通情報。",
+      "tagline": "韓国最高の地図アプリ"
+    },
+    "kakaomap": {
+      "name": "カカオマップ",
+      "description": "カカオと連動した地図アプリ。カカオタクシーと連携してすぐにタクシー呼び出し可能。",
+      "tagline": "カカオエコシステムと連動"
+    },
+    "kakaoT": {
+      "name": "カカオ T",
+      "description": "タクシー、代行運転、駐車、自転車まで1つのアプリで。韓国でタクシーに乗る時に必須！",
+      "tagline": "ワンタッチでタクシー呼び出し"
+    },
+    "subwayKorea": {
+      "name": "地下鉄路線図",
+      "description": "全国の地下鉄路線図とリアルタイム到着情報。英語、中国語、日本語対応。",
+      "tagline": "多言語対応地下鉄アプリ"
+    },
+    "papago": {
+      "name": "Papago",
+      "description": "NaverのAI翻訳アプリ。テキスト、音声、画像、会話翻訳がすべて可能。",
+      "tagline": "韓国語翻訳の定番"
+    },
+    "naverDictionary": {
+      "name": "Naver辞書",
+      "description": "韓国語学習に必須！単語の意味、例文、発音まで提供する総合辞書。",
+      "tagline": "韓国語学習ヘルパー"
+    },
+    "coupangEats": {
+      "name": "Coupang Eats",
+      "description": "1人前配達専門！素早い配達と様々なレストラン。英語対応。",
+      "tagline": "素早いフードデリバリー"
+    },
+    "shuttleDelivery": {
+      "name": "Shuttle Delivery",
+      "description": "外国人専用デリバリーアプリ。英語で注文、外国のカードで決済可能。",
+      "tagline": "外国人向けデリバリー"
+    },
+    "coupang": {
+      "name": "Coupang",
+      "description": "ロケット配送で有名な韓国最大のショッピングモール。早朝配送、当日配送可能。",
+      "tagline": "韓国代表ショッピングモール"
+    },
+    "karrot": {
+      "name": "タングン",
+      "description": "地域ベースの中古取引アプリ。近所の人と安全に物を売買。",
+      "tagline": "地域の中古取引"
+    },
+    "creatrip": {
+      "name": "Creatrip",
+      "description": "外国人観光客のための韓国旅行情報。割引クーポンと予約サービス。",
+      "tagline": "外国人旅行者必須"
+    },
+    "waug": {
+      "name": "Waug",
+      "description": "韓国のアクティビティ、ツアー、チケット予約。様々な体験を簡単に。",
+      "tagline": "アクティビティ予約"
+    },
+    "emergencyReady": {
+      "name": "安全ディディムドル",
+      "description": "政府公式災害警報アプリ。地震、台風、微細粉塵などの緊急情報提供。",
+      "tagline": "政府災害警報"
+    },
+    "xeCurrency": {
+      "name": "XE為替レート",
+      "description": "リアルタイム為替情報。ウォン両替時に便利なグローバル為替アプリ。",
+      "tagline": "リアルタイム為替確認"
+    }
   }
 }

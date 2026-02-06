@@ -1,0 +1,290 @@
+{
+  "header": {
+    "title": "Kiosk Seven",
+    "subtitle": "आप्रवासी र विद्यार्थीहरूको लागि शिक्षा प्लेटफर्म",
+    "login": "लगइन",
+    "register": "दर्ता गर्नुहोस्",
+    "logout": "लगआउट",
+    "dashboard": "ड्यासबोर्ड",
+    "instructor": "प्रशिक्षक",
+    "student": "विद्यार्थी"
+  },
+  "gateway": {
+    "subtitle": "Education Platform",
+    "badge": "आप्रवासी र विद्यार्थीहरूको लागि शिक्षा",
+    "title": "तपाईंसँग मिलेर बढ्नुहोस्",
+    "description": "डिजिटल आधारदेखि करियर सीपसम्म, कोरियामा जीवनको लागि आवश्यक सबै शिक्षा",
+    "selectPrompt": "सिक्ने ट्र्याक छान्नुहोस्",
+    "modules": "मोड्युल",
+    "footer": "© 2024 Kiosk Seven. आप्रवासी र अन्तर्राष्ट्रिय विद्यार्थीहरूको लागि शिक्षा प्लेटफर्म"
+  },
+  "sidebar": {
+    "home": "गृह",
+    "digitalBasics": "डिजिटल आधार",
+    "marketing": "मार्केटिङ सीप",
+    "career": "करियर सीप",
+    "resources": "स्रोतहरू",
+    "help": "मद्दत",
+    "settings": "सेटिङ्स",
+    "dashboard": "प्रशिक्षक ड्यासबोर्ड"
+  },
+  "tracks": {
+    "digitalBasics": {
+      "name": "डिजिटल आधार",
+      "description": "कम्प्युटर र स्मार्टफोनको आधारदेखि कोरियाली आवश्यक एपहरूसम्म",
+      "modules": {
+        "computerBasics": "कम्प्युटर आधार",
+        "computerBasicsDesc": "कम्प्युटर खोल्ने, माउस र किबोर्ड प्रयोग, फाइल व्यवस्थापन",
+        "internet": "इन्टरनेट आधार",
+        "internetDesc": "वेब ब्राउजर प्रयोग, खोज, इमेल लेख्ने र व्यवस्थापन",
+        "smartphone": "स्मार्टफोन सीप",
+        "smartphoneDesc": "एप स्थापना, फोटो व्यवस्थापन, मेसेन्जर प्रयोग",
+        "koreaApps": "कोरियाली आवश्यक एपहरू",
+        "koreaAppsDesc": "KakaoTalk, Naver, डेलिभरी एप, नक्सा एप र अन्य"
+      }
+    },
+    "marketing": {
+      "name": "मार्केटिङ सीप",
+      "description": "सोशल मिडिया मार्केटिङ, सामग्री निर्माण, र अनलाइन बिक्री",
+      "modules": {
+        "socialMedia": "सोशल मिडिया मार्केटिङ",
+        "socialMediaDesc": "Instagram, YouTube, TikTok च्यानल व्यवस्थापन र मार्केटिङ रणनीति",
+        "contentCreation": "सामग्री निर्माण",
+        "contentCreationDesc": "फोटो सम्पादन, भिडियो उत्पादन, कार्ड समाचार बनाउने",
+        "ecommerce": "अनलाइन बिक्री",
+        "ecommerceDesc": "Smart Store, Coupang, अन्तर्राष्ट्रिय बिक्री प्लेटफर्म",
+        "analytics": "डाटा विश्लेषण",
+        "analyticsDesc": "मार्केटिङ प्रदर्शन मापन, Google Analytics आधार"
+      }
+    },
+    "career": {
+      "name": "करियर सीप",
+      "description": "बायोडाटा लेखन, अन्तर्वार्ता तयारी, र कोरियाली कार्यस्थल संस्कृति बुझ्ने",
+      "modules": {
+        "resume": "बायोडाटा लेखन",
+        "resumeDesc": "कोरियाली शैलीको बायोडाटा र कभर पत्र लेख्ने",
+        "interview": "अन्तर्वार्ता तयारी",
+        "interviewDesc": "अपेक्षित प्रश्नहरू, जवाफ रणनीति, मक अन्तर्वार्ता",
+        "jobSearch": "जागिर खोज",
+        "jobSearchDesc": "विदेशी भर्ना साइटहरू, भिसा जानकारी",
+        "workplace": "कार्यस्थल संस्कृति",
+        "workplaceDesc": "कोरियाली कार्यस्थल शिष्टाचार, सञ्चार, द्वन्द्व समाधान"
+      }
+    }
+  },
+  "track": {
+    "modules": "मोड्युल",
+    "totalTime": "कुल समय",
+    "curriculum": "पाठ्यक्रम"
+  },
+  "banners": {
+    "digital": {
+      "title": "बलियो डिजिटल आधार बनाउनुहोस्!",
+      "description": "कम्प्युटर र स्मार्टफोन सीपहरू सजिलै सिक्नुहोस्"
+    },
+    "marketing": {
+      "title": "सोशल मिडियाबाट मार्केटिङ सीप",
+      "description": "Instagram र YouTube च्यानल व्यवस्थापनमा निपुण हुनुहोस्"
+    },
+    "career": {
+      "title": "करियर सफलताको पहिलो कदम",
+      "description": "बायोडाटादेखि अन्तर्वार्तासम्म, पूर्ण जागिर तयारी A देखि Z"
+    }
+  },
+  "auth": {
+    "loginTitle": "लगइन",
+    "loginSubtitle": "आफ्नो खातामा लगइन गर्नुहोस्",
+    "registerTitle": "दर्ता गर्नुहोस्",
+    "registerSubtitle": "सिक्न सुरु गर्न खाता बनाउनुहोस्",
+    "email": "इमेल",
+    "password": "पासवर्ड",
+    "name": "नाम",
+    "namePlaceholder": "राम बहादुर",
+    "organization": "संस्था",
+    "organizationPlaceholder": "विद्यालय, केन्द्र, कम्पनी, आदि",
+    "refCode": "रेफरल कोड",
+    "refCodePlaceholder": "आफ्नो संस्थाबाट प्राप्त कोड हाल्नुहोस्",
+    "learningPurpose": "सिक्ने उद्देश्य",
+    "selectPurpose": "आफ्नो सिक्ने उद्देश्य छान्नुहोस्",
+    "purpose": {
+      "employment": "जागिर तयारी",
+      "skillUp": "सीप विकास",
+      "dailyLife": "दैनिक जीवन",
+      "other": "अन्य"
+    },
+    "loginButton": "लगइन",
+    "registerButton": "दर्ता गर्नुहोस्",
+    "rememberMe": "मलाई सम्झनुहोस् (यो यन्त्रमा लगइन रहनुहोस्)",
+    "noAccount": "खाता छैन?",
+    "hasAccount": "पहिले नै खाता छ?",
+    "registerLink": "दर्ता गर्नुहोस्",
+    "loginLink": "लगइन",
+    "backToHome": "गृहमा फर्कनुहोस्",
+    "testAccounts": "परीक्षण खाताहरू",
+    "loginError": "लगइन असफल भयो। कृपया फेरि प्रयास गर्नुहोस्।",
+    "registerError": "दर्ता असफल भयो। कृपया फेरि प्रयास गर्नुहोस्।"
+  },
+  "admin": {
+    "title": "प्रशिक्षक ड्यासबोर्ड",
+    "welcome": "स्वागत छ, {{name}}",
+    "refCode": "संस्था कोड",
+    "totalStudents": "कुल विद्यार्थी",
+    "avgProgress": "औसत प्रगति",
+    "completedModules": "पूरा मोड्युल",
+    "completedStudents": "पूरा गरेका विद्यार्थी",
+    "weeklyGrowth": "साप्ताहिक वृद्धि",
+    "weeklyActivity": "साप्ताहिक गतिविधि",
+    "trackDistribution": "ट्र्याक वितरण",
+    "studentList": "विद्यार्थी सूची",
+    "studentCount": " विद्यार्थी",
+    "organizationOverview": "संस्था अवलोकन",
+    "viewAll": "सबै हेर्नुहोस्",
+    "backToDashboard": "ड्यासबोर्डमा फर्कनुहोस्",
+    "searchPlaceholder": {
+      "name": "नामले खोज्नुहोस्",
+      "email": "इमेलले खोज्नुहोस्",
+      "refCode": "कोड वा संस्थाले खोज्नुहोस्"
+    },
+    "searchBy": {
+      "name": "नाम",
+      "email": "इमेल",
+      "refCode": "कोड"
+    },
+    "sortBy": {
+      "name": "नाम (क-ज्ञ)",
+      "email": "इमेल (A-Z)",
+      "organization": "संस्था",
+      "progress": "प्रगति",
+      "lastActive": "अन्तिम सक्रिय"
+    },
+    "ascending": "बढ्दो",
+    "descending": "घट्दो",
+    "realTimeMonitoring": "वास्तविक समय निगरानी",
+    "lastUpdate": "अन्तिम अपडेट",
+    "noResults": "कुनै परिणाम भेटिएन",
+    "allTracks": "सबै ट्र्याकहरू",
+    "exportExcel": "Excel निर्यात",
+    "exportStarted": "Excel फाइल बनाउँदै...",
+    "table": {
+      "name": "नाम",
+      "organization": "संस्था",
+      "track": "ट्र्याक",
+      "progress": "प्रगति",
+      "lastActive": "अन्तिम सक्रिय",
+      "actions": "कार्यहरू"
+    }
+  },
+  "koreaApps": {
+    "title": "कोरियाली आवश्यक एपहरू",
+    "subtitle": "कोरियामा जीवनको लागि आवश्यक सबै एपहरू! नक्सा, यातायात, डेलिभरी, र किनमेल एपहरू स्थापना गर्नुहोस्।",
+    "backToTrack": "डिजिटल आधारमा फर्कनुहोस्",
+    "searchPlaceholder": "एप नामले खोज्नुहोस्",
+    "allCategories": "सबै",
+    "download": "डाउनलोड",
+    "noResults": "कुनै परिणाम भेटिएन",
+    "clearSearch": "खोज खाली गर्नुहोस्",
+    "installed": "स्थापित",
+    "markInstalled": "+स्थापित चिन्ह लगाउनुहोस्",
+    "installedCount": "स्थापित",
+    "progress": "स्थापना प्रगति",
+    "badges": {
+      "localEssential": "आवश्यक",
+      "foreignerFriendly": "विदेशीहरूको लागि अनुकूल",
+      "government": "सरकारी"
+    },
+    "tips": {
+      "title": "एप सुझावहरू",
+      "tip1": "धेरैजसो एपहरूले कोरियाली, अंग्रेजी, र चिनियाँ भाषा समर्थन गर्छन्। तपाईं सेटिङ्समा भाषा परिवर्तन गर्न सक्नुहुन्छ।",
+      "tip2": "एउटा Kakao खाताले धेरै Kakao सेवाहरू (KakaoTalk, KakaoMap, Kakao T) पहुँच गर्न दिन्छ।",
+      "tip3": "यदि विदेशी कार्ड काम गर्दैन भने, भुक्तानीको लागि KakaoPay वा NaverPay मा दर्ता गर्नुहोस्।"
+    }
+  },
+  "categories": {
+    "mapsNavigation": "नक्सा र नेभिगेसन",
+    "mapsNavigationDesc": "कोरियामा बाटो पत्ता लगाउन आवश्यक!",
+    "transportation": "यातायात",
+    "transportationDesc": "ट्याक्सी, सबवे, र बस",
+    "translationLanguage": "अनुवाद र भाषा",
+    "translationLanguageDesc": "कोरियाली अनुवाद सहायक",
+    "foodDelivery": "खाना डेलिभरी",
+    "foodDeliveryDesc": "स्वादिष्ट खाना तपाईंको ढोकामा",
+    "shoppingLiving": "किनमेल र जीवन",
+    "shoppingLivingDesc": "अनलाइन किनमेल र पुरानो सामान",
+    "travelActivities": "यात्रा र गतिविधिहरू",
+    "travelActivitiesDesc": "कोरिया यात्रा जानकारी र बुकिङ",
+    "safetyUtility": "सुरक्षा र उपयोगिता",
+    "safetyUtilityDesc": "आपतकालीन अलर्ट र उपयोगी उपकरणहरू"
+  },
+  "apps": {
+    "naverMap": {
+      "name": "Naver Map",
+      "description": "सबैभन्दा सही कोरियाली नक्सा। सार्वजनिक यातायात, पैदल, र ड्राइभिङ दिशा वास्तविक समय ट्राफिकसँग।",
+      "tagline": "कोरियाको सर्वश्रेष्ठ नक्सा एप"
+    },
+    "kakaomap": {
+      "name": "KakaoMap",
+      "description": "Kakao सँग एकीकृत नक्सा एप। Kakao Taxi एकीकरणसँग सजिलै ट्याक्सी बोलाउनुहोस्।",
+      "tagline": "Kakao इकोसिस्टममा जडित"
+    },
+    "kakaoT": {
+      "name": "Kakao T",
+      "description": "ट्याक्सी, तोकिएको ड्राइभर, पार्किङ, साइकल - सबै एउटा एपमा। कोरियामा ट्याक्सीको लागि आवश्यक!",
+      "tagline": "एक-टच ट्याक्सी कलिङ"
+    },
+    "subwayKorea": {
+      "name": "Subway Korea",
+      "description": "राष्ट्रव्यापी सबवे नक्सा र वास्तविक समय आगमन जानकारी। अंग्रेजी, चिनियाँ, जापानी समर्थन।",
+      "tagline": "बहुभाषी सबवे एप"
+    },
+    "papago": {
+      "name": "Papago",
+      "description": "Naver को AI अनुवाद एप। पाठ, आवाज, छवि, र कुराकानी अनुवाद समर्थन।",
+      "tagline": "कोरियाली अनुवादको मानक"
+    },
+    "naverDictionary": {
+      "name": "Naver Dictionary",
+      "description": "कोरियाली सिक्नको लागि आवश्यक! परिभाषा, उदाहरण, र उच्चारणसहित पूर्ण शब्दकोश।",
+      "tagline": "कोरियाली सिक्ने सहायक"
+    },
+    "coupangEats": {
+      "name": "Coupang Eats",
+      "description": "एकल-व्यक्ति डेलिभरी विशेषज्ञ! छिटो डेलिभरी र विभिन्न रेस्टुरेन्टहरू। अंग्रेजी समर्थित।",
+      "tagline": "छिटो खाना डेलिभरी"
+    },
+    "shuttleDelivery": {
+      "name": "Shuttle Delivery",
+      "description": "विदेशीहरूको लागि डेलिभरी एप। अंग्रेजीमा अर्डर गर्नुहोस् र विदेशी कार्डले भुक्तान गर्नुहोस्।",
+      "tagline": "विदेशी-अनुकूल डेलिभरी"
+    },
+    "coupang": {
+      "name": "Coupang",
+      "description": "रकेट डेलिभरीको लागि प्रसिद्ध कोरियाको सबैभन्दा ठूलो किनमेल मल। बिहान र त्यही दिन डेलिभरी।",
+      "tagline": "कोरियाको शीर्ष किनमेल मल"
+    },
+    "karrot": {
+      "name": "Karrot",
+      "description": "छिमेकमा आधारित पुरानो सामान व्यापार एप। स्थानीय छिमेकीहरूसँग सुरक्षित किनबेच।",
+      "tagline": "स्थानीय पुरानो सामान व्यापार"
+    },
+    "creatrip": {
+      "name": "Creatrip",
+      "description": "विदेशी पर्यटकहरूको लागि कोरिया यात्रा जानकारी। छुट कुपन र बुकिङ सेवाहरू।",
+      "tagline": "विदेशी यात्रीहरूको लागि आवश्यक"
+    },
+    "waug": {
+      "name": "Waug",
+      "description": "कोरियाली गतिविधिहरू, टुरहरू, र टिकटहरू बुक गर्नुहोस्। विभिन्न अनुभवहरू सजिलो।",
+      "tagline": "गतिविधि बुकिङ"
+    },
+    "emergencyReady": {
+      "name": "Emergency Ready",
+      "description": "सरकारी आधिकारिक विपद अलर्ट एप। भूकम्प, आँधी, वायु गुणस्तरको आपतकालीन जानकारी।",
+      "tagline": "सरकारी विपद अलर्ट"
+    },
+    "xeCurrency": {
+      "name": "XE Currency",
+      "description": "वास्तविक समय विनिमय दरहरू। कोरियाली वनमा रूपान्तरणको लागि उपयोगी विश्वव्यापी मुद्रा एप।",
+      "tagline": "वास्तविक समय विनिमय दर"
+    }
+  }
+}
