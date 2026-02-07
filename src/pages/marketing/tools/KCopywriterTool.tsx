@@ -77,10 +77,10 @@ export default function KCopywriterTool() {
         <span>{t('marketing.tools.back', '뒤로 가기')}</span>
       </button>
 
-      <div className="bg-gradient-to-r from-[#1e3a8a] to-[#3b82f6] rounded-2xl p-6 text-white mb-6">
+      <div className="bg-gradient-to-r from-[#1e3a8a] to-[#3b82f6] rounded-2xl p-4 md:p-6 text-white mb-6">
         <div className="flex items-center gap-3 mb-2">
-          <PenTool className="w-8 h-8" />
-          <h1 className="text-2xl font-bold">{t('marketing.tools.kCopywriter.title', 'K-카피라이터')}</h1>
+          <PenTool className="w-6 h-6 md:w-8 md:h-8" />
+          <h1 className="text-xl md:text-2xl font-bold">{t('marketing.tools.kCopywriter.title', 'K-카피라이터')}</h1>
           {aiEnabled && (
             <span className="text-xs bg-white/20 px-2 py-1 rounded-full">✨ AI 연결됨</span>
           )}
@@ -103,7 +103,7 @@ export default function KCopywriterTool() {
       )}
 
       {/* Input Form */}
-      <div className="bg-white border border-gray-200 rounded-2xl p-6 mb-6">
+      <div className="bg-white border border-gray-200 rounded-2xl p-4 md:p-6 mb-6">
         <div className="space-y-4">
           <div>
             <label className="block text-sm font-semibold text-gray-700 mb-1">상품/서비스 이름 *</label>
@@ -130,7 +130,7 @@ export default function KCopywriterTool() {
           {/* Tone Selection */}
           <div>
             <label className="block text-sm font-semibold text-gray-700 mb-2">분위기</label>
-            <div className="grid grid-cols-3 gap-3">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
               {toneOptions.map((opt) => (
                 <button
                   key={opt.value}
@@ -195,7 +195,7 @@ export default function KCopywriterTool() {
             {result.copies.map((copy, idx) => (
               <div
                 key={idx}
-                className="bg-white border border-gray-200 rounded-xl p-5 hover:border-blue-300 hover:shadow-sm transition-all"
+                className="bg-white border border-gray-200 rounded-xl p-4 md:p-5 hover:border-blue-300 hover:shadow-sm transition-all"
               >
                 <p className="text-gray-800 text-lg leading-relaxed mb-3">"{copy}"</p>
                 <div className="flex items-center justify-between">

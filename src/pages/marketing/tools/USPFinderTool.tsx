@@ -88,10 +88,10 @@ export default function USPFinderTool() {
         <span>{t('marketing.tools.back', '뒤로 가기')}</span>
       </button>
 
-      <div className="bg-gradient-to-r from-[#1e3a8a] to-[#3b82f6] rounded-2xl p-6 text-white mb-6">
+      <div className="bg-gradient-to-r from-[#1e3a8a] to-[#3b82f6] rounded-2xl p-4 md:p-6 text-white mb-6">
         <div className="flex items-center gap-3 mb-2">
-          <Target className="w-8 h-8" />
-          <h1 className="text-2xl font-bold">{t('marketing.tools.uspFinder.title', 'USP 파인더')}</h1>
+          <Target className="w-6 h-6 md:w-8 md:h-8" />
+          <h1 className="text-xl md:text-2xl font-bold">{t('marketing.tools.uspFinder.title', 'USP 파인더')}</h1>
         </div>
         <p className="text-blue-100">{t('marketing.tools.uspFinder.description', '나만의 특별한 장점을 찾아보세요')}</p>
       </div>
@@ -105,7 +105,7 @@ export default function USPFinderTool() {
             <div key={index} className="flex items-center gap-2">
               <div className="flex flex-col items-center">
                 <div
-                  className={`w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold transition-all duration-300 ${
+                  className={`w-8 h-8 md:w-10 md:h-10 rounded-full flex items-center justify-center text-xs md:text-sm font-bold transition-all duration-300 ${
                     isCompleted
                       ? 'bg-green-500 text-white'
                       : isCurrent
@@ -113,7 +113,7 @@ export default function USPFinderTool() {
                       : 'bg-gray-200 text-gray-500'
                   }`}
                 >
-                  {isCompleted ? <Check className="w-5 h-5" /> : index + 1}
+                  {isCompleted ? <Check className="w-4 h-4 md:w-5 md:h-5" /> : index + 1}
                 </div>
                 <span className={`text-xs mt-1.5 whitespace-nowrap ${isCurrent ? 'text-blue-600 font-semibold' : 'text-gray-400'}`}>
                   {label}
@@ -128,7 +128,7 @@ export default function USPFinderTool() {
       </div>
 
       {/* Step Content */}
-      <div className="bg-white border border-gray-200 rounded-2xl p-6">
+      <div className="bg-white border border-gray-200 rounded-2xl p-4 md:p-6">
         {currentStep === 0 && (
           <div>
             <h2 className="text-lg font-bold text-gray-800 mb-2">1단계: 내 제품/서비스는?</h2>

@@ -92,7 +92,7 @@ export default function Sidebar({ currentTrack }: SidebarProps) {
     <aside
       className={`
         fixed left-0 top-0 h-full bg-white border-r border-gray-200 z-40
-        transition-all duration-300 ease-out flex flex-col
+        transition-all duration-300 ease-out hidden md:flex flex-col
         ${collapsed ? 'w-20' : 'w-64'}
       `}
     >

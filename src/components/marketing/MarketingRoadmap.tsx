@@ -14,8 +14,8 @@ export default function MarketingRoadmap() {
     <div className="flex flex-col md:flex-row items-stretch gap-4">
       {marketingStages.map((stage, index) => (
         <div key={stage.id} className="flex-1 flex flex-col md:flex-row items-center gap-3">
-          <div className={`w-full rounded-xl border-2 ${stage.borderColor} ${stage.bgColor} p-5 text-center transition-all hover:shadow-md`}>
-            <span className="text-3xl mb-2 block">{stage.emoji}</span>
+          <div className={`w-full rounded-xl border-2 ${stage.borderColor} ${stage.bgColor} p-3 md:p-5 text-center transition-all hover:shadow-md`}>
+            <span className="text-2xl md:text-3xl mb-2 block">{stage.emoji}</span>
             <h3 className={`font-bold text-lg ${stage.textColor}`}>
               {t(stage.nameKey, stage.id)}
             </h3>

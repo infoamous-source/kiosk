@@ -166,7 +166,7 @@ export default function AIAssistantConnect() {
           <div className="mb-6">
             {/* AI 인사 메시지 */}
             {aiMessage && (
-              <div className="bg-white rounded-xl border border-green-200 p-5 mb-4 flex items-start gap-4">
+              <div className="bg-white rounded-xl border border-green-200 p-4 md:p-5 mb-4 flex items-start gap-3 md:gap-4">
                 <div className="w-12 h-12 bg-gradient-to-br from-green-400 to-emerald-500 rounded-full flex items-center justify-center text-white shrink-0 shadow-md">
                   <Bot className="w-6 h-6" />
                 </div>
@@ -209,7 +209,7 @@ export default function AIAssistantConnect() {
                 const el = document.getElementById('marketing-modules');
                 if (el) el.scrollIntoView({ behavior: 'smooth' });
               }}
-              className="w-full mt-4 bg-gradient-to-r from-[#1e3a8a] to-[#3b82f6] text-white font-bold py-4 px-6 rounded-xl hover:shadow-lg transition-all flex items-center justify-center gap-2"
+              className="w-full mt-4 bg-gradient-to-r from-[#1e3a8a] to-[#3b82f6] text-white font-bold py-3 px-4 md:py-4 md:px-6 rounded-xl hover:shadow-lg transition-all flex items-center justify-center gap-2"
             >
               <Sparkles className="w-5 h-5" />
               {t('marketing.aiConnect.startLearning', '마케팅 학습 시작하기')}

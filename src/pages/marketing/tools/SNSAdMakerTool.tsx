@@ -63,10 +63,10 @@ export default function SNSAdMakerTool() {
         <span>{t('marketing.tools.back', '뒤로 가기')}</span>
       </button>
 
-      <div className="bg-gradient-to-r from-[#1e3a8a] to-[#3b82f6] rounded-2xl p-6 text-white mb-6">
+      <div className="bg-gradient-to-r from-[#1e3a8a] to-[#3b82f6] rounded-2xl p-4 md:p-6 text-white mb-6">
         <div className="flex items-center gap-3 mb-2">
-          <Image className="w-8 h-8" />
-          <h1 className="text-2xl font-bold">{t('marketing.tools.snsAdMaker.title', 'SNS 광고 메이커')}</h1>
+          <Image className="w-6 h-6 md:w-8 md:h-8" />
+          <h1 className="text-xl md:text-2xl font-bold">{t('marketing.tools.snsAdMaker.title', 'SNS 광고 메이커')}</h1>
         </div>
         <p className="text-blue-100">{t('marketing.tools.snsAdMaker.description', '인스타그램 광고 이미지를 만들어보세요')}</p>
       </div>
@@ -86,7 +86,7 @@ export default function SNSAdMakerTool() {
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Left: Settings Panel */}
-        <div className="bg-white border border-gray-200 rounded-2xl p-6">
+        <div className="bg-white border border-gray-200 rounded-2xl p-4 md:p-6">
           <h2 className="font-bold text-gray-800 mb-4">설정</h2>
 
           <div className="space-y-4">
@@ -165,7 +165,7 @@ export default function SNSAdMakerTool() {
               </div>
 
               {/* Image Area */}
-              <div className={`relative aspect-square bg-gradient-to-br ${styleGradients[style]} flex flex-col items-center justify-center p-8`}>
+              <div className={`relative aspect-square bg-gradient-to-br ${styleGradients[style]} flex flex-col items-center justify-center p-4 md:p-8`}>
                 {/* Style indicator */}
                 <div className="absolute top-3 right-3 bg-black/30 px-2 py-1 rounded text-white text-xs">
                   {stylePatterns[style]}

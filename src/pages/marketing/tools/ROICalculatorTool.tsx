@@ -56,10 +56,10 @@ export default function ROICalculatorTool() {
         <span>{t('marketing.tools.back', '뒤로 가기')}</span>
       </button>
 
-      <div className="bg-gradient-to-r from-[#1e3a8a] to-[#3b82f6] rounded-2xl p-6 text-white mb-6">
+      <div className="bg-gradient-to-r from-[#1e3a8a] to-[#3b82f6] rounded-2xl p-4 md:p-6 text-white mb-6">
         <div className="flex items-center gap-3 mb-2">
-          <Calculator className="w-8 h-8" />
-          <h1 className="text-2xl font-bold">{t('marketing.tools.roiCalculator.title', 'ROI 계산기')}</h1>
+          <Calculator className="w-6 h-6 md:w-8 md:h-8" />
+          <h1 className="text-xl md:text-2xl font-bold">{t('marketing.tools.roiCalculator.title', 'ROI 계산기')}</h1>
         </div>
         <p className="text-blue-100">{t('marketing.tools.roiCalculator.description', '광고 수익률을 계산해보세요')}</p>
       </div>
@@ -71,7 +71,7 @@ export default function ROICalculatorTool() {
       </div>
 
       {/* Input Section */}
-      <div className="bg-white border border-gray-200 rounded-2xl p-6 mb-6">
+      <div className="bg-white border border-gray-200 rounded-2xl p-4 md:p-6 mb-6">
         <div className="space-y-4">
           <div>
             <label className="block text-sm font-semibold text-gray-700 mb-1">💰 광고비 (원)</label>
@@ -119,9 +119,9 @@ export default function ROICalculatorTool() {
       {result && (
         <div className="space-y-4">
           {/* ROAS Card */}
-          <div className="bg-white border-2 border-blue-200 rounded-2xl p-6 text-center">
+          <div className="bg-white border-2 border-blue-200 rounded-2xl p-4 md:p-6 text-center">
             <p className="text-sm text-gray-500 mb-2">ROAS (광고 수익률)</p>
-            <p className={`text-5xl font-black ${result.roas >= 100 ? 'text-green-600' : 'text-red-600'}`}>
+            <p className={`text-3xl md:text-5xl font-black ${result.roas >= 100 ? 'text-green-600' : 'text-red-600'}`}>
               {result.roas.toFixed(0)}%
             </p>
             <div className="mt-4">
@@ -149,7 +149,7 @@ export default function ROICalculatorTool() {
           </div>
 
           {/* Profit Card */}
-          <div className={`rounded-xl p-5 ${result.profit >= 0 ? 'bg-green-50 border border-green-200' : 'bg-red-50 border border-red-200'}`}>
+          <div className={`rounded-xl p-4 md:p-5 ${result.profit >= 0 ? 'bg-green-50 border border-green-200' : 'bg-red-50 border border-red-200'}`}>
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm text-gray-500 mb-1">순이익</p>
@@ -168,7 +168,7 @@ export default function ROICalculatorTool() {
           </div>
 
           {/* ROI */}
-          <div className="bg-white border border-gray-200 rounded-xl p-5">
+          <div className="bg-white border border-gray-200 rounded-xl p-4 md:p-5">
             <p className="text-sm text-gray-500 mb-1">ROI (투자 수익률)</p>
             <p className={`text-2xl font-bold ${result.roi >= 0 ? 'text-blue-600' : 'text-red-600'}`}>
               {result.roi >= 0 ? '+' : ''}{result.roi.toFixed(1)}%
@@ -182,7 +182,7 @@ export default function ROICalculatorTool() {
           </div>
 
           {/* Visual Bar */}
-          <div className="bg-white border border-gray-200 rounded-xl p-5">
+          <div className="bg-white border border-gray-200 rounded-xl p-4 md:p-5">
             <p className="text-sm font-semibold text-gray-700 mb-3">광고비 vs 매출</p>
             <div className="space-y-2">
               <div>

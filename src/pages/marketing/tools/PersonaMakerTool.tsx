@@ -92,10 +92,10 @@ export default function PersonaMakerTool() {
         <span>{t('marketing.tools.back', '뒤로 가기')}</span>
       </button>
 
-      <div className="bg-gradient-to-r from-[#1e3a8a] to-[#3b82f6] rounded-2xl p-6 text-white mb-6">
+      <div className="bg-gradient-to-r from-[#1e3a8a] to-[#3b82f6] rounded-2xl p-4 md:p-6 text-white mb-6">
         <div className="flex items-center gap-3 mb-2">
-          <UserCircle className="w-8 h-8" />
-          <h1 className="text-2xl font-bold">{t('marketing.tools.personaMaker.title', '페르소나 메이커')}</h1>
+          <UserCircle className="w-6 h-6 md:w-8 md:h-8" />
+          <h1 className="text-xl md:text-2xl font-bold">{t('marketing.tools.personaMaker.title', '페르소나 메이커')}</h1>
         </div>
         <p className="text-blue-100">{t('marketing.tools.personaMaker.description', '타겟 고객을 구체적인 인물로 만들어보세요')}</p>
       </div>
@@ -215,20 +215,20 @@ export default function PersonaMakerTool() {
           {/* Persona Card */}
           <div className="bg-white border-2 border-blue-200 rounded-2xl overflow-hidden shadow-lg">
             {/* Card Header */}
-            <div className="bg-gradient-to-r from-[#1e3a8a] to-[#3b82f6] p-6 text-white">
+            <div className="bg-gradient-to-r from-[#1e3a8a] to-[#3b82f6] p-4 md:p-6 text-white">
               <div className="flex items-center gap-4">
                 <div className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center text-3xl">
                   {form.gender === '여성' ? '👩' : form.gender === '기타' ? '🧑' : '👨'}
                 </div>
                 <div>
-                  <h2 className="text-2xl font-bold">{form.name}</h2>
+                  <h2 className="text-xl md:text-2xl font-bold">{form.name}</h2>
                   <p className="text-blue-100">{form.age}세 · {form.gender || '미지정'} · {form.occupation}</p>
                 </div>
               </div>
             </div>
 
             {/* Card Body */}
-            <div className="p-6 space-y-4">
+            <div className="p-4 md:p-6 space-y-4">
               {form.interests && (
                 <div>
                   <h3 className="text-sm font-semibold text-gray-500 mb-1">💖 관심사</h3>

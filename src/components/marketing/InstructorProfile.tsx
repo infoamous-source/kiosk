@@ -6,8 +6,8 @@ export default function InstructorProfile() {
   const { t } = useTranslation('common');
 
   return (
-    <div className="bg-white rounded-2xl border border-gray-200 p-8">
-      <h2 className="text-2xl font-bold text-gray-800 mb-6">
+    <div className="bg-white rounded-2xl border border-gray-200 p-4 md:p-8">
+      <h2 className="text-xl md:text-2xl font-bold text-gray-800 mb-4 md:mb-6">
         {t('marketing.instructor.sectionTitle', '강사 소개')}
       </h2>
 

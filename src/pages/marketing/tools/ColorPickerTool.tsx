@@ -46,10 +46,10 @@ export default function ColorPickerTool() {
         <span>{t('marketing.tools.back', '뒤로 가기')}</span>
       </button>
 
-      <div className="bg-gradient-to-r from-[#1e3a8a] to-[#3b82f6] rounded-2xl p-6 text-white mb-6">
+      <div className="bg-gradient-to-r from-[#1e3a8a] to-[#3b82f6] rounded-2xl p-4 md:p-6 text-white mb-6">
         <div className="flex items-center gap-3 mb-2">
-          <Palette className="w-8 h-8" />
-          <h1 className="text-2xl font-bold">{t('marketing.tools.colorPicker.title', '감정 컬러 피커')}</h1>
+          <Palette className="w-6 h-6 md:w-8 md:h-8" />
+          <h1 className="text-xl md:text-2xl font-bold">{t('marketing.tools.colorPicker.title', '감정 컬러 피커')}</h1>
         </div>
         <p className="text-blue-100">{t('marketing.tools.colorPicker.description', '브랜드 감정에 맞는 색상을 찾아보세요')}</p>
       </div>
@@ -84,7 +84,7 @@ export default function ColorPickerTool() {
       {/* Color Result */}
       {selectedData && (
         <div className="bg-white border border-gray-200 rounded-2xl overflow-hidden shadow-lg">
-          <div className="p-6">
+          <div className="p-4 md:p-6">
             <h3 className="text-xl font-bold text-gray-800 mb-1">
               {selectedData.emotionKo} ({selectedData.emotion})
             </h3>
@@ -95,7 +95,7 @@ export default function ColorPickerTool() {
               <h4 className="text-sm font-semibold text-gray-500 mb-3">메인 컬러</h4>
               <div className="flex items-center gap-4">
                 <div
-                  className="w-24 h-24 rounded-2xl shadow-lg cursor-pointer hover:scale-105 transition-transform"
+                  className="w-20 h-20 md:w-24 md:h-24 rounded-2xl shadow-lg cursor-pointer hover:scale-105 transition-transform"
                   style={{ backgroundColor: selectedData.mainColor.hex }}
                   onClick={() => handleCopyHex(selectedData.mainColor.hex)}
                 />
@@ -149,7 +149,7 @@ export default function ColorPickerTool() {
             <div className="mt-6">
               <h4 className="text-sm font-semibold text-gray-500 mb-3">미리보기</h4>
               <div
-                className="rounded-xl p-6 text-center"
+                className="rounded-xl p-4 md:p-6 text-center"
                 style={{ backgroundColor: selectedData.subColors[2]?.hex || '#f8f9fa' }}
               >
                 <div

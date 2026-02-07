@@ -47,10 +47,10 @@ export default function GlossaryTool() {
         <span>{t('marketing.tools.back', '뒤로 가기')}</span>
       </button>
 
-      <div className="bg-gradient-to-r from-[#1e3a8a] to-[#3b82f6] rounded-2xl p-6 text-white mb-6">
+      <div className="bg-gradient-to-r from-[#1e3a8a] to-[#3b82f6] rounded-2xl p-4 md:p-6 text-white mb-6">
         <div className="flex items-center gap-3 mb-2">
-          <BookOpen className="w-8 h-8" />
-          <h1 className="text-2xl font-bold">{t('marketing.tools.glossary.title', '마케팅 용어 사전')}</h1>
+          <BookOpen className="w-6 h-6 md:w-8 md:h-8" />
+          <h1 className="text-xl md:text-2xl font-bold">{t('marketing.tools.glossary.title', '마케팅 용어 사전')}</h1>
         </div>
         <p className="text-blue-100">{t('marketing.tools.glossary.description', '마케팅 용어를 쉽게 배워보세요')}</p>
       </div>
@@ -95,7 +95,7 @@ export default function GlossaryTool() {
           <div
             key={term.id}
             onClick={() => handleTermClick(term.id)}
-            className="bg-white border border-gray-200 rounded-xl p-5 hover:border-blue-300 hover:shadow-md transition-all cursor-pointer"
+            className="bg-white border border-gray-200 rounded-xl p-4 md:p-5 hover:border-blue-300 hover:shadow-md transition-all cursor-pointer"
           >
             <div className="flex items-start justify-between mb-2">
               <div>

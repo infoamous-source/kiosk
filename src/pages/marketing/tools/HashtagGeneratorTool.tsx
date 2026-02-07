@@ -63,10 +63,10 @@ export default function HashtagGeneratorTool() {
         <span>{t('marketing.tools.back', '뒤로 가기')}</span>
       </button>
 
-      <div className="bg-gradient-to-r from-[#1e3a8a] to-[#3b82f6] rounded-2xl p-6 text-white mb-6">
+      <div className="bg-gradient-to-r from-[#1e3a8a] to-[#3b82f6] rounded-2xl p-4 md:p-6 text-white mb-6">
         <div className="flex items-center gap-3 mb-2">
-          <Hash className="w-8 h-8" />
-          <h1 className="text-2xl font-bold">{t('marketing.tools.hashtagGenerator.title', '해시태그 생성기')}</h1>
+          <Hash className="w-6 h-6 md:w-8 md:h-8" />
+          <h1 className="text-xl md:text-2xl font-bold">{t('marketing.tools.hashtagGenerator.title', '해시태그 생성기')}</h1>
         </div>
         <p className="text-blue-100">{t('marketing.tools.hashtagGenerator.description', '키워드에 맞는 해시태그를 추천받으세요')}</p>
       </div>
@@ -149,7 +149,7 @@ export default function HashtagGeneratorTool() {
 
           {/* Hashtag Groups */}
           {results.map((group, gIdx) => (
-            <div key={gIdx} className="bg-white border border-gray-200 rounded-xl p-5 mb-4">
+            <div key={gIdx} className="bg-white border border-gray-200 rounded-xl p-4 md:p-5 mb-4">
               <div className="flex items-center gap-2 mb-3">
                 <span className={`text-xs px-2 py-1 rounded-full font-medium ${
                   group.category === 'trending'

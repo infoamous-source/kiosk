@@ -58,12 +58,12 @@ export default function MarketingModuleDetailPage() {
       </button>
 
       {/* Module Header */}
-      <div className="bg-white rounded-2xl border border-gray-200 p-8 mb-8">
-        <div className="flex items-start gap-5">
+      <div className="bg-white rounded-2xl border border-gray-200 p-4 md:p-8 mb-6 md:mb-8">
+        <div className="flex items-start gap-3 md:gap-5">
           <div
-            className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${stageColorMap[module.stage] || stageColorMap.foundation} flex items-center justify-center text-white shadow-lg shrink-0`}
+            className={`w-12 h-12 md:w-16 md:h-16 rounded-xl md:rounded-2xl bg-gradient-to-br ${stageColorMap[module.stage] || stageColorMap.foundation} flex items-center justify-center text-white shadow-lg shrink-0`}
           >
-            <Icon className="w-8 h-8" />
+            <Icon className="w-6 h-6 md:w-8 md:h-8" />
           </div>
           <div className="flex-1">
             <div className="flex items-center gap-2 mb-2">
@@ -71,13 +71,13 @@ export default function MarketingModuleDetailPage() {
                 {stage?.emoji} {t(stage?.nameKey || '', module.stage)}
               </span>
             </div>
-            <h1 className="text-2xl font-bold text-gray-800 mb-2">
+            <h1 className="text-xl md:text-2xl font-bold text-gray-800 mb-2">
               {t(module.titleKey, module.id)}
             </h1>
             <p className="text-gray-500 leading-relaxed">
               {t(module.descriptionKey, '')}
             </p>
-            <div className="flex items-center gap-6 mt-4 text-sm text-gray-400">
+            <div className="flex flex-wrap items-center gap-3 md:gap-6 mt-3 md:mt-4 text-sm text-gray-400">
               <span className="flex items-center gap-1">
                 <Clock className="w-4 h-4" /> {module.duration}
               </span>
@@ -101,7 +101,7 @@ export default function MarketingModuleDetailPage() {
           {module.learningItems.map((item, index) => (
             <div
               key={item.id}
-              className="bg-white rounded-xl border border-gray-200 p-5 flex items-start gap-4 hover:shadow-sm transition-shadow"
+              className="bg-white rounded-xl border border-gray-200 p-4 md:p-5 flex items-start gap-3 md:gap-4 hover:shadow-sm transition-shadow"
             >
               <div className="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center text-sm font-bold text-gray-500 shrink-0">
                 {index + 1}
@@ -132,7 +132,7 @@ export default function MarketingModuleDetailPage() {
               <button
                 key={tool.id}
                 onClick={() => navigate(tool.route)}
-                className="w-full bg-gradient-to-r from-white to-blue-50 rounded-xl border border-blue-200 p-5 flex items-center gap-4 hover:shadow-md hover:border-blue-300 transition-all group text-left"
+                className="w-full bg-gradient-to-r from-white to-blue-50 rounded-xl border border-blue-200 p-4 md:p-5 flex items-center gap-3 md:gap-4 hover:shadow-md hover:border-blue-300 transition-all group text-left"
               >
                 <div className="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center shrink-0 group-hover:bg-blue-200 transition-colors">
                   <ToolIcon className="w-6 h-6 text-blue-600" />
@@ -145,7 +145,7 @@ export default function MarketingModuleDetailPage() {
                     {t(tool.descriptionKey, '')}
                   </p>
                 </div>
-                <div className="flex items-center gap-1 text-blue-500 text-sm font-medium">
+                <div className="hidden sm:flex items-center gap-1 text-blue-500 text-sm font-medium">
                   {t('marketing.moduleDetail.tryTool', '사용하기')}
                   <ChevronRight className="w-4 h-4" />
                 </div>

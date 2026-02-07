@@ -38,7 +38,7 @@ export default function MarketingModuleCard({ module, index, stageColor, onClick
   return (
     <button
       onClick={onClick}
-      className="group text-left bg-white rounded-xl border border-gray-200 p-5 hover:shadow-lg hover:border-gray-300 transition-all duration-200 flex flex-col"
+      className="group text-left bg-white rounded-xl border border-gray-200 p-4 md:p-5 hover:shadow-lg hover:border-gray-300 transition-all duration-200 flex flex-col"
     >
       {/* Header */}
       <div className="flex items-start justify-between mb-3">
@@ -63,7 +63,7 @@ export default function MarketingModuleCard({ module, index, stageColor, onClick
       </p>
 
       {/* Meta */}
-      <div className="flex items-center gap-4 text-xs text-gray-400 pt-3 border-t border-gray-100">
+      <div className="flex items-center gap-2 sm:gap-4 text-xs text-gray-400 pt-3 border-t border-gray-100">
         <span className="flex items-center gap-1">
           <Clock className="w-3.5 h-3.5" />
           {module.duration}

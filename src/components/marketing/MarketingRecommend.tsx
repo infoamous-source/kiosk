@@ -10,8 +10,8 @@ export default function MarketingRecommend() {
   const { t } = useTranslation('common');
 
   return (
-    <div className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl p-8">
-      <h2 className="text-2xl font-bold text-gray-800 mb-2">
+    <div className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl p-4 md:p-8">
+      <h2 className="text-xl md:text-2xl font-bold text-gray-800 mb-2">
         {t('marketing.recommend.title', '이런 분에게 추천해요!')}
       </h2>
       <p className="text-gray-500 mb-6">
