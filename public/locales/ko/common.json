@@ -165,6 +165,204 @@
       "actions": "관리"
     }
   },
+  "marketing": {
+    "landing": {
+      "badge": "마케팅 실무 과정",
+      "heroTitle": "한국에서 마케터가\n되고 싶어요?",
+      "heroDescription": "기초부터 AI 활용까지, 이 과정을 마치면 나만의 마케팅 포트폴리오가 완성됩니다!",
+      "modulesUnit": "개 모듈",
+      "hoursUnit": "시간",
+      "toolsUnit": "개 실무 툴",
+      "roadmapTitle": "학습 로드맵",
+      "lessonsUnit": "개 학습",
+      "moduleCount": "개 모듈"
+    },
+    "stages": {
+      "foundation": "기초를 다져요",
+      "practice": "실무를 배워요",
+      "ai": "AI로 실습해요",
+      "foundationDesc": "마케팅 기본기 완성",
+      "practiceDesc": "SNS·광고 실전 연습",
+      "aiDesc": "AI로 광고 제작"
+    },
+    "modules": {
+      "basics": {
+        "title": "마케팅이 뭐예요?",
+        "description": "마케팅의 기본 개념과 2026년 트렌드를 쉽게 배워요",
+        "oneLine": "마케팅 기초 + 최신 트렌드",
+        "learning": {
+          "whatIsMarketing": "마케팅이란?",
+          "whatIsMarketingDesc": "물건을 파는 것과 마케팅의 차이, 마케팅의 4P를 쉽게 배워요",
+          "trend2026": "2026년 마케팅 트렌드",
+          "trend2026Desc": "나노사회, 숏폼, 진정성 등 올해 꼭 알아야 할 트렌드",
+          "marketerJobs": "마케터가 하는 일",
+          "marketerJobsDesc": "한국 회사에서 마케터는 어떤 일을 하는지 알아봐요"
+        }
+      },
+      "research": {
+        "title": "내 물건은 누구에게 팔죠?",
+        "description": "시장조사와 타겟 고객 분석하는 방법을 배워요",
+        "oneLine": "시장조사 + 타겟 분석",
+        "learning": {
+          "howToResearch": "시장 조사 방법",
+          "howToResearchDesc": "네이버 트렌드, SNS에서 시장 조사하는 방법",
+          "findTarget": "타겟 고객 찾기",
+          "findTargetDesc": "내 물건을 살 사람은 누구인지 정하는 방법",
+          "competitor": "경쟁자 분석",
+          "competitorDesc": "비슷한 물건을 파는 다른 사람들을 분석하는 방법"
+        }
+      },
+      "concept": {
+        "title": "차별화된 컨셉 만들기",
+        "description": "나만의 특별한 포인트(USP)와 브랜드 컨셉을 만들어요",
+        "oneLine": "USP + 브랜드 컨셉 기획",
+        "learning": {
+          "usp": "USP 찾기",
+          "uspDesc": "나만의 특별한 장점을 찾는 방법",
+          "brandStory": "브랜드 스토리",
+          "brandStoryDesc": "사람들의 마음을 움직이는 이야기 만들기",
+          "slogan": "슬로건 만들기",
+          "sloganDesc": "기억에 남는 한 줄 소개 만들기"
+        }
+      },
+      "branding": {
+        "title": "예쁜 디자인과 글쓰기",
+        "description": "브랜드 색상, 로고, 상세 페이지를 디자인해요",
+        "oneLine": "브랜딩 디자인 + 카피라이팅",
+        "learning": {
+          "brandColor": "브랜드 색상",
+          "brandColorDesc": "감정에 맞는 색상을 골라서 브랜드 느낌을 만들어요",
+          "logoFont": "로고와 글꼴",
+          "logoFontDesc": "무료 도구로 로고를 만들고 글꼴을 고르는 방법",
+          "detailPage": "상세 페이지",
+          "detailPageDesc": "사람들이 사고 싶게 만드는 상세 페이지 구성법"
+        }
+      },
+      "content": {
+        "title": "콘텐츠 마케팅",
+        "description": "인스타그램, 유튜브에 올릴 콘텐츠를 만들어요",
+        "oneLine": "SNS 콘텐츠 제작",
+        "learning": {
+          "channels": "SNS 채널 이해",
+          "channelsDesc": "인스타그램, 유튜브, 틱톡의 특징과 활용법",
+          "cardNews": "카드뉴스 만들기",
+          "cardNewsDesc": "눈에 띄는 카드뉴스 디자인과 글쓰기",
+          "hashtag": "해시태그 전략",
+          "hashtagDesc": "더 많은 사람이 보게 만드는 해시태그 사용법"
+        }
+      },
+      "performance": {
+        "title": "돈 써서 광고하기",
+        "description": "광고비를 써서 더 많은 사람에게 알리는 방법을 배워요",
+        "oneLine": "퍼포먼스 마케팅 기초",
+        "learning": {
+          "whatIs": "퍼포먼스 마케팅이란?",
+          "whatIsDesc": "돈을 써서 광고하는 것이 왜 필요한지 알아봐요",
+          "adTypes": "광고 종류",
+          "adTypesDesc": "네이버 광고, 인스타 광고, 구글 광고의 차이점",
+          "readData": "데이터 읽기",
+          "readDataDesc": "ROAS, CPC 같은 숫자를 읽고 이해하는 방법"
+        }
+      },
+      "aiPractice": {
+        "title": "AI로 마케팅하기",
+        "description": "AI를 활용해서 광고 카피와 이미지를 직접 만들어봐요",
+        "oneLine": "Gemini AI 활용 실습",
+        "learning": {
+          "aiWorkflow": "AI 마케팅 워크플로",
+          "aiWorkflowDesc": "AI를 마케팅에 어떻게 활용하는지 전체 흐름을 배워요",
+          "promptEngineering": "프롬프트 쓰는 법",
+          "promptEngineeringDesc": "AI에게 잘 말해서 좋은 결과를 얻는 방법",
+          "practiceAd": "실전 광고 만들기",
+          "practiceAdDesc": "AI로 카피를 쓰고, 이미지를 만들어서 광고를 완성해요"
+        }
+      }
+    },
+    "tools": {
+      "glossary": {
+        "title": "마케팅 용어 사전",
+        "description": "모르는 마케팅 단어를 쉽게 찾아보세요",
+        "searchPlaceholder": "용어 검색...",
+        "categoryAll": "전체",
+        "categoryBasic": "기초",
+        "categoryDigital": "디지털",
+        "categorySNS": "SNS",
+        "categoryPerformance": "퍼포먼스",
+        "categoryBranding": "브랜딩",
+        "categoryAI": "AI"
+      },
+      "personaMaker": {
+        "title": "페르소나 메이커",
+        "description": "내 타겟 고객을 가상 인물로 만들어봐요"
+      },
+      "uspFinder": {
+        "title": "USP 찾기",
+        "description": "나만의 특별한 장점을 찾는 질문 마법사"
+      },
+      "colorPicker": {
+        "title": "감정 컬러 추천",
+        "description": "브랜드 감정에 맞는 색상 조합을 추천해요"
+      },
+      "hashtagGenerator": {
+        "title": "해시태그 생성기",
+        "description": "키워드를 넣으면 연관 해시태그를 추천해요"
+      },
+      "roiCalculator": {
+        "title": "ROI 계산기",
+        "description": "광고비 대비 수익을 계산하고 해설해줘요"
+      },
+      "kCopywriter": {
+        "title": "K-카피라이터",
+        "description": "AI가 광고 카피를 3개 만들어줘요"
+      },
+      "snsAdMaker": {
+        "title": "SNS 광고 메이커",
+        "description": "AI로 광고 이미지를 만들고 인스타그램 미리보기"
+      },
+      "back": "뒤로 가기"
+    },
+    "recommend": {
+      "title": "이런 분에게 추천해요!",
+      "subtitle": "아래에 해당되면 이 과정이 딱이에요",
+      "target1": "한국에서 마케팅 직무로 취업하고 싶은 유학생",
+      "target2": "온라인에서 물건을 팔고 싶은 이주민",
+      "target3": "SNS로 자기 브랜드를 만들고 싶은 분",
+      "target4": "AI를 활용한 마케팅에 관심 있는 분"
+    },
+    "instructor": {
+      "sectionTitle": "강사 소개",
+      "title": "마케팅 역량강화 전문 강사",
+      "description": "이주민과 유학생의 취업 역량을 키우는 마케팅 실무 교육 전문가입니다. 쉬운 한국어로 복잡한 마케팅을 알기 쉽게 가르쳐 드립니다.",
+      "credential1": "디지털 마케팅 전문가 자격증 보유",
+      "credential2": "이주민 대상 교육 경력 5년",
+      "credential3": "현직 온라인 마케팅 컨설턴트"
+    },
+    "moduleDetail": {
+      "back": "마케팅 홈으로",
+      "learningTitle": "학습 내용",
+      "toolsTitle": "실무 도구",
+      "tryTool": "사용하기"
+    },
+    "aiConnect": {
+      "title": "내 마케팅 AI 비서 연결하기",
+      "description": "AI 비서를 연결하면 광고 카피 작성, 이미지 생성 등 더 많은 기능을 사용할 수 있어요!",
+      "helpLink": "키를 어디서 받나요?",
+      "guide": "Google AI Studio에서 무료로 API 키를 받을 수 있어요. \"Get API Key\" 버튼을 클릭하면 됩니다. 키는 내 컴퓨터에만 저장되고, 다른 사람에게 보이지 않아요.",
+      "keyLabel": "Gemini API 키",
+      "keyPlaceholder": "AIza...",
+      "connectButton": "연결 확인",
+      "connecting": "연결 확인 중...",
+      "connected": "AI 비서 연결 완료!",
+      "connectedHint": "이제 모든 AI 기능을 사용할 수 있어요",
+      "disconnect": "연결 해제",
+      "startLearning": "마케팅 학습 시작하기",
+      "skipHint": "API 키가 없어도 기본 학습은 할 수 있어요",
+      "errorEmpty": "API 키를 입력해주세요",
+      "errorInvalid": "키를 다시 확인해주세요. API 키가 올바르지 않아요.",
+      "errorQuota": "API 사용량이 초과되었어요. 잠시 후 다시 시도해주세요.",
+      "errorGeneral": "연결에 실패했어요. 키를 다시 확인하거나 잠시 후 시도해주세요."
+    }
+  },
   "koreaApps": {
     "title": "한국 필수 앱",
     "subtitle": "한국 생활에 꼭 필요한 앱들을 한눈에! 지도, 교통, 배달, 쇼핑 앱을 설치하고 사용해보세요.",

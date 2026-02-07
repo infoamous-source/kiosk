@@ -165,6 +165,116 @@
       "actions": "Actions"
     }
   },
+  "marketing": {
+    "landing": {
+      "badge": "Marketing Skills Course",
+      "heroTitle": "Want to become a\nmarketer in Korea?",
+      "heroDescription": "From basics to AI tools, complete this course and build your own marketing portfolio!",
+      "modulesUnit": " modules",
+      "hoursUnit": " hours",
+      "toolsUnit": " tools",
+      "roadmapTitle": "Learning Roadmap",
+      "lessonsUnit": " lessons",
+      "moduleCount": " modules"
+    },
+    "stages": {
+      "foundation": "Build Foundation",
+      "practice": "Learn Practice",
+      "ai": "Practice with AI",
+      "foundationDesc": "Master marketing basics",
+      "practiceDesc": "SNS & ad practice",
+      "aiDesc": "Create ads with AI"
+    },
+    "modules": {
+      "basics": {
+        "title": "What is Marketing?",
+        "description": "Learn basic marketing concepts and 2026 trends in simple terms",
+        "oneLine": "Marketing basics + Latest trends"
+      },
+      "research": {
+        "title": "Who buys my product?",
+        "description": "Learn how to research markets and analyze target customers",
+        "oneLine": "Market research + Target analysis"
+      },
+      "concept": {
+        "title": "Create a Unique Concept",
+        "description": "Find your unique selling point (USP) and create a brand concept",
+        "oneLine": "USP + Brand concept planning"
+      },
+      "branding": {
+        "title": "Design & Copywriting",
+        "description": "Design brand colors, logos, and product pages",
+        "oneLine": "Branding design + Copywriting"
+      },
+      "content": {
+        "title": "Content Marketing",
+        "description": "Create content for Instagram, YouTube and more",
+        "oneLine": "SNS content creation"
+      },
+      "performance": {
+        "title": "Paid Advertising",
+        "description": "Learn how to spend ad budget to reach more people",
+        "oneLine": "Performance marketing basics"
+      },
+      "aiPractice": {
+        "title": "Marketing with AI",
+        "description": "Create ad copy and images using AI tools",
+        "oneLine": "Gemini AI hands-on practice"
+      }
+    },
+    "tools": {
+      "glossary": { "title": "Marketing Dictionary", "description": "Look up marketing terms easily" },
+      "personaMaker": { "title": "Persona Maker", "description": "Create a virtual persona of your target customer" },
+      "uspFinder": { "title": "USP Finder", "description": "A wizard to find your unique selling point" },
+      "colorPicker": { "title": "Emotion Color Picker", "description": "Get color palette recommendations for your brand mood" },
+      "hashtagGenerator": { "title": "Hashtag Generator", "description": "Get related hashtag suggestions from keywords" },
+      "roiCalculator": { "title": "ROI Calculator", "description": "Calculate ad spend vs revenue with explanations" },
+      "kCopywriter": { "title": "K-Copywriter", "description": "AI generates 3 ad copy options for you" },
+      "snsAdMaker": { "title": "SNS Ad Maker", "description": "Create ad images with AI and preview on Instagram" },
+      "back": "Go back"
+    },
+    "recommend": {
+      "title": "Recommended for you!",
+      "subtitle": "This course is perfect if you match any of these",
+      "target1": "International students who want a marketing job in Korea",
+      "target2": "Migrants who want to sell products online",
+      "target3": "Anyone who wants to build their own brand on SNS",
+      "target4": "Anyone interested in AI-powered marketing"
+    },
+    "instructor": {
+      "sectionTitle": "Instructor",
+      "title": "Marketing Skills Training Specialist",
+      "description": "A marketing education expert who helps migrants and international students build career skills. Teaching complex marketing concepts in simple Korean.",
+      "credential1": "Certified Digital Marketing Expert",
+      "credential2": "5 years teaching experience for migrants",
+      "credential3": "Active online marketing consultant"
+    },
+    "moduleDetail": {
+      "back": "Back to Marketing",
+      "learningTitle": "Learning Content",
+      "toolsTitle": "Practice Tools",
+      "tryTool": "Try it"
+    },
+    "aiConnect": {
+      "title": "Connect My Marketing AI Assistant",
+      "description": "Connect your AI assistant to unlock ad copywriting, image generation, and more!",
+      "helpLink": "Where do I get a key?",
+      "guide": "You can get a free API key from Google AI Studio. Click the \"Get API Key\" button. Your key is stored only on your device and is not visible to anyone else.",
+      "keyLabel": "Gemini API Key",
+      "keyPlaceholder": "AIza...",
+      "connectButton": "Verify Connection",
+      "connecting": "Verifying...",
+      "connected": "AI Assistant Connected!",
+      "connectedHint": "You can now use all AI features",
+      "disconnect": "Disconnect",
+      "startLearning": "Start Marketing Course",
+      "skipHint": "You can still learn basics without an API key",
+      "errorEmpty": "Please enter your API key",
+      "errorInvalid": "Please check your key. The API key is invalid.",
+      "errorQuota": "API quota exceeded. Please try again later.",
+      "errorGeneral": "Connection failed. Please check your key or try again later."
+    }
+  },
   "koreaApps": {
     "title": "Essential Korean Apps",
     "subtitle": "All the apps you need for life in Korea! Install and learn to use maps, transit, delivery, and shopping apps.",

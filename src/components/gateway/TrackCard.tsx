@@ -30,11 +30,14 @@ export default function TrackCard({ track, delay = 0 }: TrackCardProps) {
   const handleClick = () => {
     handleActivityLog('click', track.id, undefined, { source: 'gateway' });
 
+    // 마케팅 트랙은 전용 랜딩 페이지로 이동
+    const targetPath = track.id === 'marketing' ? '/marketing' : `/track/${track.id}`;
+
     // 비로그인 시 로그인 페이지로, 선택한 트랙 정보를 state로 전달
     if (!isAuthenticated) {
-      navigate('/login', { state: { redirectTo: `/track/${track.id}` } });
+      navigate('/login', { state: { redirectTo: targetPath } });
     } else {
-      navigate(`/track/${track.id}`);
+      navigate(targetPath);
     }
   };
 

@@ -32,7 +32,7 @@ interface NavItem {
 const mainNavItems: NavItem[] = [
   { id: 'home', labelKey: 'sidebar.home', icon: Home, path: '/' },
   { id: 'digital', labelKey: 'sidebar.digitalBasics', icon: Monitor, path: '/track/digital-basics', trackId: 'digital-basics' },
-  { id: 'marketing', labelKey: 'sidebar.marketing', icon: TrendingUp, path: '/track/marketing', trackId: 'marketing' },
+  { id: 'marketing', labelKey: 'sidebar.marketing', icon: TrendingUp, path: '/marketing', trackId: 'marketing' },
   { id: 'career', labelKey: 'sidebar.career', icon: Briefcase, path: '/track/career', trackId: 'career' },
 ];
 
@@ -55,6 +55,10 @@ export default function Sidebar({ currentTrack }: SidebarProps) {
   const isActive = (item: NavItem) => {
     if (item.trackId && currentTrack) {
       return item.trackId === currentTrack;
+    }
+    // 마케팅 하위 경로 (/marketing/modules/..., /marketing/tools/...) 에서도 활성화
+    if (item.path !== '/' && location.pathname.startsWith(item.path)) {
+      return true;
     }
     return location.pathname === item.path;
   };

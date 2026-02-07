@@ -8,6 +8,9 @@ import RegisterPage from './pages/RegisterPage';
 import AdminPage from './pages/AdminPage';
 import OrganizationDetailPage from './pages/OrganizationDetailPage';
 import KoreaAppsPage from './pages/KoreaAppsPage';
+import MarketingLandingPage from './pages/marketing/MarketingLandingPage';
+import MarketingModuleDetailPage from './pages/marketing/MarketingModuleDetailPage';
+import MarketingToolRouter from './pages/marketing/MarketingToolRouter';
 
 export default function App() {
   return (
@@ -30,6 +33,12 @@ export default function App() {
           <Route element={<MainLayout />}>
             <Route path="/track/:trackId" element={<TrackPage />} />
             <Route path="/track/digital-basics/korea-apps" element={<KoreaAppsPage />} />
+
+            {/* 마케팅 실무 트랙 */}
+            <Route path="/marketing" element={<MarketingLandingPage />} />
+            <Route path="/marketing/modules/:moduleId" element={<MarketingModuleDetailPage />} />
+            <Route path="/marketing/tools/:toolId" element={<MarketingToolRouter />} />
+
             <Route path="/resources" element={<div className="text-gray-500">Resources page (Coming soon)</div>} />
             <Route path="/help" element={<div className="text-gray-500">Help page (Coming soon)</div>} />
             <Route path="/settings" element={<div className="text-gray-500">Settings page (Coming soon)</div>} />

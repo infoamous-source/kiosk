@@ -18,13 +18,15 @@ export interface TrackModule {
   icon: string;
   duration: string;
   lessons: number;
+  stage?: 'foundation' | 'practice' | 'ai';
+  toolIds?: string[];
 }
 
 export interface ActivityLog {
   userId: string;
   trackId: TrackId;
   moduleId?: string;
-  action: 'view' | 'click' | 'start' | 'complete';
+  action: 'view' | 'click' | 'start' | 'complete' | 'tool_use' | 'ai_generate' | 'copy_output' | 'export';
   timestamp: string;
   metadata?: Record<string, string>;
 }
