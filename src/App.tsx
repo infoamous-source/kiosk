@@ -15,7 +15,7 @@ import MarketingToolRouter from './pages/marketing/MarketingToolRouter';
 export default function App() {
   return (
     <AuthProvider>
-      <BrowserRouter>
+      <BrowserRouter basename="/kiosk">
         <Routes>
           {/* Gateway (첫 페이지 - 트리오 카드) */}
           <Route path="/" element={<GatewayPage />} />
