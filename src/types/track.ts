@@ -20,6 +20,7 @@ export interface TrackModule {
   lessons: number;
   stage?: 'foundation' | 'practice' | 'ai';
   toolIds?: string[];
+  session?: string; // 디지털 기초 모듈용 (예: "1일차 1-2교시")
 }
 
 export interface ActivityLog {

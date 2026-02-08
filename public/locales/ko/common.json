@@ -774,76 +774,117 @@
       "skip": "건너뛰고 입학하기"
     }
   },
+  "digital": {
+    "modules": {
+      "setup": {
+        "title": "필수 앱 세팅 및 초기설정",
+        "description": "네이버 계정, 이메일, 지도 활용",
+        "session": "1일차 1-2교시"
+      },
+      "kakao": {
+        "title": "카카오 인증서 & 키오스크",
+        "description": "인증서 발급, 카드등록, 키오스크 연습",
+        "session": "1일차 3-4교시"
+      },
+      "gov24": {
+        "title": "정부24 서류 발급",
+        "description": "회원가입, 용어 익히기, 민원 발급",
+        "session": "2일차 1-2교시"
+      },
+      "translation": {
+        "title": "번역 앱 & 디지털 안전",
+        "description": "ChatGPT, 파파고, 구글번역, 보안 설정",
+        "session": "2일차 3-4교시"
+      }
+    }
+  },
+  "categories": {
+    "essential": "필수 앱",
+    "essentialDesc": "한국 생활 필수 앱",
+    "mapsNavigation": "지도 & 길찾기",
+    "mapsNavigationDesc": "한국에서 길 찾을 때 필수!",
+    "government": "정부 서비스",
+    "governmentDesc": "공공 서비스와 민원 발급",
+    "translationLanguage": "번역 & 언어",
+    "translationLanguageDesc": "한국어 번역 도우미",
+    "ai": "AI 도구",
+    "aiDesc": "AI로 번역하고 질문하기",
+    "communication": "소통",
+    "communicationDesc": "메신저와 SNS"
+  },
   "apps": {
+    "naver": {
+      "name": "네이버",
+      "description": "한국 대표 포털. 계정 만들고 이메일 사용하기.",
+      "tagline": "한국 생활의 시작"
+    },
     "naverMap": {
       "name": "네이버 지도",
       "description": "가장 정확한 한국 지도. 대중교통, 도보, 자동차 길찾기와 실시간 교통정보 제공.",
       "tagline": "한국 최고의 지도 앱"
     },
-    "kakaomap": {
-      "name": "카카오맵",
-      "description": "카카오와 연동된 지도 앱. 카카오택시와 연계하여 바로 택시 호출 가능.",
-      "tagline": "카카오 생태계와 연동"
+    "gov24": {
+      "name": "정부24",
+      "description": "정부 공식 민원 서비스. 외국인등록 사실증명 등 서류 발급.",
+      "tagline": "정부 서비스 원스톱"
     },
-    "kakaoT": {
-      "name": "카카오 T",
-      "description": "택시, 대리운전, 주차, 자전거까지 한 앱에서. 한국에서 택시 탈 때 필수!",
-      "tagline": "원터치 택시 호출"
+    "googleTranslate": {
+      "name": "구글 번역",
+      "description": "100개 언어 지원. 네팔, 스리랑카, 파키스탄, 캄보디아 등 모든 언어.",
+      "tagline": "모든 언어 번역"
     },
-    "subwayKorea": {
-      "name": "지하철 노선도",
-      "description": "전국 지하철 노선도와 실시간 도착정보. 영어, 중국어, 일본어 지원.",
-      "tagline": "다국어 지하철 앱"
+    "chatgpt": {
+      "name": "ChatGPT",
+      "description": "AI로 번역하고 질문하기. 약봉투, 계약서, 안내문 번역.",
+      "tagline": "AI 번역과 질문"
+    },
+    "kakaotalk": {
+      "name": "카카오톡",
+      "description": "한국 대표 메신저. 인증서 발급, 카카오페이, GPT 연동.",
+      "tagline": "한국 필수 메신저"
+    },
+    "kioskPractice": {
+      "name": "키오스크 연습",
+      "description": "키오스크 주문 연습하기. 메뉴 선택부터 결제까지.",
+      "tagline": "키오스크 마스터"
     },
     "papago": {
       "name": "파파고",
-      "description": "네이버의 AI 번역 앱. 텍스트, 음성, 이미지, 대화 번역 모두 가능.",
+      "description": "네이버 AI 번역. 태국어, 베트남어 등 지원. 이미지 번역 가능.",
       "tagline": "한국어 번역의 정석"
-    },
-    "naverDictionary": {
-      "name": "네이버 사전",
-      "description": "한국어 학습에 필수! 단어 뜻, 예문, 발음까지 제공하는 종합 사전.",
-      "tagline": "한국어 학습 도우미"
-    },
-    "coupangEats": {
-      "name": "쿠팡이츠",
-      "description": "한 명 배달 전문! 빠른 배달과 다양한 음식점. 영어 지원.",
-      "tagline": "빠른 음식 배달"
-    },
-    "shuttleDelivery": {
-      "name": "셔틀",
-      "description": "외국인 전용 배달 앱. 영어로 주문하고 외국 카드로 결제 가능.",
-      "tagline": "외국인 친화 배달"
-    },
-    "coupang": {
-      "name": "쿠팡",
-      "description": "로켓배송으로 유명한 한국 최대 쇼핑몰. 새벽배송, 당일배송 가능.",
-      "tagline": "한국 대표 쇼핑몰"
-    },
-    "karrot": {
-      "name": "당근",
-      "description": "동네 기반 중고거래 앱. 이웃과 직거래로 안전하게 물건 사고팔기.",
-      "tagline": "동네 중고거래"
-    },
-    "creatrip": {
-      "name": "크리에이트립",
-      "description": "외국인 관광객을 위한 한국 여행 정보. 할인 쿠폰과 예약 서비스.",
-      "tagline": "외국인 여행 필수"
-    },
-    "waug": {
-      "name": "와그",
-      "description": "한국 액티비티, 투어, 티켓 예약. 다양한 체험을 간편하게.",
-      "tagline": "액티비티 예약"
-    },
-    "emergencyReady": {
-      "name": "안전디딤돌",
-      "description": "정부 공식 재난 알림 앱. 지진, 태풍, 미세먼지 등 긴급 정보 제공.",
-      "tagline": "정부 재난 알림"
-    },
-    "xeCurrency": {
-      "name": "XE 환율",
-      "description": "실시간 환율 정보. 원화 환전 시 유용한 글로벌 환율 앱.",
-      "tagline": "실시간 환율 확인"
+    }
+  },
+  "enrollment": {
+    "selectSchool": "학교를 선택하세요",
+    "completeProfile": "입학 정보를 입력해주세요",
+    "pendingBanner": "{{school}}에 등록되었습니다. 추가 정보를 입력해주세요.",
+    "submitted": "입학 정보가 제출되었습니다!",
+    "fields": {
+      "computerExperience": "컴퓨터 사용 경험",
+      "hasOwnDevice": "개인 기기 보유 여부",
+      "digitalGoals": "디지털 학습 목표",
+      "snsAccounts": "사용 중인 SNS",
+      "businessType": "사업 상태",
+      "marketingExperience": "마케팅 경험",
+      "visaType": "비자 유형",
+      "workExperienceKorea": "한국 근무 경력",
+      "desiredIndustry": "희망 업종",
+      "koreanLevel": "한국어 수준",
+      "expNone": "없음",
+      "expBasic": "기초",
+      "expIntermediate": "중급",
+      "expExperienced": "경험 있음",
+      "smartphoneOnly": "스마트폰만 보유",
+      "hasComputer": "PC/노트북 보유",
+      "noDevice": "기기 없음",
+      "noSNS": "SNS 없음",
+      "noBusiness": "사업 없음",
+      "planningBusiness": "사업 준비 중",
+      "runningBusiness": "사업 운영 중",
+      "otherVisa": "기타",
+      "under1year": "1년 미만",
+      "1to3years": "1~3년",
+      "over3years": "3년 이상"
     }
   }
 }

@@ -21,10 +21,11 @@ export interface AppItem {
   nameKey: string;
   descriptionKey: string;
   taglineKey: string;
-  storeLinks: AppStoreLinks;
+  storeLinks: Partial<AppStoreLinks>; // 개발 예정 앱을 위해 Partial로 변경
   badges: BadgeType[];
   koreanName: string;
   deepLinks?: DeepLinks;
+  comingSoon?: boolean; // 개발 예정 여부
 }
 
 export interface Category {

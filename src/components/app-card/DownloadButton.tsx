@@ -3,7 +3,7 @@ import { useOSDetection } from '../../hooks/useOSDetection';
 import type { AppStoreLinks, DeepLinks } from '../../types/app';
 
 interface DownloadButtonProps {
-  storeLinks: AppStoreLinks;
+  storeLinks: Partial<AppStoreLinks>;
   deepLinks?: DeepLinks;
   isInstalled: boolean;
 }
@@ -43,11 +43,20 @@ export default function DownloadButton({ storeLinks, deepLinks, isInstalled }: D
   const { t } = useTranslation('common');
   const os = useOSDetection();
 
+  // 개발 예정 앱 처리
+  if (!storeLinks.ios && !storeLinks.android) {
+    return (
+      <div className="inline-flex items-center gap-1.5 px-4 py-2.5 bg-gray-300 text-gray-600 rounded-xl text-sm font-bold cursor-not-allowed">
+        {t('download.comingSoon', '개발 예정')}
+      </div>
+    );
+  }
+
   // "Open App" button for installed apps with deep links on Android
-  const showOpenButton = isInstalled && deepLinks?.android && os === 'android';
+  const showOpenButton = isInstalled && deepLinks?.android && os === 'android' && storeLinks.android;
 
   if (showOpenButton) {
-    const intentUrl = buildIntentUrl(deepLinks!, storeLinks.android);
+    const intentUrl = buildIntentUrl(deepLinks!, storeLinks.android!);
     return (
       <div className="flex flex-wrap gap-2">
         <a
@@ -61,7 +70,7 @@ export default function DownloadButton({ storeLinks, deepLinks, isInstalled }: D
     );
   }
 
-  if (os === 'ios') {
+  if (os === 'ios' && storeLinks.ios) {
     return (
       <a
         href={storeLinks.ios}
@@ -75,7 +84,7 @@ export default function DownloadButton({ storeLinks, deepLinks, isInstalled }: D
     );
   }
 
-  if (os === 'android') {
+  if (os === 'android' && storeLinks.android) {
     return (
       <a
         href={storeLinks.android}
@@ -92,24 +101,28 @@ export default function DownloadButton({ storeLinks, deepLinks, isInstalled }: D
   // Desktop: show both buttons
   return (
     <div className="flex flex-wrap gap-2">
-      <a
-        href={storeLinks.ios}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="inline-flex items-center gap-1.5 px-3 py-2 bg-gray-800 text-white rounded-xl text-xs font-bold btn-duo border-b-[3px] border-gray-900 hover:bg-gray-700 transition-colors"
-      >
-        <AppleIcon />
-        {t('download.getOnAppStore')}
-      </a>
-      <a
-        href={storeLinks.android}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="inline-flex items-center gap-1.5 px-3 py-2 bg-duo-400 text-white rounded-xl text-xs font-bold btn-duo border-b-[3px] border-duo-600 hover:bg-duo-500 transition-colors"
-      >
-        <PlayStoreIcon />
-        {t('download.getOnPlayStore')}
-      </a>
+      {storeLinks.ios && (
+        <a
+          href={storeLinks.ios}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center gap-1.5 px-3 py-2 bg-gray-800 text-white rounded-xl text-xs font-bold btn-duo border-b-[3px] border-gray-900 hover:bg-gray-700 transition-colors"
+        >
+          <AppleIcon />
+          {t('download.getOnAppStore')}
+        </a>
+      )}
+      {storeLinks.android && (
+        <a
+          href={storeLinks.android}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center gap-1.5 px-3 py-2 bg-duo-400 text-white rounded-xl text-xs font-bold btn-duo border-b-[3px] border-duo-600 hover:bg-duo-500 transition-colors"
+        >
+          <PlayStoreIcon />
+          {t('download.getOnPlayStore')}
+        </a>
+      )}
       {storeLinks.web && (
         <a
           href={storeLinks.web}

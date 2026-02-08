@@ -1,59 +1,70 @@
 import type { AppItem, Category } from '../types/app';
 
+// 교안 기준 카테고리 (6개)
 export const categories: Category[] = [
+  {
+    id: 'essential',
+    nameKey: 'categories.essential',
+    descriptionKey: 'categories.essentialDesc',
+    icon: 'star',
+    order: 1,
+  },
   {
     id: 'maps-navigation',
     nameKey: 'categories.mapsNavigation',
     descriptionKey: 'categories.mapsNavigationDesc',
     icon: 'maps',
-    order: 1,
+    order: 2,
   },
   {
-    id: 'transportation',
-    nameKey: 'categories.transportation',
-    descriptionKey: 'categories.transportationDesc',
-    icon: 'transport',
-    order: 2,
+    id: 'government',
+    nameKey: 'categories.government',
+    descriptionKey: 'categories.governmentDesc',
+    icon: 'safety',
+    order: 3,
   },
   {
     id: 'translation-language',
     nameKey: 'categories.translationLanguage',
     descriptionKey: 'categories.translationLanguageDesc',
     icon: 'translation',
-    order: 3,
-  },
-  {
-    id: 'food-delivery',
-    nameKey: 'categories.foodDelivery',
-    descriptionKey: 'categories.foodDeliveryDesc',
-    icon: 'food',
     order: 4,
   },
   {
-    id: 'shopping-living',
-    nameKey: 'categories.shoppingLiving',
-    descriptionKey: 'categories.shoppingLivingDesc',
-    icon: 'shopping',
+    id: 'ai',
+    nameKey: 'categories.ai',
+    descriptionKey: 'categories.aiDesc',
+    icon: 'ai',
     order: 5,
   },
   {
-    id: 'travel-activities',
-    nameKey: 'categories.travelActivities',
-    descriptionKey: 'categories.travelActivitiesDesc',
-    icon: 'travel',
+    id: 'communication',
+    nameKey: 'categories.communication',
+    descriptionKey: 'categories.communicationDesc',
+    icon: 'communication',
     order: 6,
-  },
-  {
-    id: 'safety-utility',
-    nameKey: 'categories.safetyUtility',
-    descriptionKey: 'categories.safetyUtilityDesc',
-    icon: 'safety',
-    order: 7,
   },
 ];
 
+// 교안 기준 필수 앱 (8개)
 export const apps: AppItem[] = [
-  // Maps & Navigation
+  // 1. 네이버 (필수)
+  {
+    id: 'naver',
+    categoryId: 'essential',
+    icon: '/app-icons/naver.png',
+    nameKey: 'apps.naver.name',
+    descriptionKey: 'apps.naver.description',
+    taglineKey: 'apps.naver.tagline',
+    storeLinks: {
+      ios: 'https://apps.apple.com/app/id393499958',
+      android: 'https://play.google.com/store/apps/details?id=com.nhn.android.search',
+    },
+    badges: ['local-essential'],
+    koreanName: '네이버',
+  },
+
+  // 2. 네이버 지도
   {
     id: 'naver-map',
     categoryId: 'maps-navigation',
@@ -73,55 +84,25 @@ export const apps: AppItem[] = [
       androidPackage: 'com.nhn.android.nmap',
     },
   },
+
+  // 3. 정부24
   {
-    id: 'kakaomap',
-    categoryId: 'maps-navigation',
-    icon: '/app-icons/kakaomap.png',
-    nameKey: 'apps.kakaomap.name',
-    descriptionKey: 'apps.kakaomap.description',
-    taglineKey: 'apps.kakaomap.tagline',
+    id: 'gov24',
+    categoryId: 'government',
+    icon: '/app-icons/gov24.png',
+    nameKey: 'apps.gov24.name',
+    descriptionKey: 'apps.gov24.description',
+    taglineKey: 'apps.gov24.tagline',
     storeLinks: {
-      ios: 'https://apps.apple.com/app/id304608425',
-      android: 'https://play.google.com/store/apps/details?id=net.daum.android.map',
+      ios: 'https://apps.apple.com/app/id453440550',
+      android: 'https://play.google.com/store/apps/details?id=kr.go.mopas.minsimin',
+      web: 'https://www.gov.kr',
     },
-    badges: ['local-essential'],
-    koreanName: '카카오맵',
-    deepLinks: {
-      ios: 'kakaomap://',
-      android: 'kakaomap://',
-      androidPackage: 'net.daum.android.map',
-    },
+    badges: ['government'],
+    koreanName: '정부24',
   },
-  // Transportation
-  {
-    id: 'kakao-t',
-    categoryId: 'transportation',
-    icon: '/app-icons/kakao-t.png',
-    nameKey: 'apps.kakaoT.name',
-    descriptionKey: 'apps.kakaoT.description',
-    taglineKey: 'apps.kakaoT.tagline',
-    storeLinks: {
-      ios: 'https://apps.apple.com/app/id981110422',
-      android: 'https://play.google.com/store/apps/details?id=com.kakao.taxi',
-    },
-    badges: ['local-essential'],
-    koreanName: '카카오 T',
-  },
-  {
-    id: 'subway-korea',
-    categoryId: 'transportation',
-    icon: '/app-icons/subway-korea.png',
-    nameKey: 'apps.subwayKorea.name',
-    descriptionKey: 'apps.subwayKorea.description',
-    taglineKey: 'apps.subwayKorea.tagline',
-    storeLinks: {
-      ios: 'https://apps.apple.com/app/id325924444',
-      android: 'https://play.google.com/store/apps/details?id=com.imagedrome.jihachul',
-    },
-    badges: ['foreigner-friendly'],
-    koreanName: '지하철 노선도',
-  },
-  // Translation & Language
+
+  // 4. 파파고
   {
     id: 'papago',
     categoryId: 'translation-language',
@@ -137,138 +118,68 @@ export const apps: AppItem[] = [
     badges: ['local-essential'],
     koreanName: '파파고',
   },
+
+  // 5. 구글 번역
   {
-    id: 'naver-dictionary',
+    id: 'google-translate',
     categoryId: 'translation-language',
-    icon: '/app-icons/naver-dictionary.png',
-    nameKey: 'apps.naverDictionary.name',
-    descriptionKey: 'apps.naverDictionary.description',
-    taglineKey: 'apps.naverDictionary.tagline',
+    icon: '/app-icons/google-translate.png',
+    nameKey: 'apps.googleTranslate.name',
+    descriptionKey: 'apps.googleTranslate.description',
+    taglineKey: 'apps.googleTranslate.tagline',
     storeLinks: {
-      ios: 'https://apps.apple.com/app/id673085116',
-      android: 'https://play.google.com/store/apps/details?id=com.nhn.android.naverdic',
-    },
-    badges: [],
-    koreanName: '네이버 사전',
-  },
-  // Food Delivery
-  {
-    id: 'coupang-eats',
-    categoryId: 'food-delivery',
-    icon: '/app-icons/coupang-eats.png',
-    nameKey: 'apps.coupangEats.name',
-    descriptionKey: 'apps.coupangEats.description',
-    taglineKey: 'apps.coupangEats.tagline',
-    storeLinks: {
-      ios: 'https://apps.apple.com/app/id1445504255',
-      android: 'https://play.google.com/store/apps/details?id=com.coupang.mobile.eats',
+      ios: 'https://apps.apple.com/app/id414706506',
+      android: 'https://play.google.com/store/apps/details?id=com.google.android.apps.translate',
     },
     badges: ['foreigner-friendly'],
-    koreanName: '쿠팡이츠',
+    koreanName: '구글 번역',
   },
+
+  // 6. ChatGPT
   {
-    id: 'shuttle-delivery',
-    categoryId: 'food-delivery',
-    icon: '/app-icons/shuttle-delivery.png',
-    nameKey: 'apps.shuttleDelivery.name',
-    descriptionKey: 'apps.shuttleDelivery.description',
-    taglineKey: 'apps.shuttleDelivery.tagline',
+    id: 'chatgpt',
+    categoryId: 'ai',
+    icon: '/app-icons/chatgpt.png',
+    nameKey: 'apps.chatgpt.name',
+    descriptionKey: 'apps.chatgpt.description',
+    taglineKey: 'apps.chatgpt.tagline',
     storeLinks: {
-      ios: 'https://apps.apple.com/app/id1220751968',
-      android: 'https://play.google.com/store/apps/details?id=com.goshuttle',
-      web: 'https://www.shuttledelivery.co.kr/en',
+      ios: 'https://apps.apple.com/app/id6448311069',
+      android: 'https://play.google.com/store/apps/details?id=com.openai.chatgpt',
     },
     badges: ['foreigner-friendly'],
-    koreanName: '셔틀',
+    koreanName: 'ChatGPT',
   },
-  // Shopping & Living
+
+  // 7. 카카오톡
   {
-    id: 'coupang',
-    categoryId: 'shopping-living',
-    icon: '/app-icons/coupang.png',
-    nameKey: 'apps.coupang.name',
-    descriptionKey: 'apps.coupang.description',
-    taglineKey: 'apps.coupang.tagline',
+    id: 'kakaotalk',
+    categoryId: 'communication',
+    icon: '/app-icons/kakaotalk.png',
+    nameKey: 'apps.kakaotalk.name',
+    descriptionKey: 'apps.kakaotalk.description',
+    taglineKey: 'apps.kakaotalk.tagline',
     storeLinks: {
-      ios: 'https://apps.apple.com/app/id454434967',
-      android: 'https://play.google.com/store/apps/details?id=com.coupang.mobile',
+      ios: 'https://apps.apple.com/app/id362057947',
+      android: 'https://play.google.com/store/apps/details?id=com.kakao.talk',
     },
     badges: ['local-essential'],
-    koreanName: '쿠팡',
+    koreanName: '카카오톡',
   },
+
+  // 8. 키오스크 연습 앱 (개발 예정)
   {
-    id: 'karrot',
-    categoryId: 'shopping-living',
-    icon: '/app-icons/karrot.png',
-    nameKey: 'apps.karrot.name',
-    descriptionKey: 'apps.karrot.description',
-    taglineKey: 'apps.karrot.tagline',
+    id: 'kiosk-practice',
+    categoryId: 'essential',
+    icon: '/app-icons/kiosk.png',
+    nameKey: 'apps.kioskPractice.name',
+    descriptionKey: 'apps.kioskPractice.description',
+    taglineKey: 'apps.kioskPractice.tagline',
     storeLinks: {
-      ios: 'https://apps.apple.com/app/id1018769995',
-      android: 'https://play.google.com/store/apps/details?id=com.towneers.www',
-    },
-    badges: ['local-essential'],
-    koreanName: '당근',
-  },
-  // Travel & Activities
-  {
-    id: 'creatrip',
-    categoryId: 'travel-activities',
-    icon: '/app-icons/creatrip.png',
-    nameKey: 'apps.creatrip.name',
-    descriptionKey: 'apps.creatrip.description',
-    taglineKey: 'apps.creatrip.tagline',
-    storeLinks: {
-      ios: 'https://apps.apple.com/app/id1221245620',
-      android: 'https://play.google.com/store/apps/details?id=com.creatrip',
-      web: 'https://creatrip.com/en',
-    },
-    badges: ['foreigner-friendly'],
-    koreanName: '크리에이트립',
-  },
-  {
-    id: 'waug',
-    categoryId: 'travel-activities',
-    icon: '/app-icons/waug.png',
-    nameKey: 'apps.waug.name',
-    descriptionKey: 'apps.waug.description',
-    taglineKey: 'apps.waug.tagline',
-    storeLinks: {
-      ios: 'https://apps.apple.com/app/id1109193105',
-      android: 'https://play.google.com/store/apps/details?id=kr.co.waug.waug',
-      web: 'https://www.waug.com',
+      // 개발 예정
     },
     badges: [],
-    koreanName: '와그',
-  },
-  // Safety & Utility
-  {
-    id: 'emergency-ready',
-    categoryId: 'safety-utility',
-    icon: '/app-icons/emergency-ready.png',
-    nameKey: 'apps.emergencyReady.name',
-    descriptionKey: 'apps.emergencyReady.description',
-    taglineKey: 'apps.emergencyReady.tagline',
-    storeLinks: {
-      ios: 'https://apps.apple.com/app/id826120919',
-      android: 'https://play.google.com/store/apps/details?id=kr.go.nema.disasteralert_eng',
-    },
-    badges: ['government'],
-    koreanName: '안전디딤돌',
-  },
-  {
-    id: 'xe-currency',
-    categoryId: 'safety-utility',
-    icon: '/app-icons/xe-currency.png',
-    nameKey: 'apps.xeCurrency.name',
-    descriptionKey: 'apps.xeCurrency.description',
-    taglineKey: 'apps.xeCurrency.tagline',
-    storeLinks: {
-      ios: 'https://apps.apple.com/app/id315241195',
-      android: 'https://play.google.com/store/apps/details?id=com.xe.currency',
-      web: 'https://www.xe.com',
-    },
-    badges: [],
-    koreanName: 'XE Currency',
+    koreanName: '키오스크 연습',
+    comingSoon: true,
   },
 ];
