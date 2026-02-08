@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { GraduationCap, Globe, ChevronDown } from 'lucide-react';
 import TrackCard from '../components/gateway/TrackCard';
 import { tracks } from '../data/tracks';
+import { useVisibility } from '../contexts/VisibilityContext';
 
 const languages = [
   { code: 'ko', label: '한국어', flag: '🇰🇷' },
@@ -23,6 +24,7 @@ const languages = [
 
 export default function GatewayPage() {
   const { t, i18n } = useTranslation('common');
+  const { isTrackVisible } = useVisibility();
   const [langOpen, setLangOpen] = useState(false);
   const langRef = useRef<HTMLDivElement>(null);
   const currentLang = languages.find((l) => l.code === i18n.language) || languages[0];
@@ -109,7 +111,9 @@ export default function GatewayPage() {
       {/* 트랙 카드 그리드 */}
       <section className="pb-24 px-4 sm:px-8">
         <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-8">
-          {tracks.map((track, index) => (
+          {tracks
+            .filter((track) => isTrackVisible(track.id))
+            .map((track, index) => (
             <TrackCard key={track.id} track={track} delay={index * 100} />
           ))}
         </div>

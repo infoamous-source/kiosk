@@ -163,6 +163,25 @@
       "progress": "진행률",
       "lastActive": "최근 활동",
       "actions": "관리"
+    },
+    "tabs": {
+      "students": "학생 현황",
+      "content": "콘텐츠 관리"
+    },
+    "contentManager": {
+      "title": "콘텐츠 관리",
+      "infoTitle": "모듈과 도구를 ON/OFF로 관리하세요",
+      "infoDescription": "OFF로 설정하면 소속 학생들에게 해당 항목이 보이지 않습니다. 새로 추가되는 항목은 자동으로 ON 상태입니다.",
+      "modules": "모듈",
+      "tools": "실무 도구",
+      "allOn": "전체 ON",
+      "allOff": "전체 OFF",
+      "offCount": "개 OFF",
+      "trackOff": "이 트랙은 OFF 상태입니다. 학생들에게 보이지 않습니다.",
+      "interactive": "실습",
+      "static": "읽기",
+      "note": "설정은 자동 저장됩니다. 새로 추가되는 모듈/도구는 기본 ON입니다.",
+      "toolDisabled": "이 도구는 현재 사용할 수 없습니다."
     }
   },
   "marketing": {

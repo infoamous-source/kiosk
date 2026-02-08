@@ -7,19 +7,26 @@ import MarketingModuleCard from '../../components/marketing/MarketingModuleCard'
 import MarketingRecommend from '../../components/marketing/MarketingRecommend';
 import InstructorProfile from '../../components/marketing/InstructorProfile';
 import { marketingModules, marketingStages } from '../../data/marketing/modules';
+import { useVisibility } from '../../contexts/VisibilityContext';
 
 export default function MarketingLandingPage() {
   const { t } = useTranslation('common');
   const navigate = useNavigate();
+  const { isModuleVisible } = useVisibility();
 
-  const totalHours = marketingModules.reduce((acc, m) => {
+  // 보이는 모듈만 필터링
+  const visibleModules = marketingModules.filter((m) =>
+    isModuleVisible('marketing', m.id),
+  );
+
+  const totalHours = visibleModules.reduce((acc, m) => {
     const h = parseFloat(m.duration);
     return acc + (isNaN(h) ? 0 : h);
   }, 0);
 
   return (
     <div className="max-w-5xl mx-auto pb-20">
-      <MarketingHero totalModules={marketingModules.length} totalHours={totalHours} />
+      <MarketingHero totalModules={visibleModules.length} totalHours={totalHours} />
 
       {/* AI 비서 연결 섹션 */}
       <section className="mt-8">
@@ -34,7 +41,7 @@ export default function MarketingLandingPage() {
       </section>
 
       {marketingStages.map((stage) => {
-        const stageModules = marketingModules.filter((m) => m.stage === stage.id);
+        const stageModules = visibleModules.filter((m) => m.stage === stage.id);
         if (stageModules.length === 0) return null;
         return (
           <section key={stage.id} className="mt-12 px-4">

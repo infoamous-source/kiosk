@@ -163,6 +163,25 @@
       "progress": "Progress",
       "lastActive": "Last Active",
       "actions": "Actions"
+    },
+    "tabs": {
+      "students": "Students",
+      "content": "Content Management"
+    },
+    "contentManager": {
+      "title": "Content Management",
+      "infoTitle": "Manage modules and tools with ON/OFF switches",
+      "infoDescription": "When set to OFF, the item will be hidden from students in your organization. New items are automatically set to ON.",
+      "modules": "Modules",
+      "tools": "Practice Tools",
+      "allOn": "All ON",
+      "allOff": "All OFF",
+      "offCount": " OFF",
+      "trackOff": "This track is OFF. It is hidden from students.",
+      "interactive": "Interactive",
+      "static": "Static",
+      "note": "Settings are saved automatically. New modules/tools default to ON.",
+      "toolDisabled": "This tool is currently unavailable."
     }
   },
   "marketing": {

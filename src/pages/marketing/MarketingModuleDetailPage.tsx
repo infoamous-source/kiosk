@@ -5,6 +5,7 @@ import {
   Clock, GraduationCap, Wrench, ChevronRight, CheckCircle,
 } from 'lucide-react';
 import { marketingModules, marketingTools, marketingStages } from '../../data/marketing/modules';
+import { useVisibility } from '../../contexts/VisibilityContext';
 
 const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
   BookOpen, Search, Lightbulb, Palette, Share2, DollarSign, Sparkles,
@@ -19,6 +20,7 @@ export default function MarketingModuleDetailPage() {
   const { moduleId } = useParams<{ moduleId: string }>();
   const { t } = useTranslation('common');
   const navigate = useNavigate();
+  const { isToolVisible } = useVisibility();
 
   const module = marketingModules.find((m) => m.id === moduleId);
 
@@ -37,7 +39,9 @@ export default function MarketingModuleDetailPage() {
   }
 
   const stage = marketingStages.find((s) => s.id === module.stage);
-  const tools = marketingTools.filter((tool) => module.toolIds.includes(tool.id));
+  const tools = marketingTools.filter(
+    (tool) => module.toolIds.includes(tool.id) && isToolVisible('marketing', tool.id),
+  );
   const Icon = iconMap[module.icon] || BookOpen;
 
   const stageColorMap: Record<string, string> = {

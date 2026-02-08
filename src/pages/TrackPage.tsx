@@ -20,6 +20,7 @@ import {
 import { tracks } from '../data/tracks';
 import RollingBanner from '../components/common/RollingBanner';
 import { handleActivityLog } from '../utils/activityLogger';
+import { useVisibility } from '../contexts/VisibilityContext';
 import type { TrackId, TrackModule } from '../types/track';
 
 const iconMap: Record<string, typeof Laptop> = {
@@ -105,6 +106,7 @@ function ModuleCard({ module, trackId, trackColor }: ModuleCardProps) {
 export default function TrackPage() {
   const { trackId } = useParams<{ trackId: string }>();
   const { t } = useTranslation('common');
+  const { isModuleVisible } = useVisibility();
 
   const track = tracks.find((tr) => tr.id === trackId);
 
@@ -150,7 +152,9 @@ export default function TrackPage() {
       <div className="space-y-4">
         <h2 className="text-xl font-bold text-gray-800">{t('track.curriculum')}</h2>
 
-        {track.modules.map((module, index) => (
+        {track.modules
+          .filter((module) => isModuleVisible(track.id, module.id))
+          .map((module, index) => (
           <div key={module.id} className="flex items-start gap-4">
             <div className={`w-8 h-8 rounded-full bg-gradient-to-br ${track.gradient} flex items-center justify-center text-white text-sm font-bold shrink-0`}>
               {index + 1}

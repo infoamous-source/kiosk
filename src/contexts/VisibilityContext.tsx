@@ -1,0 +1,187 @@
+import { createContext, useContext, useState, useEffect, useCallback, type ReactNode } from 'react';
+import { useAuth } from './AuthContext';
+import type { TrackId } from '../types/track';
+import {
+  type InstructorSettings,
+  getSettingsKey,
+  createDefaultSettings,
+} from '../types/instructorSettings';
+
+// ─── Context 타입 ───
+
+interface VisibilityContextType {
+  /** 현재 설정 객체 */
+  settings: InstructorSettings | null;
+
+  /** 트랙이 보이는지 (기본값: true) */
+  isTrackVisible: (trackId: TrackId) => boolean;
+
+  /** 모듈이 보이는지 (기본값: true) */
+  isModuleVisible: (trackId: TrackId, moduleId: string) => boolean;
+
+  /** 툴이 보이는지 (기본값: true) */
+  isToolVisible: (trackId: TrackId, toolId: string) => boolean;
+
+  /** [강사 전용] 트랙 ON/OFF */
+  setTrackVisible: (trackId: TrackId, visible: boolean) => void;
+
+  /** [강사 전용] 모듈 ON/OFF */
+  setModuleVisible: (trackId: TrackId, moduleId: string, visible: boolean) => void;
+
+  /** [강사 전용] 툴 ON/OFF */
+  setToolVisible: (trackId: TrackId, toolId: string, visible: boolean) => void;
+}
+
+const VisibilityContext = createContext<VisibilityContextType | null>(null);
+
+// ─── Provider ───
+
+export function VisibilityProvider({ children }: { children: ReactNode }) {
+  const { user } = useAuth();
+  const [settings, setSettings] = useState<InstructorSettings | null>(null);
+
+  // 사용자 변경 시 설정 로드
+  useEffect(() => {
+    if (!user?.refCode) {
+      setSettings(null);
+      return;
+    }
+
+    const key = getSettingsKey(user.refCode);
+    try {
+      const stored = localStorage.getItem(key);
+      if (stored) {
+        setSettings(JSON.parse(stored));
+      } else {
+        // 설정이 없으면 기본값(전부 ON)
+        setSettings(null);
+      }
+    } catch {
+      setSettings(null);
+    }
+  }, [user?.refCode]);
+
+  // 설정 저장 헬퍼
+  const saveSettings = useCallback(
+    (newSettings: InstructorSettings) => {
+      newSettings.updatedAt = new Date().toISOString();
+      const key = getSettingsKey(newSettings.refCode);
+      localStorage.setItem(key, JSON.stringify(newSettings));
+      setSettings({ ...newSettings });
+    },
+    [],
+  );
+
+  // 현재 유효한 설정 가져오기 (없으면 기본값 생성)
+  const getOrCreateSettings = useCallback((): InstructorSettings => {
+    if (settings) return { ...settings };
+    const refCode = user?.refCode || 'DEFAULT';
+    return createDefaultSettings(refCode);
+  }, [settings, user?.refCode]);
+
+  // ─── 읽기 함수 (학생 + 강사 공용) ───
+
+  const isTrackVisible = useCallback(
+    (trackId: TrackId): boolean => {
+      if (!settings) return true; // 설정 없으면 전부 보임
+      const track = settings.tracks[trackId];
+      if (!track) return true;
+      return track.visible;
+    },
+    [settings],
+  );
+
+  const isModuleVisible = useCallback(
+    (trackId: TrackId, moduleId: string): boolean => {
+      if (!settings) return true;
+      const track = settings.tracks[trackId];
+      if (!track) return true;
+      if (!track.visible) return false; // 트랙이 OFF면 모듈도 안 보임
+      const mod = track.modules[moduleId];
+      if (!mod) return true; // 설정 안 된 모듈은 기본 ON
+      return mod.visible;
+    },
+    [settings],
+  );
+
+  const isToolVisible = useCallback(
+    (trackId: TrackId, toolId: string): boolean => {
+      if (!settings) return true;
+      const track = settings.tracks[trackId];
+      if (!track) return true;
+      if (!track.visible) return false;
+      const tool = track.tools[toolId];
+      if (!tool) return true; // 설정 안 된 툴은 기본 ON
+      return tool.visible;
+    },
+    [settings],
+  );
+
+  // ─── 쓰기 함수 (강사 전용) ───
+
+  const setTrackVisible = useCallback(
+    (trackId: TrackId, visible: boolean) => {
+      if (user?.role !== 'instructor') return;
+      const s = getOrCreateSettings();
+      if (!s.tracks[trackId]) {
+        s.tracks[trackId] = { visible, modules: {}, tools: {} };
+      } else {
+        s.tracks[trackId].visible = visible;
+      }
+      saveSettings(s);
+    },
+    [user?.role, getOrCreateSettings, saveSettings],
+  );
+
+  const setModuleVisible = useCallback(
+    (trackId: TrackId, moduleId: string, visible: boolean) => {
+      if (user?.role !== 'instructor') return;
+      const s = getOrCreateSettings();
+      if (!s.tracks[trackId]) {
+        s.tracks[trackId] = { visible: true, modules: {}, tools: {} };
+      }
+      s.tracks[trackId].modules[moduleId] = { visible };
+      saveSettings(s);
+    },
+    [user?.role, getOrCreateSettings, saveSettings],
+  );
+
+  const setToolVisible = useCallback(
+    (trackId: TrackId, toolId: string, visible: boolean) => {
+      if (user?.role !== 'instructor') return;
+      const s = getOrCreateSettings();
+      if (!s.tracks[trackId]) {
+        s.tracks[trackId] = { visible: true, modules: {}, tools: {} };
+      }
+      s.tracks[trackId].tools[toolId] = { visible };
+      saveSettings(s);
+    },
+    [user?.role, getOrCreateSettings, saveSettings],
+  );
+
+  return (
+    <VisibilityContext.Provider
+      value={{
+        settings,
+        isTrackVisible,
+        isModuleVisible,
+        isToolVisible,
+        setTrackVisible,
+        setModuleVisible,
+        setToolVisible,
+      }}
+    >
+      {children}
+    </VisibilityContext.Provider>
+  );
+}
+
+// ─── Hook ───
+
+export function useVisibility() {
+  const context = useContext(VisibilityContext);
+  if (!context) {
+    throw new Error('useVisibility must be used within a VisibilityProvider');
+  }
+  return context;
+}

@@ -1,5 +1,6 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { AuthProvider } from './contexts/AuthContext';
+import { VisibilityProvider } from './contexts/VisibilityContext';
 import MainLayout from './components/common/MainLayout';
 import GatewayPage from './pages/GatewayPage';
 import TrackPage from './pages/TrackPage';
@@ -15,6 +16,7 @@ import MarketingToolRouter from './pages/marketing/MarketingToolRouter';
 export default function App() {
   return (
     <AuthProvider>
+      <VisibilityProvider>
       <BrowserRouter basename="/kiosk">
         <Routes>
           {/* Gateway (첫 페이지 - 트리오 카드) */}
@@ -45,6 +47,7 @@ export default function App() {
           </Route>
         </Routes>
       </BrowserRouter>
+      </VisibilityProvider>
     </AuthProvider>
   );
 }

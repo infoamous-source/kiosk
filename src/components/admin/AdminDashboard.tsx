@@ -16,6 +16,7 @@ import {
   RefreshCw,
   Activity,
   ChevronRight,
+  Settings2,
 } from 'lucide-react';
 import {
   BarChart,
@@ -30,6 +31,9 @@ import {
   Cell,
 } from 'recharts';
 import { useAuth } from '../../contexts/AuthContext';
+import ContentManager from './ContentManager';
+
+type DashboardTab = 'students' | 'content';
 
 // 검색 타입 정의
 type SortType = 'name' | 'email' | 'organization' | 'progress' | 'lastActive';
@@ -68,6 +72,7 @@ export default function AdminDashboard() {
   const { t } = useTranslation('common');
   const navigate = useNavigate();
   const { user } = useAuth();
+  const [activeTab, setActiveTab] = useState<DashboardTab>('students');
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedTrack, setSelectedTrack] = useState('all');
   const [sortType, setSortType] = useState<SortType>('name');
@@ -185,13 +190,45 @@ export default function AdminDashboard() {
   return (
     <div className="max-w-6xl mx-auto">
       {/* 헤더 */}
-      <div className="mb-8">
+      <div className="mb-6">
         <h1 className="text-2xl font-bold text-gray-800">{t('admin.title')}</h1>
         <p className="text-gray-500 mt-1">
           {t('admin.welcome', { name: user?.name })} • {t('admin.refCode')}: <span className="font-mono font-semibold">{user?.refCode}</span>
         </p>
       </div>
 
+      {/* 탭 네비게이션 */}
+      <div className="flex gap-1 bg-gray-100 p-1 rounded-xl mb-8">
+        <button
+          onClick={() => setActiveTab('students')}
+          className={`flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-medium transition-all flex-1 justify-center ${
+            activeTab === 'students'
+              ? 'bg-white text-gray-800 shadow-sm'
+              : 'text-gray-500 hover:text-gray-700'
+          }`}
+        >
+          <Users className="w-4 h-4" />
+          {t('admin.tabs.students')}
+        </button>
+        <button
+          onClick={() => setActiveTab('content')}
+          className={`flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-medium transition-all flex-1 justify-center ${
+            activeTab === 'content'
+              ? 'bg-white text-gray-800 shadow-sm'
+              : 'text-gray-500 hover:text-gray-700'
+          }`}
+        >
+          <Settings2 className="w-4 h-4" />
+          {t('admin.tabs.content')}
+        </button>
+      </div>
+
+      {/* 콘텐츠 관리 탭 */}
+      {activeTab === 'content' && <ContentManager />}
+
+      {/* 학생 현황 탭 */}
+      {activeTab === 'students' && (
+      <>
       {/* 통계 카드 */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
         <div className="bg-white rounded-xl border border-gray-100 p-5">
@@ -563,6 +600,8 @@ export default function AdminDashboard() {
           )}
         </div>
       </div>
+      </>
+      )}
     </div>
   );
 }
