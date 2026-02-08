@@ -12,6 +12,9 @@ interface PersonaForm {
   interests: string;
   painPoints: string;
   goals: string;
+  spendLevel: string;
+  sns: string[];
+  routine: string;
 }
 
 const initialForm: PersonaForm = {
@@ -22,6 +25,9 @@ const initialForm: PersonaForm = {
   interests: '',
   painPoints: '',
   goals: '',
+  spendLevel: '',
+  sns: [],
+  routine: '',
 };
 
 export default function PersonaMakerTool() {
@@ -31,8 +37,17 @@ export default function PersonaMakerTool() {
   const [showResult, setShowResult] = useState(false);
   const [copied, setCopied] = useState(false);
 
-  const updateField = (field: keyof PersonaForm, value: string) => {
+  const updateField = (field: keyof PersonaForm, value: string | string[]) => {
     setForm((prev) => ({ ...prev, [field]: value }));
+  };
+
+  const toggleSns = (platform: string) => {
+    setForm((prev) => ({
+      ...prev,
+      sns: prev.sns.includes(platform)
+        ? prev.sns.filter((s) => s !== platform)
+        : [...prev.sns, platform],
+    }));
   };
 
   const canGenerate = form.name.trim() && form.age.trim() && form.occupation.trim();
@@ -58,7 +73,10 @@ export default function PersonaMakerTool() {
       `${t('marketing.tools.personaMaker.interestsLine')}: ${form.interests}`,
       `${t('marketing.tools.personaMaker.painPointsLine')}: ${form.painPoints}`,
       `${t('marketing.tools.personaMaker.goalsLine')}: ${form.goals}`,
-    ].join('\n');
+      form.spendLevel ? `${t('marketing.tools.personaMaker.spendLevelLine', '소비 수준')}: ${form.spendLevel}` : '',
+      form.sns.length > 0 ? `${t('marketing.tools.personaMaker.snsLine', '주요 SNS')}: ${form.sns.join(', ')}` : '',
+      form.routine ? `${t('marketing.tools.personaMaker.routineLine', '일상 루틴')}: ${form.routine}` : '',
+    ].filter(Boolean).join('\n');
 
     try {
       await navigator.clipboard.writeText(text);
@@ -76,10 +94,78 @@ export default function PersonaMakerTool() {
     setCopied(false);
   };
 
+  const applyTemplate = (template: PersonaForm) => {
+    setForm(template);
+  };
+
   const genderOptions = [
     { value: '남성', label: t('marketing.tools.personaMaker.genderMale') },
     { value: '여성', label: t('marketing.tools.personaMaker.genderFemale') },
     { value: '기타', label: t('marketing.tools.personaMaker.genderOther') },
+  ];
+
+  const spendLevelOptions = [
+    { value: 'low', label: '💰 절약형', icon: '💰' },
+    { value: 'medium', label: '💰💰 보통', icon: '💰💰' },
+    { value: 'high', label: '💰💰💰 여유', icon: '💰💰💰' },
+  ];
+
+  const snsOptions = [
+    { value: 'instagram', label: t('marketing.tools.personaMaker.snsInstagram', '인스타그램') },
+    { value: 'youtube', label: t('marketing.tools.personaMaker.snsYoutube', '유튜브') },
+    { value: 'tiktok', label: t('marketing.tools.personaMaker.snsTiktok', '틱톡') },
+    { value: 'naver', label: t('marketing.tools.personaMaker.snsNaver', '네이버') },
+  ];
+
+  const templates = [
+    {
+      icon: '🎓',
+      title: '20대 유학생',
+      data: {
+        name: '김민수',
+        age: '24',
+        gender: '남성',
+        occupation: '대학생(유학생)',
+        interests: 'SNS, 카페투어',
+        painPoints: '한국어가 어렵고 취업 준비가 막막해요',
+        goals: '한국 회사에 취업하고 싶어요',
+        spendLevel: 'low',
+        sns: ['instagram', 'youtube'],
+        routine: '수업→도서관→카페→SNS',
+      },
+    },
+    {
+      icon: '💼',
+      title: '30대 직장인',
+      data: {
+        name: '응웬 티 란',
+        age: '32',
+        gender: '여성',
+        occupation: '공장 근무자',
+        interests: '요리, 온라인 쇼핑',
+        painPoints: '한국어 서류가 어렵고 비교가 힘들어요',
+        goals: '온라인으로 부업을 시작하고 싶어요',
+        spendLevel: 'medium',
+        sns: ['youtube', 'naver'],
+        routine: '출근→퇴근→요리→SNS',
+      },
+    },
+    {
+      icon: '🏪',
+      title: '40대 사업가',
+      data: {
+        name: '이영호',
+        age: '45',
+        gender: '남성',
+        occupation: '식당 사장님',
+        interests: '맛집 탐방, 요리',
+        painPoints: '손님이 줄어서 온라인 마케팅이 필요해요',
+        goals: '배달앱과 SNS로 매출을 늘리고 싶어요',
+        spendLevel: 'high',
+        sns: ['instagram', 'naver'],
+        routine: '식재료 준비→영업→SNS 올리기',
+      },
+    },
   ];
 
   return (
@@ -104,6 +190,23 @@ export default function PersonaMakerTool() {
         <div className="space-y-4">
           <div className="bg-blue-50 border border-blue-100 rounded-xl p-4 mb-2">
             <p className="text-sm text-blue-700">{t('marketing.tools.personaMaker.tipMessage')}</p>
+          </div>
+
+          {/* Templates */}
+          <div>
+            <h3 className="text-sm font-semibold text-gray-700 mb-3">{t('marketing.tools.personaMaker.templatesTitle', '빠른 시작 템플릿')}</h3>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+              {templates.map((template, idx) => (
+                <button
+                  key={idx}
+                  onClick={() => applyTemplate(template.data)}
+                  className="bg-white border-2 border-gray-200 hover:border-blue-400 rounded-xl p-4 text-left transition-all hover:shadow-md"
+                >
+                  <div className="text-3xl mb-2">{template.icon}</div>
+                  <div className="text-sm font-semibold text-gray-800">{template.title}</div>
+                </button>
+              ))}
+            </div>
           </div>
 
           {/* Name */}
@@ -198,6 +301,58 @@ export default function PersonaMakerTool() {
             />
           </div>
 
+          {/* Spend Level */}
+          <div>
+            <label className="block text-sm font-semibold text-gray-700 mb-1">{t('marketing.tools.personaMaker.spendLevelLabel', '소비 수준')}</label>
+            <div className="flex gap-2">
+              {spendLevelOptions.map((opt) => (
+                <button
+                  key={opt.value}
+                  onClick={() => updateField('spendLevel', opt.value)}
+                  className={`flex-1 py-3 rounded-xl text-sm font-medium transition-all ${
+                    form.spendLevel === opt.value
+                      ? 'bg-blue-600 text-white'
+                      : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                  }`}
+                >
+                  {opt.label}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* SNS */}
+          <div>
+            <label className="block text-sm font-semibold text-gray-700 mb-1">{t('marketing.tools.personaMaker.snsLabel', '주로 사용하는 SNS')}</label>
+            <div className="grid grid-cols-2 gap-2">
+              {snsOptions.map((opt) => (
+                <button
+                  key={opt.value}
+                  onClick={() => toggleSns(opt.value)}
+                  className={`py-3 rounded-xl text-sm font-medium transition-all ${
+                    form.sns.includes(opt.value)
+                      ? 'bg-blue-600 text-white'
+                      : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                  }`}
+                >
+                  {opt.label}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* Routine */}
+          <div>
+            <label className="block text-sm font-semibold text-gray-700 mb-1">{t('marketing.tools.personaMaker.routineLabel', '일상 루틴')}</label>
+            <textarea
+              value={form.routine}
+              onChange={(e) => updateField('routine', e.target.value)}
+              placeholder={t('marketing.tools.personaMaker.routinePlaceholder', '예: 출근→점심→퇴근→운동→SNS')}
+              rows={2}
+              className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-blue-400 focus:outline-none resize-none"
+            />
+          </div>
+
           <button
             onClick={handleGenerate}
             disabled={!canGenerate}
@@ -245,6 +400,35 @@ export default function PersonaMakerTool() {
                 <div>
                   <h3 className="text-sm font-semibold text-gray-500 mb-1">🎯 목표</h3>
                   <p className="text-gray-800">{form.goals}</p>
+                </div>
+              )}
+              {form.spendLevel && (
+                <div>
+                  <h3 className="text-sm font-semibold text-gray-500 mb-1">💰 소비 수준</h3>
+                  <div className="inline-block px-3 py-1 bg-blue-50 text-blue-700 rounded-full text-sm font-medium">
+                    {spendLevelOptions.find((opt) => opt.value === form.spendLevel)?.icon}
+                  </div>
+                </div>
+              )}
+              {form.sns.length > 0 && (
+                <div>
+                  <h3 className="text-sm font-semibold text-gray-500 mb-1">📱 주요 SNS</h3>
+                  <div className="flex flex-wrap gap-2">
+                    {form.sns.map((platform) => (
+                      <span
+                        key={platform}
+                        className="px-3 py-1 bg-blue-50 text-blue-700 rounded-full text-sm font-medium"
+                      >
+                        {snsOptions.find((opt) => opt.value === platform)?.label}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              )}
+              {form.routine && (
+                <div>
+                  <h3 className="text-sm font-semibold text-gray-500 mb-1">📅 일상 루틴</h3>
+                  <p className="text-gray-800">{form.routine}</p>
                 </div>
               )}
             </div>

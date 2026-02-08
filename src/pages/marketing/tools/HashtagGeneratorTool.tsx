@@ -14,12 +14,15 @@ export default function HashtagGeneratorTool() {
   const [hasSearched, setHasSearched] = useState(false);
   const [copiedAll, setCopiedAll] = useState(false);
   const [copiedTag, setCopiedTag] = useState<string | null>(null);
+  const [selectedTags, setSelectedTags] = useState<string[]>([]);
+  const [copiedSelected, setCopiedSelected] = useState(false);
 
   const handleSearch = () => {
     if (!keyword.trim()) return;
     const found = searchHashtags(keyword.trim());
     setResults(found);
     setHasSearched(true);
+    setSelectedTags([]);
 
     logPortfolioActivity(
       'hashtag-generator', 'mk-05', 'Hashtag Generator',
@@ -27,6 +30,33 @@ export default function HashtagGeneratorTool() {
       { groups: found.length, totalHashtags: found.reduce((a, g) => a + g.hashtags.length, 0) },
       true
     );
+  };
+
+  const handleToggleTag = (tag: string) => {
+    setSelectedTags((prev) => {
+      if (prev.includes(tag)) {
+        return prev.filter((t) => t !== tag);
+      } else if (prev.length < 30) {
+        return [...prev, tag];
+      }
+      return prev;
+    });
+    // 개별 태그 복사 피드백
+    navigator.clipboard.writeText(tag).then(() => {
+      setCopiedTag(tag);
+      setTimeout(() => setCopiedTag(null), 1500);
+    }).catch(() => { /* ignore */ });
+  };
+
+  const handleCopySelected = async () => {
+    if (selectedTags.length === 0) return;
+    try {
+      await navigator.clipboard.writeText(selectedTags.join(' '));
+      setCopiedSelected(true);
+      setTimeout(() => setCopiedSelected(false), 2000);
+    } catch {
+      // ignore
+    }
   };
 
   const allHashtags = results.flatMap((g) => g.hashtags);
@@ -41,17 +71,37 @@ export default function HashtagGeneratorTool() {
     }
   };
 
-  const handleCopyTag = async (tag: string) => {
-    try {
-      await navigator.clipboard.writeText(tag);
-      setCopiedTag(tag);
-      setTimeout(() => setCopiedTag(null), 2000);
-    } catch {
-      // ignore
+
+  const suggestedKeywords = ['맛집', '카페', '패션', '뷰티', '여행', '마케팅', '창업', '인테리어', '교육', '건강', '반려동물', '게임'];
+
+  // Strategy analysis
+  const strategyAnalysis = () => {
+    if (selectedTags.length === 0) return null;
+
+    const trendingCount = selectedTags.filter((tag) => {
+      return results.some((g) => g.category === 'trending' && g.hashtags.includes(tag));
+    }).length;
+
+    const nicheCount = selectedTags.filter((tag) => {
+      return results.some((g) => g.category === 'niche' && g.hashtags.includes(tag));
+    }).length;
+
+    const trendingRatio = selectedTags.length > 0 ? (trendingCount / selectedTags.length) * 100 : 0;
+    const nicheRatio = selectedTags.length > 0 ? (nicheCount / selectedTags.length) * 100 : 0;
+
+    let recommendation = '';
+    if (trendingRatio > 60) {
+      recommendation = '트렌딩 해시태그가 많습니다. 노출은 많지만 경쟁이 치열할 수 있어요.';
+    } else if (nicheRatio > 60) {
+      recommendation = '니치 해시태그가 많습니다. 타겟층에 정확히 도달할 수 있어요.';
+    } else {
+      recommendation = '트렌딩과 니치의 균형이 좋습니다. 이상적인 조합이에요!';
     }
+
+    return { trendingCount, nicheCount, trendingRatio, nicheRatio, recommendation };
   };
 
-  const suggestedKeywords = ['맛집', '카페', '패션', '뷰티', '여행', '마케팅', '창업'];
+  const analysis = strategyAnalysis();
 
   return (
     <div className="max-w-3xl mx-auto px-4 pb-20">
@@ -107,6 +157,7 @@ export default function HashtagGeneratorTool() {
                   const found = searchHashtags(kw);
                   setResults(found);
                   setHasSearched(true);
+                  setSelectedTags([]);
                   logPortfolioActivity(
                     'hashtag-generator', 'mk-05', 'Hashtag Generator',
                     { keyword: kw },
@@ -126,6 +177,37 @@ export default function HashtagGeneratorTool() {
       {/* Results */}
       {hasSearched && results.length > 0 && (
         <div>
+          {/* Selection Counter and Progress Bar */}
+          {selectedTags.length > 0 && (
+            <div className="bg-white border border-blue-200 rounded-xl p-4 mb-4">
+              <div className="flex items-center justify-between mb-2">
+                <p className="text-sm font-semibold text-gray-700">선택: {selectedTags.length}/30</p>
+                <button
+                  onClick={handleCopySelected}
+                  className="flex items-center gap-2 px-3 py-1.5 bg-green-600 text-white rounded-lg text-sm font-semibold hover:bg-green-700 transition-colors"
+                >
+                  {copiedSelected ? (
+                    <>
+                      <CheckCircle className="w-4 h-4" />
+                      복사 완료!
+                    </>
+                  ) : (
+                    <>
+                      <Copy className="w-4 h-4" />
+                      선택한 해시태그 복사
+                    </>
+                  )}
+                </button>
+              </div>
+              <div className="w-full h-2 bg-gray-200 rounded-full overflow-hidden">
+                <div
+                  className="h-full bg-gradient-to-r from-blue-500 to-purple-500 transition-all duration-300"
+                  style={{ width: `${(selectedTags.length / 30) * 100}%` }}
+                />
+              </div>
+            </div>
+          )}
+
           {/* Copy All Button */}
           <div className="flex items-center justify-between mb-4">
             <p className="text-sm text-gray-500">{t('marketing.tools.hashtagGenerator.hashtagCount', { count: allHashtags.length })}</p>
@@ -162,22 +244,50 @@ export default function HashtagGeneratorTool() {
                 </span>
               </div>
               <div className="flex flex-wrap gap-2">
-                {group.hashtags.map((tag, tIdx) => (
-                  <button
-                    key={tIdx}
-                    onClick={() => handleCopyTag(tag)}
-                    className={`px-3 py-1.5 rounded-full text-sm font-medium transition-all ${
-                      copiedTag === tag
-                        ? 'bg-green-100 text-green-700'
-                        : 'bg-blue-50 text-blue-700 hover:bg-blue-100'
-                    }`}
-                  >
-                    {copiedTag === tag ? `✓ ${t('marketing.tools.hashtagGenerator.copied')}` : tag}
-                  </button>
-                ))}
+                {group.hashtags.map((tag, tIdx) => {
+                  const isSelected = selectedTags.includes(tag);
+                  return (
+                    <button
+                      key={tIdx}
+                      onClick={() => handleToggleTag(tag)}
+                      className={`px-3 py-1.5 rounded-full text-sm font-medium transition-all ${
+                        isSelected
+                          ? 'bg-blue-600 text-white ring-2 ring-blue-300'
+                          : copiedTag === tag
+                          ? 'bg-green-100 text-green-700'
+                          : 'bg-blue-50 text-blue-700 hover:bg-blue-100'
+                      }`}
+                    >
+                      {isSelected ? `✓ ${tag}` : copiedTag === tag ? `✓ ${t('marketing.tools.hashtagGenerator.copied')}` : tag}
+                    </button>
+                  );
+                })}
               </div>
             </div>
           ))}
+
+          {/* Strategy Analysis */}
+          {analysis && (
+            <div className="bg-gradient-to-r from-purple-50 to-blue-50 border border-purple-200 rounded-xl p-4 md:p-5 mb-4">
+              <h3 className="text-sm font-bold text-gray-800 mb-3">전략 분석</h3>
+              <div className="space-y-2 mb-3">
+                <div className="flex items-center justify-between text-sm">
+                  <span className="text-gray-600">트렌딩 해시태그</span>
+                  <span className="font-semibold text-red-600">{analysis.trendingCount}개 ({analysis.trendingRatio.toFixed(0)}%)</span>
+                </div>
+                <div className="flex items-center justify-between text-sm">
+                  <span className="text-gray-600">니치 해시태그</span>
+                  <span className="font-semibold text-purple-600">{analysis.nicheCount}개 ({analysis.nicheRatio.toFixed(0)}%)</span>
+                </div>
+              </div>
+              <div className="bg-white/60 rounded-lg p-3 border border-purple-100">
+                <p className="text-sm text-gray-700">
+                  <span className="font-semibold">💡 추천: </span>
+                  {analysis.recommendation}
+                </p>
+              </div>
+            </div>
+          )}
 
           {/* Usage Tip */}
           <div className="bg-yellow-50 border border-yellow-200 rounded-xl p-4 mt-4">

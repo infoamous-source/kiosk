@@ -42,6 +42,26 @@ export const hashtagDatabase: Record<string, HashtagGroup[]> = {
     { keyword: '창업', hashtags: ['#창업', '#스타트업', '#사업자', '#소자본창업', '#1인창업'], category: 'trending' },
     { keyword: '창업', hashtags: ['#사이드프로젝트', '#온라인창업', '#스마트스토어', '#쿠팡창업', '#부업'], category: 'niche' },
   ],
+  '인테리어': [
+    { keyword: '인테리어', hashtags: ['#인테리어', '#홈스타일링', '#집꾸미기', '#인테리어스타그램', '#셀프인테리어'], category: 'trending' },
+    { keyword: '인테리어', hashtags: ['#미니멀인테리어', '#원룸꾸미기', '#빈티지인테리어', '#DIY인테리어', '#렌트리모델링'], category: 'niche' },
+  ],
+  '교육': [
+    { keyword: '교육', hashtags: ['#공부스타그램', '#교육', '#자기계발', '#온라인강의', '#스터디'], category: 'trending' },
+    { keyword: '교육', hashtags: ['#독학', '#자격증준비', '#코딩공부', '#어학연수', '#평생학습'], category: 'niche' },
+  ],
+  '건강': [
+    { keyword: '건강', hashtags: ['#건강', '#운동스타그램', '#다이어트', '#헬시라이프', '#건강식단'], category: 'trending' },
+    { keyword: '건강', hashtags: ['#비타민', '#명상', '#요가', '#건강검진', '#면역력'], category: 'niche' },
+  ],
+  '반려동물': [
+    { keyword: '반려동물', hashtags: ['#반려동물', '#강아지', '#고양이', '#펫스타그램', '#멍스타그램'], category: 'trending' },
+    { keyword: '반려동물', hashtags: ['#강아지산책', '#고양이집사', '#반려동물용품', '#펫카페', '#유기동물'], category: 'niche' },
+  ],
+  '게임': [
+    { keyword: '게임', hashtags: ['#게임', '#겜스타그램', '#모바일게임', '#게임추천', '#e스포츠'], category: 'trending' },
+    { keyword: '게임', hashtags: ['#인디게임', '#레트로게임', '#게임리뷰', '#게임개발', '#보드게임'], category: 'niche' },
+  ],
 };
 
 // 기본 추천 해시태그 (키워드가 DB에 없을 때)

@@ -7,7 +7,8 @@ import { logPortfolioActivity } from '../../../utils/portfolioLogger';
 import { isGeminiEnabled } from '../../../services/gemini/geminiClient';
 import type { CopywriterOutput } from '../../../types/marketing';
 
-type Tone = 'emotional' | 'fun' | 'serious';
+type Tone = 'emotional' | 'fun' | 'serious' | 'trendy' | 'storytelling';
+type CopyLength = 'short' | 'medium' | 'long';
 
 export default function KCopywriterTool() {
   const { t } = useTranslation('common');
@@ -17,11 +18,14 @@ export default function KCopywriterTool() {
     { value: 'emotional', label: t('marketing.tools.kCopywriter.toneEmotional'), emoji: '💖', desc: t('marketing.tools.kCopywriter.toneEmotionalDesc') },
     { value: 'fun', label: t('marketing.tools.kCopywriter.toneFun'), emoji: '😄', desc: t('marketing.tools.kCopywriter.toneFunDesc') },
     { value: 'serious', label: t('marketing.tools.kCopywriter.toneProfessional'), emoji: '💼', desc: t('marketing.tools.kCopywriter.toneProfessionalDesc') },
+    { value: 'trendy', label: '트렌디', emoji: '😎', desc: '최신 유행 감각' },
+    { value: 'storytelling', label: '스토리텔링', emoji: '📖', desc: '이야기로 전달' },
   ];
 
   const [productName, setProductName] = useState('');
   const [target, setTarget] = useState('');
   const [tone, setTone] = useState<Tone>('emotional');
+  const [copyLength, setCopyLength] = useState<CopyLength>('medium');
   const [result, setResult] = useState<CopywriterOutput | null>(null);
   const [loading, setLoading] = useState(false);
   const [copiedIdx, setCopiedIdx] = useState<number | null>(null);
@@ -34,12 +38,12 @@ export default function KCopywriterTool() {
     setResult(null);
 
     try {
-      const output = await generateCopy({ productName, target, tone });
+      const output = await generateCopy({ productName, target, tone, length: copyLength });
       setResult(output);
 
       logPortfolioActivity(
         'k-copywriter', 'mk-07', 'K-Copywriter',
-        { productName, target, tone },
+        { productName, target, tone, length: copyLength },
         { copies: output.copies, isMockData: output.isMockData },
         output.isMockData
       );
@@ -130,7 +134,7 @@ export default function KCopywriterTool() {
           {/* Tone Selection */}
           <div>
             <label className="block text-sm font-semibold text-gray-700 mb-2">{t('marketing.tools.kCopywriter.toneLabel')}</label>
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
               {toneOptions.map((opt) => (
                 <button
                   key={opt.value}
@@ -148,6 +152,46 @@ export default function KCopywriterTool() {
                   <span className="text-xs text-gray-400 block">{opt.desc}</span>
                 </button>
               ))}
+            </div>
+          </div>
+
+          {/* Length Selection */}
+          <div>
+            <label className="block text-sm font-semibold text-gray-700 mb-2">카피 길이</label>
+            <div className="grid grid-cols-3 gap-3">
+              <button
+                onClick={() => setCopyLength('short')}
+                className={`py-3 px-4 rounded-xl border-2 text-center transition-all ${
+                  copyLength === 'short'
+                    ? 'border-blue-500 bg-blue-50 text-blue-600'
+                    : 'border-gray-200 hover:border-gray-300 text-gray-700'
+                }`}
+              >
+                <span className="text-sm font-semibold block">한줄</span>
+                <span className="text-xs text-gray-400 block">짧고 임팩트</span>
+              </button>
+              <button
+                onClick={() => setCopyLength('medium')}
+                className={`py-3 px-4 rounded-xl border-2 text-center transition-all ${
+                  copyLength === 'medium'
+                    ? 'border-blue-500 bg-blue-50 text-blue-600'
+                    : 'border-gray-200 hover:border-gray-300 text-gray-700'
+                }`}
+              >
+                <span className="text-sm font-semibold block">2-3줄</span>
+                <span className="text-xs text-gray-400 block">적당한 설명</span>
+              </button>
+              <button
+                onClick={() => setCopyLength('long')}
+                className={`py-3 px-4 rounded-xl border-2 text-center transition-all ${
+                  copyLength === 'long'
+                    ? 'border-blue-500 bg-blue-50 text-blue-600'
+                    : 'border-gray-200 hover:border-gray-300 text-gray-700'
+                }`}
+              >
+                <span className="text-sm font-semibold block">5줄+</span>
+                <span className="text-xs text-gray-400 block">상세한 내용</span>
+              </button>
             </div>
           </div>
 
@@ -199,7 +243,10 @@ export default function KCopywriterTool() {
               >
                 <p className="text-gray-800 text-lg leading-relaxed mb-3">"{copy}"</p>
                 <div className="flex items-center justify-between">
-                  <span className="text-xs text-gray-400">{t('marketing.tools.kCopywriter.optionPrefix')} {idx + 1}</span>
+                  <div className="flex items-center gap-2">
+                    <span className="text-xs text-gray-400">{t('marketing.tools.kCopywriter.optionPrefix')} {idx + 1}</span>
+                    <span className="text-xs text-blue-500 font-medium">{copy.length}자</span>
+                  </div>
                   <button
                     onClick={() => handleCopy(copy, idx)}
                     className="flex items-center gap-1.5 px-3 py-1.5 bg-blue-50 text-blue-600 rounded-lg text-sm font-medium hover:bg-blue-100 transition-colors"

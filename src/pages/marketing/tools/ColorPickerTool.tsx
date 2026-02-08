@@ -5,11 +5,33 @@ import { useNavigate } from 'react-router-dom';
 import { colorEmotions } from '../../../data/marketing/colorEmotions';
 import { logPortfolioActivity } from '../../../utils/portfolioLogger';
 
+function getContrastRatio(hex1: string, hex2: string): number {
+  const luminance = (hex: string) => {
+    const rgb = [parseInt(hex.slice(1,3),16)/255, parseInt(hex.slice(3,5),16)/255, parseInt(hex.slice(5,7),16)/255];
+    const adjusted = rgb.map(c => c <= 0.03928 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4));
+    return 0.2126 * adjusted[0] + 0.7152 * adjusted[1] + 0.0722 * adjusted[2];
+  };
+  const l1 = luminance(hex1), l2 = luminance(hex2);
+  return (Math.max(l1, l2) + 0.05) / (Math.min(l1, l2) + 0.05);
+}
+
+const similarEmotions: Record<string, string[]> = {
+  trust: ['calm', 'fresh'],
+  passion: ['creative', 'friendly'],
+  calm: ['trust', 'natural'],
+  luxury: ['creative', 'trust'],
+  friendly: ['passion', 'natural'],
+  creative: ['luxury', 'passion'],
+  fresh: ['calm', 'natural'],
+  natural: ['calm', 'fresh'],
+};
+
 export default function ColorPickerTool() {
   const { t } = useTranslation('common');
   const navigate = useNavigate();
   const [selectedEmotion, setSelectedEmotion] = useState<string | null>(null);
   const [copiedHex, setCopiedHex] = useState<string | null>(null);
+  const [copiedPalette, setCopiedPalette] = useState(false);
 
   const selectedData = colorEmotions.find((e) => e.id === selectedEmotion);
 
@@ -18,6 +40,20 @@ export default function ColorPickerTool() {
       await navigator.clipboard.writeText(hex);
       setCopiedHex(hex);
       setTimeout(() => setCopiedHex(null), 2000);
+    } catch {
+      // ignore
+    }
+  };
+
+  const handleCopyPalette = async () => {
+    if (!selectedData) return;
+
+    const paletteText = `${selectedData.emotionKo} (${selectedData.emotion}) 팔레트\n\n메인 컬러:\n${selectedData.mainColor.nameKo} (${selectedData.mainColor.name}): ${selectedData.mainColor.hex}\n\n보조 컬러:\n${selectedData.subColors.map((c, i) => `${i + 1}. ${c.nameKo} (${c.name}): ${c.hex}`).join('\n')}`;
+
+    try {
+      await navigator.clipboard.writeText(paletteText);
+      setCopiedPalette(true);
+      setTimeout(() => setCopiedPalette(false), 2000);
     } catch {
       // ignore
     }
@@ -85,9 +121,27 @@ export default function ColorPickerTool() {
       {selectedData && (
         <div className="bg-white border border-gray-200 rounded-2xl overflow-hidden shadow-lg">
           <div className="p-4 md:p-6">
-            <h3 className="text-xl font-bold text-gray-800 mb-1">
-              {selectedData.emotionKo} ({selectedData.emotion})
-            </h3>
+            <div className="flex items-start justify-between mb-1">
+              <h3 className="text-xl font-bold text-gray-800">
+                {selectedData.emotionKo} ({selectedData.emotion})
+              </h3>
+              <button
+                onClick={handleCopyPalette}
+                className="flex items-center gap-1.5 px-3 py-1.5 bg-blue-600 hover:bg-blue-700 text-white text-sm rounded-lg transition-colors"
+              >
+                {copiedPalette ? (
+                  <>
+                    <CheckCircle className="w-4 h-4" />
+                    <span>{t('marketing.tools.colorPicker.paletteCopied', '복사됨')}</span>
+                  </>
+                ) : (
+                  <>
+                    <Copy className="w-4 h-4" />
+                    <span>{t('marketing.tools.colorPicker.copyPalette', '팔레트 전체 복사')}</span>
+                  </>
+                )}
+              </button>
+            </div>
             <p className="text-gray-500 mb-6">{selectedData.description}</p>
 
             {/* Main Color */}
@@ -144,6 +198,57 @@ export default function ColorPickerTool() {
                 ))}
               </div>
             </div>
+
+            {/* Accessibility Section */}
+            <div className="mt-6 p-4 bg-gray-50 rounded-xl border border-gray-200">
+              <h4 className="text-sm font-semibold text-gray-700 mb-3">{t('marketing.tools.colorPicker.accessibility', '접근성')}</h4>
+              <div className="space-y-2">
+                <div className="flex items-center justify-between text-sm">
+                  <span className="text-gray-600">{t('marketing.tools.colorPicker.whiteTextContrast', '흰색 텍스트 대비')}</span>
+                  <span className="font-medium">
+                    {getContrastRatio(selectedData.mainColor.hex, '#FFFFFF').toFixed(2)} {' '}
+                    {getContrastRatio(selectedData.mainColor.hex, '#FFFFFF') >= 4.5
+                      ? t('marketing.tools.colorPicker.aaPassed', '✅ AA 통과')
+                      : t('marketing.tools.colorPicker.aaFailed', '⚠️ AA 미달')}
+                  </span>
+                </div>
+                <div className="flex items-center justify-between text-sm">
+                  <span className="text-gray-600">{t('marketing.tools.colorPicker.blackTextContrast', '검은색 텍스트 대비')}</span>
+                  <span className="font-medium">
+                    {getContrastRatio(selectedData.mainColor.hex, '#000000').toFixed(2)} {' '}
+                    {getContrastRatio(selectedData.mainColor.hex, '#000000') >= 4.5
+                      ? t('marketing.tools.colorPicker.aaPassed', '✅ AA 통과')
+                      : t('marketing.tools.colorPicker.aaFailed', '⚠️ AA 미달')}
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            {/* Similar Emotions */}
+            {similarEmotions[selectedData.id] && (
+              <div className="mt-6 p-4 bg-blue-50 rounded-xl border border-blue-100">
+                <h4 className="text-sm font-semibold text-gray-700 mb-3">{t('marketing.tools.colorPicker.similarEmotions', '비슷한 감정')}</h4>
+                <div className="flex flex-wrap gap-2">
+                  {similarEmotions[selectedData.id].map((emotionId) => {
+                    const emotion = colorEmotions.find((e) => e.id === emotionId);
+                    if (!emotion) return null;
+                    return (
+                      <button
+                        key={emotionId}
+                        onClick={() => handleSelectEmotion(emotionId)}
+                        className="px-3 py-1.5 bg-white hover:bg-blue-100 border border-blue-200 rounded-lg text-sm font-medium text-gray-700 transition-colors flex items-center gap-2"
+                      >
+                        <div
+                          className="w-4 h-4 rounded-full"
+                          style={{ backgroundColor: emotion.mainColor.hex }}
+                        />
+                        {emotion.emotionKo}
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
 
             {/* Preview */}
             <div className="mt-6">

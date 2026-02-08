@@ -74,8 +74,54 @@ const seriousCopies: Record<string, string[]> = {
   ],
 };
 
+const trendyCopies: Record<string, string[]> = {
+  default: [
+    '찐으로 미쳤다... 이건 사야 됨 🔥',
+    '요즘 힙한 사람들은 다 이거 쓴다던데?',
+    '이거 모르면 손해! 알잘딱깔센 아이템',
+  ],
+  food: [
+    '맛잘알이 추천하는 그 맛집, 여기임 📍',
+    '이거 먹고 리뷰 안 남기는 사람 없음 ㅋㅋ',
+    '찐 맛집러들 사이에서 난리 난 그곳',
+  ],
+  fashion: [
+    '이번 시즌 잇템은 이거라고요? 맞아요 ✨',
+    '인스타에서 본 그 옷, 여기서 살 수 있음',
+    '코디 고민? 이 한 벌이면 끝!',
+  ],
+  beauty: [
+    '요즘 올영에서 1등 하는 거 이거래 🏆',
+    '피부 좋아졌다고? 비밀은 이거였음',
+    '언니들 사이에서 입소문 난 그 템!',
+  ],
+};
+
+const storytellingCopies: Record<string, string[]> = {
+  default: [
+    '처음엔 반신반의했어요. 그런데 한 달 뒤, 모든 게 달라졌습니다.',
+    '작은 가게에서 시작한 이야기. 지금은 수천 명이 찾는 브랜드가 되었어요.',
+    '고객 한 분이 이런 말을 해주셨어요. "이건 정말 다르다"고요.',
+  ],
+  food: [
+    '할머니의 레시피를 지키면서도, 새로운 맛을 만들어갑니다.',
+    '새벽 4시에 시작되는 하루. 그만큼 신선한 재료만 고집합니다.',
+    '처음 이 맛을 본 날, 저는 이 일을 평생 하겠다고 결심했어요.',
+  ],
+  fashion: [
+    '옷장 정리를 하다 깨달았어요. 정말 좋은 옷 하나면 충분하다는 것을.',
+    '디자이너가 100번 수정한 끝에 완성된 이 실루엣.',
+    '첫 출근날, 이 옷을 입고 거울 앞에 섰을 때의 그 자신감.',
+  ],
+  beauty: [
+    '피부 고민으로 밤잠을 설치던 날들이 있었어요.',
+    '연구원이 3년간 개발한 성분, 드디어 세상에 나왔습니다.',
+    '내 피부를 이해해주는 화장품을 만나기까지 10년이 걸렸어요.',
+  ],
+};
+
 export function getMockCopyOptions(
-  tone: 'emotional' | 'fun' | 'serious',
+  tone: 'emotional' | 'fun' | 'serious' | 'trendy' | 'storytelling',
   productKeyword?: string
 ): string[] {
   const key = detectCategory(productKeyword || '');
@@ -87,6 +133,10 @@ export function getMockCopyOptions(
       return funCopies[key] || funCopies.default;
     case 'serious':
       return seriousCopies[key] || seriousCopies.default;
+    case 'trendy':
+      return trendyCopies[key] || trendyCopies.default;
+    case 'storytelling':
+      return storytellingCopies[key] || storytellingCopies.default;
     default:
       return emotionalCopies.default;
   }

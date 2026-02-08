@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { ArrowLeft, Image, ArrowRight, RotateCcw } from 'lucide-react';
+import { ArrowLeft, Image, ArrowRight, RotateCcw, Play } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { logPortfolioActivity } from '../../../utils/portfolioLogger';
 import type { AdImageStyle } from '../../../types/marketing';
@@ -11,6 +11,9 @@ const styleGradients: Record<AdImageStyle, string> = {
   '3d': 'from-cyan-400 to-blue-600',
   popart: 'from-yellow-400 via-red-400 to-pink-500',
 };
+
+type Platform = 'instagram' | 'youtube' | 'kakao';
+type TextPosition = 'top' | 'center' | 'bottom';
 
 export default function SNSAdMakerTool() {
   const { t } = useTranslation('common');
@@ -30,10 +33,15 @@ export default function SNSAdMakerTool() {
     popart: t('marketing.tools.snsAdMaker.stylePopartDesc'),
   };
 
+  const ctaOptions = ['구매하기', '자세히 보기', '무료 체험', '지금 신청'];
+
   const [subject, setSubject] = useState('');
   const [style, setStyle] = useState<AdImageStyle>('realistic');
   const [copyText, setCopyText] = useState('');
   const [showPreview, setShowPreview] = useState(false);
+  const [platform, setPlatform] = useState<Platform>('instagram');
+  const [textPosition, setTextPosition] = useState<TextPosition>('center');
+  const [ctaText, setCtaText] = useState('구매하기');
 
   const canGenerate = subject.trim().length > 0;
 
@@ -43,7 +51,7 @@ export default function SNSAdMakerTool() {
 
     logPortfolioActivity(
       'sns-ad-maker', 'mk-07', 'SNS Ad Maker',
-      { subject, style, copyText },
+      { subject, style, copyText, platform, textPosition, ctaText },
       { generated: true, isMockData: true },
       true
     );
@@ -53,8 +61,19 @@ export default function SNSAdMakerTool() {
     setShowPreview(false);
   };
 
+  const getPositionClass = () => {
+    switch (textPosition) {
+      case 'top':
+        return 'items-start justify-start pt-8';
+      case 'bottom':
+        return 'items-end justify-end pb-8';
+      default:
+        return 'items-center justify-center';
+    }
+  };
+
   return (
-    <div className="max-w-3xl mx-auto px-4 pb-20">
+    <div className="max-w-6xl mx-auto px-4 pb-20">
       <button
         onClick={() => navigate(-1)}
         className="flex items-center gap-2 text-gray-500 hover:text-gray-700 mt-6 mb-6 transition-colors"
@@ -124,6 +143,44 @@ export default function SNSAdMakerTool() {
             </div>
 
             <div>
+              <label className="block text-sm font-semibold text-gray-700 mb-2">텍스트 위치</label>
+              <div className="grid grid-cols-3 gap-2">
+                {(['top', 'center', 'bottom'] as TextPosition[]).map((pos) => (
+                  <button
+                    key={pos}
+                    onClick={() => setTextPosition(pos)}
+                    className={`py-2 px-3 rounded-xl border-2 text-center text-sm transition-all ${
+                      textPosition === pos
+                        ? 'border-blue-500 bg-blue-50 text-blue-600'
+                        : 'border-gray-200 hover:border-gray-300 text-gray-700'
+                    }`}
+                  >
+                    {pos === 'top' ? '상단' : pos === 'center' ? '중앙' : '하단'}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            <div>
+              <label className="block text-sm font-semibold text-gray-700 mb-2">CTA 버튼</label>
+              <div className="grid grid-cols-2 gap-2">
+                {ctaOptions.map((cta) => (
+                  <button
+                    key={cta}
+                    onClick={() => setCtaText(cta)}
+                    className={`py-2 px-3 rounded-xl border-2 text-center text-sm transition-all ${
+                      ctaText === cta
+                        ? 'border-blue-500 bg-blue-50 text-blue-600'
+                        : 'border-gray-200 hover:border-gray-300 text-gray-700'
+                    }`}
+                  >
+                    {cta}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            <div>
               <label className="block text-sm font-semibold text-gray-700 mb-1">{t('marketing.tools.snsAdMaker.copyLabel')}</label>
               <textarea
                 value={copyText}
@@ -149,65 +206,182 @@ export default function SNSAdMakerTool() {
           </div>
         </div>
 
-        {/* Right: Instagram Preview */}
+        {/* Right: Preview Panel */}
         <div>
-          <h2 className="font-bold text-gray-800 mb-4">{t('marketing.tools.snsAdMaker.instagramPreview')}</h2>
+          {/* Platform Tabs */}
+          <div className="flex items-center gap-2 mb-4">
+            <button
+              onClick={() => setPlatform('instagram')}
+              className={`flex-1 py-2 px-4 rounded-lg text-sm font-semibold transition-all ${
+                platform === 'instagram'
+                  ? 'bg-gradient-to-r from-purple-500 to-pink-500 text-white'
+                  : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+              }`}
+            >
+              Instagram
+            </button>
+            <button
+              onClick={() => setPlatform('youtube')}
+              className={`flex-1 py-2 px-4 rounded-lg text-sm font-semibold transition-all ${
+                platform === 'youtube'
+                  ? 'bg-red-600 text-white'
+                  : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+              }`}
+            >
+              YouTube
+            </button>
+            <button
+              onClick={() => setPlatform('kakao')}
+              className={`flex-1 py-2 px-4 rounded-lg text-sm font-semibold transition-all ${
+                platform === 'kakao'
+                  ? 'bg-yellow-400 text-gray-800'
+                  : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+              }`}
+            >
+              KakaoTalk
+            </button>
+          </div>
 
           {showPreview ? (
-            <div className="bg-white border border-gray-200 rounded-2xl overflow-hidden shadow-lg">
-              {/* Instagram Header */}
-              <div className="flex items-center gap-3 p-3 border-b border-gray-100">
-                <div className="w-8 h-8 bg-gradient-to-br from-purple-500 to-pink-500 rounded-full" />
-                <div>
-                  <p className="text-sm font-semibold text-gray-800">{t('marketing.tools.snsAdMaker.brandName')}</p>
-                  <p className="text-xs text-gray-400">{t('marketing.tools.snsAdMaker.sponsored')}</p>
-                </div>
-              </div>
-
-              {/* Image Area */}
-              <div className={`relative aspect-square bg-gradient-to-br ${styleGradients[style]} flex flex-col items-center justify-center p-4 md:p-8`}>
-                {/* Style indicator */}
-                <div className="absolute top-3 right-3 bg-black/30 px-2 py-1 rounded text-white text-xs">
-                  {stylePatterns[style]}
-                </div>
-
-                {/* Main visual */}
-                <div className="text-center">
-                  <div className="text-6xl mb-4">
-                    {style === 'realistic' ? '📸' : style === 'illustration' ? '🎨' : style === '3d' ? '🧊' : '🎉'}
-                  </div>
-                  <p className="text-white font-bold text-xl mb-2">{subject}</p>
-                  {copyText && (
-                    <div className="mt-4 bg-white/20 backdrop-blur-sm rounded-xl px-4 py-3">
-                      <p className="text-white font-medium text-sm leading-relaxed">{copyText}</p>
+            <div>
+              {/* Instagram Preview */}
+              {platform === 'instagram' && (
+                <div className="bg-white border border-gray-200 rounded-2xl overflow-hidden shadow-lg">
+                  {/* Instagram Header */}
+                  <div className="flex items-center gap-3 p-3 border-b border-gray-100">
+                    <div className="w-8 h-8 bg-gradient-to-br from-purple-500 to-pink-500 rounded-full" />
+                    <div>
+                      <p className="text-sm font-semibold text-gray-800">{t('marketing.tools.snsAdMaker.brandName')}</p>
+                      <p className="text-xs text-gray-400">{t('marketing.tools.snsAdMaker.sponsored')}</p>
                     </div>
-                  )}
-                </div>
+                  </div>
 
-                {/* Mock watermark */}
-                <div className="absolute bottom-3 left-3 bg-black/20 px-2 py-1 rounded text-white/60 text-xs">
-                  {t('marketing.tools.snsAdMaker.mockPreview')}
-                </div>
-              </div>
+                  {/* Image Area */}
+                  <div className={`relative aspect-square bg-gradient-to-br ${styleGradients[style]} flex flex-col ${getPositionClass()} p-4 md:p-8`}>
+                    {/* Style indicator */}
+                    <div className="absolute top-3 right-3 bg-black/30 px-2 py-1 rounded text-white text-xs">
+                      {stylePatterns[style]}
+                    </div>
 
-              {/* Instagram Actions */}
-              <div className="p-3">
-                <div className="flex gap-4 mb-2">
-                  <span className="text-xl">❤️</span>
-                  <span className="text-xl">💬</span>
-                  <span className="text-xl">📤</span>
+                    {/* Main visual */}
+                    <div className="text-center">
+                      <div className="text-6xl mb-4">
+                        {style === 'realistic' ? '📸' : style === 'illustration' ? '🎨' : style === '3d' ? '🧊' : '🎉'}
+                      </div>
+                      <p className="text-white font-bold text-xl mb-2">{subject}</p>
+                      {copyText && (
+                        <div className="mt-4 bg-white/20 backdrop-blur-sm rounded-xl px-4 py-3">
+                          <p className="text-white font-medium text-sm leading-relaxed">{copyText}</p>
+                        </div>
+                      )}
+                      {/* CTA Button */}
+                      <button className="mt-4 px-6 py-2.5 bg-white text-gray-800 rounded-full font-bold text-sm hover:bg-gray-100 transition-colors shadow-lg">
+                        {ctaText}
+                      </button>
+                    </div>
+                  </div>
+
+                  {/* Instagram Actions */}
+                  <div className="p-3">
+                    <div className="flex gap-4 mb-2">
+                      <span className="text-xl">❤️</span>
+                      <span className="text-xl">💬</span>
+                      <span className="text-xl">📤</span>
+                    </div>
+                    <p className="text-sm">
+                      {t('marketing.tools.snsAdMaker.likes', { count: 123 })}
+                    </p>
+                    <p className="text-sm mt-1">
+                      <span className="font-semibold">{t('marketing.tools.snsAdMaker.brandName')}</span>{' '}
+                      {copyText || subject}
+                    </p>
+                  </div>
                 </div>
-                <p className="text-sm">
-                  {t('marketing.tools.snsAdMaker.likes', { count: 123 })}
-                </p>
-                <p className="text-sm mt-1">
-                  <span className="font-semibold">{t('marketing.tools.snsAdMaker.brandName')}</span>{' '}
-                  {copyText || subject}
-                </p>
-              </div>
+              )}
+
+              {/* YouTube Preview */}
+              {platform === 'youtube' && (
+                <div className="bg-white border border-gray-200 rounded-2xl overflow-hidden shadow-lg">
+                  <div className={`relative aspect-video bg-gradient-to-br ${styleGradients[style]} flex flex-col ${getPositionClass()} p-6`}>
+                    {/* Play button overlay */}
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <div className="w-20 h-20 bg-red-600 rounded-full flex items-center justify-center shadow-2xl hover:bg-red-700 transition-colors cursor-pointer">
+                        <Play className="w-8 h-8 text-white ml-1" fill="white" />
+                      </div>
+                    </div>
+
+                    {/* Duration badge */}
+                    <div className="absolute bottom-3 right-3 bg-black/80 px-2 py-1 rounded text-white text-xs font-semibold">
+                      12:34
+                    </div>
+
+                    {/* Subject text */}
+                    <div className="relative z-10 text-center">
+                      <p className="text-white font-bold text-2xl md:text-3xl drop-shadow-lg">{subject}</p>
+                      {copyText && (
+                        <div className="mt-3 bg-black/40 backdrop-blur-sm rounded-xl px-4 py-2 inline-block">
+                          <p className="text-white font-medium text-sm">{copyText}</p>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+
+                  {/* YouTube Info */}
+                  <div className="p-4">
+                    <h3 className="font-bold text-gray-800 text-base mb-2">{subject} - {ctaText}</h3>
+                    <div className="flex items-center gap-3 text-xs text-gray-500">
+                      <span>{t('marketing.tools.snsAdMaker.brandName')}</span>
+                      <span>•</span>
+                      <span>1.2만 조회수</span>
+                      <span>•</span>
+                      <span>1일 전</span>
+                    </div>
+                    <button className="mt-3 w-full py-2 bg-red-600 text-white rounded-lg font-bold text-sm hover:bg-red-700 transition-colors">
+                      {ctaText}
+                    </button>
+                  </div>
+                </div>
+              )}
+
+              {/* KakaoTalk Preview */}
+              {platform === 'kakao' && (
+                <div className="bg-white border border-gray-200 rounded-2xl overflow-hidden shadow-lg">
+                  <div className="p-4">
+                    <div className="flex gap-3">
+                      {/* Thumbnail */}
+                      <div className={`w-20 h-20 rounded-lg bg-gradient-to-br ${styleGradients[style]} flex items-center justify-center flex-shrink-0`}>
+                        <span className="text-3xl">
+                          {style === 'realistic' ? '📸' : style === 'illustration' ? '🎨' : style === '3d' ? '🧊' : '🎉'}
+                        </span>
+                      </div>
+
+                      {/* Content */}
+                      <div className="flex-1 min-w-0">
+                        <h3 className="font-bold text-gray-800 text-sm mb-1 truncate">{subject}</h3>
+                        <p className="text-xs text-gray-500 line-clamp-2 mb-2">
+                          {copyText || '광고 카피를 입력해주세요'}
+                        </p>
+                        <div className="flex items-center justify-between">
+                          <span className="text-xs text-gray-400">{t('marketing.tools.snsAdMaker.brandName')}</span>
+                          <button className="text-xs text-blue-600 font-semibold hover:underline">
+                            {ctaText}
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* CTA Button */}
+                  <div className="border-t border-gray-100 p-3">
+                    <button className="w-full py-2.5 bg-yellow-400 text-gray-800 rounded-lg font-bold text-sm hover:bg-yellow-500 transition-colors">
+                      {ctaText}
+                    </button>
+                  </div>
+                </div>
+              )}
             </div>
           ) : (
-            <div className="bg-gray-50 border-2 border-dashed border-gray-300 rounded-2xl aspect-square flex flex-col items-center justify-center text-gray-400">
+            <div className="bg-gray-50 border-2 border-dashed border-gray-300 rounded-2xl aspect-square lg:aspect-auto lg:h-[500px] flex flex-col items-center justify-center text-gray-400">
               <Image className="w-16 h-16 mb-3 opacity-50" />
               <p className="font-medium text-center px-4">{t('marketing.tools.snsAdMaker.emptyMessage')}</p>
             </div>

@@ -252,6 +252,178 @@ export const glossaryTerms: GlossaryTerm[] = [
     example: '"좋은 카피라이팅은 한 줄로 사람의 마음을 사로잡아요."',
     category: 'ai',
   },
+
+  // ── 추가 기초 (basic) ──
+  {
+    id: 'g-31',
+    term: 'Niche Market',
+    termKo: '니치 마켓 (틈새 시장)',
+    easyExplanation: '큰 시장 안에 있는 작고 특별한 시장이에요. 경쟁이 적어서 기회가 많아요.',
+    example: '"비건 반려동물 간식은 니치 마켓이에요."',
+    category: 'basic',
+  },
+  {
+    id: 'g-32',
+    term: 'B2C / B2B',
+    termKo: 'B2C / B2B',
+    easyExplanation: 'B2C는 일반 사람에게 파는 거예요. B2B는 회사에게 파는 거예요.',
+    example: '"쿠팡은 B2C, 사무용품 납품은 B2B예요."',
+    category: 'basic',
+  },
+  {
+    id: 'g-33',
+    term: 'Market Share',
+    termKo: '시장 점유율',
+    easyExplanation: '전체 시장에서 내 브랜드가 차지하는 비율이에요. 높을수록 잘 팔리는 거예요.',
+    example: '"삼성 갤럭시의 한국 스마트폰 시장 점유율은 약 60%예요."',
+    category: 'basic',
+  },
+  {
+    id: 'g-34',
+    term: 'Positioning',
+    termKo: '포지셔닝',
+    easyExplanation: '고객의 머릿속에 내 브랜드가 어떤 위치에 있는지 정하는 거예요.',
+    example: '"다이소는 싸고 편리한 가게로 포지셔닝했어요."',
+    category: 'basic',
+  },
+
+  // ── 추가 디지털 (digital) ──
+  {
+    id: 'g-35',
+    term: 'Bounce Rate',
+    termKo: '이탈률',
+    easyExplanation: '웹사이트에 왔다가 다른 페이지를 안 보고 바로 나간 비율이에요.',
+    example: '"이탈률이 80%면 10명 중 8명이 바로 나간 거예요."',
+    category: 'digital',
+  },
+  {
+    id: 'g-36',
+    term: 'Organic Traffic',
+    termKo: '자연 유입',
+    easyExplanation: '광고 없이 검색이나 SNS를 통해 자연스럽게 들어오는 방문자예요.',
+    example: '"블로그 글이 네이버 검색 1위라서 자연 유입이 많아요."',
+    category: 'digital',
+  },
+  {
+    id: 'g-37',
+    term: 'Email Marketing',
+    termKo: '이메일 마케팅',
+    easyExplanation: '고객에게 이메일을 보내서 물건을 알리거나 할인 정보를 전하는 거예요.',
+    example: '"매주 이메일 뉴스레터로 신상품 소식을 보내요."',
+    category: 'digital',
+  },
+  {
+    id: 'g-38',
+    term: 'UX/UI',
+    termKo: 'UX/UI (사용자 경험/화면 디자인)',
+    easyExplanation: 'UX는 사용하기 편한 정도, UI는 화면이 예쁜 정도예요.',
+    example: '"이 앱은 UX가 좋아서 누구나 쉽게 쓸 수 있어요."',
+    category: 'digital',
+  },
+  {
+    id: 'g-39',
+    term: 'Cookie',
+    termKo: '쿠키 (웹 쿠키)',
+    easyExplanation: '웹사이트가 내 컴퓨터에 남기는 작은 정보예요. 로그인 유지, 광고 추적 등에 써요.',
+    example: '"쿠키 덕분에 쇼핑몰에서 다시 로그인 안 해도 돼요."',
+    category: 'digital',
+  },
+
+  // ── 추가 SNS ──
+  {
+    id: 'g-40',
+    term: 'Viral',
+    termKo: '바이럴',
+    easyExplanation: '사람들이 자발적으로 공유해서 빠르게 퍼지는 콘텐츠예요.',
+    example: '"이 영상이 바이럴 되면서 하루 만에 100만 뷰를 넘었어요."',
+    category: 'sns',
+  },
+  {
+    id: 'g-41',
+    term: 'UGC (User Generated Content)',
+    termKo: 'UGC (사용자 생성 콘텐츠)',
+    easyExplanation: '일반 사용자가 직접 만든 후기, 사진, 영상 같은 콘텐츠예요.',
+    example: '"고객이 올린 후기 사진을 우리 인스타에 다시 올렸어요. 이게 UGC예요."',
+    category: 'sns',
+  },
+  {
+    id: 'g-42',
+    term: 'Story',
+    termKo: '스토리',
+    easyExplanation: '24시간 뒤에 사라지는 짧은 사진이나 영상이에요. 인스타그램, 카카오에서 써요.',
+    example: '"인스타 스토리에 오늘의 메뉴를 올렸더니 주문이 늘었어요."',
+    category: 'sns',
+  },
+  {
+    id: 'g-43',
+    term: 'Live Commerce',
+    termKo: '라이브 커머스',
+    easyExplanation: '실시간 방송을 하면서 물건을 파는 거예요. 시청자가 바로 구매할 수 있어요.',
+    example: '"네이버 쇼핑라이브에서 라이브 커머스를 했더니 1시간에 500만원 팔렸어요."',
+    category: 'sns',
+  },
+  {
+    id: 'g-44',
+    term: 'Collab (Collaboration)',
+    termKo: '콜라보 (협업)',
+    easyExplanation: '다른 브랜드나 인플루언서와 함께 제품이나 콘텐츠를 만드는 거예요.',
+    example: '"카페와 디저트 가게가 콜라보로 특별 메뉴를 만들었어요."',
+    category: 'sns',
+  },
+
+  // ── 추가 퍼포먼스 (performance) ──
+  {
+    id: 'g-45',
+    term: 'CPM (Cost Per Mille)',
+    termKo: 'CPM (1000회 노출 비용)',
+    easyExplanation: '광고가 1000번 보이는 데 드는 돈이에요. 노출 광고의 비용을 계산할 때 써요.',
+    example: '"CPM이 3000원이면 1000번 보이는 데 3000원이 드는 거예요."',
+    category: 'performance',
+  },
+  {
+    id: 'g-46',
+    term: 'Funnel',
+    termKo: '퍼널 (깔때기)',
+    easyExplanation: '고객이 물건을 사기까지 거치는 단계예요. 인지 → 관심 → 구매 순서예요.',
+    example: '"광고를 본 1000명 중 100명이 클릭하고, 10명이 구매하는 게 퍼널이에요."',
+    category: 'performance',
+  },
+  {
+    id: 'g-47',
+    term: 'Retargeting',
+    termKo: '리타게팅',
+    easyExplanation: '내 사이트에 왔다 간 사람에게 다시 광고를 보여주는 거예요.',
+    example: '"쇼핑몰에서 본 신발 광고가 계속 따라다니는 게 리타게팅이에요."',
+    category: 'performance',
+  },
+
+  // ── 추가 브랜딩 (branding) ──
+  {
+    id: 'g-48',
+    term: 'Rebranding',
+    termKo: '리브랜딩',
+    easyExplanation: '브랜드의 이름, 로고, 이미지를 새롭게 바꾸는 거예요.',
+    example: '"오래된 빵집이 리브랜딩해서 젊은 느낌으로 바뀌었어요."',
+    category: 'branding',
+  },
+  {
+    id: 'g-49',
+    term: 'Brand Loyalty',
+    termKo: '브랜드 충성도',
+    easyExplanation: '고객이 다른 브랜드 대신 계속 우리 브랜드를 사는 정도예요.',
+    example: '"애플 사용자는 브랜드 충성도가 높아서 계속 아이폰을 사요."',
+    category: 'branding',
+  },
+
+  // ── 추가 AI ──
+  {
+    id: 'g-50',
+    term: 'Chatbot',
+    termKo: '챗봇',
+    easyExplanation: '사람 대신 자동으로 대화해주는 AI 프로그램이에요. 24시간 고객 상담이 가능해요.',
+    example: '"쇼핑몰 챗봇이 배송 질문에 자동으로 답해줘요."',
+    category: 'ai',
+  },
 ];
 
 export const glossaryCategories = [

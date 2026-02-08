@@ -30,7 +30,7 @@ export default function USPFinderTool() {
   ];
   const [currentStep, setCurrentStep] = useState(0);
   const [data, setData] = useState<USPData>(initialData);
-  const [copied, setCopied] = useState(false);
+  const [copiedIdx, setCopiedIdx] = useState<number | null>(null);
 
   const updateField = (field: keyof USPData, value: string) => {
     setData((prev) => ({ ...prev, [field]: value }));
@@ -63,15 +63,23 @@ export default function USPFinderTool() {
     if (currentStep > 0) setCurrentStep((prev) => prev - 1);
   };
 
-  const generateUSP = () => {
+  const generateClassicUSP = () => {
     return `"${data.productName}"는 ${data.competitors}와 달리, ${data.strengths}합니다. ${data.targetNeeds}을(를) 원하는 고객에게 최고의 선택입니다.`;
   };
 
-  const handleCopy = async () => {
+  const generateBenefitUSP = () => {
+    return `${data.targetNeeds}을(를) 원하신다면, "${data.productName}"를 선택하세요. ${data.competitors}와 달리 ${data.strengths}하니까요.`;
+  };
+
+  const generateEmotionalUSP = () => {
+    return `${data.strengths}. "${data.productName}", 당신의 ${data.targetNeeds}을(를) 위한 유일한 선택.`;
+  };
+
+  const handleCopy = async (idx: number, text: string) => {
     try {
-      await navigator.clipboard.writeText(generateUSP());
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
+      await navigator.clipboard.writeText(text);
+      setCopiedIdx(idx);
+      setTimeout(() => setCopiedIdx(null), 2000);
     } catch {
       // ignore
     }
@@ -80,7 +88,7 @@ export default function USPFinderTool() {
   const handleReset = () => {
     setData(initialData);
     setCurrentStep(0);
-    setCopied(false);
+    setCopiedIdx(null);
   };
 
   return (
@@ -138,6 +146,13 @@ export default function USPFinderTool() {
           <div>
             <h2 className="text-lg font-bold text-gray-800 mb-2">{t('marketing.tools.uspFinder.step1Title')}</h2>
             <p className="text-gray-500 text-sm mb-4">{t('marketing.tools.uspFinder.step1Description')}</p>
+
+            <div className="bg-yellow-50 border border-yellow-200 rounded-xl p-3 mb-4">
+              <p className="text-sm text-yellow-800">
+                {t('marketing.tools.uspFinder.step1Tip', '💡 구체적인 이름이 좋아요! 예: \'수제 쿠키 전문점 달콤이\'')}
+              </p>
+            </div>
+
             <input
               type="text"
               value={data.productName}
@@ -152,6 +167,13 @@ export default function USPFinderTool() {
           <div>
             <h2 className="text-lg font-bold text-gray-800 mb-2">{t('marketing.tools.uspFinder.step2Title')}</h2>
             <p className="text-gray-500 text-sm mb-4">{t('marketing.tools.uspFinder.step2Description')}</p>
+
+            <div className="bg-yellow-50 border border-yellow-200 rounded-xl p-3 mb-4">
+              <p className="text-sm text-yellow-800">
+                {t('marketing.tools.uspFinder.step2Tip', '💡 직접 경쟁하는 곳을 적어보세요. 예: \'동네 빵집, 대형 카페\'')}
+              </p>
+            </div>
+
             <textarea
               value={data.competitors}
               onChange={(e) => updateField('competitors', e.target.value)}
@@ -167,6 +189,13 @@ export default function USPFinderTool() {
             <div>
               <h2 className="text-lg font-bold text-gray-800 mb-2">{t('marketing.tools.uspFinder.step3Title')}</h2>
               <p className="text-gray-500 text-sm mb-4">{t('marketing.tools.uspFinder.step3Description')}</p>
+
+              <div className="bg-yellow-50 border border-yellow-200 rounded-xl p-3 mb-4">
+                <p className="text-sm text-yellow-800">
+                  {t('marketing.tools.uspFinder.step3Tip', '💡 경쟁자가 못 하는 것을 적으세요. 예: \'100% 유기농 재료만 사용\'')}
+                </p>
+              </div>
+
               <textarea
                 value={data.strengths}
                 onChange={(e) => updateField('strengths', e.target.value)}
@@ -192,10 +221,95 @@ export default function USPFinderTool() {
         {currentStep === 3 && (
           <div>
             <h2 className="text-lg font-bold text-gray-800 mb-4">{t('marketing.tools.uspFinder.resultTitle')}</h2>
-            <div className="bg-gradient-to-br from-blue-50 to-indigo-50 border-2 border-blue-200 rounded-xl p-6">
-              <p className="text-lg text-gray-800 leading-relaxed font-medium">
-                {generateUSP()}
-              </p>
+
+            {/* Classic Template */}
+            <div className="bg-white border-2 border-blue-200 rounded-xl p-5 mb-4">
+              <div className="flex items-center justify-between mb-3">
+                <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-blue-100 text-blue-700 text-sm font-semibold rounded-full">
+                  🏷️ {t('marketing.tools.uspFinder.templateClassic', '클래식')}
+                </span>
+                <button
+                  onClick={() => handleCopy(0, generateClassicUSP())}
+                  className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white text-sm rounded-lg font-semibold hover:bg-blue-700 transition-colors"
+                >
+                  {copiedIdx === 0 ? (
+                    <>
+                      <CheckCircle className="w-4 h-4" />
+                      {t('marketing.tools.uspFinder.copySuccess')}
+                    </>
+                  ) : (
+                    <>
+                      <Copy className="w-4 h-4" />
+                      {t('marketing.tools.uspFinder.copyButton')}
+                    </>
+                  )}
+                </button>
+              </div>
+              <div className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-lg p-4">
+                <p className="text-base text-gray-800 leading-relaxed font-medium">
+                  {generateClassicUSP()}
+                </p>
+              </div>
+            </div>
+
+            {/* Benefit Template */}
+            <div className="bg-white border-2 border-green-200 rounded-xl p-5 mb-4">
+              <div className="flex items-center justify-between mb-3">
+                <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-green-100 text-green-700 text-sm font-semibold rounded-full">
+                  🎯 {t('marketing.tools.uspFinder.templateBenefit', '베네핏')}
+                </span>
+                <button
+                  onClick={() => handleCopy(1, generateBenefitUSP())}
+                  className="flex items-center gap-2 px-4 py-2 bg-green-600 text-white text-sm rounded-lg font-semibold hover:bg-green-700 transition-colors"
+                >
+                  {copiedIdx === 1 ? (
+                    <>
+                      <CheckCircle className="w-4 h-4" />
+                      {t('marketing.tools.uspFinder.copySuccess')}
+                    </>
+                  ) : (
+                    <>
+                      <Copy className="w-4 h-4" />
+                      {t('marketing.tools.uspFinder.copyButton')}
+                    </>
+                  )}
+                </button>
+              </div>
+              <div className="bg-gradient-to-br from-green-50 to-emerald-50 rounded-lg p-4">
+                <p className="text-base text-gray-800 leading-relaxed font-medium">
+                  {generateBenefitUSP()}
+                </p>
+              </div>
+            </div>
+
+            {/* Emotional Template */}
+            <div className="bg-white border-2 border-pink-200 rounded-xl p-5 mb-4">
+              <div className="flex items-center justify-between mb-3">
+                <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-pink-100 text-pink-700 text-sm font-semibold rounded-full">
+                  💖 {t('marketing.tools.uspFinder.templateEmotional', '감성')}
+                </span>
+                <button
+                  onClick={() => handleCopy(2, generateEmotionalUSP())}
+                  className="flex items-center gap-2 px-4 py-2 bg-pink-600 text-white text-sm rounded-lg font-semibold hover:bg-pink-700 transition-colors"
+                >
+                  {copiedIdx === 2 ? (
+                    <>
+                      <CheckCircle className="w-4 h-4" />
+                      {t('marketing.tools.uspFinder.copySuccess')}
+                    </>
+                  ) : (
+                    <>
+                      <Copy className="w-4 h-4" />
+                      {t('marketing.tools.uspFinder.copyButton')}
+                    </>
+                  )}
+                </button>
+              </div>
+              <div className="bg-gradient-to-br from-pink-50 to-rose-50 rounded-lg p-4">
+                <p className="text-base text-gray-800 leading-relaxed font-medium">
+                  {generateEmotionalUSP()}
+                </p>
+              </div>
             </div>
 
             <div className="mt-6 bg-yellow-50 border border-yellow-200 rounded-xl p-4">
@@ -205,22 +319,6 @@ export default function USPFinderTool() {
             </div>
 
             <div className="flex gap-3 mt-6">
-              <button
-                onClick={handleCopy}
-                className="flex-1 flex items-center justify-center gap-2 py-3 bg-blue-600 text-white rounded-xl font-semibold hover:bg-blue-700 transition-colors"
-              >
-                {copied ? (
-                  <>
-                    <CheckCircle className="w-5 h-5" />
-                    {t('marketing.tools.uspFinder.copySuccess')}
-                  </>
-                ) : (
-                  <>
-                    <Copy className="w-5 h-5" />
-                    {t('marketing.tools.uspFinder.copyButton')}
-                  </>
-                )}
-              </button>
               <button
                 onClick={handleReset}
                 className="flex items-center justify-center gap-2 px-6 py-3 bg-gray-100 text-gray-600 rounded-xl font-semibold hover:bg-gray-200 transition-colors"

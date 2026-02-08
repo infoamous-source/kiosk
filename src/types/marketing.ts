@@ -118,7 +118,8 @@ export interface ModuleProgress {
 export interface CopywriterInput {
   productName: string;
   target: string;
-  tone: 'emotional' | 'fun' | 'serious';
+  tone: 'emotional' | 'fun' | 'serious' | 'trendy' | 'storytelling';
+  length?: 'short' | 'medium' | 'long';
 }
 
 export interface CopywriterOutput {
