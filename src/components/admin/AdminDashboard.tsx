@@ -17,6 +17,7 @@ import {
   Activity,
   ChevronRight,
   Settings2,
+  GraduationCap,
 } from 'lucide-react';
 import {
   BarChart,
@@ -32,8 +33,9 @@ import {
 } from 'recharts';
 import { useAuth } from '../../contexts/AuthContext';
 import ContentManager from './ContentManager';
+import SchoolManagement from './SchoolManagement';
 
-type DashboardTab = 'students' | 'content';
+type DashboardTab = 'students' | 'content' | 'school';
 
 // 검색 타입 정의
 type SortType = 'name' | 'email' | 'organization' | 'progress' | 'lastActive';
@@ -221,10 +223,24 @@ export default function AdminDashboard() {
           <Settings2 className="w-4 h-4" />
           {t('admin.tabs.content')}
         </button>
+        <button
+          onClick={() => setActiveTab('school')}
+          className={`flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-medium transition-all flex-1 justify-center ${
+            activeTab === 'school'
+              ? 'bg-white text-gray-800 shadow-sm'
+              : 'text-gray-500 hover:text-gray-700'
+          }`}
+        >
+          <GraduationCap className="w-4 h-4" />
+          {t('admin.tabs.school')}
+        </button>
       </div>
 
       {/* 콘텐츠 관리 탭 */}
       {activeTab === 'content' && <ContentManager />}
+
+      {/* 학교 관리 탭 */}
+      {activeTab === 'school' && <SchoolManagement />}
 
       {/* 학생 현황 탭 */}
       {activeTab === 'students' && (

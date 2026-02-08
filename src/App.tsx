@@ -12,6 +12,14 @@ import KoreaAppsPage from './pages/KoreaAppsPage';
 import MarketingLandingPage from './pages/marketing/MarketingLandingPage';
 import MarketingModuleDetailPage from './pages/marketing/MarketingModuleDetailPage';
 import MarketingToolRouter from './pages/marketing/MarketingToolRouter';
+import MarketingHubPage from './pages/marketing/MarketingHubPage';
+import MarketingSchoolLayout from './pages/marketing/school/MarketingSchoolLayout';
+import AttendanceTab from './pages/marketing/school/AttendanceTab';
+import CurriculumTab from './pages/marketing/school/CurriculumTab';
+import LabTab from './pages/marketing/school/LabTab';
+import SchoolToolRouter from './pages/marketing/school/SchoolToolRouter';
+import ProToolsDashboard from './pages/marketing/ProToolsDashboard';
+import AISetupPage from './pages/marketing/school/AISetupPage';
 import ProfilePage from './pages/ProfilePage';
 
 export default function App() {
@@ -32,12 +40,27 @@ export default function App() {
           <Route path="/admin/organization/:orgCode" element={<OrganizationDetailPage />} />
           <Route path="/admin/organizations" element={<AdminPage />} />
 
+          {/* 마케팅 허브 (학교 시스템) */}
+          <Route path="/marketing/hub" element={<MarketingHubPage />} />
+          <Route path="/marketing/pro" element={<ProToolsDashboard />} />
+          <Route path="/marketing/school/ai-setup" element={<AISetupPage />} />
+
+          {/* 마케팅 학교 (Bottom Tab 레이아웃) */}
+          <Route path="/marketing/school" element={<MarketingSchoolLayout />}>
+            <Route path="attendance" element={<AttendanceTab />} />
+            <Route path="curriculum" element={<CurriculumTab />} />
+            <Route path="lab" element={<LabTab />} />
+          </Route>
+
+          {/* 학교 툴 (독립 페이지) */}
+          <Route path="/marketing/school/tools/:toolId" element={<SchoolToolRouter />} />
+
           {/* 트랙 내부 페이지 (사이드바 레이아웃) */}
           <Route element={<MainLayout />}>
             <Route path="/track/:trackId" element={<TrackPage />} />
             <Route path="/track/digital-basics/korea-apps" element={<KoreaAppsPage />} />
 
-            {/* 마케팅 실무 트랙 */}
+            {/* 기존 마케팅 (레거시, 코드 보존) */}
             <Route path="/marketing" element={<MarketingLandingPage />} />
             <Route path="/marketing/modules/:moduleId" element={<MarketingModuleDetailPage />} />
             <Route path="/marketing/tools/:toolId" element={<MarketingToolRouter />} />

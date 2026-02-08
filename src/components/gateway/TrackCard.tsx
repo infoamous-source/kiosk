@@ -30,10 +30,33 @@ export default function TrackCard({ track, delay = 0 }: TrackCardProps) {
   const handleClick = () => {
     handleActivityLog('click', track.id, undefined, { source: 'gateway' });
 
-    // 마케팅 트랙은 전용 랜딩 페이지로 이동
-    const targetPath = track.id === 'marketing' ? '/marketing' : `/track/${track.id}`;
+    // 마케팅 → 허브로 이동
+    if (track.id === 'marketing') {
+      const targetPath = '/marketing/hub';
+      if (!isAuthenticated) {
+        navigate('/login', { state: { redirectTo: targetPath } });
+      } else {
+        navigate(targetPath);
+      }
+      return;
+    }
 
-    // 비로그인 시 로그인 페이지로, 선택한 트랙 정보를 state로 전달
+    // 디지털, 취업은 "준비 중" 토스트
+    if (track.id === 'digital-basics' || track.id === 'career') {
+      const toast = document.createElement('div');
+      toast.className = 'fixed top-6 left-1/2 -translate-x-1/2 bg-gray-800 text-white px-6 py-3 rounded-xl shadow-lg z-[9999] text-sm font-medium';
+      toast.textContent = t('school.comingSoon');
+      document.body.appendChild(toast);
+      setTimeout(() => {
+        toast.style.opacity = '0';
+        toast.style.transition = 'opacity 0.3s';
+        setTimeout(() => toast.remove(), 300);
+      }, 2000);
+      return;
+    }
+
+    // 기타 트랙 (fallback)
+    const targetPath = `/track/${track.id}`;
     if (!isAuthenticated) {
       navigate('/login', { state: { redirectTo: targetPath } });
     } else {

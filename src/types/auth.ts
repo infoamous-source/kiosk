@@ -31,6 +31,8 @@ export interface User {
   country?: string;
   // 구독 정보
   subscription: SubscriptionInfo;
+  // 학교 진행도 (마케팅 학교)
+  schoolProgress?: import('./school').SchoolProgress;
 }
 
 export interface AuthState {

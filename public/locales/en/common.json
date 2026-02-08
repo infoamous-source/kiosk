@@ -172,7 +172,8 @@
     },
     "tabs": {
       "students": "Students",
-      "content": "Content Management"
+      "content": "Content Management",
+      "school": "School Management"
     },
     "contentManager": {
       "title": "Content Management",
@@ -576,6 +577,145 @@
       "delete": "Delete",
       "empty": "No ideas saved yet.\nUse marketing tools and save your results!",
       "noResults": "No results found."
+    }
+  },
+  "school": {
+    "comingSoon": "Coming soon! Stay tuned 🚀",
+    "hub": {
+      "badge": "K-Marketer Training",
+      "title": "Marketing Track",
+      "description": "Build your marketing skills at the school, then unlock professional tools after graduation!",
+      "backToLobby": "Back to Lobby",
+      "schoolTitle": "Marketing School",
+      "schoolDescription": "Learn marketing through 6-period curriculum and AI tools. Complete all courses to graduate!",
+      "schoolBadge": "6-Period Curriculum",
+      "graduated": "Graduated",
+      "proTitle": "Pro Marketing Tools",
+      "proDescriptionLocked": "Graduate from school to unlock 8 professional marketing tools!",
+      "proDescriptionUnlocked": "Congratulations! Use all professional marketing tools freely.",
+      "proBadge": "8 Pro Tools",
+      "proLockedBadge": "Unlock after graduation",
+      "proLocked": "You need to graduate first! Enroll in the school.",
+      "proExpired": "Your Pro tools access has expired."
+    },
+    "layout": {
+      "title": "Marketing School"
+    },
+    "nav": {
+      "attendance": "My Page",
+      "curriculum": "Schedule",
+      "lab": "AI Lab"
+    },
+    "studentCard": {
+      "schoolName": "K-Marketer School",
+      "alumni": "Alumni",
+      "id": "Student ID",
+      "statusGraduated": "Graduated",
+      "statusEnrolled": "Enrolled"
+    },
+    "stamps": {
+      "title": "Stamp Board",
+      "period": "Period"
+    },
+    "attendance": {
+      "graduationSection": "Graduation",
+      "alreadyGraduated": "You've already graduated!",
+      "congratulations": "Congratulations! Enjoy using Pro tools.",
+      "readyToGraduate": "All requirements met! You're ready to graduate.",
+      "graduateButton": "Graduate",
+      "notReady": "Graduation requirements not yet met.",
+      "notReadyHint": "Collect all 6 stamps and complete the graduation project (simulation)."
+    },
+    "curriculum": {
+      "title": "Schedule",
+      "subtitle": "Complete the 6-period curriculum in order",
+      "period": "Period",
+      "completed": "Completed"
+    },
+    "lab": {
+      "title": "AI Lab",
+      "subtitle": "Practice with marketing AI tools",
+      "graduationToggle": "Graduation",
+      "graduationSubtitle": "Complete the ROAS Simulator for your graduation project",
+      "graduationProject": "Graduation",
+      "graduationHint": "Complete this simulation to qualify for graduation"
+    },
+    "tools": {
+      "comingSoon": "This tool is coming soon. Stay tuned for updates!",
+      "completeButton": "Complete Practice ✅",
+      "alreadyCompleted": "Already completed!",
+      "graduationNote": "This is your graduation project. Completing the simulation fulfills the graduation requirement."
+    },
+    "periods": {
+      "aptitudeTest": {
+        "name": "Marketing Aptitude Test",
+        "description": "Discover your marketing type"
+      },
+      "marketScanner": {
+        "name": "Market Compass Scanner",
+        "description": "Analyze market trends and competitors"
+      },
+      "edgeMaker": {
+        "name": "Market Compass Edge Maker",
+        "description": "Create your differentiation points"
+      },
+      "viralCardMaker": {
+        "name": "Viral Card Maker",
+        "description": "Create viral content cards"
+      },
+      "perfectPlanner": {
+        "name": "Perfect Planner",
+        "description": "Plan your marketing strategy"
+      },
+      "roasSimulator": {
+        "name": "ROAS Simulator",
+        "description": "Simulate your ad return on spend"
+      }
+    },
+    "graduation": {
+      "reviewTitle": "Graduation 🎓",
+      "reviewSubtitle": "Leave a message for your instructor",
+      "reviewPlaceholder": "Share what you learned, your thoughts, etc.",
+      "submitReview": "Submit",
+      "diplomaTitle": "Diploma",
+      "diplomaBody": "This certifies successful completion of all courses at the Marketing School.",
+      "diplomaDate": "Awarded on {{date}}",
+      "proUnlocked": "Pro Marketing Tools are now unlocked!",
+      "proUnlockedHint": "Use 8 professional tools freely for 180 days",
+      "goToPro": "Go to Pro Tools",
+      "later": "Maybe later"
+    },
+    "pro": {
+      "title": "Pro Marketing Tools",
+      "subtitle": "Professional tools for graduates",
+      "backToHub": "Back to Hub",
+      "notGraduated": "Graduation Required",
+      "notGraduatedHint": "Graduate from the marketing school to access Pro tools.",
+      "goToSchool": "Go to School",
+      "expired": "Access Expired",
+      "expiredHint": "Your Pro tools access period has ended. Contact your instructor for an extension."
+    },
+    "admin": {
+      "totalEnrolled": "Total Enrolled",
+      "totalGraduated": "Graduated",
+      "totalReviews": "Reviews",
+      "studentsSection": "Students",
+      "reviewsSection": "Graduation Reviews",
+      "enrolledStudents": "Enrolled Students",
+      "daysLabel": "days extension",
+      "searchPlaceholder": "Search student ID",
+      "noStudents": "No students enrolled.",
+      "graduated": "Graduated",
+      "extend": "Extend",
+      "extended": "Extended by {{days}} days!",
+      "noReviews": "No graduation reviews yet."
+    },
+    "aiSetup": {
+      "title": "Enrollment Setup",
+      "subtitle": "Connect your AI assistant before entering the school",
+      "step1": "Connect AI",
+      "step2": "Enrolled",
+      "skip": "Skip and enroll"
     }
   },
   "apps": {
