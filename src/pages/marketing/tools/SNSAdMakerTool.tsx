@@ -5,13 +5,6 @@ import { useNavigate } from 'react-router-dom';
 import { logPortfolioActivity } from '../../../utils/portfolioLogger';
 import type { AdImageStyle } from '../../../types/marketing';
 
-const styleOptions: { value: AdImageStyle; label: string; emoji: string }[] = [
-  { value: 'realistic', label: '사실적', emoji: '📷' },
-  { value: 'illustration', label: '일러스트', emoji: '🎨' },
-  { value: '3d', label: '3D', emoji: '🧊' },
-  { value: 'popart', label: '팝아트', emoji: '🌈' },
-];
-
 const styleGradients: Record<AdImageStyle, string> = {
   realistic: 'from-gray-700 to-gray-900',
   illustration: 'from-pink-400 to-purple-500',
@@ -19,16 +12,23 @@ const styleGradients: Record<AdImageStyle, string> = {
   popart: 'from-yellow-400 via-red-400 to-pink-500',
 };
 
-const stylePatterns: Record<AdImageStyle, string> = {
-  realistic: '📸 사실적인 사진 느낌',
-  illustration: '✏️ 손으로 그린 듯한 일러스트',
-  '3d': '🧊 입체적인 3D 렌더링',
-  popart: '🎉 화려한 팝아트 스타일',
-};
-
 export default function SNSAdMakerTool() {
   const { t } = useTranslation('common');
   const navigate = useNavigate();
+
+  const styleOptions: { value: AdImageStyle; label: string; emoji: string }[] = [
+    { value: 'realistic', label: t('marketing.tools.snsAdMaker.styleRealistic'), emoji: '📷' },
+    { value: 'illustration', label: t('marketing.tools.snsAdMaker.styleIllustration'), emoji: '🎨' },
+    { value: '3d', label: t('marketing.tools.snsAdMaker.style3d'), emoji: '🧊' },
+    { value: 'popart', label: t('marketing.tools.snsAdMaker.stylePopart'), emoji: '🌈' },
+  ];
+
+  const stylePatterns: Record<AdImageStyle, string> = {
+    realistic: t('marketing.tools.snsAdMaker.styleRealisticDesc'),
+    illustration: t('marketing.tools.snsAdMaker.styleIllustrationDesc'),
+    '3d': t('marketing.tools.snsAdMaker.style3dDesc'),
+    popart: t('marketing.tools.snsAdMaker.stylePopartDesc'),
+  };
 
   const [subject, setSubject] = useState('');
   const [style, setStyle] = useState<AdImageStyle>('realistic');
@@ -74,12 +74,12 @@ export default function SNSAdMakerTool() {
       {/* Tip: Link to K-Copywriter */}
       <div className="bg-blue-50 border border-blue-100 rounded-xl p-4 mb-6">
         <p className="text-sm text-blue-700">
-          💡 아직 카피가 없나요?{' '}
+          {t('marketing.tools.snsAdMaker.noCopyMessage')}{' '}
           <button
             onClick={() => navigate('/marketing/tools/k-copywriter')}
             className="text-blue-600 hover:underline font-semibold"
           >
-            K-카피라이터에서 먼저 만들기 →
+            {t('marketing.tools.snsAdMaker.createCopyLink')}
           </button>
         </p>
       </div>
@@ -87,22 +87,22 @@ export default function SNSAdMakerTool() {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Left: Settings Panel */}
         <div className="bg-white border border-gray-200 rounded-2xl p-4 md:p-6">
-          <h2 className="font-bold text-gray-800 mb-4">설정</h2>
+          <h2 className="font-bold text-gray-800 mb-4">{t('marketing.tools.snsAdMaker.settingsTitle')}</h2>
 
           <div className="space-y-4">
             <div>
-              <label className="block text-sm font-semibold text-gray-700 mb-1">이미지 주제 *</label>
+              <label className="block text-sm font-semibold text-gray-700 mb-1">{t('marketing.tools.snsAdMaker.subjectLabel')}</label>
               <input
                 type="text"
                 value={subject}
                 onChange={(e) => setSubject(e.target.value)}
-                placeholder="예: 신선한 망고 주스, 예쁜 카페"
+                placeholder={t('marketing.tools.snsAdMaker.subjectPlaceholder')}
                 className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-blue-400 focus:outline-none"
               />
             </div>
 
             <div>
-              <label className="block text-sm font-semibold text-gray-700 mb-2">스타일</label>
+              <label className="block text-sm font-semibold text-gray-700 mb-2">{t('marketing.tools.snsAdMaker.styleLabel')}</label>
               <div className="grid grid-cols-2 gap-2">
                 {styleOptions.map((opt) => (
                   <button
@@ -124,11 +124,11 @@ export default function SNSAdMakerTool() {
             </div>
 
             <div>
-              <label className="block text-sm font-semibold text-gray-700 mb-1">광고 카피 (선택)</label>
+              <label className="block text-sm font-semibold text-gray-700 mb-1">{t('marketing.tools.snsAdMaker.copyLabel')}</label>
               <textarea
                 value={copyText}
                 onChange={(e) => setCopyText(e.target.value)}
-                placeholder="이미지 위에 올릴 텍스트를 입력하세요"
+                placeholder={t('marketing.tools.snsAdMaker.copyPlaceholder')}
                 rows={3}
                 className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-blue-400 focus:outline-none resize-none"
               />
@@ -143,7 +143,7 @@ export default function SNSAdMakerTool() {
                   : 'bg-gray-300 cursor-not-allowed'
               }`}
             >
-              미리보기 생성
+              {t('marketing.tools.snsAdMaker.generatePreview')}
               <ArrowRight className="w-5 h-5" />
             </button>
           </div>
@@ -151,7 +151,7 @@ export default function SNSAdMakerTool() {
 
         {/* Right: Instagram Preview */}
         <div>
-          <h2 className="font-bold text-gray-800 mb-4">인스타그램 미리보기</h2>
+          <h2 className="font-bold text-gray-800 mb-4">{t('marketing.tools.snsAdMaker.instagramPreview')}</h2>
 
           {showPreview ? (
             <div className="bg-white border border-gray-200 rounded-2xl overflow-hidden shadow-lg">
@@ -159,8 +159,8 @@ export default function SNSAdMakerTool() {
               <div className="flex items-center gap-3 p-3 border-b border-gray-100">
                 <div className="w-8 h-8 bg-gradient-to-br from-purple-500 to-pink-500 rounded-full" />
                 <div>
-                  <p className="text-sm font-semibold text-gray-800">my_brand</p>
-                  <p className="text-xs text-gray-400">Sponsored</p>
+                  <p className="text-sm font-semibold text-gray-800">{t('marketing.tools.snsAdMaker.brandName')}</p>
+                  <p className="text-xs text-gray-400">{t('marketing.tools.snsAdMaker.sponsored')}</p>
                 </div>
               </div>
 
@@ -186,7 +186,7 @@ export default function SNSAdMakerTool() {
 
                 {/* Mock watermark */}
                 <div className="absolute bottom-3 left-3 bg-black/20 px-2 py-1 rounded text-white/60 text-xs">
-                  Mock Preview
+                  {t('marketing.tools.snsAdMaker.mockPreview')}
                 </div>
               </div>
 
@@ -198,10 +198,10 @@ export default function SNSAdMakerTool() {
                   <span className="text-xl">📤</span>
                 </div>
                 <p className="text-sm">
-                  <span className="font-semibold">123</span> likes
+                  {t('marketing.tools.snsAdMaker.likes', { count: 123 })}
                 </p>
                 <p className="text-sm mt-1">
-                  <span className="font-semibold">my_brand</span>{' '}
+                  <span className="font-semibold">{t('marketing.tools.snsAdMaker.brandName')}</span>{' '}
                   {copyText || subject}
                 </p>
               </div>
@@ -209,8 +209,7 @@ export default function SNSAdMakerTool() {
           ) : (
             <div className="bg-gray-50 border-2 border-dashed border-gray-300 rounded-2xl aspect-square flex flex-col items-center justify-center text-gray-400">
               <Image className="w-16 h-16 mb-3 opacity-50" />
-              <p className="font-medium">설정을 입력하고</p>
-              <p className="font-medium">미리보기를 생성하세요</p>
+              <p className="font-medium text-center px-4">{t('marketing.tools.snsAdMaker.emptyMessage')}</p>
             </div>
           )}
 
@@ -220,7 +219,7 @@ export default function SNSAdMakerTool() {
               className="w-full mt-4 flex items-center justify-center gap-2 py-3 bg-gray-100 text-gray-600 rounded-xl font-semibold hover:bg-gray-200 transition-colors"
             >
               <RotateCcw className="w-5 h-5" />
-              다시 만들기
+              {t('marketing.tools.snsAdMaker.resetButton')}
             </button>
           )}
         </div>

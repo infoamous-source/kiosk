@@ -1,10 +1,41 @@
+import { useState, useRef, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { GraduationCap } from 'lucide-react';
+import { GraduationCap, Globe, ChevronDown } from 'lucide-react';
 import TrackCard from '../components/gateway/TrackCard';
 import { tracks } from '../data/tracks';
 
+const languages = [
+  { code: 'ko', label: '한국어', flag: '🇰🇷' },
+  { code: 'en', label: 'English', flag: '🇺🇸' },
+  { code: 'zh', label: '中文', flag: '🇨🇳' },
+  { code: 'ja', label: '日本語', flag: '🇯🇵' },
+  { code: 'vi', label: 'Tiếng Việt', flag: '🇻🇳' },
+  { code: 'th', label: 'ภาษาไทย', flag: '🇹🇭' },
+  { code: 'id', label: 'Bahasa Indonesia', flag: '🇮🇩' },
+  { code: 'mn', label: 'Монгол', flag: '🇲🇳' },
+  { code: 'uz', label: 'Oʻzbekcha', flag: '🇺🇿' },
+  { code: 'ne', label: 'नेपाली', flag: '🇳🇵' },
+  { code: 'tl', label: 'Filipino', flag: '🇵🇭' },
+  { code: 'my', label: 'မြန်မာ', flag: '🇲🇲' },
+  { code: 'km', label: 'ភាសាខ្មែរ', flag: '🇰🇭' },
+  { code: 'ru', label: 'Русский', flag: '🇷🇺' },
+];
+
 export default function GatewayPage() {
-  const { t } = useTranslation('common');
+  const { t, i18n } = useTranslation('common');
+  const [langOpen, setLangOpen] = useState(false);
+  const langRef = useRef<HTMLDivElement>(null);
+  const currentLang = languages.find((l) => l.code === i18n.language) || languages[0];
+
+  useEffect(() => {
+    const handler = (e: MouseEvent) => {
+      if (langRef.current && !langRef.current.contains(e.target as Node)) {
+        setLangOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handler);
+    return () => document.removeEventListener('mousedown', handler);
+  }, []);
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-slate-50 to-white">
@@ -19,6 +50,36 @@ export default function GatewayPage() {
               <h1 className="text-xl font-bold text-gray-800">Kiosk Seven</h1>
               <p className="text-xs text-gray-500">{t('gateway.subtitle')}</p>
             </div>
+          </div>
+
+          {/* 언어 선택기 */}
+          <div ref={langRef} className="relative">
+            <button
+              onClick={() => setLangOpen(!langOpen)}
+              className="flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-gray-100 transition-colors text-sm font-medium text-gray-600"
+            >
+              <Globe className="w-4 h-4" />
+              <span>{currentLang.flag}</span>
+              <span className="hidden sm:inline">{currentLang.label}</span>
+              <ChevronDown className={`w-4 h-4 transition-transform ${langOpen ? 'rotate-180' : ''}`} />
+            </button>
+
+            {langOpen && (
+              <div className="absolute right-0 top-full mt-2 bg-white rounded-xl shadow-lg border border-gray-100 py-2 min-w-[180px] max-h-[400px] overflow-y-auto z-50">
+                {languages.map((lang) => (
+                  <button
+                    key={lang.code}
+                    onClick={() => { i18n.changeLanguage(lang.code); setLangOpen(false); }}
+                    className={`w-full flex items-center gap-3 px-4 py-2.5 text-sm hover:bg-gray-50 transition-colors ${
+                      lang.code === i18n.language ? 'text-blue-600 font-semibold bg-blue-50' : 'text-gray-700'
+                    }`}
+                  >
+                    <span>{lang.flag}</span>
+                    <span>{lang.label}</span>
+                  </button>
+                ))}
+              </div>
+            )}
           </div>
         </div>
       </header>

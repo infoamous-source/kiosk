@@ -286,5 +286,175 @@
       "description": "Real-time exchange rates. Useful na global currency app para sa converting to Korean Won.",
       "tagline": "Real-time exchange rates"
     }
+  },
+  "marketing": {
+    "landing": {
+      "badge": "Marketing Skills Course",
+      "heroTitle": "Gusto mong maging\nmarketer sa Korea?",
+      "heroDescription": "Mula sa basics hanggang AI tools, tapusin ang course na ito at bumuo ng sariling marketing portfolio!",
+      "modulesUnit": " modules",
+      "hoursUnit": " oras",
+      "toolsUnit": " tools",
+      "roadmapTitle": "Learning Roadmap",
+      "lessonsUnit": " lessons",
+      "moduleCount": " modules",
+      "lessonsCount": "{{count}} lessons",
+      "toolsCount": "{{count}} tools",
+      "practiceToolsCount": "{{count}} practice tools"
+    },
+    "stages": {
+      "foundation": "Bumuo ng Foundation",
+      "practice": "Matuto ng Practice",
+      "ai": "Magsanay gamit ang AI",
+      "foundationDesc": "Master ang marketing basics",
+      "practiceDesc": "SNS at ad practice",
+      "aiDesc": "Gumawa ng ads gamit ang AI",
+      "foundation_label": "Foundation",
+      "practice_label": "Practice",
+      "ai_label": "AI"
+    },
+    "modules": {
+      "basics": { "title": "Ano ang Marketing?", "description": "Matuto ng basic marketing concepts at 2026 trends", "oneLine": "Marketing basics + Latest trends" },
+      "research": { "title": "Sino ang bumibili ng produkto ko?", "description": "Matuto ng market research at target customer analysis", "oneLine": "Market research + Target analysis" },
+      "concept": { "title": "Gumawa ng Unique Concept", "description": "Hanapin ang iyong USP at gumawa ng brand concept", "oneLine": "USP + Brand concept planning" },
+      "branding": { "title": "Design at Copywriting", "description": "Mag-design ng brand colors, logos, at product pages", "oneLine": "Branding design + Copywriting" },
+      "content": { "title": "Content Marketing", "description": "Gumawa ng content para sa Instagram, YouTube at iba pa", "oneLine": "SNS content creation" },
+      "performance": { "title": "Paid Advertising", "description": "Matuto kung paano gumastos ng ad budget para maabot ang mas maraming tao", "oneLine": "Performance marketing basics" },
+      "aiPractice": { "title": "Marketing gamit ang AI", "description": "Gumawa ng ad copy at images gamit ang AI tools", "oneLine": "Gemini AI hands-on practice" }
+    },
+    "tools": {
+      "glossary": {
+        "title": "Marketing Dictionary", "description": "Tingnan ang marketing terms nang madali",
+        "termsCount": "{{count}} terms", "noResults": "Walang resulta",
+        "categoryAll": "Lahat", "categoryBasic": "Basic", "categoryDigital": "Digital",
+        "categorySNS": "SNS", "categoryPerformance": "Performance", "categoryBranding": "Branding", "categoryAI": "AI",
+        "searchPlaceholder": "Maghanap ng terms..."
+      },
+      "personaMaker": {
+        "title": "Persona Maker", "description": "Gumawa ng virtual persona ng iyong target customer",
+        "tipMessage": "💡 Isipin ang isang tao na bibili ng iyong produkto",
+        "nameLabel": "Pangalan", "ageLabel": "Edad", "genderLabel": "Kasarian",
+        "genderMale": "Lalaki", "genderFemale": "Babae", "genderOther": "Iba pa",
+        "occupationLabel": "Trabaho", "interestsLabel": "Mga Interes / Hobbies",
+        "painPointsLabel": "Pain points", "goalsLabel": "Mga Layunin",
+        "createButton": "Gumawa ng Persona Card", "ageSuffix": " taong gulang", "unspecified": "Hindi tinukoy",
+        "copySuccess": "Nakopya!", "copyButton": "Kopyahin", "resetButton": "Gumawa Muli",
+        "personaCard": "[ Persona Card ]",
+        "nameLine": "Pangalan", "ageLine": "Edad", "genderLine": "Kasarian",
+        "occupationLine": "Trabaho", "interestsLine": "Mga Interes", "painPointsLine": "Pain points", "goalsLine": "Mga Layunin"
+      },
+      "uspFinder": {
+        "title": "USP Finder", "description": "Wizard para hanapin ang iyong unique selling point",
+        "step1": "Aking Produkto", "step2": "Mga Competitors", "step3": "Mga Lakas", "step4": "Resulta",
+        "step1Title": "Ano ang iyong produkto/serbisyo?", "step1Placeholder": "hal. Handmade cookies, nail art service...",
+        "step2Title": "Sino ang iyong mga competitors?", "step2Placeholder": "hal. Local bakery, nail shop...",
+        "step3Title": "Iyong natatanging lakas", "step3Subtitle": "Ano ang gusto ng customers",
+        "step3Placeholder": "hal. Gumagamit ng organic ingredients...", "step3CustomerPlaceholder": "hal. Healthy snacks...",
+        "resultTitle": "🎉 Handa na ang iyong USP!",
+        "prevButton": "Nakaraan", "nextButton": "Susunod", "createButton": "Gumawa ng USP",
+        "copySuccess": "Nakopya!", "copyButton": "Kopyahin", "resetButton": "Gumawa Muli"
+      },
+      "colorPicker": {
+        "title": "Emotion Color Picker", "description": "Kumuha ng color palette recommendations para sa iyong brand mood",
+        "selectEmotion": "Anong feeling ang gusto mong ibigay?",
+        "mainColor": "Main Color", "subColors": "Sub Colors", "preview": "Preview",
+        "buyButton": "Bumili Ngayon", "previewTitle": "Special offer para sa iyo", "previewSubtitle": "Magsimula ngayon",
+        "resetButton": "Pumili Muli"
+      },
+      "hashtagGenerator": {
+        "title": "Hashtag Generator", "description": "Kumuha ng related hashtag suggestions mula sa keywords",
+        "inputPlaceholder": "Maglagay ng keywords (hal. restaurant, cafe)",
+        "suggestedKeywords": "Suggested Keywords", "hashtagCount": "{{count}} hashtags",
+        "copyAllSuccess": "Lahat nakopya!", "copyAll": "Kopyahin Lahat",
+        "popular": "🔥 Popular", "niche": "💎 Niche", "general": "🌐 General",
+        "copied": "Nakopya", "tip": "Ang pagsama ng 3-5 popular + 5-7 niche hashtags ay pinakamahusay!",
+        "generateButton": "I-generate"
+      },
+      "roiCalculator": {
+        "title": "ROI Calculator", "description": "Kalkulahin ang ad spend vs revenue na may explanations",
+        "adSpendLabel": "💰 Ad Spend (KRW)", "revenueLabel": "📈 Revenue (KRW)",
+        "calculateButton": "Kalkulahin", "currencyUnit": "KRW",
+        "roasLabel": "ROAS (Return on Ad Spend)",
+        "adSpendResult": "Ad Spend", "revenueResult": "Revenue",
+        "profitLabel": "Net Profit", "roiLabel": "ROI (Return on Investment)",
+        "profitPerWon": "Bawat 1 KRW na ginastos", "profitSuffix": "KRW profit", "lossSuffix": "KRW loss",
+        "messageGreat": "Kamangha-mangha! Napakahusay ng iyong ad performance!",
+        "messageGood": "Magaling! Maganda ang performance ng iyong ads!",
+        "messageOk": "Hindi masama! Kaunting optimization ay makakatulong.",
+        "messageEven": "Break even. Pabuti natin ang ads?",
+        "messageLoss": "Lugi ka... Subukan mong baguhin ang target o ad content.",
+        "tip": "Sa pangkalahatan, ROAS na higit sa 300% ay itinuturing na maganda. Mag-aim ng 200%+ para magsimula!"
+      },
+      "kCopywriter": {
+        "title": "K-Copywriter", "description": "AI ay gumagawa ng 3 ad copy options para sa iyo",
+        "toneEmotional": "Emotional", "toneEmotionalDesc": "Mainit at puso",
+        "toneFun": "Fun", "toneFunDesc": "Playful at friendly",
+        "toneProfessional": "Professional", "toneProfessionalDesc": "Mapagkakatiwalaan at expert",
+        "productLabel": "Produkto/Serbisyo Pangalan *", "productPlaceholder": "hal. Handmade cookies, tutoring...",
+        "targetLabel": "Target Customer (opsyonal)", "targetPlaceholder": "hal. Mga babae sa 20s, office workers...",
+        "toneLabel": "Tone", "generating": "Gumagawa ng copy...", "generateButton": "I-generate ang Copy",
+        "sampleLabel": "📝 Sample Copy", "aiLabel": "✨ AI-Generated Copy", "resetButton": "I-generate Muli",
+        "optionPrefix": "Option", "copyButton": "Kopyahin", "copySuccess": "Nakopya!",
+        "noAiMessage": "Hindi nakakonekta ang AI assistant. Pakikonekta ang iyong API key mula sa Marketing home."
+      },
+      "snsAdMaker": {
+        "title": "SNS Ad Maker", "description": "Gumawa ng ad images gamit ang AI at i-preview sa Instagram",
+        "settingsTitle": "Settings", "subjectLabel": "Image Subject *",
+        "subjectPlaceholder": "hal. Masarap na chocolate cake",
+        "styleLabel": "Style", "styleRealistic": "Realistic", "styleIllustration": "Illustration",
+        "style3d": "3D", "stylePopart": "Pop Art",
+        "promptRealistic": "📸 Realistic photo style", "promptIllustration": "✏️ Hand-drawn illustration",
+        "prompt3d": "🧊 3D rendering", "promptPopart": "🎉 Vibrant pop art style",
+        "copyLabel": "Ad Copy (opsyonal)", "copyPlaceholder": "hal. Mag-order na!",
+        "generatePreview": "I-generate ang Preview", "instagramPreview": "Instagram Preview",
+        "brandName": "my_brand", "sponsored": "Sponsored", "mockPreview": "Mock Preview",
+        "likes": "{{count}} likes", "emptyMessage": "Maglagay ng settings at gumawa ng preview",
+        "resetButton": "Gumawa Muli"
+      },
+      "back": "Bumalik"
+    },
+    "recommend": {
+      "title": "Recommended para sa iyo!",
+      "subtitle": "Perpekto ang course na ito kung tumutugma ka sa alinman sa mga ito",
+      "target1": "International students na gustong magkaroon ng marketing job sa Korea",
+      "target2": "Mga migrante na gustong magbenta ng produkto online",
+      "target3": "Sinumang gustong bumuo ng sariling brand sa SNS",
+      "target4": "Sinumang interesado sa AI-powered marketing"
+    },
+    "instructor": {
+      "sectionTitle": "Instructor",
+      "title": "Marketing Skills Training Specialist",
+      "description": "Marketing education expert na tumutulong sa mga migrante at international students na bumuo ng career skills.",
+      "credential1": "Certified Digital Marketing Expert",
+      "credential2": "5 taong teaching experience para sa mga migrante",
+      "credential3": "Active online marketing consultant"
+    },
+    "moduleDetail": {
+      "back": "Bumalik sa Marketing",
+      "learningTitle": "Learning Content",
+      "toolsTitle": "Practice Tools",
+      "tryTool": "Subukan",
+      "notFound": "Hindi nahanap ang module.",
+      "backToMarketing": "Bumalik sa Marketing home"
+    },
+    "aiConnect": {
+      "title": "Ikonekta ang Aking Marketing AI Assistant",
+      "description": "Ikonekta ang iyong AI assistant para ma-unlock ang ad copywriting, image generation, at iba pa!",
+      "helpLink": "Saan ko makukuha ang key?",
+      "guide": "Makakakuha ka ng free API key mula sa Google AI Studio. I-click ang Get API Key button. Ang iyong key ay nakaimbak lang sa iyong device.",
+      "keyLabel": "Gemini API Key",
+      "keyPlaceholder": "AIza...",
+      "connectButton": "I-verify ang Connection",
+      "connecting": "Nag-verify...",
+      "connected": "Nakakonekta ang AI Assistant!",
+      "connectedHint": "Maaari mo nang gamitin ang lahat ng AI features",
+      "disconnect": "Idiskonekta",
+      "startLearning": "Magsimula ng Marketing Course",
+      "skipHint": "Maaari mo pa ring matutunan ang basics nang walang API key",
+      "errorEmpty": "Pakipasukin ang iyong API key",
+      "errorInvalid": "Pakisuri ang iyong key. Hindi valid ang API key.",
+      "errorQuota": "Nalampasan ang API quota. Pakisubukang muli mamaya.",
+      "errorGeneral": "Nabigo ang connection. Pakisuri ang iyong key o subukang muli mamaya."
+    }
   }
 }

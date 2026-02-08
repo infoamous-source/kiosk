@@ -286,5 +286,207 @@
       "description": "Nilai tukar real-time. Aplikasi mata uang global berguna untuk konversi ke Won Korea.",
       "tagline": "Nilai tukar real-time"
     }
+  },
+  "marketing": {
+    "landing": {
+      "badge": "Kursus Keterampilan Marketing",
+      "heroTitle": "Ingin menjadi marketer\ndi Korea?",
+      "heroDescription": "Dari dasar hingga alat AI, selesaikan kursus ini dan bangun portofolio marketing Anda sendiri!",
+      "modulesUnit": " modul",
+      "hoursUnit": " jam",
+      "toolsUnit": " alat",
+      "roadmapTitle": "Peta Pembelajaran",
+      "lessonsUnit": " pelajaran",
+      "moduleCount": " modul",
+      "lessonsCount": "{{count}} pelajaran",
+      "toolsCount": "{{count}} alat",
+      "practiceToolsCount": "{{count}} alat praktik"
+    },
+    "stages": {
+      "foundation": "Bangun Fondasi",
+      "practice": "Belajar Praktik",
+      "ai": "Praktik dengan AI",
+      "foundationDesc": "Kuasai dasar marketing",
+      "practiceDesc": "Praktik SNS & iklan",
+      "aiDesc": "Buat iklan dengan AI",
+      "foundation_label": "Fondasi",
+      "practice_label": "Praktik",
+      "ai_label": "AI"
+    },
+    "modules": {
+      "basics": {
+        "title": "Dasar Marketing",
+        "description": "Memahami konsep marketing dasar dan terminologi",
+        "oneLine": "Konsep inti dari definisi marketing hingga 4P"
+      },
+      "research": {
+        "title": "Riset Pasar",
+        "description": "Memahami pelanggan dan menganalisis pesaing",
+        "oneLine": "Persona pelanggan, analisis kompetitor, tren pasar"
+      },
+      "concept": {
+        "title": "Strategi Konsep",
+        "description": "Membangun konsep produk dan branding",
+        "oneLine": "USP, positioning, strategi diferensiasi"
+      },
+      "branding": {
+        "title": "Desain Branding",
+        "description": "Identitas brand dan strategi visual",
+        "oneLine": "Logo, warna, font, panduan identitas brand"
+      },
+      "content": {
+        "title": "Marketing Konten",
+        "description": "SNS dan strategi marketing konten",
+        "oneLine": "Instagram, YouTube, TikTok, copywriting"
+      },
+      "performance": {
+        "title": "Marketing Performa",
+        "description": "Iklan digital dan pengukuran ROI",
+        "oneLine": "Iklan Meta, Google Ads, analisis data"
+      },
+      "aiPractice": {
+        "title": "Praktik Alat AI",
+        "description": "Buat materi marketing dengan alat AI",
+        "oneLine": "Copy AI, pembuat gambar iklan, generator hashtag"
+      }
+    },
+    "tools": {
+      "back": "Kembali",
+      "glossary": {
+        "title": "Glosarium Marketing",
+        "description": "Kamus istilah marketing yang paling sering digunakan",
+        "searchPlaceholder": "Cari istilah marketing...",
+        "allCategories": "Semua Kategori",
+        "noResults": "Istilah tidak ditemukan",
+        "termCount": "istilah"
+      },
+      "personaMaker": {
+        "title": "Pembuat Persona Pelanggan",
+        "description": "Buat persona pelanggan target Anda",
+        "productName": "Nama Produk/Layanan",
+        "productNamePlaceholder": "Contoh: Kursus online Korea",
+        "targetFeatures": "Fitur Target",
+        "targetFeaturesPlaceholder": "Contoh: Usia 20-30, pekerja asing, tertarik belajar Korea",
+        "generate": "Buat Persona",
+        "resultTitle": "Persona Pelanggan",
+        "copyButton": "Salin",
+        "downloadButton": "Unduh sebagai Gambar"
+      },
+      "uspFinder": {
+        "title": "Pencari USP",
+        "description": "Temukan keunggulan unik produk Anda",
+        "productName": "Nama Produk/Layanan",
+        "productNamePlaceholder": "Contoh: Kursus online Korea",
+        "productFeatures": "Fitur Produk",
+        "productFeaturesPlaceholder": "Contoh: Video asli Korea, kelas langsung 1:1, harga terjangkau",
+        "competitors": "Pesaing",
+        "competitorsPlaceholder": "Contoh: Duolingo, Talk To Me In Korean",
+        "generate": "Temukan USP",
+        "resultTitle": "USP yang Direkomendasikan"
+      },
+      "colorPicker": {
+        "title": "Pemilih Warna Brand",
+        "description": "Temukan warna yang cocok dengan identitas brand Anda",
+        "brandKeywords": "Kata Kunci Brand",
+        "brandKeywordsPlaceholder": "Contoh: Profesional, modern, dapat dipercaya",
+        "industry": "Industri",
+        "industryPlaceholder": "Contoh: Pendidikan, teknologi, F&B",
+        "generate": "Rekomendasikan Warna",
+        "resultTitle": "Palet Warna yang Direkomendasikan",
+        "primaryColor": "Warna Utama",
+        "secondaryColor": "Warna Sekunder",
+        "accentColor": "Warna Aksen"
+      },
+      "hashtagGenerator": {
+        "title": "Generator Hashtag",
+        "description": "Buat hashtag optimal untuk posting SNS",
+        "platform": "Platform",
+        "contentDescription": "Deskripsi Konten",
+        "contentDescriptionPlaceholder": "Contoh: Posting tentang kelas belajar Korea",
+        "targetAudience": "Audiens Target",
+        "targetAudiencePlaceholder": "Contoh: Pekerja asing di Korea",
+        "generate": "Buat Hashtag",
+        "resultTitle": "Hashtag yang Direkomendasikan",
+        "copyAll": "Salin Semua"
+      },
+      "roiCalculator": {
+        "title": "Kalkulator ROI Iklan",
+        "description": "Hitung efektivitas kampanye iklan Anda",
+        "adSpend": "Biaya Iklan",
+        "adSpendPlaceholder": "Contoh: 1000000",
+        "revenue": "Pendapatan",
+        "revenuePlaceholder": "Contoh: 3000000",
+        "calculate": "Hitung ROI",
+        "resultTitle": "Hasil Analisis",
+        "roiLabel": "ROI",
+        "roasLabel": "ROAS",
+        "profitLabel": "Keuntungan",
+        "interpretation": "Interpretasi"
+      },
+      "kCopywriter": {
+        "title": "Pembuat Copy Korea",
+        "description": "Buat copy marketing dalam gaya Korea",
+        "productName": "Nama Produk",
+        "productNamePlaceholder": "Contoh: Kursus online Korea",
+        "keyMessage": "Pesan Kunci",
+        "keyMessagePlaceholder": "Contoh: Belajar Korea dalam 3 bulan",
+        "tone": "Nada",
+        "toneOptions": {
+          "professional": "Profesional",
+          "friendly": "Ramah",
+          "trendy": "Trendi",
+          "emotional": "Emosional"
+        },
+        "generate": "Buat Copy",
+        "resultTitle": "Copy yang Dihasilkan"
+      },
+      "snsAdMaker": {
+        "title": "Pembuat Iklan SNS",
+        "description": "Buat konsep iklan SNS dengan AI",
+        "platform": "Platform",
+        "platformOptions": {
+          "instagram": "Instagram",
+          "facebook": "Facebook",
+          "youtube": "YouTube",
+          "tiktok": "TikTok"
+        },
+        "productName": "Nama Produk",
+        "productNamePlaceholder": "Contoh: Kursus online Korea",
+        "targetAudience": "Audiens Target",
+        "targetAudiencePlaceholder": "Contoh: Pekerja asing 20-30 tahun",
+        "keyMessage": "Pesan Kunci",
+        "keyMessagePlaceholder": "Contoh: Belajar Korea mudah dan menyenangkan",
+        "generate": "Buat Konsep Iklan",
+        "resultTitle": "Konsep Iklan",
+        "imagePrompt": "Prompt Gambar",
+        "adCopy": "Copy Iklan",
+        "hashtags": "Hashtag"
+      }
+    },
+    "recommend": {
+      "title": "Direkomendasikan untuk Anda!",
+      "subtitle": "Kursus ini sempurna jika Anda cocok dengan salah satu dari ini",
+      "target1": "Pekerja asing yang ingin bekerja di bidang marketing di Korea",
+      "target2": "Ingin memulai bisnis online atau menjual produk",
+      "target3": "Tertarik pada SNS marketing dan pembuatan konten",
+      "target4": "Ingin mempelajari marketing praktis dengan alat AI"
+    },
+    "instructor": {
+      "name": "Tim Kiosk Seven",
+      "title": "Spesialis Marketing Digital",
+      "experience": "Pengalaman 10+ tahun di marketing digital dan pendidikan"
+    },
+    "moduleDetail": {
+      "back": "Kembali ke Marketing",
+      "learningTitle": "Konten Pembelajaran",
+      "toolsTitle": "Alat Praktik",
+      "tryTool": "Coba",
+      "notFound": "Modul tidak ditemukan.",
+      "backToMarketing": "Kembali ke Beranda Marketing"
+    },
+    "aiConnect": {
+      "title": "Terhubung dengan AI",
+      "description": "Buat materi marketing dengan alat AI praktis"
+    }
   }
 }

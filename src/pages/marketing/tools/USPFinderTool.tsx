@@ -18,11 +18,16 @@ const initialData: USPData = {
   targetNeeds: '',
 };
 
-const steps = ['내 제품', '경쟁자', '강점', '결과'];
-
 export default function USPFinderTool() {
   const { t } = useTranslation('common');
   const navigate = useNavigate();
+
+  const steps = [
+    t('marketing.tools.uspFinder.step1'),
+    t('marketing.tools.uspFinder.step2'),
+    t('marketing.tools.uspFinder.step3'),
+    t('marketing.tools.uspFinder.step4')
+  ];
   const [currentStep, setCurrentStep] = useState(0);
   const [data, setData] = useState<USPData>(initialData);
   const [copied, setCopied] = useState(false);
@@ -131,13 +136,13 @@ export default function USPFinderTool() {
       <div className="bg-white border border-gray-200 rounded-2xl p-4 md:p-6">
         {currentStep === 0 && (
           <div>
-            <h2 className="text-lg font-bold text-gray-800 mb-2">1단계: 내 제품/서비스는?</h2>
-            <p className="text-gray-500 text-sm mb-4">팔고 싶은 물건이나 서비스의 이름을 적어주세요.</p>
+            <h2 className="text-lg font-bold text-gray-800 mb-2">{t('marketing.tools.uspFinder.step1Title')}</h2>
+            <p className="text-gray-500 text-sm mb-4">{t('marketing.tools.uspFinder.step1Description')}</p>
             <input
               type="text"
               value={data.productName}
               onChange={(e) => updateField('productName', e.target.value)}
-              placeholder="예: 홈메이드 망고 주스"
+              placeholder={t('marketing.tools.uspFinder.step1Placeholder')}
               className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-blue-400 focus:outline-none"
             />
           </div>
@@ -145,12 +150,12 @@ export default function USPFinderTool() {
 
         {currentStep === 1 && (
           <div>
-            <h2 className="text-lg font-bold text-gray-800 mb-2">2단계: 경쟁자는 누구?</h2>
-            <p className="text-gray-500 text-sm mb-4">비슷한 물건을 파는 다른 곳은 어디인가요?</p>
+            <h2 className="text-lg font-bold text-gray-800 mb-2">{t('marketing.tools.uspFinder.step2Title')}</h2>
+            <p className="text-gray-500 text-sm mb-4">{t('marketing.tools.uspFinder.step2Description')}</p>
             <textarea
               value={data.competitors}
               onChange={(e) => updateField('competitors', e.target.value)}
-              placeholder="예: 편의점 주스, 카페 스무디, 마트 주스"
+              placeholder={t('marketing.tools.uspFinder.step2Placeholder')}
               rows={3}
               className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-blue-400 focus:outline-none resize-none"
             />
@@ -160,23 +165,23 @@ export default function USPFinderTool() {
         {currentStep === 2 && (
           <div className="space-y-4">
             <div>
-              <h2 className="text-lg font-bold text-gray-800 mb-2">3단계: 나만의 강점</h2>
-              <p className="text-gray-500 text-sm mb-4">경쟁자와 다른 나만의 특별한 점은?</p>
+              <h2 className="text-lg font-bold text-gray-800 mb-2">{t('marketing.tools.uspFinder.step3Title')}</h2>
+              <p className="text-gray-500 text-sm mb-4">{t('marketing.tools.uspFinder.step3Description')}</p>
               <textarea
                 value={data.strengths}
                 onChange={(e) => updateField('strengths', e.target.value)}
-                placeholder="예: 당일 수확한 생망고만 사용, 설탕 무첨가"
+                placeholder={t('marketing.tools.uspFinder.step3Placeholder')}
                 rows={3}
                 className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-blue-400 focus:outline-none resize-none"
               />
             </div>
             <div>
-              <h2 className="text-lg font-bold text-gray-800 mb-2">고객이 원하는 것</h2>
-              <p className="text-gray-500 text-sm mb-4">타겟 고객이 가장 원하는 것은?</p>
+              <h2 className="text-lg font-bold text-gray-800 mb-2">{t('marketing.tools.uspFinder.step3Subtitle')}</h2>
+              <p className="text-gray-500 text-sm mb-4">{t('marketing.tools.uspFinder.step3SubDescription')}</p>
               <textarea
                 value={data.targetNeeds}
                 onChange={(e) => updateField('targetNeeds', e.target.value)}
-                placeholder="예: 건강한 음료, 신선한 과일 맛"
+                placeholder={t('marketing.tools.uspFinder.step3SubPlaceholder')}
                 rows={2}
                 className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-blue-400 focus:outline-none resize-none"
               />
@@ -186,7 +191,7 @@ export default function USPFinderTool() {
 
         {currentStep === 3 && (
           <div>
-            <h2 className="text-lg font-bold text-gray-800 mb-4">🎉 당신의 USP가 완성됐어요!</h2>
+            <h2 className="text-lg font-bold text-gray-800 mb-4">{t('marketing.tools.uspFinder.resultTitle')}</h2>
             <div className="bg-gradient-to-br from-blue-50 to-indigo-50 border-2 border-blue-200 rounded-xl p-6">
               <p className="text-lg text-gray-800 leading-relaxed font-medium">
                 {generateUSP()}
@@ -195,7 +200,7 @@ export default function USPFinderTool() {
 
             <div className="mt-6 bg-yellow-50 border border-yellow-200 rounded-xl p-4">
               <p className="text-sm text-yellow-800">
-                💡 <strong>팁:</strong> 이 USP를 광고 카피, 소개 페이지, SNS 프로필에 활용해보세요!
+                {t('marketing.tools.uspFinder.tipMessage')}
               </p>
             </div>
 
@@ -207,12 +212,12 @@ export default function USPFinderTool() {
                 {copied ? (
                   <>
                     <CheckCircle className="w-5 h-5" />
-                    복사 완료!
+                    {t('marketing.tools.uspFinder.copySuccess')}
                   </>
                 ) : (
                   <>
                     <Copy className="w-5 h-5" />
-                    USP 복사하기
+                    {t('marketing.tools.uspFinder.copyButton')}
                   </>
                 )}
               </button>
@@ -221,7 +226,7 @@ export default function USPFinderTool() {
                 className="flex items-center justify-center gap-2 px-6 py-3 bg-gray-100 text-gray-600 rounded-xl font-semibold hover:bg-gray-200 transition-colors"
               >
                 <RotateCcw className="w-5 h-5" />
-                다시
+                {t('marketing.tools.uspFinder.resetButton')}
               </button>
             </div>
           </div>
@@ -235,7 +240,7 @@ export default function USPFinderTool() {
                 onClick={handleBack}
                 className="px-6 py-3 bg-gray-100 text-gray-600 rounded-xl font-semibold hover:bg-gray-200 transition-colors"
               >
-                이전
+                {t('marketing.tools.uspFinder.prevButton')}
               </button>
             )}
             <button
@@ -247,7 +252,7 @@ export default function USPFinderTool() {
                   : 'bg-gray-300 cursor-not-allowed'
               }`}
             >
-              {currentStep === 2 ? 'USP 만들기' : '다음'}
+              {currentStep === 2 ? t('marketing.tools.uspFinder.createButton') : t('marketing.tools.uspFinder.nextButton')}
               <ArrowRight className="w-5 h-5" />
             </button>
           </div>

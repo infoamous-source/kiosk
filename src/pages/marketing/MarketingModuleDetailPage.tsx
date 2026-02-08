@@ -25,12 +25,12 @@ export default function MarketingModuleDetailPage() {
   if (!module) {
     return (
       <div className="max-w-3xl mx-auto px-4 py-12 text-center">
-        <p className="text-gray-500 text-lg">모듈을 찾을 수 없습니다.</p>
+        <p className="text-gray-500 text-lg">{t('marketing.moduleDetail.notFound', 'Module not found.')}</p>
         <button
           onClick={() => navigate('/marketing')}
           className="mt-4 text-blue-600 hover:underline"
         >
-          마케팅 홈으로 돌아가기
+          {t('marketing.moduleDetail.backToMarketing', 'Back to Marketing home')}
         </button>
       </div>
     );
@@ -82,10 +82,10 @@ export default function MarketingModuleDetailPage() {
                 <Clock className="w-4 h-4" /> {module.duration}
               </span>
               <span className="flex items-center gap-1">
-                <GraduationCap className="w-4 h-4" /> {module.lessons}개 학습
+                <GraduationCap className="w-4 h-4" /> {t('marketing.landing.lessonsCount', { count: module.lessons })}
               </span>
               <span className="flex items-center gap-1">
-                <Wrench className="w-4 h-4" /> {module.toolIds.length}개 실무 툴
+                <Wrench className="w-4 h-4" /> {t('marketing.landing.practiceToolsCount', { count: module.toolIds.length })}
               </span>
             </div>
           </div>

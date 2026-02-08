@@ -50,14 +50,14 @@ export default function PersonaMakerTool() {
 
   const handleCopy = async () => {
     const text = [
-      '[ 페르소나 카드 ]',
-      `이름: ${form.name}`,
-      `나이: ${form.age}세`,
-      `성별: ${form.gender}`,
-      `직업: ${form.occupation}`,
-      `관심사: ${form.interests}`,
-      `고민: ${form.painPoints}`,
-      `목표: ${form.goals}`,
+      `[ ${t('marketing.tools.personaMaker.personaCard')} ]`,
+      `${t('marketing.tools.personaMaker.nameLine')}: ${form.name}`,
+      `${t('marketing.tools.personaMaker.ageLine')}: ${form.age}${t('marketing.tools.personaMaker.ageSuffix')}`,
+      `${t('marketing.tools.personaMaker.genderLine')}: ${form.gender}`,
+      `${t('marketing.tools.personaMaker.occupationLine')}: ${form.occupation}`,
+      `${t('marketing.tools.personaMaker.interestsLine')}: ${form.interests}`,
+      `${t('marketing.tools.personaMaker.painPointsLine')}: ${form.painPoints}`,
+      `${t('marketing.tools.personaMaker.goalsLine')}: ${form.goals}`,
     ].join('\n');
 
     try {
@@ -77,9 +77,9 @@ export default function PersonaMakerTool() {
   };
 
   const genderOptions = [
-    { value: '남성', label: '남성' },
-    { value: '여성', label: '여성' },
-    { value: '기타', label: '기타' },
+    { value: '남성', label: t('marketing.tools.personaMaker.genderMale') },
+    { value: '여성', label: t('marketing.tools.personaMaker.genderFemale') },
+    { value: '기타', label: t('marketing.tools.personaMaker.genderOther') },
   ];
 
   return (
@@ -103,17 +103,17 @@ export default function PersonaMakerTool() {
       {!showResult ? (
         <div className="space-y-4">
           <div className="bg-blue-50 border border-blue-100 rounded-xl p-4 mb-2">
-            <p className="text-sm text-blue-700">💡 내 물건을 살 것 같은 사람을 한 명 상상해보세요. 자세히 적을수록 마케팅이 쉬워져요!</p>
+            <p className="text-sm text-blue-700">{t('marketing.tools.personaMaker.tipMessage')}</p>
           </div>
 
           {/* Name */}
           <div>
-            <label className="block text-sm font-semibold text-gray-700 mb-1">이름 *</label>
+            <label className="block text-sm font-semibold text-gray-700 mb-1">{t('marketing.tools.personaMaker.nameLabel')} *</label>
             <input
               type="text"
               value={form.name}
               onChange={(e) => updateField('name', e.target.value)}
-              placeholder="예: 김민수"
+              placeholder={t('marketing.tools.personaMaker.namePlaceholder')}
               className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-blue-400 focus:outline-none"
             />
           </div>
@@ -121,17 +121,17 @@ export default function PersonaMakerTool() {
           {/* Age & Gender Row */}
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-sm font-semibold text-gray-700 mb-1">나이 *</label>
+              <label className="block text-sm font-semibold text-gray-700 mb-1">{t('marketing.tools.personaMaker.ageLabel')} *</label>
               <input
                 type="number"
                 value={form.age}
                 onChange={(e) => updateField('age', e.target.value)}
-                placeholder="예: 25"
+                placeholder={t('marketing.tools.personaMaker.agePlaceholder')}
                 className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-blue-400 focus:outline-none"
               />
             </div>
             <div>
-              <label className="block text-sm font-semibold text-gray-700 mb-1">성별</label>
+              <label className="block text-sm font-semibold text-gray-700 mb-1">{t('marketing.tools.personaMaker.genderLabel')}</label>
               <div className="flex gap-2">
                 {genderOptions.map((opt) => (
                   <button
@@ -152,35 +152,35 @@ export default function PersonaMakerTool() {
 
           {/* Occupation */}
           <div>
-            <label className="block text-sm font-semibold text-gray-700 mb-1">직업 *</label>
+            <label className="block text-sm font-semibold text-gray-700 mb-1">{t('marketing.tools.personaMaker.occupationLabel')} *</label>
             <input
               type="text"
               value={form.occupation}
               onChange={(e) => updateField('occupation', e.target.value)}
-              placeholder="예: 대학생, 직장인, 주부"
+              placeholder={t('marketing.tools.personaMaker.occupationPlaceholder')}
               className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-blue-400 focus:outline-none"
             />
           </div>
 
           {/* Interests */}
           <div>
-            <label className="block text-sm font-semibold text-gray-700 mb-1">관심사 / 취미</label>
+            <label className="block text-sm font-semibold text-gray-700 mb-1">{t('marketing.tools.personaMaker.interestsLabel')}</label>
             <input
               type="text"
               value={form.interests}
               onChange={(e) => updateField('interests', e.target.value)}
-              placeholder="예: 카페 탐방, 인스타그램, 여행"
+              placeholder={t('marketing.tools.personaMaker.interestsPlaceholder')}
               className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-blue-400 focus:outline-none"
             />
           </div>
 
           {/* Pain Points */}
           <div>
-            <label className="block text-sm font-semibold text-gray-700 mb-1">고민 / 불편한 점</label>
+            <label className="block text-sm font-semibold text-gray-700 mb-1">{t('marketing.tools.personaMaker.painPointsLabel')}</label>
             <textarea
               value={form.painPoints}
               onChange={(e) => updateField('painPoints', e.target.value)}
-              placeholder="예: 좋은 카페를 찾기 어려워요, 시간이 부족해요"
+              placeholder={t('marketing.tools.personaMaker.painPointsPlaceholder')}
               rows={2}
               className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-blue-400 focus:outline-none resize-none"
             />
@@ -188,11 +188,11 @@ export default function PersonaMakerTool() {
 
           {/* Goals */}
           <div>
-            <label className="block text-sm font-semibold text-gray-700 mb-1">목표 / 원하는 것</label>
+            <label className="block text-sm font-semibold text-gray-700 mb-1">{t('marketing.tools.personaMaker.goalsLabel')}</label>
             <textarea
               value={form.goals}
               onChange={(e) => updateField('goals', e.target.value)}
-              placeholder="예: 새로운 경험을 하고 싶어요, 가성비 좋은 제품을 찾고 싶어요"
+              placeholder={t('marketing.tools.personaMaker.goalsPlaceholder')}
               rows={2}
               className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-blue-400 focus:outline-none resize-none"
             />
@@ -207,7 +207,7 @@ export default function PersonaMakerTool() {
                 : 'bg-gray-300 cursor-not-allowed'
             }`}
           >
-            페르소나 카드 만들기
+            {t('marketing.tools.personaMaker.createButton')}
           </button>
         </div>
       ) : (
@@ -222,7 +222,7 @@ export default function PersonaMakerTool() {
                 </div>
                 <div>
                   <h2 className="text-xl md:text-2xl font-bold">{form.name}</h2>
-                  <p className="text-blue-100">{form.age}세 · {form.gender || '미지정'} · {form.occupation}</p>
+                  <p className="text-blue-100">{form.age}{t('marketing.tools.personaMaker.ageSuffix')} · {form.gender || t('marketing.tools.personaMaker.unspecified')} · {form.occupation}</p>
                 </div>
               </div>
             </div>
@@ -259,12 +259,12 @@ export default function PersonaMakerTool() {
               {copied ? (
                 <>
                   <CheckCircle className="w-5 h-5" />
-                  복사 완료!
+                  {t('marketing.tools.personaMaker.copySuccess')}
                 </>
               ) : (
                 <>
                   <Copy className="w-5 h-5" />
-                  텍스트 복사
+                  {t('marketing.tools.personaMaker.copyButton')}
                 </>
               )}
             </button>
@@ -273,7 +273,7 @@ export default function PersonaMakerTool() {
               className="flex items-center justify-center gap-2 px-6 py-3 bg-gray-100 text-gray-600 rounded-xl font-semibold hover:bg-gray-200 transition-colors"
             >
               <RotateCcw className="w-5 h-5" />
-              다시 만들기
+              {t('marketing.tools.personaMaker.resetButton')}
             </button>
           </div>
         </div>

@@ -9,15 +9,15 @@ import type { CopywriterOutput } from '../../../types/marketing';
 
 type Tone = 'emotional' | 'fun' | 'serious';
 
-const toneOptions: { value: Tone; label: string; emoji: string; desc: string }[] = [
-  { value: 'emotional', label: '감성적', emoji: '💖', desc: '따뜻하고 마음을 움직이는' },
-  { value: 'fun', label: '재미있게', emoji: '😄', desc: '유쾌하고 친근한' },
-  { value: 'serious', label: '전문적', emoji: '💼', desc: '신뢰감 있고 전문적인' },
-];
-
 export default function KCopywriterTool() {
   const { t } = useTranslation('common');
   const navigate = useNavigate();
+
+  const toneOptions: { value: Tone; label: string; emoji: string; desc: string }[] = [
+    { value: 'emotional', label: t('marketing.tools.kCopywriter.toneEmotional'), emoji: '💖', desc: t('marketing.tools.kCopywriter.toneEmotionalDesc') },
+    { value: 'fun', label: t('marketing.tools.kCopywriter.toneFun'), emoji: '😄', desc: t('marketing.tools.kCopywriter.toneFunDesc') },
+    { value: 'serious', label: t('marketing.tools.kCopywriter.toneProfessional'), emoji: '💼', desc: t('marketing.tools.kCopywriter.toneProfessionalDesc') },
+  ];
 
   const [productName, setProductName] = useState('');
   const [target, setTarget] = useState('');
@@ -91,12 +91,12 @@ export default function KCopywriterTool() {
       {!aiEnabled && (
         <div className="bg-yellow-50 border border-yellow-200 rounded-xl p-4 mb-6">
           <p className="text-sm text-yellow-800">
-            💡 AI 비서가 연결되지 않았어요. 샘플 카피를 보여드릴게요!
+            {t('marketing.tools.kCopywriter.noAiMessage')}
             <button
               onClick={() => navigate('/marketing')}
               className="ml-1 text-blue-600 hover:underline font-medium"
             >
-              AI 비서 연결하기 →
+              {t('marketing.tools.kCopywriter.connectAi')}
             </button>
           </p>
         </div>
@@ -106,30 +106,30 @@ export default function KCopywriterTool() {
       <div className="bg-white border border-gray-200 rounded-2xl p-4 md:p-6 mb-6">
         <div className="space-y-4">
           <div>
-            <label className="block text-sm font-semibold text-gray-700 mb-1">상품/서비스 이름 *</label>
+            <label className="block text-sm font-semibold text-gray-700 mb-1">{t('marketing.tools.kCopywriter.productLabel')}</label>
             <input
               type="text"
               value={productName}
               onChange={(e) => setProductName(e.target.value)}
-              placeholder="예: 홈메이드 망고 주스, 카페 라떼"
+              placeholder={t('marketing.tools.kCopywriter.productPlaceholder')}
               className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-blue-400 focus:outline-none"
             />
           </div>
 
           <div>
-            <label className="block text-sm font-semibold text-gray-700 mb-1">타겟 고객 (선택)</label>
+            <label className="block text-sm font-semibold text-gray-700 mb-1">{t('marketing.tools.kCopywriter.targetLabel')}</label>
             <input
               type="text"
               value={target}
               onChange={(e) => setTarget(e.target.value)}
-              placeholder="예: 20대 여성, 건강을 중시하는 직장인"
+              placeholder={t('marketing.tools.kCopywriter.targetPlaceholder')}
               className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-blue-400 focus:outline-none"
             />
           </div>
 
           {/* Tone Selection */}
           <div>
-            <label className="block text-sm font-semibold text-gray-700 mb-2">분위기</label>
+            <label className="block text-sm font-semibold text-gray-700 mb-2">{t('marketing.tools.kCopywriter.toneLabel')}</label>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
               {toneOptions.map((opt) => (
                 <button
@@ -163,12 +163,12 @@ export default function KCopywriterTool() {
             {loading ? (
               <>
                 <Loader2 className="w-5 h-5 animate-spin" />
-                카피 생성 중...
+                {t('marketing.tools.kCopywriter.generating')}
               </>
             ) : (
               <>
                 <Sparkles className="w-5 h-5" />
-                카피 만들기
+                {t('marketing.tools.kCopywriter.generateButton')}
               </>
             )}
           </button>
@@ -180,14 +180,14 @@ export default function KCopywriterTool() {
         <div>
           <div className="flex items-center justify-between mb-4">
             <h2 className="text-lg font-bold text-gray-800">
-              {result.isMockData ? '📝 샘플 카피' : '✨ AI가 만든 카피'}
+              {result.isMockData ? t('marketing.tools.kCopywriter.sampleLabel') : t('marketing.tools.kCopywriter.aiLabel')}
             </h2>
             <button
               onClick={handleReset}
               className="flex items-center gap-1 text-sm text-gray-500 hover:text-gray-700"
             >
               <RotateCcw className="w-4 h-4" />
-              다시 만들기
+              {t('marketing.tools.kCopywriter.resetButton')}
             </button>
           </div>
 
@@ -199,7 +199,7 @@ export default function KCopywriterTool() {
               >
                 <p className="text-gray-800 text-lg leading-relaxed mb-3">"{copy}"</p>
                 <div className="flex items-center justify-between">
-                  <span className="text-xs text-gray-400">옵션 {idx + 1}</span>
+                  <span className="text-xs text-gray-400">{t('marketing.tools.kCopywriter.optionPrefix')} {idx + 1}</span>
                   <button
                     onClick={() => handleCopy(copy, idx)}
                     className="flex items-center gap-1.5 px-3 py-1.5 bg-blue-50 text-blue-600 rounded-lg text-sm font-medium hover:bg-blue-100 transition-colors"
@@ -207,12 +207,12 @@ export default function KCopywriterTool() {
                     {copiedIdx === idx ? (
                       <>
                         <CheckCircle className="w-4 h-4" />
-                        복사 완료!
+                        {t('marketing.tools.kCopywriter.copySuccess')}
                       </>
                     ) : (
                       <>
                         <Copy className="w-4 h-4" />
-                        복사하기
+                        {t('marketing.tools.kCopywriter.copyButton')}
                       </>
                     )}
                   </button>
@@ -224,7 +224,7 @@ export default function KCopywriterTool() {
           {result.isMockData && (
             <div className="mt-4 bg-blue-50 border border-blue-100 rounded-xl p-4">
               <p className="text-sm text-blue-700">
-                💡 이것은 샘플 카피예요. AI 비서를 연결하면 상품에 맞는 진짜 카피를 만들 수 있어요!
+                {t('marketing.tools.kCopywriter.sampleNote')}
               </p>
             </div>
           )}

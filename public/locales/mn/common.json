@@ -286,5 +286,207 @@
       "description": "Бодит цагийн ханш. Солонгос вон руу хөрвүүлэхэд хэрэгтэй дэлхийн валютын апп.",
       "tagline": "Бодит цагийн ханш"
     }
+  },
+  "marketing": {
+    "landing": {
+      "badge": "Маркетингийн ур чадварын курс",
+      "heroTitle": "Солонгост маркетер\nболохыг хүсч байна уу?",
+      "heroDescription": "Үндсээс AI хэрэгслүүд хүртэл, энэ курсийг дуусгаж өөрийн маркетингийн портфолио бүтээгээрэй!",
+      "modulesUnit": " модуль",
+      "hoursUnit": " цаг",
+      "toolsUnit": " хэрэгсэл",
+      "roadmapTitle": "Суралцах зураглал",
+      "lessonsUnit": " хичээл",
+      "moduleCount": " модуль",
+      "lessonsCount": "{{count}} хичээл",
+      "toolsCount": "{{count}} хэрэгсэл",
+      "practiceToolsCount": "{{count}} дадлагын хэрэгсэл"
+    },
+    "stages": {
+      "foundation": "Суурь бий болгох",
+      "practice": "Дадлага сурах",
+      "ai": "AI-аар дадлага хийх",
+      "foundationDesc": "Маркетингийн үндсийг эзэмших",
+      "practiceDesc": "SNS ба зарын дадлага",
+      "aiDesc": "AI-аар зар бүтээх",
+      "foundation_label": "Суурь",
+      "practice_label": "Дадлага",
+      "ai_label": "AI"
+    },
+    "modules": {
+      "basics": {
+        "title": "Маркетингийн үндэс",
+        "description": "Маркетингийн үндсэн ойлголт, нэр томъёо ойлгох",
+        "oneLine": "Маркетингийн тодорхойлолтоос 4P хүртэлх үндсэн ойлголт"
+      },
+      "research": {
+        "title": "Зах зээлийн судалгаа",
+        "description": "Хэрэглэгчдийг ойлгож өрсөлдөгчдийг шинжлэх",
+        "oneLine": "Хэрэглэгчийн дүр төрх, өрсөлдөгчийн шинжилгээ, зах зээлийн чиг хандлага"
+      },
+      "concept": {
+        "title": "Концепцийн стратеги",
+        "description": "Бүтээгдэхүүний концепц ба брэндийг бий болгох",
+        "oneLine": "USP, байршил, ялгах стратеги"
+      },
+      "branding": {
+        "title": "Брэндийн дизайн",
+        "description": "Брэндийн баримжаа ба харааны стратеги",
+        "oneLine": "Лого, өнгө, үсэг, брэндийн танилцуулга заавар"
+      },
+      "content": {
+        "title": "Контент маркетинг",
+        "description": "SNS ба контент маркетингийн стратеги",
+        "oneLine": "Instagram, YouTube, TikTok, хуулбар бичих"
+      },
+      "performance": {
+        "title": "Гүйцэтгэлийн маркетинг",
+        "description": "Дижитал зар ба ROI хэмжилт",
+        "oneLine": "Meta зар, Google Ads, өгөгдөл шинжилгээ"
+      },
+      "aiPractice": {
+        "title": "AI хэрэгслийн дадлага",
+        "description": "AI хэрэгслээр маркетингийн материал бүтээх",
+        "oneLine": "AI хуулбар, зарын зураг үүсгэгч, хэштэг үүсгэгч"
+      }
+    },
+    "tools": {
+      "back": "Буцах",
+      "glossary": {
+        "title": "Маркетингийн толь бичиг",
+        "description": "Хамгийн түгээмэл маркетингийн нэр томъёоны толь бичиг",
+        "searchPlaceholder": "Маркетингийн нэр томъёо хайх...",
+        "allCategories": "Бүх ангилал",
+        "noResults": "Нэр томъёо олдсонгүй",
+        "termCount": "нэр томъёо"
+      },
+      "personaMaker": {
+        "title": "Хэрэглэгчийн дүр төрх үүсгэгч",
+        "description": "Зорилтот хэрэглэгчийн дүр төрхөө үүсгэх",
+        "productName": "Бүтээгдэхүүн/Үйлчилгээний нэр",
+        "productNamePlaceholder": "Жишээ: Солонгос хэлний онлайн курс",
+        "targetFeatures": "Зорилтот онцлог",
+        "targetFeaturesPlaceholder": "Жишээ: Нас 20-30, гадаадын ажилчин, Солонгос хэл сурах сонирхолтой",
+        "generate": "Дүр төрх үүсгэх",
+        "resultTitle": "Хэрэглэгчийн дүр төрх",
+        "copyButton": "Хуулах",
+        "downloadButton": "Зураг болгож татах"
+      },
+      "uspFinder": {
+        "title": "USP олох хэрэгсэл",
+        "description": "Бүтээгдэхүүнийхээ өвөрмөц давуу талыг олох",
+        "productName": "Бүтээгдэхүүн/Үйлчилгээний нэр",
+        "productNamePlaceholder": "Жишээ: Солонгос хэлний онлайн курс",
+        "productFeatures": "Бүтээгдэхүүний онцлог",
+        "productFeaturesPlaceholder": "Жишээ: Солонгосын эх видео, 1:1 шууд хичээл, хямд үнэ",
+        "competitors": "Өрсөлдөгчид",
+        "competitorsPlaceholder": "Жишээ: Duolingo, Talk To Me In Korean",
+        "generate": "USP олох",
+        "resultTitle": "Санал болгох USP"
+      },
+      "colorPicker": {
+        "title": "Брэндийн өнгө сонгогч",
+        "description": "Брэндийн баримжаанд тохирох өнгө олох",
+        "brandKeywords": "Брэндийн түлхүүр үг",
+        "brandKeywordsPlaceholder": "Жишээ: Мэргэжлийн, орчин үеийн, найдвартай",
+        "industry": "Салбар",
+        "industryPlaceholder": "Жишээ: Боловсрол, технологи, хоол уух",
+        "generate": "Өнгө санал болгох",
+        "resultTitle": "Санал болгох өнгөний палитр",
+        "primaryColor": "Үндсэн өнгө",
+        "secondaryColor": "Дэд өнгө",
+        "accentColor": "Онцлох өнгө"
+      },
+      "hashtagGenerator": {
+        "title": "Хэштэг үүсгэгч",
+        "description": "SNS пост хийхэд оновчтой хэштэг үүсгэх",
+        "platform": "Платформ",
+        "contentDescription": "Контентын тайлбар",
+        "contentDescriptionPlaceholder": "Жишээ: Солонгос хэлний хичээлийн талаарх пост",
+        "targetAudience": "Зорилтот үзэгчид",
+        "targetAudiencePlaceholder": "Жишээ: Солонгос дахь гадаадын ажилчид",
+        "generate": "Хэштэг үүсгэх",
+        "resultTitle": "Санал болгох хэштэгүүд",
+        "copyAll": "Бүгдийг хуулах"
+      },
+      "roiCalculator": {
+        "title": "Зарын ROI тооцоолуур",
+        "description": "Зарын кампанит ажлын үр дүнг тооцоолох",
+        "adSpend": "Зарын зардал",
+        "adSpendPlaceholder": "Жишээ: 1000000",
+        "revenue": "Орлого",
+        "revenuePlaceholder": "Жишээ: 3000000",
+        "calculate": "ROI тооцоолох",
+        "resultTitle": "Шинжилгээний үр дүн",
+        "roiLabel": "ROI",
+        "roasLabel": "ROAS",
+        "profitLabel": "Ашиг",
+        "interpretation": "Тайлбар"
+      },
+      "kCopywriter": {
+        "title": "Солонгос хуулбар үүсгэгч",
+        "description": "Солонгос маягийн маркетингийн хуулбар үүсгэх",
+        "productName": "Бүтээгдэхүүний нэр",
+        "productNamePlaceholder": "Жишээ: Солонгос хэлний онлайн курс",
+        "keyMessage": "Гол мессеж",
+        "keyMessagePlaceholder": "Жишээ: 3 сарын дотор Солонгос хэл сурах",
+        "tone": "Өнгө аяс",
+        "toneOptions": {
+          "professional": "Мэргэжлийн",
+          "friendly": "Найрсаг",
+          "trendy": "Трэнд",
+          "emotional": "Сэтгэл хөдлөлийн"
+        },
+        "generate": "Хуулбар үүсгэх",
+        "resultTitle": "Үүссэн хуулбар"
+      },
+      "snsAdMaker": {
+        "title": "SNS зар үүсгэгч",
+        "description": "AI-аар SNS зарын концепц үүсгэх",
+        "platform": "Платформ",
+        "platformOptions": {
+          "instagram": "Instagram",
+          "facebook": "Facebook",
+          "youtube": "YouTube",
+          "tiktok": "TikTok"
+        },
+        "productName": "Бүтээгдэхүүний нэр",
+        "productNamePlaceholder": "Жишээ: Солонгос хэлний онлайн курс",
+        "targetAudience": "Зорилтот үзэгчид",
+        "targetAudiencePlaceholder": "Жишээ: 20-30 насны гадаадын ажилчид",
+        "keyMessage": "Гол мессеж",
+        "keyMessagePlaceholder": "Жишээ: Солонгос хэл сурах нь амархан, хөгжөөнтэй",
+        "generate": "Зарын концепц үүсгэх",
+        "resultTitle": "Зарын концепц",
+        "imagePrompt": "Зургийн заавар",
+        "adCopy": "Зарын хуулбар",
+        "hashtags": "Хэштэг"
+      }
+    },
+    "recommend": {
+      "title": "Танд зориулсан санал!",
+      "subtitle": "Та дараах зүйлсийн аль нэгтэй таарч байвал энэ курс тохиромжтой",
+      "target1": "Солонгост маркетингийн салбарт ажиллахыг хүсч буй гадаадын ажилчин",
+      "target2": "Онлайн бизнес эхлэх эсвэл бүтээгдэхүүн зарахыг хүсч байна",
+      "target3": "SNS маркетинг, контент үүсгэхэд сонирхолтой",
+      "target4": "AI хэрэгслээр практик маркетинг сурахыг хүсч байна"
+    },
+    "instructor": {
+      "name": "Kiosk Seven баг",
+      "title": "Дижитал маркетингийн мэргэжилтэн",
+      "experience": "Дижитал маркетинг болон боловсролд 10+ жилийн туршлагатай"
+    },
+    "moduleDetail": {
+      "back": "Маркетинг руу буцах",
+      "learningTitle": "Суралцах агуулга",
+      "toolsTitle": "Дадлагын хэрэгслүүд",
+      "tryTool": "Туршиж үзэх",
+      "notFound": "Модуль олдсонгүй.",
+      "backToMarketing": "Маркетингийн нүүр хуудас руу буцах"
+    },
+    "aiConnect": {
+      "title": "AI-тай холбогдох",
+      "description": "Практик AI хэрэгслээр маркетингийн материал бүтээх"
+    }
   }
 }

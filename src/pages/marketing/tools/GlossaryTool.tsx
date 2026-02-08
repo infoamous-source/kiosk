@@ -11,6 +11,16 @@ export default function GlossaryTool() {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('all');
 
+  const categoryLabels: Record<string, string> = {
+    all: t('marketing.tools.glossary.categoryAll'),
+    basic: t('marketing.tools.glossary.categoryBasic'),
+    digital: t('marketing.tools.glossary.categoryDigital'),
+    sns: t('marketing.tools.glossary.categorySNS'),
+    performance: t('marketing.tools.glossary.categoryPerformance'),
+    branding: t('marketing.tools.glossary.categoryBranding'),
+    ai: t('marketing.tools.glossary.categoryAI'),
+  };
+
   const filteredTerms = useMemo(() => {
     return glossaryTerms.filter((term) => {
       const matchesCategory = selectedCategory === 'all' || term.category === selectedCategory;
@@ -25,16 +35,6 @@ export default function GlossaryTool() {
 
   const handleTermClick = (termId: string) => {
     logPortfolioActivity('glossary', 'mk-01', 'Marketing Glossary', { termId }, { viewed: true }, true);
-  };
-
-  const categoryLabels: Record<string, string> = {
-    all: '전체',
-    basic: '기초',
-    digital: '디지털',
-    sns: 'SNS',
-    performance: '퍼포먼스',
-    branding: '브랜딩',
-    ai: 'AI',
   };
 
   return (
@@ -62,7 +62,7 @@ export default function GlossaryTool() {
           type="text"
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
-          placeholder={t('marketing.tools.glossary.searchPlaceholder', '용어를 검색하세요...')}
+          placeholder={t('marketing.tools.glossary.searchPlaceholder')}
           className="w-full pl-12 pr-4 py-3 border-2 border-gray-200 rounded-xl focus:border-blue-400 focus:outline-none transition-colors"
         />
       </div>
@@ -86,7 +86,7 @@ export default function GlossaryTool() {
 
       {/* Results Count */}
       <p className="text-sm text-gray-500 mb-4">
-        {filteredTerms.length}개의 용어
+        {t('marketing.tools.glossary.termsCount', { count: filteredTerms.length })}
       </p>
 
       {/* Term Cards */}
@@ -116,7 +116,7 @@ export default function GlossaryTool() {
         {filteredTerms.length === 0 && (
           <div className="text-center py-12 text-gray-400">
             <Search className="w-12 h-12 mx-auto mb-3 opacity-50" />
-            <p>검색 결과가 없어요</p>
+            <p>{t('marketing.tools.glossary.noResults')}</p>
           </div>
         )}
       </div>

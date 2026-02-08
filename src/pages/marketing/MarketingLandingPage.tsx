@@ -44,7 +44,7 @@ export default function MarketingLandingPage() {
                 {t(stage.nameKey, stage.id)}
               </h2>
               <span className={`text-sm px-3 py-1 rounded-full ${stage.bgColor} ${stage.textColor}`}>
-                {stageModules.length}개 모듈
+                {t('marketing.landing.moduleCount', { count: stageModules.length })}
               </span>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">

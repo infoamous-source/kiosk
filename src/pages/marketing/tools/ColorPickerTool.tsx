@@ -55,11 +55,11 @@ export default function ColorPickerTool() {
       </div>
 
       <div className="bg-blue-50 border border-blue-100 rounded-xl p-4 mb-6">
-        <p className="text-sm text-blue-700">💡 브랜드가 주고 싶은 느낌을 선택하면, 어울리는 색상 조합을 추천해드려요!</p>
+        <p className="text-sm text-blue-700">{t('marketing.tools.colorPicker.tipMessage')}</p>
       </div>
 
       {/* Emotion Selection */}
-      <h2 className="text-lg font-bold text-gray-800 mb-4">어떤 느낌을 주고 싶어요?</h2>
+      <h2 className="text-lg font-bold text-gray-800 mb-4">{t('marketing.tools.colorPicker.selectEmotion')}</h2>
       <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-8">
         {colorEmotions.map((emotion) => (
           <button
@@ -92,7 +92,7 @@ export default function ColorPickerTool() {
 
             {/* Main Color */}
             <div className="mb-6">
-              <h4 className="text-sm font-semibold text-gray-500 mb-3">메인 컬러</h4>
+              <h4 className="text-sm font-semibold text-gray-500 mb-3">{t('marketing.tools.colorPicker.mainColor')}</h4>
               <div className="flex items-center gap-4">
                 <div
                   className="w-20 h-20 md:w-24 md:h-24 rounded-2xl shadow-lg cursor-pointer hover:scale-105 transition-transform"
@@ -109,7 +109,7 @@ export default function ColorPickerTool() {
                     {copiedHex === selectedData.mainColor.hex ? (
                       <>
                         <CheckCircle className="w-3.5 h-3.5" />
-                        <span>복사됨!</span>
+                        <span>{t('marketing.tools.colorPicker.copiedText')}</span>
                       </>
                     ) : (
                       <>
@@ -124,7 +124,7 @@ export default function ColorPickerTool() {
 
             {/* Sub Colors */}
             <div>
-              <h4 className="text-sm font-semibold text-gray-500 mb-3">서브 컬러</h4>
+              <h4 className="text-sm font-semibold text-gray-500 mb-3">{t('marketing.tools.colorPicker.subColors')}</h4>
               <div className="grid grid-cols-3 gap-3">
                 {selectedData.subColors.map((color, idx) => (
                   <div
@@ -138,7 +138,7 @@ export default function ColorPickerTool() {
                     />
                     <p className="text-xs font-medium text-gray-700 mt-2">{color.nameKo}</p>
                     <p className="text-xs text-gray-400">
-                      {copiedHex === color.hex ? '복사됨!' : color.hex}
+                      {copiedHex === color.hex ? t('marketing.tools.colorPicker.copiedText') : color.hex}
                     </p>
                   </div>
                 ))}
@@ -147,7 +147,7 @@ export default function ColorPickerTool() {
 
             {/* Preview */}
             <div className="mt-6">
-              <h4 className="text-sm font-semibold text-gray-500 mb-3">미리보기</h4>
+              <h4 className="text-sm font-semibold text-gray-500 mb-3">{t('marketing.tools.colorPicker.preview')}</h4>
               <div
                 className="rounded-xl p-4 md:p-6 text-center"
                 style={{ backgroundColor: selectedData.subColors[2]?.hex || '#f8f9fa' }}
@@ -156,13 +156,13 @@ export default function ColorPickerTool() {
                   className="inline-block px-6 py-3 rounded-lg text-white font-bold mb-3"
                   style={{ backgroundColor: selectedData.mainColor.hex }}
                 >
-                  구매하기
+                  {t('marketing.tools.colorPicker.buyButton')}
                 </div>
                 <p style={{ color: selectedData.mainColor.hex }} className="font-medium">
-                  당신을 위한 특별한 제안
+                  {t('marketing.tools.colorPicker.previewTitle')}
                 </p>
                 <p style={{ color: selectedData.subColors[0]?.hex }} className="text-sm mt-1">
-                  지금 시작해보세요
+                  {t('marketing.tools.colorPicker.previewSubtitle')}
                 </p>
               </div>
             </div>

@@ -78,7 +78,7 @@ export default function HashtagGeneratorTool() {
           value={keyword}
           onChange={(e) => setKeyword(e.target.value)}
           onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
-          placeholder="키워드를 입력하세요 (예: 맛집, 카페)"
+          placeholder={t('marketing.tools.hashtagGenerator.inputPlaceholder')}
           className="w-full px-4 py-3 pr-24 border-2 border-gray-200 rounded-xl focus:border-blue-400 focus:outline-none"
         />
         <button
@@ -97,7 +97,7 @@ export default function HashtagGeneratorTool() {
       {/* Suggested Keywords */}
       {!hasSearched && (
         <div className="mb-6">
-          <p className="text-sm text-gray-500 mb-2">추천 키워드</p>
+          <p className="text-sm text-gray-500 mb-2">{t('marketing.tools.hashtagGenerator.suggestedKeywords')}</p>
           <div className="flex flex-wrap gap-2">
             {suggestedKeywords.map((kw) => (
               <button
@@ -128,7 +128,7 @@ export default function HashtagGeneratorTool() {
         <div>
           {/* Copy All Button */}
           <div className="flex items-center justify-between mb-4">
-            <p className="text-sm text-gray-500">{allHashtags.length}개의 해시태그</p>
+            <p className="text-sm text-gray-500">{t('marketing.tools.hashtagGenerator.hashtagCount', { count: allHashtags.length })}</p>
             <button
               onClick={handleCopyAll}
               className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg text-sm font-semibold hover:bg-blue-700 transition-colors"
@@ -136,12 +136,12 @@ export default function HashtagGeneratorTool() {
               {copiedAll ? (
                 <>
                   <CheckCircle className="w-4 h-4" />
-                  전체 복사됨!
+                  {t('marketing.tools.hashtagGenerator.copyAllSuccess')}
                 </>
               ) : (
                 <>
                   <Copy className="w-4 h-4" />
-                  전체 복사
+                  {t('marketing.tools.hashtagGenerator.copyAll')}
                 </>
               )}
             </button>
@@ -158,7 +158,7 @@ export default function HashtagGeneratorTool() {
                     ? 'bg-purple-50 text-purple-600'
                     : 'bg-gray-50 text-gray-600'
                 }`}>
-                  {group.category === 'trending' ? '🔥 인기' : group.category === 'niche' ? '💎 니치' : '🌐 일반'}
+                  {group.category === 'trending' ? t('marketing.tools.hashtagGenerator.popular') : group.category === 'niche' ? t('marketing.tools.hashtagGenerator.niche') : t('marketing.tools.hashtagGenerator.general')}
                 </span>
               </div>
               <div className="flex flex-wrap gap-2">
@@ -172,7 +172,7 @@ export default function HashtagGeneratorTool() {
                         : 'bg-blue-50 text-blue-700 hover:bg-blue-100'
                     }`}
                   >
-                    {copiedTag === tag ? '✓ 복사됨' : tag}
+                    {copiedTag === tag ? `✓ ${t('marketing.tools.hashtagGenerator.copied')}` : tag}
                   </button>
                 ))}
               </div>
@@ -182,7 +182,7 @@ export default function HashtagGeneratorTool() {
           {/* Usage Tip */}
           <div className="bg-yellow-50 border border-yellow-200 rounded-xl p-4 mt-4">
             <p className="text-sm text-yellow-800">
-              💡 <strong>팁:</strong> 인기 해시태그 3~5개 + 니치 해시태그 5~7개를 조합하면 효과가 좋아요!
+              {t('marketing.tools.hashtagGenerator.tip')}
             </p>
           </div>
         </div>

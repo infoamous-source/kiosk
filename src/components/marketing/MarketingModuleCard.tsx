@@ -9,10 +9,10 @@ const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
   BookOpen, Search, Lightbulb, Palette, Share2, DollarSign, Sparkles,
 };
 
-const stageLabels: Record<string, { ko: string; color: string }> = {
-  foundation: { ko: '기초', color: 'bg-blue-100 text-blue-700' },
-  practice: { ko: '실무', color: 'bg-purple-100 text-purple-700' },
-  ai: { ko: 'AI', color: 'bg-red-100 text-red-700' },
+const stageColors: Record<string, string> = {
+  foundation: 'bg-blue-100 text-blue-700',
+  practice: 'bg-purple-100 text-purple-700',
+  ai: 'bg-red-100 text-red-700',
 };
 
 interface Props {
@@ -25,7 +25,7 @@ interface Props {
 export default function MarketingModuleCard({ module, index, stageColor, onClick }: Props) {
   const { t } = useTranslation('common');
   const Icon = iconMap[module.icon] || BookOpen;
-  const stageMeta = stageLabels[module.stage];
+  const stageBadgeColor = stageColors[module.stage];
 
   const gradientMap: Record<string, string> = {
     blue: 'from-blue-500 to-blue-600',
@@ -48,9 +48,9 @@ export default function MarketingModuleCard({ module, index, stageColor, onClick
           <Icon className="w-6 h-6" />
         </div>
         <span
-          className={`text-xs font-semibold px-2 py-1 rounded-full ${stageMeta?.color || 'bg-gray-100 text-gray-600'}`}
+          className={`text-xs font-semibold px-2 py-1 rounded-full ${stageBadgeColor || 'bg-gray-100 text-gray-600'}`}
         >
-          {stageMeta?.ko || module.stage}
+          {t(`marketing.stages.${module.stage}_label`, module.stage)}
         </span>
       </div>
 
@@ -70,11 +70,11 @@ export default function MarketingModuleCard({ module, index, stageColor, onClick
         </span>
         <span className="flex items-center gap-1">
           <GraduationCap className="w-3.5 h-3.5" />
-          {module.lessons}개 학습
+          {t('marketing.landing.lessonsCount', { count: module.lessons })}
         </span>
         <span className="flex items-center gap-1">
           <Wrench className="w-3.5 h-3.5" />
-          {module.toolIds.length}개 툴
+          {t('marketing.landing.toolsCount', { count: module.toolIds.length })}
         </span>
       </div>
     </button>

@@ -24,11 +24,11 @@ export default function ROICalculatorTool() {
   }, [adSpend, revenue]);
 
   const getROASMessage = (roas: number) => {
-    if (roas >= 500) return { emoji: '🎉', text: '대박이에요! 광고 효율이 정말 좋아요!', color: 'text-green-600' };
-    if (roas >= 300) return { emoji: '👍', text: '좋아요! 광고가 잘 되고 있어요!', color: 'text-green-600' };
-    if (roas >= 200) return { emoji: '😊', text: '나쁘지 않아요! 조금 더 최적화하면 좋겠어요.', color: 'text-blue-600' };
-    if (roas >= 100) return { emoji: '😐', text: '본전이에요. 광고를 개선해볼까요?', color: 'text-yellow-600' };
-    return { emoji: '😥', text: '손해예요... 타겟이나 광고 내용을 바꿔보세요.', color: 'text-red-600' };
+    if (roas >= 500) return { emoji: '🎉', text: t('marketing.tools.roiCalculator.messageGreat'), color: 'text-green-600' };
+    if (roas >= 300) return { emoji: '👍', text: t('marketing.tools.roiCalculator.messageGood'), color: 'text-green-600' };
+    if (roas >= 200) return { emoji: '😊', text: t('marketing.tools.roiCalculator.messageOk'), color: 'text-blue-600' };
+    if (roas >= 100) return { emoji: '😐', text: t('marketing.tools.roiCalculator.messageEven'), color: 'text-yellow-600' };
+    return { emoji: '😥', text: t('marketing.tools.roiCalculator.messageLoss'), color: 'text-red-600' };
   };
 
   const handleCalculate = () => {
@@ -66,7 +66,7 @@ export default function ROICalculatorTool() {
 
       <div className="bg-blue-50 border border-blue-100 rounded-xl p-4 mb-6">
         <p className="text-sm text-blue-700">
-          💡 ROAS(Return on Ad Spend)는 광고비 대비 매출을 보는 지표예요. ROAS가 100% 이상이면 광고비보다 매출이 더 많다는 뜻이에요!
+          {t('marketing.tools.roiCalculator.roasInfo')}
         </p>
       </div>
 
@@ -74,7 +74,7 @@ export default function ROICalculatorTool() {
       <div className="bg-white border border-gray-200 rounded-2xl p-4 md:p-6 mb-6">
         <div className="space-y-4">
           <div>
-            <label className="block text-sm font-semibold text-gray-700 mb-1">💰 광고비 (원)</label>
+            <label className="block text-sm font-semibold text-gray-700 mb-1">{t('marketing.tools.roiCalculator.adSpendLabel')}</label>
             <input
               type="number"
               value={adSpend}
@@ -83,12 +83,12 @@ export default function ROICalculatorTool() {
               className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-blue-400 focus:outline-none text-lg"
             />
             {adSpend && (
-              <p className="text-xs text-gray-400 mt-1">{formatNumber(parseFloat(adSpend) || 0)}원</p>
+              <p className="text-xs text-gray-400 mt-1">{formatNumber(parseFloat(adSpend) || 0)}{t('marketing.tools.roiCalculator.currencyUnit')}</p>
             )}
           </div>
 
           <div>
-            <label className="block text-sm font-semibold text-gray-700 mb-1">📈 매출 (원)</label>
+            <label className="block text-sm font-semibold text-gray-700 mb-1">{t('marketing.tools.roiCalculator.revenueLabel')}</label>
             <input
               type="number"
               value={revenue}
@@ -97,7 +97,7 @@ export default function ROICalculatorTool() {
               className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-blue-400 focus:outline-none text-lg"
             />
             {revenue && (
-              <p className="text-xs text-gray-400 mt-1">{formatNumber(parseFloat(revenue) || 0)}원</p>
+              <p className="text-xs text-gray-400 mt-1">{formatNumber(parseFloat(revenue) || 0)}{t('marketing.tools.roiCalculator.currencyUnit')}</p>
             )}
           </div>
 
@@ -110,7 +110,7 @@ export default function ROICalculatorTool() {
                 : 'bg-gray-300 cursor-not-allowed'
             }`}
           >
-            계산하기
+            {t('marketing.tools.roiCalculator.calculateButton')}
           </button>
         </div>
       </div>
@@ -120,7 +120,7 @@ export default function ROICalculatorTool() {
         <div className="space-y-4">
           {/* ROAS Card */}
           <div className="bg-white border-2 border-blue-200 rounded-2xl p-4 md:p-6 text-center">
-            <p className="text-sm text-gray-500 mb-2">ROAS (광고 수익률)</p>
+            <p className="text-sm text-gray-500 mb-2">{t('marketing.tools.roiCalculator.roasLabel')}</p>
             <p className={`text-3xl md:text-5xl font-black ${result.roas >= 100 ? 'text-green-600' : 'text-red-600'}`}>
               {result.roas.toFixed(0)}%
             </p>
@@ -139,12 +139,12 @@ export default function ROICalculatorTool() {
           {/* Detail Cards */}
           <div className="grid grid-cols-2 gap-4">
             <div className="bg-white border border-gray-200 rounded-xl p-4 text-center">
-              <p className="text-xs text-gray-500 mb-1">광고비</p>
-              <p className="text-lg font-bold text-gray-800">{formatNumber(result.spend)}원</p>
+              <p className="text-xs text-gray-500 mb-1">{t('marketing.tools.roiCalculator.adSpend')}</p>
+              <p className="text-lg font-bold text-gray-800">{formatNumber(result.spend)}{t('marketing.tools.roiCalculator.currencyUnit')}</p>
             </div>
             <div className="bg-white border border-gray-200 rounded-xl p-4 text-center">
-              <p className="text-xs text-gray-500 mb-1">매출</p>
-              <p className="text-lg font-bold text-gray-800">{formatNumber(result.revenue)}원</p>
+              <p className="text-xs text-gray-500 mb-1">{t('marketing.tools.roiCalculator.revenue')}</p>
+              <p className="text-lg font-bold text-gray-800">{formatNumber(result.revenue)}{t('marketing.tools.roiCalculator.currencyUnit')}</p>
             </div>
           </div>
 
@@ -152,9 +152,9 @@ export default function ROICalculatorTool() {
           <div className={`rounded-xl p-4 md:p-5 ${result.profit >= 0 ? 'bg-green-50 border border-green-200' : 'bg-red-50 border border-red-200'}`}>
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm text-gray-500 mb-1">순이익</p>
+                <p className="text-sm text-gray-500 mb-1">{t('marketing.tools.roiCalculator.profit')}</p>
                 <p className={`text-2xl font-bold ${result.profit >= 0 ? 'text-green-600' : 'text-red-600'}`}>
-                  {result.profit >= 0 ? '+' : ''}{formatNumber(result.profit)}원
+                  {result.profit >= 0 ? '+' : ''}{formatNumber(result.profit)}{t('marketing.tools.roiCalculator.currencyUnit')}
                 </p>
               </div>
               {result.profit > 0 ? (
@@ -169,26 +169,26 @@ export default function ROICalculatorTool() {
 
           {/* ROI */}
           <div className="bg-white border border-gray-200 rounded-xl p-4 md:p-5">
-            <p className="text-sm text-gray-500 mb-1">ROI (투자 수익률)</p>
+            <p className="text-sm text-gray-500 mb-1">{t('marketing.tools.roiCalculator.roiLabel')}</p>
             <p className={`text-2xl font-bold ${result.roi >= 0 ? 'text-blue-600' : 'text-red-600'}`}>
               {result.roi >= 0 ? '+' : ''}{result.roi.toFixed(1)}%
             </p>
             <p className="text-xs text-gray-400 mt-1">
               {result.roi >= 0
-                ? `광고비 1원당 ${(result.roi / 100).toFixed(2)}원의 이익`
-                : `광고비 1원당 ${Math.abs(result.roi / 100).toFixed(2)}원의 손실`
+                ? t('marketing.tools.roiCalculator.profitPerUnit', { amount: (result.roi / 100).toFixed(2) })
+                : t('marketing.tools.roiCalculator.lossPerUnit', { amount: Math.abs(result.roi / 100).toFixed(2) })
               }
             </p>
           </div>
 
           {/* Visual Bar */}
           <div className="bg-white border border-gray-200 rounded-xl p-4 md:p-5">
-            <p className="text-sm font-semibold text-gray-700 mb-3">광고비 vs 매출</p>
+            <p className="text-sm font-semibold text-gray-700 mb-3">{t('marketing.tools.roiCalculator.comparison')}</p>
             <div className="space-y-2">
               <div>
                 <div className="flex justify-between text-xs text-gray-500 mb-1">
-                  <span>광고비</span>
-                  <span>{formatNumber(result.spend)}원</span>
+                  <span>{t('marketing.tools.roiCalculator.adSpend')}</span>
+                  <span>{formatNumber(result.spend)}{t('marketing.tools.roiCalculator.currencyUnit')}</span>
                 </div>
                 <div className="w-full h-6 bg-gray-100 rounded-full overflow-hidden">
                   <div
@@ -199,8 +199,8 @@ export default function ROICalculatorTool() {
               </div>
               <div>
                 <div className="flex justify-between text-xs text-gray-500 mb-1">
-                  <span>매출</span>
-                  <span>{formatNumber(result.revenue)}원</span>
+                  <span>{t('marketing.tools.roiCalculator.revenue')}</span>
+                  <span>{formatNumber(result.revenue)}{t('marketing.tools.roiCalculator.currencyUnit')}</span>
                 </div>
                 <div className="w-full h-6 bg-gray-100 rounded-full overflow-hidden">
                   <div
@@ -215,8 +215,7 @@ export default function ROICalculatorTool() {
           {/* Tips */}
           <div className="bg-yellow-50 border border-yellow-200 rounded-xl p-4">
             <p className="text-sm text-yellow-800">
-              💡 <strong>팁:</strong> 일반적으로 ROAS 300% 이상이면 좋은 광고라고 해요.
-              업종에 따라 다르지만, 처음에는 200% 이상을 목표로 해보세요!
+              {t('marketing.tools.roiCalculator.tip')}
             </p>
           </div>
         </div>

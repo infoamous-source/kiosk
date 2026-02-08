@@ -286,5 +286,207 @@
       "description": "Real vaqt valyuta kurslari. Koreya voniga konvertatsiya qilish uchun foydali global valyuta ilovasi.",
       "tagline": "Real vaqt valyuta kurslari"
     }
+  },
+  "marketing": {
+    "landing": {
+      "badge": "Marketing ko'nikmalari kursi",
+      "heroTitle": "Koreyada marketer\nbo'lishni xohlaysizmi?",
+      "heroDescription": "Asoslardan AI vositalarigacha, bu kursni tugatib o'z marketing portfolioingizni yarating!",
+      "modulesUnit": " modul",
+      "hoursUnit": " soat",
+      "toolsUnit": " vosita",
+      "roadmapTitle": "O'quv xaritasi",
+      "lessonsUnit": " dars",
+      "moduleCount": " modul",
+      "lessonsCount": "{{count}} dars",
+      "toolsCount": "{{count}} vosita",
+      "practiceToolsCount": "{{count}} amaliy vosita"
+    },
+    "stages": {
+      "foundation": "Poydevor qurish",
+      "practice": "Amaliyot o'rganish",
+      "ai": "AI bilan amaliyot",
+      "foundationDesc": "Marketing asoslarini o'zlashtirish",
+      "practiceDesc": "SNS va reklama amaliyoti",
+      "aiDesc": "AI bilan reklama yaratish",
+      "foundation_label": "Poydevor",
+      "practice_label": "Amaliyot",
+      "ai_label": "AI"
+    },
+    "modules": {
+      "basics": {
+        "title": "Marketing asoslari",
+        "description": "Marketing asosiy tushunchalari va terminologiyasini tushunish",
+        "oneLine": "Marketing ta'rifidan 4P gacha asosiy tushunchalar"
+      },
+      "research": {
+        "title": "Bozor tadqiqoti",
+        "description": "Mijozlarni tushunish va raqiblarni tahlil qilish",
+        "oneLine": "Mijoz personasi, raqobat tahlili, bozor tendentsiyalari"
+      },
+      "concept": {
+        "title": "Konsepsiya strategiyasi",
+        "description": "Mahsulot konsepsiyasi va brendingni qurish",
+        "oneLine": "USP, pozitsiyalash, farqlash strategiyasi"
+      },
+      "branding": {
+        "title": "Brending dizayni",
+        "description": "Brend identifikatsiyasi va vizual strategiya",
+        "oneLine": "Logo, ranglar, shriftlar, brend identifikatsiya qo'llanmasi"
+      },
+      "content": {
+        "title": "Kontent marketing",
+        "description": "SNS va kontent marketing strategiyasi",
+        "oneLine": "Instagram, YouTube, TikTok, kopyrayting"
+      },
+      "performance": {
+        "title": "Samaradorlik marketingi",
+        "description": "Raqamli reklama va ROI o'lchash",
+        "oneLine": "Meta reklamalari, Google Ads, ma'lumotlar tahlili"
+      },
+      "aiPractice": {
+        "title": "AI vositalari amaliyoti",
+        "description": "AI vositalari bilan marketing materiallari yaratish",
+        "oneLine": "AI kopy, reklama tasvirlari generatori, hashtag generatori"
+      }
+    },
+    "tools": {
+      "back": "Orqaga",
+      "glossary": {
+        "title": "Marketing lug'ati",
+        "description": "Eng ko'p uchraydigan marketing atamalarining lug'ati",
+        "searchPlaceholder": "Marketing atamalarini qidiring...",
+        "allCategories": "Barcha toifalar",
+        "noResults": "Atama topilmadi",
+        "termCount": "atama"
+      },
+      "personaMaker": {
+        "title": "Mijoz personasi yaratuvchi",
+        "description": "Maqsadli mijoz personangizni yarating",
+        "productName": "Mahsulot/Xizmat nomi",
+        "productNamePlaceholder": "Misol: Koreys tilidan onlayn kurs",
+        "targetFeatures": "Maqsadli xususiyatlar",
+        "targetFeaturesPlaceholder": "Misol: Yoshi 20-30, chet el ishchisi, koreys tilini o'rganishga qiziqadi",
+        "generate": "Persona yaratish",
+        "resultTitle": "Mijoz personasi",
+        "copyButton": "Nusxalash",
+        "downloadButton": "Rasm sifatida yuklab olish"
+      },
+      "uspFinder": {
+        "title": "USP topuvchi",
+        "description": "Mahsulotingizning noyob afzalliklarini toping",
+        "productName": "Mahsulot/Xizmat nomi",
+        "productNamePlaceholder": "Misol: Koreys tilidan onlayn kurs",
+        "productFeatures": "Mahsulot xususiyatlari",
+        "productFeaturesPlaceholder": "Misol: Koreys tilida asl videolar, 1:1 jonli darslar, hamyonbop narx",
+        "competitors": "Raqobatchilar",
+        "competitorsPlaceholder": "Misol: Duolingo, Talk To Me In Korean",
+        "generate": "USP topish",
+        "resultTitle": "Tavsiya etilgan USP"
+      },
+      "colorPicker": {
+        "title": "Brend rang tanlash",
+        "description": "Brend identifikatsiyangizga mos ranglarni toping",
+        "brandKeywords": "Brend kalit so'zlari",
+        "brandKeywordsPlaceholder": "Misol: Professional, zamonaviy, ishonchli",
+        "industry": "Soha",
+        "industryPlaceholder": "Misol: Ta'lim, texnologiya, oziq-ovqat",
+        "generate": "Rang tavsiya qilish",
+        "resultTitle": "Tavsiya etilgan rang palitralari",
+        "primaryColor": "Asosiy rang",
+        "secondaryColor": "Ikkinchi darajali rang",
+        "accentColor": "Urg'u rang"
+      },
+      "hashtagGenerator": {
+        "title": "Hashtag generatori",
+        "description": "SNS postlari uchun optimal hashtaglar yarating",
+        "platform": "Platforma",
+        "contentDescription": "Kontent tavsifi",
+        "contentDescriptionPlaceholder": "Misol: Koreys tili darslari haqida post",
+        "targetAudience": "Maqsadli auditoriya",
+        "targetAudiencePlaceholder": "Misol: Koreyadagi chet el ishchilari",
+        "generate": "Hashtag yaratish",
+        "resultTitle": "Tavsiya etilgan hashtaglar",
+        "copyAll": "Barchasini nusxalash"
+      },
+      "roiCalculator": {
+        "title": "Reklama ROI kalkulyatori",
+        "description": "Reklama kampaniyangizning samaradorligini hisoblang",
+        "adSpend": "Reklama xarajati",
+        "adSpendPlaceholder": "Misol: 1000000",
+        "revenue": "Daromad",
+        "revenuePlaceholder": "Misol: 3000000",
+        "calculate": "ROI hisoblash",
+        "resultTitle": "Tahlil natijalari",
+        "roiLabel": "ROI",
+        "roasLabel": "ROAS",
+        "profitLabel": "Foyda",
+        "interpretation": "Talqin"
+      },
+      "kCopywriter": {
+        "title": "Koreyscha kopy yaratuvchi",
+        "description": "Koreys uslubida marketing kopy yarating",
+        "productName": "Mahsulot nomi",
+        "productNamePlaceholder": "Misol: Koreys tilidan onlayn kurs",
+        "keyMessage": "Asosiy xabar",
+        "keyMessagePlaceholder": "Misol: 3 oyda koreys tilini o'rganing",
+        "tone": "Ohang",
+        "toneOptions": {
+          "professional": "Professional",
+          "friendly": "Do'stona",
+          "trendy": "Zamonaviy",
+          "emotional": "Hissiy"
+        },
+        "generate": "Kopy yaratish",
+        "resultTitle": "Yaratilgan kopy"
+      },
+      "snsAdMaker": {
+        "title": "SNS reklama yaratuvchi",
+        "description": "AI bilan SNS reklama konsepsiyasini yarating",
+        "platform": "Platforma",
+        "platformOptions": {
+          "instagram": "Instagram",
+          "facebook": "Facebook",
+          "youtube": "YouTube",
+          "tiktok": "TikTok"
+        },
+        "productName": "Mahsulot nomi",
+        "productNamePlaceholder": "Misol: Koreys tilidan onlayn kurs",
+        "targetAudience": "Maqsadli auditoriya",
+        "targetAudiencePlaceholder": "Misol: 20-30 yoshli chet el ishchilari",
+        "keyMessage": "Asosiy xabar",
+        "keyMessagePlaceholder": "Misol: Koreys tilini o'rganish oson va qiziqarli",
+        "generate": "Reklama konsepsiyasini yaratish",
+        "resultTitle": "Reklama konsepsiyasi",
+        "imagePrompt": "Rasm uchun ko'rsatma",
+        "adCopy": "Reklama kopiyasi",
+        "hashtags": "Hashtaglar"
+      }
+    },
+    "recommend": {
+      "title": "Siz uchun tavsiya!",
+      "subtitle": "Agar quyidagilardan biriga mos kelsangiz, bu kurs mukammal",
+      "target1": "Koreyada marketing sohasida ishlashni xohlovchi chet el ishchisi",
+      "target2": "Onlayn biznes boshlash yoki mahsulot sotishni xohlaysiz",
+      "target3": "SNS marketing va kontent yaratishga qiziqasiz",
+      "target4": "AI vositalari bilan amaliy marketingni o'rganishni xohlaysiz"
+    },
+    "instructor": {
+      "name": "Kiosk Seven jamoasi",
+      "title": "Raqamli marketing mutaxassisi",
+      "experience": "Raqamli marketing va ta'limda 10+ yillik tajriba"
+    },
+    "moduleDetail": {
+      "back": "Marketingga qaytish",
+      "learningTitle": "O'quv kontenti",
+      "toolsTitle": "Amaliy vositalar",
+      "tryTool": "Sinab ko'ring",
+      "notFound": "Modul topilmadi.",
+      "backToMarketing": "Marketing bosh sahifasiga qaytish"
+    },
+    "aiConnect": {
+      "title": "AI bilan bog'lanish",
+      "description": "Amaliy AI vositalari bilan marketing materiallari yarating"
+    }
   }
 }
