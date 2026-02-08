@@ -98,12 +98,16 @@
     "registerSubtitle": "创建账户开始学习",
     "email": "邮箱",
     "password": "密码",
+    "instructorCode": "讲师代码",
+    "instructorCodePlaceholder": "请输入讲师代码",
+    "instructorCodeHint": "讲师代码（可选）",
+    "orgCode": "机构代码",
+    "orgCodePlaceholder": "请输入机构代码",
+    "orgCodeHint": "机构代码（可选）",
     "name": "姓名",
     "namePlaceholder": "张三",
     "organization": "所属机构",
     "organizationPlaceholder": "学校、中心、公司名称等",
-    "refCode": "推荐码",
-    "refCodePlaceholder": "输入机构提供的代码",
     "learningPurpose": "学习目的",
     "selectPurpose": "选择学习目的",
     "purpose": {
@@ -127,7 +131,6 @@
   "admin": {
     "title": "讲师仪表板",
     "welcome": "欢迎，{{name}}",
-    "refCode": "机构代码",
     "totalStudents": "总学生数",
     "avgProgress": "平均进度",
     "completedModules": "完成模块",
@@ -143,12 +146,14 @@
     "searchPlaceholder": {
       "name": "搜索姓名",
       "email": "搜索邮箱",
-      "refCode": "搜索代码或机构"
+      "instructorCode": "按讲师代码搜索",
+      "orgCode": "按机构代码搜索"
     },
     "searchBy": {
       "name": "姓名",
       "email": "邮箱",
-      "refCode": "代码"
+      "instructorCode": "讲师代码",
+      "orgCode": "机构代码"
     },
     "sortBy": {
       "name": "姓名 (A-Z)",
@@ -172,7 +177,9 @@
       "progress": "进度",
       "lastActive": "最近活动",
       "actions": "操作"
-    }
+    },
+    "instructorCode": "讲师代码",
+    "orgCode": "机构代码"
   },
   "marketing": {
     "landing": {

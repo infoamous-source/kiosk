@@ -98,12 +98,16 @@
     "registerSubtitle": "สร้างบัญชีเพื่อเริ่มเรียน",
     "email": "อีเมล",
     "password": "รหัสผ่าน",
+    "instructorCode": "รหัสอาจารย์",
+    "instructorCodePlaceholder": "ป้อนรหัสอาจารย์",
+    "instructorCodeHint": "รหัสอาจารย์ (ไม่บังคับ)",
+    "orgCode": "รหัสองค์กร",
+    "orgCodePlaceholder": "ป้อนรหัสองค์กร",
+    "orgCodeHint": "รหัสองค์กร (ไม่บังคับ)",
     "name": "ชื่อ",
     "namePlaceholder": "สมชาย ใจดี",
     "organization": "องค์กร",
     "organizationPlaceholder": "โรงเรียน ศูนย์ บริษัท ฯลฯ",
-    "refCode": "รหัสแนะนำ",
-    "refCodePlaceholder": "ใส่รหัสจากองค์กรของคุณ",
     "learningPurpose": "วัตถุประสงค์การเรียน",
     "selectPurpose": "เลือกวัตถุประสงค์การเรียน",
     "purpose": {
@@ -127,7 +131,6 @@
   "admin": {
     "title": "แดชบอร์ดผู้สอน",
     "welcome": "ยินดีต้อนรับ, {{name}}",
-    "refCode": "รหัสองค์กร",
     "totalStudents": "นักเรียนทั้งหมด",
     "avgProgress": "ความคืบหน้าเฉลี่ย",
     "completedModules": "โมดูลที่เสร็จ",
@@ -143,12 +146,14 @@
     "searchPlaceholder": {
       "name": "ค้นหาตามชื่อ",
       "email": "ค้นหาตามอีเมล",
-      "refCode": "ค้นหาตามรหัสหรือองค์กร"
+      "instructorCode": "ค้นหาด้วยรหัสอาจารย์",
+      "orgCode": "ค้นหาด้วยรหัสองค์กร"
     },
     "searchBy": {
       "name": "ชื่อ",
       "email": "อีเมล",
-      "refCode": "รหัส"
+      "instructorCode": "รหัสอาจารย์",
+      "orgCode": "รหัสองค์กร"
     },
     "sortBy": {
       "name": "ชื่อ (ก-ฮ)",
@@ -172,7 +177,9 @@
       "progress": "ความคืบหน้า",
       "lastActive": "ใช้งานล่าสุด",
       "actions": "การดำเนินการ"
-    }
+    },
+    "instructorCode": "รหัสอาจารย์",
+    "orgCode": "รหัสองค์กร"
   },
   "koreaApps": {
     "title": "แอปที่จำเป็นในเกาหลี",

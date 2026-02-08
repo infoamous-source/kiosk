@@ -98,12 +98,16 @@
     "registerSubtitle": "Суралцаж эхлэхийн тулд бүртгэл үүсгэнэ үү",
     "email": "Имэйл",
     "password": "Нууц үг",
+    "instructorCode": "Багшийн код",
+    "instructorCodePlaceholder": "Багшийн код оруулах",
+    "instructorCodeHint": "Багшийн код (заавал биш)",
+    "orgCode": "Байгууллагын код",
+    "orgCodePlaceholder": "Байгууллагын код оруулах",
+    "orgCodeHint": "Байгууллагын код (заавал биш)",
     "name": "Нэр",
     "namePlaceholder": "Батболд",
     "organization": "Байгууллага",
     "organizationPlaceholder": "Сургууль, төв, компани гэх мэт",
-    "refCode": "Лавлах код",
-    "refCodePlaceholder": "Байгууллагаасаа авсан кодыг оруулна уу",
     "learningPurpose": "Суралцах зорилго",
     "selectPurpose": "Суралцах зорилгоо сонгоно уу",
     "purpose": {
@@ -127,7 +131,6 @@
   "admin": {
     "title": "Багшийн хяналтын самбар",
     "welcome": "Тавтай морил, {{name}}",
-    "refCode": "Байгууллагын код",
     "totalStudents": "Нийт оюутан",
     "avgProgress": "Дундаж явц",
     "completedModules": "Дууссан модуль",
@@ -143,12 +146,14 @@
     "searchPlaceholder": {
       "name": "Нэрээр хайх",
       "email": "Имэйлээр хайх",
-      "refCode": "Код эсвэл байгууллагаар хайх"
+      "instructorCode": "Багшийн кодоор хайх",
+      "orgCode": "Байгууллагын кодоор хайх"
     },
     "searchBy": {
       "name": "Нэр",
       "email": "Имэйл",
-      "refCode": "Код"
+      "instructorCode": "Багшийн код",
+      "orgCode": "Байгууллагын код"
     },
     "sortBy": {
       "name": "Нэр (А-Я)",
@@ -172,7 +177,9 @@
       "progress": "Явц",
       "lastActive": "Сүүлд идэвхтэй",
       "actions": "Үйлдэл"
-    }
+    },
+    "instructorCode": "Багшийн код",
+    "orgCode": "Байгууллагын код"
   },
   "koreaApps": {
     "title": "Солонгосын шаардлагатай апп-ууд",

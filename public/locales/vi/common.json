@@ -98,12 +98,16 @@
     "registerSubtitle": "Tạo tài khoản để bắt đầu học",
     "email": "Email",
     "password": "Mật khẩu",
+    "instructorCode": "Mã giảng viên",
+    "instructorCodePlaceholder": "Nhập mã giảng viên",
+    "instructorCodeHint": "Mã giảng viên (tùy chọn)",
+    "orgCode": "Mã tổ chức",
+    "orgCodePlaceholder": "Nhập mã tổ chức",
+    "orgCodeHint": "Mã tổ chức (tùy chọn)",
     "name": "Họ tên",
     "namePlaceholder": "Nguyễn Văn A",
     "organization": "Tổ chức",
     "organizationPlaceholder": "Trường, trung tâm, công ty, v.v.",
-    "refCode": "Mã giới thiệu",
-    "refCodePlaceholder": "Nhập mã từ tổ chức của bạn",
     "learningPurpose": "Mục đích học tập",
     "selectPurpose": "Chọn mục đích học tập",
     "purpose": {
@@ -127,7 +131,6 @@
   "admin": {
     "title": "Bảng điều khiển giảng viên",
     "welcome": "Chào mừng, {{name}}",
-    "refCode": "Mã tổ chức",
     "totalStudents": "Tổng học viên",
     "avgProgress": "Tiến độ trung bình",
     "completedModules": "Mô-đun hoàn thành",
@@ -143,12 +146,14 @@
     "searchPlaceholder": {
       "name": "Tìm theo tên",
       "email": "Tìm theo email",
-      "refCode": "Tìm theo mã hoặc tổ chức"
+      "instructorCode": "Tìm theo mã giảng viên",
+      "orgCode": "Tìm theo mã tổ chức"
     },
     "searchBy": {
       "name": "Tên",
       "email": "Email",
-      "refCode": "Mã"
+      "instructorCode": "Mã giảng viên",
+      "orgCode": "Mã tổ chức"
     },
     "sortBy": {
       "name": "Tên (A-Z)",
@@ -172,7 +177,9 @@
       "progress": "Tiến độ",
       "lastActive": "Hoạt động gần nhất",
       "actions": "Thao tác"
-    }
+    },
+    "instructorCode": "Mã giảng viên",
+    "orgCode": "Mã tổ chức"
   },
   "marketing": {
     "landing": {

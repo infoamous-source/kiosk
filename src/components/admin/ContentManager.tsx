@@ -147,7 +147,7 @@ export default function ContentManager() {
           {t('admin.contentManager.title')}
         </h3>
         <span className="text-sm text-gray-500 font-mono bg-gray-100 px-3 py-1 rounded-lg">
-          {user?.refCode}
+          {user?.instructorCode}
         </span>
       </div>
 

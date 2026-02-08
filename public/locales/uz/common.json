@@ -98,12 +98,16 @@
     "registerSubtitle": "O'qishni boshlash uchun hisob yarating",
     "email": "Elektron pochta",
     "password": "Parol",
+    "instructorCode": "O'qituvchi kodi",
+    "instructorCodePlaceholder": "O'qituvchi kodini kiriting",
+    "instructorCodeHint": "O'qituvchi kodi (ixtiyoriy)",
+    "orgCode": "Tashkilot kodi",
+    "orgCodePlaceholder": "Tashkilot kodini kiriting",
+    "orgCodeHint": "Tashkilot kodi (ixtiyoriy)",
     "name": "Ism",
     "namePlaceholder": "Aziz Karimov",
     "organization": "Tashkilot",
     "organizationPlaceholder": "Maktab, markaz, kompaniya va h.k.",
-    "refCode": "Tavsiya kodi",
-    "refCodePlaceholder": "Tashkilotingizdan olingan kodni kiriting",
     "learningPurpose": "O'qish maqsadi",
     "selectPurpose": "O'qish maqsadingizni tanlang",
     "purpose": {
@@ -127,7 +131,6 @@
   "admin": {
     "title": "O'qituvchi paneli",
     "welcome": "Xush kelibsiz, {{name}}",
-    "refCode": "Tashkilot kodi",
     "totalStudents": "Jami talabalar",
     "avgProgress": "O'rtacha progress",
     "completedModules": "Tugallangan modullar",
@@ -143,12 +146,14 @@
     "searchPlaceholder": {
       "name": "Ism bo'yicha qidirish",
       "email": "Email bo'yicha qidirish",
-      "refCode": "Kod yoki tashkilot bo'yicha qidirish"
+      "instructorCode": "O'qituvchi kodi bo'yicha qidirish",
+      "orgCode": "Tashkilot kodi bo'yicha qidirish"
     },
     "searchBy": {
       "name": "Ism",
       "email": "Email",
-      "refCode": "Kod"
+      "instructorCode": "O'qituvchi kodi",
+      "orgCode": "Tashkilot kodi"
     },
     "sortBy": {
       "name": "Ism (A-Z)",
@@ -172,7 +177,9 @@
       "progress": "Progress",
       "lastActive": "So'nggi faoliyat",
       "actions": "Amallar"
-    }
+    },
+    "instructorCode": "O'qituvchi kodi",
+    "orgCode": "Tashkilot kodi"
   },
   "koreaApps": {
     "title": "Koreya muhim ilovalari",

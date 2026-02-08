@@ -13,6 +13,7 @@ import {
   ChevronRight,
   GraduationCap,
   LayoutDashboard,
+  UserCircle,
 } from 'lucide-react';
 import type { TrackId } from '../../types/track';
 import { useAuth } from '../../contexts/AuthContext';
@@ -115,6 +116,29 @@ export default function Sidebar({ currentTrack }: SidebarProps) {
           <NavButton key={item.id} item={item} />
         ))}
       </nav>
+
+      {/* 내 프로필 버튼 (로그인 시 표시) */}
+      {user && (
+        <div className="px-3">
+          <button
+            onClick={() => navigate('/profile')}
+            className={`
+              w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200
+              ${location.pathname === '/profile'
+                ? 'bg-blue-50 text-blue-600 font-semibold'
+                : 'text-gray-600 hover:bg-gray-50 hover:text-gray-800'
+              }
+              ${collapsed ? 'justify-center' : ''}
+            `}
+            title={collapsed ? t('sidebar.profile') : undefined}
+          >
+            <UserCircle className="w-5 h-5 shrink-0" />
+            {!collapsed && (
+              <span className="truncate">{t('sidebar.profile', '내 프로필')}</span>
+            )}
+          </button>
+        </div>
+      )}
 
       {/* 강사 전용 대시보드 버튼 */}
       {isInstructor && (

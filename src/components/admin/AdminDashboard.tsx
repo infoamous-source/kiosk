@@ -41,13 +41,13 @@ type SortOrder = 'asc' | 'desc';
 
 // 더미 데이터 (기관 코드 추가)
 const dummyStudents = [
-  { id: '1', name: '김민수', email: 'minsu@test.com', track: 'digital-basics', progress: 75, lastActive: '2024-01-15', refCode: 'ORG001', organization: '서울다문화센터' },
-  { id: '2', name: 'John Smith', email: 'john@test.com', track: 'marketing', progress: 45, lastActive: '2024-01-14', refCode: 'ORG002', organization: '부산외국인지원센터' },
-  { id: '3', name: '田中花子', email: 'hanako@test.com', track: 'career', progress: 90, lastActive: '2024-01-15', refCode: 'ORG001', organization: '서울다문화센터' },
-  { id: '4', name: '이영희', email: 'younghee@test.com', track: 'digital-basics', progress: 30, lastActive: '2024-01-13', refCode: 'ORG003', organization: '인천글로벌센터' },
-  { id: '5', name: 'Maria Garcia', email: 'maria@test.com', track: 'marketing', progress: 60, lastActive: '2024-01-15', refCode: 'ORG002', organization: '부산외국인지원센터' },
-  { id: '6', name: '박지현', email: 'jihyun@test.com', track: 'career', progress: 85, lastActive: '2024-01-15', refCode: 'ORG001', organization: '서울다문화센터' },
-  { id: '7', name: 'Ahmed Hassan', email: 'ahmed@test.com', track: 'digital-basics', progress: 55, lastActive: '2024-01-14', refCode: 'ORG003', organization: '인천글로벌센터' },
+  { id: '1', name: '김민수', email: 'minsu@test.com', track: 'digital-basics', progress: 75, lastActive: '2024-01-15', instructorCode: 'INST-001', orgCode: 'ORG-001', organization: '서울다문화센터' },
+  { id: '2', name: 'John Smith', email: 'john@test.com', track: 'marketing', progress: 45, lastActive: '2024-01-14', instructorCode: 'INST-001', orgCode: 'ORG-002', organization: '부산외국인지원센터' },
+  { id: '3', name: '田中花子', email: 'hanako@test.com', track: 'career', progress: 90, lastActive: '2024-01-15', instructorCode: 'INST-001', orgCode: 'ORG-001', organization: '서울다문화센터' },
+  { id: '4', name: '이영희', email: 'younghee@test.com', track: 'digital-basics', progress: 30, lastActive: '2024-01-13', instructorCode: 'INST-001', orgCode: 'ORG-003', organization: '인천글로벌센터' },
+  { id: '5', name: 'Maria Garcia', email: 'maria@test.com', track: 'marketing', progress: 60, lastActive: '2024-01-15', instructorCode: 'INST-001', orgCode: 'ORG-002', organization: '부산외국인지원센터' },
+  { id: '6', name: '박지현', email: 'jihyun@test.com', track: 'career', progress: 85, lastActive: '2024-01-15', instructorCode: 'INST-001', orgCode: 'ORG-001', organization: '서울다문화센터' },
+  { id: '7', name: 'Ahmed Hassan', email: 'ahmed@test.com', track: 'digital-basics', progress: 55, lastActive: '2024-01-14', instructorCode: 'INST-001', orgCode: 'ORG-003', organization: '인천글로벌센터' },
 ];
 
 const progressByTrack = [
@@ -115,7 +115,7 @@ export default function AdminDashboard() {
       student.name.toLowerCase().includes(query) ||
       student.email.toLowerCase().includes(query) ||
       student.organization.toLowerCase().includes(query) ||
-      student.refCode.toLowerCase().includes(query);
+      student.orgCode.toLowerCase().includes(query);
 
     const matchesTrack = selectedTrack === 'all' || student.track === selectedTrack;
     return matchesSearch && matchesTrack;
@@ -148,17 +148,17 @@ export default function AdminDashboard() {
 
   // 기관별 그룹핑
   const organizationGroups = realtimeStudents.reduce((acc, student) => {
-    if (!acc[student.refCode]) {
-      acc[student.refCode] = {
+    if (!acc[student.orgCode]) {
+      acc[student.orgCode] = {
         name: student.organization,
-        refCode: student.refCode,
+        orgCode: student.orgCode,
         students: [],
         avgProgress: 0,
       };
     }
-    acc[student.refCode].students.push(student);
+    acc[student.orgCode].students.push(student);
     return acc;
-  }, {} as Record<string, { name: string; refCode: string; students: typeof dummyStudents; avgProgress: number }>);
+  }, {} as Record<string, { name: string; orgCode: string; students: typeof dummyStudents; avgProgress: number }>);
 
   // 기관별 평균 진도율 계산
   Object.values(organizationGroups).forEach(org => {
@@ -193,7 +193,7 @@ export default function AdminDashboard() {
       <div className="mb-6">
         <h1 className="text-2xl font-bold text-gray-800">{t('admin.title')}</h1>
         <p className="text-gray-500 mt-1">
-          {t('admin.welcome', { name: user?.name })} • {t('admin.refCode')}: <span className="font-mono font-semibold">{user?.refCode}</span>
+          {t('admin.welcome', { name: user?.name })} • {t('admin.instructorCode')}: <span className="font-mono font-semibold">{user?.instructorCode}</span>
         </p>
       </div>
 
@@ -348,13 +348,13 @@ export default function AdminDashboard() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           {Object.values(organizationGroups).map((org) => (
             <button
-              key={org.refCode}
-              onClick={() => navigate(`/admin/organization/${org.refCode}`)}
+              key={org.orgCode}
+              onClick={() => navigate(`/admin/organization/${org.orgCode}`)}
               className="p-4 border border-gray-200 rounded-xl hover:border-purple-300 hover:bg-purple-50/50 transition-all text-left group"
             >
               <div className="flex items-center justify-between mb-2">
                 <span className="font-medium text-gray-800 group-hover:text-purple-700">{org.name}</span>
-                <span className="text-xs font-mono text-gray-400 bg-gray-100 px-2 py-1 rounded">{org.refCode}</span>
+                <span className="text-xs font-mono text-gray-400 bg-gray-100 px-2 py-1 rounded">{org.orgCode}</span>
               </div>
               <div className="flex items-center justify-between">
                 <span className="text-sm text-gray-500">{org.students.length}{t('admin.studentCount')}</span>
@@ -547,11 +547,11 @@ export default function AdminDashboard() {
                   </td>
                   <td className="px-5 py-4">
                     <button
-                      onClick={() => navigate(`/admin/organization/${student.refCode}`)}
+                      onClick={() => navigate(`/admin/organization/${student.orgCode}`)}
                       className="text-left hover:text-purple-600 transition-colors"
                     >
                       <p className="text-sm text-gray-700 font-medium">{student.organization}</p>
-                      <p className="text-xs text-gray-400 font-mono">{student.refCode}</p>
+                      <p className="text-xs text-gray-400 font-mono">{student.orgCode}</p>
                     </button>
                   </td>
                   <td className="px-5 py-4">

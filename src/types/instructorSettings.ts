@@ -14,22 +14,31 @@ export interface TrackVisibility {
   tools: Record<string, VisibilityItem>;
 }
 
+/** 기관/그룹별 오버라이드 설정 */
+export interface OrgOverride {
+  orgCode: string;
+  tracks: Partial<Record<TrackId, Partial<TrackVisibility>>>;
+}
+
 /** 강사가 저장하는 전체 설정 */
 export interface InstructorSettings {
-  refCode: string;
+  instructorCode: string;
   updatedAt: string;
+  /** 기본 설정 (전체 학생 대상) */
   tracks: Record<TrackId, TrackVisibility>;
+  /** 기관별 오버라이드 (기관마다 다르게 설정할 때) */
+  orgOverrides?: OrgOverride[];
 }
 
 /** localStorage 키 생성 */
-export function getSettingsKey(refCode: string): string {
-  return `kiosk-instructor-settings-${refCode}`;
+export function getSettingsKey(instructorCode: string): string {
+  return `kiosk-instructor-settings-${instructorCode}`;
 }
 
 /** 기본 설정 생성 (전부 ON) */
-export function createDefaultSettings(refCode: string): InstructorSettings {
+export function createDefaultSettings(instructorCode: string): InstructorSettings {
   return {
-    refCode,
+    instructorCode,
     updatedAt: new Date().toISOString(),
     tracks: {
       'digital-basics': {

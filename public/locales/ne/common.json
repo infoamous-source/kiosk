@@ -98,12 +98,16 @@
     "registerSubtitle": "सिक्न सुरु गर्न खाता बनाउनुहोस्",
     "email": "इमेल",
     "password": "पासवर्ड",
+    "instructorCode": "प्रशिक्षक कोड",
+    "instructorCodePlaceholder": "प्रशिक्षक कोड प्रविष्ट गर्नुहोस्",
+    "instructorCodeHint": "प्रशिक्षक कोड (वैकल्पिक)",
+    "orgCode": "संस्था कोड",
+    "orgCodePlaceholder": "संस्था कोड प्रविष्ट गर्नुहोस्",
+    "orgCodeHint": "संस्था कोड (वैकल्पिक)",
     "name": "नाम",
     "namePlaceholder": "राम बहादुर",
     "organization": "संस्था",
     "organizationPlaceholder": "विद्यालय, केन्द्र, कम्पनी, आदि",
-    "refCode": "रेफरल कोड",
-    "refCodePlaceholder": "आफ्नो संस्थाबाट प्राप्त कोड हाल्नुहोस्",
     "learningPurpose": "सिक्ने उद्देश्य",
     "selectPurpose": "आफ्नो सिक्ने उद्देश्य छान्नुहोस्",
     "purpose": {
@@ -127,7 +131,6 @@
   "admin": {
     "title": "प्रशिक्षक ड्यासबोर्ड",
     "welcome": "स्वागत छ, {{name}}",
-    "refCode": "संस्था कोड",
     "totalStudents": "कुल विद्यार्थी",
     "avgProgress": "औसत प्रगति",
     "completedModules": "पूरा मोड्युल",
@@ -143,12 +146,14 @@
     "searchPlaceholder": {
       "name": "नामले खोज्नुहोस्",
       "email": "इमेलले खोज्नुहोस्",
-      "refCode": "कोड वा संस्थाले खोज्नुहोस्"
+      "instructorCode": "प्रशिक्षक कोड द्वारा खोज्नुहोस्",
+      "orgCode": "संस्था कोड द्वारा खोज्नुहोस्"
     },
     "searchBy": {
       "name": "नाम",
       "email": "इमेल",
-      "refCode": "कोड"
+      "instructorCode": "प्रशिक्षक कोड",
+      "orgCode": "संस्था कोड"
     },
     "sortBy": {
       "name": "नाम (क-ज्ञ)",
@@ -172,7 +177,9 @@
       "progress": "प्रगति",
       "lastActive": "अन्तिम सक्रिय",
       "actions": "कार्यहरू"
-    }
+    },
+    "instructorCode": "प्रशिक्षक कोड",
+    "orgCode": "संस्था कोड"
   },
   "koreaApps": {
     "title": "कोरियाली आवश्यक एपहरू",

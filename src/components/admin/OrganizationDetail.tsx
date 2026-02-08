@@ -25,27 +25,27 @@ import {
 
 // 더미 데이터 (실제로는 API에서 가져옴)
 const allStudents = [
-  { id: '1', name: '김민수', email: 'minsu@test.com', track: 'digital-basics', progress: 75, lastActive: '2024-01-15', refCode: 'ORG001', organization: '서울다문화센터' },
-  { id: '2', name: 'John Smith', email: 'john@test.com', track: 'marketing', progress: 45, lastActive: '2024-01-14', refCode: 'ORG002', organization: '부산외국인지원센터' },
-  { id: '3', name: '田中花子', email: 'hanako@test.com', track: 'career', progress: 90, lastActive: '2024-01-15', refCode: 'ORG001', organization: '서울다문화센터' },
-  { id: '4', name: '이영희', email: 'younghee@test.com', track: 'digital-basics', progress: 30, lastActive: '2024-01-13', refCode: 'ORG003', organization: '인천글로벌센터' },
-  { id: '5', name: 'Maria Garcia', email: 'maria@test.com', track: 'marketing', progress: 60, lastActive: '2024-01-15', refCode: 'ORG002', organization: '부산외국인지원센터' },
-  { id: '6', name: '박지현', email: 'jihyun@test.com', track: 'career', progress: 85, lastActive: '2024-01-15', refCode: 'ORG001', organization: '서울다문화센터' },
-  { id: '7', name: 'Ahmed Hassan', email: 'ahmed@test.com', track: 'digital-basics', progress: 55, lastActive: '2024-01-14', refCode: 'ORG003', organization: '인천글로벌센터' },
+  { id: '1', name: '김민수', email: 'minsu@test.com', track: 'digital-basics', progress: 75, lastActive: '2024-01-15', orgCode: 'ORG001', organization: '서울다문화센터' },
+  { id: '2', name: 'John Smith', email: 'john@test.com', track: 'marketing', progress: 45, lastActive: '2024-01-14', orgCode: 'ORG002', organization: '부산외국인지원센터' },
+  { id: '3', name: '田中花子', email: 'hanako@test.com', track: 'career', progress: 90, lastActive: '2024-01-15', orgCode: 'ORG001', organization: '서울다문화센터' },
+  { id: '4', name: '이영희', email: 'younghee@test.com', track: 'digital-basics', progress: 30, lastActive: '2024-01-13', orgCode: 'ORG003', organization: '인천글로벌센터' },
+  { id: '5', name: 'Maria Garcia', email: 'maria@test.com', track: 'marketing', progress: 60, lastActive: '2024-01-15', orgCode: 'ORG002', organization: '부산외국인지원센터' },
+  { id: '6', name: '박지현', email: 'jihyun@test.com', track: 'career', progress: 85, lastActive: '2024-01-15', orgCode: 'ORG001', organization: '서울다문화센터' },
+  { id: '7', name: 'Ahmed Hassan', email: 'ahmed@test.com', track: 'digital-basics', progress: 55, lastActive: '2024-01-14', orgCode: 'ORG003', organization: '인천글로벌센터' },
 ];
 
 export default function OrganizationDetail() {
   const { t } = useTranslation('common');
-  const { refCode } = useParams<{ refCode: string }>();
+  const { orgCode } = useParams<{ orgCode: string }>();
   const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState('');
   const [isRealTimeEnabled, setIsRealTimeEnabled] = useState(true);
   const [lastUpdate, setLastUpdate] = useState<Date>(new Date());
   const [students, setStudents] = useState(
-    allStudents.filter(s => s.refCode === refCode)
+    allStudents.filter(s => s.orgCode === orgCode)
   );
 
-  const organization = students[0]?.organization || refCode;
+  const organization = students[0]?.organization || orgCode;
 
   // 실시간 업데이트 시뮬레이션
   useEffect(() => {
@@ -116,7 +116,7 @@ export default function OrganizationDetail() {
           </div>
           <div>
             <h1 className="text-2xl font-bold text-gray-800">{organization}</h1>
-            <p className="text-gray-500 font-mono">{t('admin.refCode')}: {refCode}</p>
+            <p className="text-gray-500 font-mono">{t('admin.orgCode')}: {orgCode}</p>
           </div>
         </div>
       </div>

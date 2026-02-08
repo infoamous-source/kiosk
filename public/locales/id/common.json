@@ -98,12 +98,16 @@
     "registerSubtitle": "Buat akun untuk mulai belajar",
     "email": "Email",
     "password": "Kata Sandi",
+    "instructorCode": "Kode Instruktur",
+    "instructorCodePlaceholder": "Masukkan kode instruktur",
+    "instructorCodeHint": "Kode instruktur (opsional)",
+    "orgCode": "Kode Organisasi",
+    "orgCodePlaceholder": "Masukkan kode organisasi",
+    "orgCodeHint": "Kode organisasi (opsional)",
     "name": "Nama",
     "namePlaceholder": "Budi Santoso",
     "organization": "Organisasi",
     "organizationPlaceholder": "Sekolah, pusat, perusahaan, dll.",
-    "refCode": "Kode Referral",
-    "refCodePlaceholder": "Masukkan kode dari organisasi Anda",
     "learningPurpose": "Tujuan Belajar",
     "selectPurpose": "Pilih tujuan belajar Anda",
     "purpose": {
@@ -127,7 +131,6 @@
   "admin": {
     "title": "Dasbor Instruktur",
     "welcome": "Selamat datang, {{name}}",
-    "refCode": "Kode Organisasi",
     "totalStudents": "Total Siswa",
     "avgProgress": "Rata-rata Progres",
     "completedModules": "Modul Selesai",
@@ -143,12 +146,14 @@
     "searchPlaceholder": {
       "name": "Cari berdasarkan nama",
       "email": "Cari berdasarkan email",
-      "refCode": "Cari berdasarkan kode atau organisasi"
+      "instructorCode": "Cari berdasarkan kode instruktur",
+      "orgCode": "Cari berdasarkan kode organisasi"
     },
     "searchBy": {
       "name": "Nama",
       "email": "Email",
-      "refCode": "Kode"
+      "instructorCode": "Kode Instruktur",
+      "orgCode": "Kode Organisasi"
     },
     "sortBy": {
       "name": "Nama (A-Z)",
@@ -172,7 +177,9 @@
       "progress": "Progres",
       "lastActive": "Terakhir Aktif",
       "actions": "Aksi"
-    }
+    },
+    "instructorCode": "Kode Instruktur",
+    "orgCode": "Kode Organisasi"
   },
   "koreaApps": {
     "title": "Aplikasi Penting Korea",

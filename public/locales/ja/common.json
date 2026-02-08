@@ -98,12 +98,16 @@
     "registerSubtitle": "新しいアカウントを作成して学習を始めましょう",
     "email": "メール",
     "password": "パスワード",
+    "instructorCode": "講師コード",
+    "instructorCodePlaceholder": "講師コードを入力してください",
+    "instructorCodeHint": "講師コード（オプション）",
+    "orgCode": "機関コード",
+    "orgCodePlaceholder": "機関コードを入力してください",
+    "orgCodeHint": "機関コード（オプション）",
     "name": "名前",
     "namePlaceholder": "山田太郎",
     "organization": "所属機関",
     "organizationPlaceholder": "学校、センター、会社名など",
-    "refCode": "紹介コード",
-    "refCodePlaceholder": "機関から受け取ったコードを入力",
     "learningPurpose": "学習目的",
     "selectPurpose": "学習目的を選んでください",
     "purpose": {
@@ -127,7 +131,6 @@
   "admin": {
     "title": "講師ダッシュボード",
     "welcome": "{{name}}さん、ようこそ",
-    "refCode": "機関コード",
     "totalStudents": "総学生数",
     "avgProgress": "平均進捗",
     "completedModules": "完了モジュール",
@@ -143,12 +146,14 @@
     "searchPlaceholder": {
       "name": "名前で検索",
       "email": "メールで検索",
-      "refCode": "コードまたは機関で検索"
+      "instructorCode": "講師コードで検索",
+      "orgCode": "コードまたは機関で検索"
     },
     "searchBy": {
       "name": "名前",
       "email": "メール",
-      "refCode": "コード"
+      "instructorCode": "講師コード",
+      "orgCode": "機関コード"
     },
     "sortBy": {
       "name": "名前 (あいうえお)",
@@ -172,7 +177,9 @@
       "progress": "進捗",
       "lastActive": "最終活動",
       "actions": "管理"
-    }
+    },
+    "instructorCode": "講師コード",
+    "orgCode": "機関コード"
   },
   "marketing": {
     "landing": {

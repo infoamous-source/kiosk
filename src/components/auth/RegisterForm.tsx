@@ -10,6 +10,7 @@ import {
   Target,
   UserPlus,
   Loader2,
+  GraduationCap,
 } from 'lucide-react';
 import { useAuth } from '../../contexts/AuthContext';
 
@@ -31,7 +32,8 @@ export default function RegisterForm() {
     email: '',
     password: '',
     organization: '',
-    refCode: '',
+    instructorCode: '',
+    orgCode: '',
     learningPurpose: '',
   });
   const [isLoading, setIsLoading] = useState(false);
@@ -167,22 +169,53 @@ export default function RegisterForm() {
               </div>
             </div>
 
-            {/* 추천 기관 코드 */}
+            {/* 강사 코드 */}
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
-                {t('auth.refCode')}
+                {t('auth.instructorCode')} <span className="text-red-500">*</span>
+              </label>
+              <div className="relative">
+                <GraduationCap className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
+                <input
+                  type="text"
+                  name="instructorCode"
+                  value={formData.instructorCode}
+                  onChange={(e) => {
+                    setFormData((prev) => ({
+                      ...prev,
+                      instructorCode: e.target.value.toUpperCase(),
+                    }));
+                  }}
+                  placeholder={t('auth.instructorCodePlaceholder')}
+                  className="w-full pl-11 pr-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+                  required
+                />
+              </div>
+              <p className="text-xs text-gray-400 mt-1 ml-1">{t('auth.instructorCodeHint')}</p>
+            </div>
+
+            {/* 기관 코드 */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                {t('auth.orgCode')}
               </label>
               <div className="relative">
                 <Tag className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
                 <input
                   type="text"
-                  name="refCode"
-                  value={formData.refCode}
-                  onChange={handleChange}
-                  placeholder={t('auth.refCodePlaceholder')}
+                  name="orgCode"
+                  value={formData.orgCode}
+                  onChange={(e) => {
+                    setFormData((prev) => ({
+                      ...prev,
+                      orgCode: e.target.value.toUpperCase(),
+                    }));
+                  }}
+                  placeholder={t('auth.orgCodePlaceholder')}
                   className="w-full pl-11 pr-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
                 />
               </div>
+              <p className="text-xs text-gray-400 mt-1 ml-1">{t('auth.orgCodeHint')}</p>
             </div>
 
             {/* 학습 목적 */}

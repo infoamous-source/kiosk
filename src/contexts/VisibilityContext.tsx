@@ -42,12 +42,12 @@ export function VisibilityProvider({ children }: { children: ReactNode }) {
 
   // 사용자 변경 시 설정 로드
   useEffect(() => {
-    if (!user?.refCode) {
+    if (!user?.instructorCode) {
       setSettings(null);
       return;
     }
 
-    const key = getSettingsKey(user.refCode);
+    const key = getSettingsKey(user.instructorCode);
     try {
       const stored = localStorage.getItem(key);
       if (stored) {
@@ -59,13 +59,13 @@ export function VisibilityProvider({ children }: { children: ReactNode }) {
     } catch {
       setSettings(null);
     }
-  }, [user?.refCode]);
+  }, [user?.instructorCode]);
 
   // 설정 저장 헬퍼
   const saveSettings = useCallback(
     (newSettings: InstructorSettings) => {
       newSettings.updatedAt = new Date().toISOString();
-      const key = getSettingsKey(newSettings.refCode);
+      const key = getSettingsKey(newSettings.instructorCode);
       localStorage.setItem(key, JSON.stringify(newSettings));
       setSettings({ ...newSettings });
     },
@@ -75,9 +75,9 @@ export function VisibilityProvider({ children }: { children: ReactNode }) {
   // 현재 유효한 설정 가져오기 (없으면 기본값 생성)
   const getOrCreateSettings = useCallback((): InstructorSettings => {
     if (settings) return { ...settings };
-    const refCode = user?.refCode || 'DEFAULT';
-    return createDefaultSettings(refCode);
-  }, [settings, user?.refCode]);
+    const code = user?.instructorCode || 'DEFAULT';
+    return createDefaultSettings(code);
+  }, [settings, user?.instructorCode]);
 
   // ─── 읽기 함수 (학생 + 강사 공용) ───
 

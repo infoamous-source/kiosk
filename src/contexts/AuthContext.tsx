@@ -12,7 +12,8 @@ interface RegisterData {
   email: string;
   password: string;
   organization: string;
-  refCode: string;
+  instructorCode: string;
+  orgCode: string;
   learningPurpose: string;
 }
 
@@ -73,9 +74,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       email,
       role,
       organization: '테스트 기관',
-      refCode: 'TEST001',
+      instructorCode: 'INST-001',
+      orgCode: 'ORG-001',
       learningPurpose: '학습 목적',
       createdAt: new Date().toISOString(),
+      subscription: {
+        type: 'none',
+        status: 'none',
+      },
     };
 
     // 자동 로그인 체크 시 localStorage에, 아니면 sessionStorage에 저장
@@ -107,9 +113,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       email: data.email,
       role: 'student',
       organization: data.organization,
-      refCode: data.refCode,
+      instructorCode: data.instructorCode,
+      orgCode: data.orgCode,
       learningPurpose: data.learningPurpose,
       createdAt: new Date().toISOString(),
+      subscription: {
+        type: 'none',
+        status: 'none',
+      },
     };
 
     // 자동 로그인 체크 시 localStorage에, 아니면 sessionStorage에 저장

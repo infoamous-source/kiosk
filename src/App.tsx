@@ -12,6 +12,7 @@ import KoreaAppsPage from './pages/KoreaAppsPage';
 import MarketingLandingPage from './pages/marketing/MarketingLandingPage';
 import MarketingModuleDetailPage from './pages/marketing/MarketingModuleDetailPage';
 import MarketingToolRouter from './pages/marketing/MarketingToolRouter';
+import ProfilePage from './pages/ProfilePage';
 
 export default function App() {
   return (
@@ -28,7 +29,7 @@ export default function App() {
 
           {/* 강사 전용 대시보드 */}
           <Route path="/admin" element={<AdminPage />} />
-          <Route path="/admin/organization/:refCode" element={<OrganizationDetailPage />} />
+          <Route path="/admin/organization/:orgCode" element={<OrganizationDetailPage />} />
           <Route path="/admin/organizations" element={<AdminPage />} />
 
           {/* 트랙 내부 페이지 (사이드바 레이아웃) */}
@@ -40,6 +41,9 @@ export default function App() {
             <Route path="/marketing" element={<MarketingLandingPage />} />
             <Route path="/marketing/modules/:moduleId" element={<MarketingModuleDetailPage />} />
             <Route path="/marketing/tools/:toolId" element={<MarketingToolRouter />} />
+
+            {/* 내 프로필 */}
+            <Route path="/profile" element={<ProfilePage />} />
 
             <Route path="/resources" element={<div className="text-gray-500">Resources page (Coming soon)</div>} />
             <Route path="/help" element={<div className="text-gray-500">Help page (Coming soon)</div>} />

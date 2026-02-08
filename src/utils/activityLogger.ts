@@ -66,8 +66,8 @@ export function getActivityLogs(): ActivityLog[] {
   }
 }
 
-export function getLogsByRefCode(_refCode: string): ActivityLog[] {
-  // TODO: DB 연결 시 서버에서 _refCode로 필터링
+export function getLogsByInstructorCode(_instructorCode: string): ActivityLog[] {
+  // TODO: DB 연결 시 서버에서 _instructorCode로 필터링
   // 현재는 로컬에서 필터링 불가 (userId만 저장됨)
   return getActivityLogs();
 }

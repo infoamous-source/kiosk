@@ -26,7 +26,8 @@
     "resources": "Resources",
     "help": "Help",
     "settings": "Settings",
-    "dashboard": "Instructor Dashboard"
+    "dashboard": "Instructor Dashboard",
+    "profile": "My Profile"
   },
   "tracks": {
     "digitalBasics": {
@@ -102,8 +103,12 @@
     "namePlaceholder": "John Doe",
     "organization": "Organization",
     "organizationPlaceholder": "School, center, company name, etc.",
-    "refCode": "Referral Code",
-    "refCodePlaceholder": "Enter code from your organization",
+    "instructorCode": "Instructor Code",
+    "instructorCodePlaceholder": "Enter code from your instructor",
+    "instructorCodeHint": "Enter the code you received from your instructor",
+    "orgCode": "Organization Code",
+    "orgCodePlaceholder": "Enter org code (optional)",
+    "orgCodeHint": "Enter your organization code if applicable (leave blank for individual)",
     "learningPurpose": "Learning Purpose",
     "selectPurpose": "Select your learning purpose",
     "purpose": {
@@ -127,7 +132,8 @@
   "admin": {
     "title": "Instructor Dashboard",
     "welcome": "Welcome, {{name}}",
-    "refCode": "Organization Code",
+    "instructorCode": "Instructor Code",
+    "orgCode": "Organization Code",
     "totalStudents": "Total Students",
     "avgProgress": "Avg Progress",
     "completedModules": "Completed Modules",
@@ -499,6 +505,78 @@
     "travelActivitiesDesc": "Korea travel info and bookings",
     "safetyUtility": "Safety & Utility",
     "safetyUtilityDesc": "Emergency alerts and useful tools"
+  },
+  "profile": {
+    "loginRequired": "Please log in to view your profile.",
+    "tabs": {
+      "info": "My Info",
+      "activity": "Activity",
+      "ideaBox": "Idea Box"
+    },
+    "personalInfo": "Personal Information",
+    "affiliationInfo": "Affiliation Info",
+    "subscriptionInfo": "Subscription Info",
+    "age": "Age",
+    "ageSuffix": " years old",
+    "country": "Country",
+    "joinDate": "Join Date",
+    "notSet": "Not set",
+    "noOrg": "Individual",
+    "instructorCode": "Instructor Code",
+    "orgCode": "Organization Code",
+    "gender": {
+      "label": "Gender",
+      "male": "Male",
+      "female": "Female",
+      "other": "Other"
+    },
+    "subscription": {
+      "typeLabel": "Subscription Type",
+      "statusLabel": "Status",
+      "none": "None",
+      "individual": "Individual",
+      "organization": "Organization",
+      "active": "Active",
+      "expired": "Expired",
+      "inactive": "None",
+      "startDate": "Start Date",
+      "endDate": "End Date",
+      "history": "Previous Organization History"
+    },
+    "activity": {
+      "title": "Activity History",
+      "countUnit": " events",
+      "description": "View your learning activities and tool usage history.",
+      "moduleStart": "Module Started",
+      "moduleComplete": "Module Completed",
+      "toolUse": "Tool Used",
+      "trackStart": "Track Started",
+      "lessonStart": "Lesson Started",
+      "lessonComplete": "Lesson Completed",
+      "modulesAccessed": "Modules Accessed",
+      "toolsUsed": "Tools Used",
+      "completed": "Completed",
+      "empty": "No activity yet.\nSelect a track and start learning!"
+    },
+    "ideaBox": {
+      "title": "Idea Box",
+      "countUnit": " items",
+      "description": "A collection of results from marketing tools. Save and revisit your ideas anytime!",
+      "searchPlaceholder": "Search...",
+      "filterAll": "All",
+      "typePersona": "Persona",
+      "typeUSP": "USP",
+      "typeCopy": "Copy",
+      "typeHashtag": "Hashtag",
+      "typeColor": "Color",
+      "typeROI": "ROI",
+      "typeAd": "Ad",
+      "typeOther": "Other",
+      "copy": "Copy",
+      "delete": "Delete",
+      "empty": "No ideas saved yet.\nUse marketing tools and save your results!",
+      "noResults": "No results found."
+    }
   },
   "apps": {
     "naverMap": {

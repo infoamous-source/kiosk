@@ -98,12 +98,16 @@
     "registerSubtitle": "Create an account to start learning",
     "email": "Email",
     "password": "Password",
+    "instructorCode": "Instructor Code",
+    "instructorCodePlaceholder": "Enter instructor code",
+    "instructorCodeHint": "Instructor code (optional)",
+    "orgCode": "Organization Code",
+    "orgCodePlaceholder": "Enter organization code",
+    "orgCodeHint": "Organization code (optional)",
     "name": "Name",
     "namePlaceholder": "John Doe",
     "organization": "Organization",
     "organizationPlaceholder": "School, center, company name, etc.",
-    "refCode": "Referral Code",
-    "refCodePlaceholder": "Enter code from your organization",
     "learningPurpose": "Learning Purpose",
     "selectPurpose": "Select your learning purpose",
     "purpose": {
@@ -127,7 +131,6 @@
   "admin": {
     "title": "Instructor Dashboard",
     "welcome": "Welcome, {{name}}",
-    "refCode": "Organization Code",
     "totalStudents": "Total Students",
     "avgProgress": "Avg Progress",
     "completedModules": "Completed Modules",
@@ -163,7 +166,9 @@
       "progress": "Progress",
       "lastActive": "Last Active",
       "actions": "Actions"
-    }
+    },
+    "instructorCode": "Instructor Code",
+    "orgCode": "Organization Code"
   },
   "koreaApps": {
     "title": "Essential Korean Apps",
