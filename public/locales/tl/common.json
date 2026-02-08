@@ -26,7 +26,8 @@
     "resources": "Resources",
     "help": "Tulong",
     "settings": "Settings",
-    "dashboard": "Instructor Dashboard"
+    "dashboard": "Instructor Dashboard",
+    "profile": "내 프로필"
   },
   "tracks": {
     "digitalBasics": {
@@ -98,16 +99,16 @@
     "registerSubtitle": "Gumawa ng account para magsimulang matuto",
     "email": "Email",
     "password": "Password",
+    "name": "Pangalan",
+    "namePlaceholder": "Juan dela Cruz",
+    "organization": "Organisasyon",
+    "organizationPlaceholder": "School, center, company, atbp.",
     "instructorCode": "Instructor Code",
     "instructorCodePlaceholder": "Ilagay ang instructor code",
     "instructorCodeHint": "Instructor code (opsyonal)",
     "orgCode": "Organization Code",
     "orgCodePlaceholder": "Ilagay ang organization code",
     "orgCodeHint": "Organization code (opsyonal)",
-    "name": "Pangalan",
-    "namePlaceholder": "Juan dela Cruz",
-    "organization": "Organisasyon",
-    "organizationPlaceholder": "School, center, company, atbp.",
     "learningPurpose": "Layunin ng Pag-aaral",
     "selectPurpose": "Piliin ang iyong layunin sa pag-aaral",
     "purpose": {
@@ -131,6 +132,8 @@
   "admin": {
     "title": "Instructor Dashboard",
     "welcome": "Maligayang pagdating, {{name}}",
+    "instructorCode": "Instructor Code",
+    "orgCode": "Organization Code",
     "totalStudents": "Kabuuang Estudyante",
     "avgProgress": "Average Progress",
     "completedModules": "Natapos na Module",
@@ -143,18 +146,7 @@
     "organizationOverview": "Organization Overview",
     "viewAll": "Tingnan Lahat",
     "backToDashboard": "Bumalik sa Dashboard",
-    "searchPlaceholder": {
-      "name": "Maghanap ayon sa pangalan",
-      "email": "Maghanap ayon sa email",
-      "instructorCode": "Maghanap ng instructor code",
-      "orgCode": "Maghanap ng organization code"
-    },
-    "searchBy": {
-      "name": "Pangalan",
-      "email": "Email",
-      "instructorCode": "Instructor Code",
-      "orgCode": "Organization Code"
-    },
+    "searchHint": "기관명/기관코드/이름/이메일로 검색",
     "sortBy": {
       "name": "Pangalan (A-Z)",
       "email": "Email (A-Z)",
@@ -178,120 +170,24 @@
       "lastActive": "Huling Aktibo",
       "actions": "Actions"
     },
-    "instructorCode": "Instructor Code",
-    "orgCode": "Organization Code"
-  },
-  "koreaApps": {
-    "title": "Essential Korean Apps",
-    "subtitle": "Lahat ng apps na kailangan mo para sa buhay sa Korea! Mag-install at matutong gumamit ng maps, transit, delivery, at shopping apps.",
-    "backToTrack": "Bumalik sa Digital Basics",
-    "searchPlaceholder": "Maghanap ayon sa pangalan ng app",
-    "allCategories": "Lahat",
-    "download": "Download",
-    "noResults": "Walang resulta",
-    "clearSearch": "I-clear ang search",
-    "installed": "Naka-install",
-    "markInstalled": "+Markahan bilang Installed",
-    "installedCount": "naka-install",
-    "progress": "Install Progress",
-    "badges": {
-      "localEssential": "Essential",
-      "foreignerFriendly": "Foreigner Friendly",
-      "government": "Government"
+    "tabs": {
+      "students": "학생 현황",
+      "content": "콘텐츠 관리"
     },
-    "tips": {
-      "title": "App Tips",
-      "tip1": "Karamihan sa apps ay sumusuporta sa Korean, English, at Chinese. Maaari mong baguhin ang wika sa settings.",
-      "tip2": "Isang Kakao account lang ang kailangan para ma-access ang maraming Kakao services (KakaoTalk, KakaoMap, Kakao T).",
-      "tip3": "Kung hindi gumagana ang foreign card mo, mag-register sa KakaoPay o NaverPay para makabayad."
-    }
-  },
-  "categories": {
-    "mapsNavigation": "Maps at Navigation",
-    "mapsNavigationDesc": "Essential para makahanap ng daan sa Korea!",
-    "transportation": "Transportation",
-    "transportationDesc": "Taxi, subway, at bus",
-    "translationLanguage": "Translation at Language",
-    "translationLanguageDesc": "Korean translation helpers",
-    "foodDelivery": "Food Delivery",
-    "foodDeliveryDesc": "Masarap na pagkain sa iyong pinto",
-    "shoppingLiving": "Shopping at Living",
-    "shoppingLivingDesc": "Online shopping at secondhand trading",
-    "travelActivities": "Travel at Activities",
-    "travelActivitiesDesc": "Korea travel info at bookings",
-    "safetyUtility": "Safety at Utility",
-    "safetyUtilityDesc": "Emergency alerts at useful tools"
-  },
-  "apps": {
-    "naverMap": {
-      "name": "Naver Map",
-      "description": "Pinakatumpak na Korean map. Public transit, walking, at driving directions na may real-time traffic.",
-      "tagline": "Pinakamahusay na map app ng Korea"
-    },
-    "kakaomap": {
-      "name": "KakaoMap",
-      "description": "Map app na konektado sa Kakao. Madaling tumawag ng taxi gamit ang Kakao Taxi integration.",
-      "tagline": "Konektado sa Kakao ecosystem"
-    },
-    "kakaoT": {
-      "name": "Kakao T",
-      "description": "Taxi, designated driver, parking, bike - lahat sa isang app. Essential para sa taxi sa Korea!",
-      "tagline": "One-touch taxi calling"
-    },
-    "subwayKorea": {
-      "name": "Subway Korea",
-      "description": "Nationwide subway map at real-time arrival info. Sumusuporta sa English, Chinese, Japanese.",
-      "tagline": "Multilingual subway app"
-    },
-    "papago": {
-      "name": "Papago",
-      "description": "AI translation app ng Naver. Text, voice, image, at conversation translation lahat supported.",
-      "tagline": "Standard para sa Korean translation"
-    },
-    "naverDictionary": {
-      "name": "Naver Dictionary",
-      "description": "Essential para sa pag-aaral ng Korean! Comprehensive dictionary na may definitions, examples, at pronunciation.",
-      "tagline": "Korean learning helper"
-    },
-    "coupangEats": {
-      "name": "Coupang Eats",
-      "description": "Single-person delivery specialist! Mabilis na delivery at iba't ibang restaurants. English supported.",
-      "tagline": "Mabilis na food delivery"
-    },
-    "shuttleDelivery": {
-      "name": "Shuttle Delivery",
-      "description": "Delivery app para sa foreigners. Mag-order sa English at magbayad gamit ang foreign cards.",
-      "tagline": "Foreigner-friendly delivery"
-    },
-    "coupang": {
-      "name": "Coupang",
-      "description": "Pinakamalaking shopping mall ng Korea na kilala sa Rocket Delivery. Dawn at same-day delivery available.",
-      "tagline": "Top shopping mall ng Korea"
-    },
-    "karrot": {
-      "name": "Karrot",
-      "description": "Neighborhood-based secondhand trading app. Ligtas na bumili at magbenta sa mga kapitbahay.",
-      "tagline": "Local secondhand trading"
-    },
-    "creatrip": {
-      "name": "Creatrip",
-      "description": "Korea travel info para sa foreign tourists. Discount coupons at reservation services.",
-      "tagline": "Essential para sa foreign travelers"
-    },
-    "waug": {
-      "name": "Waug",
-      "description": "Mag-book ng Korean activities, tours, at tickets. Iba't ibang experiences na madali.",
-      "tagline": "Activity bookings"
-    },
-    "emergencyReady": {
-      "name": "Emergency Ready",
-      "description": "Official government disaster alert app. Emergency info sa earthquakes, typhoons, air quality.",
-      "tagline": "Government disaster alerts"
-    },
-    "xeCurrency": {
-      "name": "XE Currency",
-      "description": "Real-time exchange rates. Useful na global currency app para sa converting to Korean Won.",
-      "tagline": "Real-time exchange rates"
+    "contentManager": {
+      "title": "콘텐츠 관리",
+      "infoTitle": "모듈과 도구를 ON/OFF로 관리하세요",
+      "infoDescription": "OFF로 설정하면 소속 학생들에게 해당 항목이 보이지 않습니다. 새로 추가되는 항목은 자동으로 ON 상태입니다.",
+      "modules": "모듈",
+      "tools": "실무 도구",
+      "allOn": "전체 ON",
+      "allOff": "전체 OFF",
+      "offCount": "개 OFF",
+      "trackOff": "이 트랙은 OFF 상태입니다. 학생들에게 보이지 않습니다.",
+      "interactive": "실습",
+      "static": "읽기",
+      "note": "설정은 자동 저장됩니다. 새로 추가되는 모듈/도구는 기본 ON입니다.",
+      "toolDisabled": "이 도구는 현재 사용할 수 없습니다."
     }
   },
   "marketing": {
@@ -324,37 +220,93 @@
       "basics": {
         "title": "Ano ang Marketing?",
         "description": "Matuto ng basic marketing concepts at 2026 trends",
-        "oneLine": "Marketing basics + Latest trends"
+        "oneLine": "Marketing basics + Latest trends",
+        "learning": {
+          "whatIsMarketing": "마케팅이란?",
+          "whatIsMarketingDesc": "물건을 파는 것과 마케팅의 차이, 마케팅의 4P를 쉽게 배워요",
+          "trend2026": "2026년 마케팅 트렌드",
+          "trend2026Desc": "나노사회, 숏폼, 진정성 등 올해 꼭 알아야 할 트렌드",
+          "marketerJobs": "마케터가 하는 일",
+          "marketerJobsDesc": "한국 회사에서 마케터는 어떤 일을 하는지 알아봐요"
+        }
       },
       "research": {
         "title": "Sino ang bumibili ng produkto ko?",
         "description": "Matuto ng market research at target customer analysis",
-        "oneLine": "Market research + Target analysis"
+        "oneLine": "Market research + Target analysis",
+        "learning": {
+          "howToResearch": "시장 조사 방법",
+          "howToResearchDesc": "네이버 트렌드, SNS에서 시장 조사하는 방법",
+          "findTarget": "타겟 고객 찾기",
+          "findTargetDesc": "내 물건을 살 사람은 누구인지 정하는 방법",
+          "competitor": "경쟁자 분석",
+          "competitorDesc": "비슷한 물건을 파는 다른 사람들을 분석하는 방법"
+        }
       },
       "concept": {
         "title": "Gumawa ng Unique Concept",
         "description": "Hanapin ang iyong USP at gumawa ng brand concept",
-        "oneLine": "USP + Brand concept planning"
+        "oneLine": "USP + Brand concept planning",
+        "learning": {
+          "usp": "USP 찾기",
+          "uspDesc": "나만의 특별한 장점을 찾는 방법",
+          "brandStory": "브랜드 스토리",
+          "brandStoryDesc": "사람들의 마음을 움직이는 이야기 만들기",
+          "slogan": "슬로건 만들기",
+          "sloganDesc": "기억에 남는 한 줄 소개 만들기"
+        }
       },
       "branding": {
         "title": "Design at Copywriting",
         "description": "Mag-design ng brand colors, logos, at product pages",
-        "oneLine": "Branding design + Copywriting"
+        "oneLine": "Branding design + Copywriting",
+        "learning": {
+          "brandColor": "브랜드 색상",
+          "brandColorDesc": "감정에 맞는 색상을 골라서 브랜드 느낌을 만들어요",
+          "logoFont": "로고와 글꼴",
+          "logoFontDesc": "무료 도구로 로고를 만들고 글꼴을 고르는 방법",
+          "detailPage": "상세 페이지",
+          "detailPageDesc": "사람들이 사고 싶게 만드는 상세 페이지 구성법"
+        }
       },
       "content": {
         "title": "Content Marketing",
         "description": "Gumawa ng content para sa Instagram, YouTube at iba pa",
-        "oneLine": "SNS content creation"
+        "oneLine": "SNS content creation",
+        "learning": {
+          "channels": "SNS 채널 이해",
+          "channelsDesc": "인스타그램, 유튜브, 틱톡의 특징과 활용법",
+          "cardNews": "카드뉴스 만들기",
+          "cardNewsDesc": "눈에 띄는 카드뉴스 디자인과 글쓰기",
+          "hashtag": "해시태그 전략",
+          "hashtagDesc": "더 많은 사람이 보게 만드는 해시태그 사용법"
+        }
       },
       "performance": {
         "title": "Paid Advertising",
         "description": "Matuto kung paano gumastos ng ad budget para maabot ang mas maraming tao",
-        "oneLine": "Performance marketing basics"
+        "oneLine": "Performance marketing basics",
+        "learning": {
+          "whatIs": "퍼포먼스 마케팅이란?",
+          "whatIsDesc": "돈을 써서 광고하는 것이 왜 필요한지 알아봐요",
+          "adTypes": "광고 종류",
+          "adTypesDesc": "네이버 광고, 인스타 광고, 구글 광고의 차이점",
+          "readData": "데이터 읽기",
+          "readDataDesc": "ROAS, CPC 같은 숫자를 읽고 이해하는 방법"
+        }
       },
       "aiPractice": {
         "title": "Marketing gamit ang AI",
         "description": "Gumawa ng ad copy at images gamit ang AI tools",
-        "oneLine": "Gemini AI hands-on practice"
+        "oneLine": "Gemini AI hands-on practice",
+        "learning": {
+          "aiWorkflow": "AI 마케팅 워크플로",
+          "aiWorkflowDesc": "AI를 마케팅에 어떻게 활용하는지 전체 흐름을 배워요",
+          "promptEngineering": "프롬프트 쓰는 법",
+          "promptEngineeringDesc": "AI에게 잘 말해서 좋은 결과를 얻는 방법",
+          "practiceAd": "실전 광고 만들기",
+          "practiceAdDesc": "AI로 카피를 쓰고, 이미지를 만들어서 광고를 완성해요"
+        }
       }
     },
     "tools": {
@@ -567,6 +519,191 @@
       "errorInvalid": "Pakisuri ang iyong key. Hindi valid ang API key.",
       "errorQuota": "Nalampasan ang API quota. Pakisubukang muli mamaya.",
       "errorGeneral": "Nabigo ang connection. Pakisuri ang iyong key o subukang muli mamaya."
+    }
+  },
+  "koreaApps": {
+    "title": "Essential Korean Apps",
+    "subtitle": "Lahat ng apps na kailangan mo para sa buhay sa Korea! Mag-install at matutong gumamit ng maps, transit, delivery, at shopping apps.",
+    "backToTrack": "Bumalik sa Digital Basics",
+    "searchPlaceholder": "Maghanap ayon sa pangalan ng app",
+    "allCategories": "Lahat",
+    "download": "Download",
+    "noResults": "Walang resulta",
+    "clearSearch": "I-clear ang search",
+    "installed": "Naka-install",
+    "markInstalled": "+Markahan bilang Installed",
+    "installedCount": "naka-install",
+    "progress": "Install Progress",
+    "badges": {
+      "localEssential": "Essential",
+      "foreignerFriendly": "Foreigner Friendly",
+      "government": "Government"
+    },
+    "tips": {
+      "title": "App Tips",
+      "tip1": "Karamihan sa apps ay sumusuporta sa Korean, English, at Chinese. Maaari mong baguhin ang wika sa settings.",
+      "tip2": "Isang Kakao account lang ang kailangan para ma-access ang maraming Kakao services (KakaoTalk, KakaoMap, Kakao T).",
+      "tip3": "Kung hindi gumagana ang foreign card mo, mag-register sa KakaoPay o NaverPay para makabayad."
+    }
+  },
+  "categories": {
+    "mapsNavigation": "Maps at Navigation",
+    "mapsNavigationDesc": "Essential para makahanap ng daan sa Korea!",
+    "transportation": "Transportation",
+    "transportationDesc": "Taxi, subway, at bus",
+    "translationLanguage": "Translation at Language",
+    "translationLanguageDesc": "Korean translation helpers",
+    "foodDelivery": "Food Delivery",
+    "foodDeliveryDesc": "Masarap na pagkain sa iyong pinto",
+    "shoppingLiving": "Shopping at Living",
+    "shoppingLivingDesc": "Online shopping at secondhand trading",
+    "travelActivities": "Travel at Activities",
+    "travelActivitiesDesc": "Korea travel info at bookings",
+    "safetyUtility": "Safety at Utility",
+    "safetyUtilityDesc": "Emergency alerts at useful tools"
+  },
+  "profile": {
+    "loginRequired": "프로필을 보려면 로그인이 필요합니다.",
+    "tabs": {
+      "info": "내 정보",
+      "activity": "활동 내역",
+      "ideaBox": "아이디어 상자"
+    },
+    "personalInfo": "개인 정보",
+    "affiliationInfo": "소속 정보",
+    "subscriptionInfo": "구독 정보",
+    "age": "나이",
+    "ageSuffix": "세",
+    "country": "국적",
+    "joinDate": "가입일",
+    "notSet": "미설정",
+    "noOrg": "개인",
+    "instructorCode": "강사코드",
+    "orgCode": "기관코드",
+    "gender": {
+      "label": "성별",
+      "male": "남성",
+      "female": "여성",
+      "other": "기타"
+    },
+    "subscription": {
+      "typeLabel": "구독 유형",
+      "statusLabel": "상태",
+      "none": "미구독",
+      "individual": "개인 구독",
+      "organization": "기관 구독",
+      "active": "활성",
+      "expired": "만료",
+      "inactive": "없음",
+      "startDate": "시작일",
+      "endDate": "종료일",
+      "history": "이전 기관 기록"
+    },
+    "activity": {
+      "title": "활동 내역",
+      "countUnit": "건",
+      "description": "학습 활동과 도구 사용 기록을 확인할 수 있어요.",
+      "moduleStart": "모듈 시작",
+      "moduleComplete": "모듈 완료",
+      "toolUse": "도구 사용",
+      "trackStart": "트랙 시작",
+      "lessonStart": "학습 시작",
+      "lessonComplete": "학습 완료",
+      "modulesAccessed": "모듈 접근",
+      "toolsUsed": "도구 사용",
+      "completed": "완료",
+      "empty": "아직 활동 기록이 없어요.\n트랙을 선택하고 학습을 시작해보세요!"
+    },
+    "ideaBox": {
+      "title": "아이디어 상자",
+      "countUnit": "개",
+      "description": "마케팅 도구에서 만든 결과물을 모아두는 곳이에요. 나중에 다시 보고 활용할 수 있어요!",
+      "searchPlaceholder": "검색...",
+      "filterAll": "전체",
+      "typePersona": "페르소나",
+      "typeUSP": "USP",
+      "typeCopy": "카피",
+      "typeHashtag": "해시태그",
+      "typeColor": "컬러",
+      "typeROI": "ROI",
+      "typeAd": "광고",
+      "typeOther": "기타",
+      "copy": "복사",
+      "delete": "삭제",
+      "empty": "아직 저장된 아이디어가 없어요.\n마케팅 도구를 사용하고 결과를 저장해보세요!",
+      "noResults": "검색 결과가 없습니다."
+    }
+  },
+  "apps": {
+    "naverMap": {
+      "name": "Naver Map",
+      "description": "Pinakatumpak na Korean map. Public transit, walking, at driving directions na may real-time traffic.",
+      "tagline": "Pinakamahusay na map app ng Korea"
+    },
+    "kakaomap": {
+      "name": "KakaoMap",
+      "description": "Map app na konektado sa Kakao. Madaling tumawag ng taxi gamit ang Kakao Taxi integration.",
+      "tagline": "Konektado sa Kakao ecosystem"
+    },
+    "kakaoT": {
+      "name": "Kakao T",
+      "description": "Taxi, designated driver, parking, bike - lahat sa isang app. Essential para sa taxi sa Korea!",
+      "tagline": "One-touch taxi calling"
+    },
+    "subwayKorea": {
+      "name": "Subway Korea",
+      "description": "Nationwide subway map at real-time arrival info. Sumusuporta sa English, Chinese, Japanese.",
+      "tagline": "Multilingual subway app"
+    },
+    "papago": {
+      "name": "Papago",
+      "description": "AI translation app ng Naver. Text, voice, image, at conversation translation lahat supported.",
+      "tagline": "Standard para sa Korean translation"
+    },
+    "naverDictionary": {
+      "name": "Naver Dictionary",
+      "description": "Essential para sa pag-aaral ng Korean! Comprehensive dictionary na may definitions, examples, at pronunciation.",
+      "tagline": "Korean learning helper"
+    },
+    "coupangEats": {
+      "name": "Coupang Eats",
+      "description": "Single-person delivery specialist! Mabilis na delivery at iba't ibang restaurants. English supported.",
+      "tagline": "Mabilis na food delivery"
+    },
+    "shuttleDelivery": {
+      "name": "Shuttle Delivery",
+      "description": "Delivery app para sa foreigners. Mag-order sa English at magbayad gamit ang foreign cards.",
+      "tagline": "Foreigner-friendly delivery"
+    },
+    "coupang": {
+      "name": "Coupang",
+      "description": "Pinakamalaking shopping mall ng Korea na kilala sa Rocket Delivery. Dawn at same-day delivery available.",
+      "tagline": "Top shopping mall ng Korea"
+    },
+    "karrot": {
+      "name": "Karrot",
+      "description": "Neighborhood-based secondhand trading app. Ligtas na bumili at magbenta sa mga kapitbahay.",
+      "tagline": "Local secondhand trading"
+    },
+    "creatrip": {
+      "name": "Creatrip",
+      "description": "Korea travel info para sa foreign tourists. Discount coupons at reservation services.",
+      "tagline": "Essential para sa foreign travelers"
+    },
+    "waug": {
+      "name": "Waug",
+      "description": "Mag-book ng Korean activities, tours, at tickets. Iba't ibang experiences na madali.",
+      "tagline": "Activity bookings"
+    },
+    "emergencyReady": {
+      "name": "Emergency Ready",
+      "description": "Official government disaster alert app. Emergency info sa earthquakes, typhoons, air quality.",
+      "tagline": "Government disaster alerts"
+    },
+    "xeCurrency": {
+      "name": "XE Currency",
+      "description": "Real-time exchange rates. Useful na global currency app para sa converting to Korean Won.",
+      "tagline": "Real-time exchange rates"
     }
   }
 }

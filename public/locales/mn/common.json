@@ -26,7 +26,8 @@
     "resources": "Сурах материал",
     "help": "Тусламж",
     "settings": "Тохиргоо",
-    "dashboard": "Багшийн хяналтын самбар"
+    "dashboard": "Багшийн хяналтын самбар",
+    "profile": "내 프로필"
   },
   "tracks": {
     "digitalBasics": {
@@ -98,16 +99,16 @@
     "registerSubtitle": "Суралцаж эхлэхийн тулд бүртгэл үүсгэнэ үү",
     "email": "Имэйл",
     "password": "Нууц үг",
+    "name": "Нэр",
+    "namePlaceholder": "Батболд",
+    "organization": "Байгууллага",
+    "organizationPlaceholder": "Сургууль, төв, компани гэх мэт",
     "instructorCode": "Багшийн код",
     "instructorCodePlaceholder": "Багшийн код оруулах",
     "instructorCodeHint": "Багшийн код (заавал биш)",
     "orgCode": "Байгууллагын код",
     "orgCodePlaceholder": "Байгууллагын код оруулах",
     "orgCodeHint": "Байгууллагын код (заавал биш)",
-    "name": "Нэр",
-    "namePlaceholder": "Батболд",
-    "organization": "Байгууллага",
-    "organizationPlaceholder": "Сургууль, төв, компани гэх мэт",
     "learningPurpose": "Суралцах зорилго",
     "selectPurpose": "Суралцах зорилгоо сонгоно уу",
     "purpose": {
@@ -131,6 +132,8 @@
   "admin": {
     "title": "Багшийн хяналтын самбар",
     "welcome": "Тавтай морил, {{name}}",
+    "instructorCode": "Багшийн код",
+    "orgCode": "Байгууллагын код",
     "totalStudents": "Нийт оюутан",
     "avgProgress": "Дундаж явц",
     "completedModules": "Дууссан модуль",
@@ -143,18 +146,7 @@
     "organizationOverview": "Байгууллагын тойм",
     "viewAll": "Бүгдийг харах",
     "backToDashboard": "Хяналтын самбар руу буцах",
-    "searchPlaceholder": {
-      "name": "Нэрээр хайх",
-      "email": "Имэйлээр хайх",
-      "instructorCode": "Багшийн кодоор хайх",
-      "orgCode": "Байгууллагын кодоор хайх"
-    },
-    "searchBy": {
-      "name": "Нэр",
-      "email": "Имэйл",
-      "instructorCode": "Багшийн код",
-      "orgCode": "Байгууллагын код"
-    },
+    "searchHint": "기관명/기관코드/이름/이메일로 검색",
     "sortBy": {
       "name": "Нэр (А-Я)",
       "email": "Имэйл (A-Z)",
@@ -178,8 +170,356 @@
       "lastActive": "Сүүлд идэвхтэй",
       "actions": "Үйлдэл"
     },
-    "instructorCode": "Багшийн код",
-    "orgCode": "Байгууллагын код"
+    "tabs": {
+      "students": "학생 현황",
+      "content": "콘텐츠 관리"
+    },
+    "contentManager": {
+      "title": "콘텐츠 관리",
+      "infoTitle": "모듈과 도구를 ON/OFF로 관리하세요",
+      "infoDescription": "OFF로 설정하면 소속 학생들에게 해당 항목이 보이지 않습니다. 새로 추가되는 항목은 자동으로 ON 상태입니다.",
+      "modules": "모듈",
+      "tools": "실무 도구",
+      "allOn": "전체 ON",
+      "allOff": "전체 OFF",
+      "offCount": "개 OFF",
+      "trackOff": "이 트랙은 OFF 상태입니다. 학생들에게 보이지 않습니다.",
+      "interactive": "실습",
+      "static": "읽기",
+      "note": "설정은 자동 저장됩니다. 새로 추가되는 모듈/도구는 기본 ON입니다.",
+      "toolDisabled": "이 도구는 현재 사용할 수 없습니다."
+    }
+  },
+  "marketing": {
+    "landing": {
+      "badge": "Маркетингийн ур чадварын курс",
+      "heroTitle": "Солонгост маркетер\nболохыг хүсч байна уу?",
+      "heroDescription": "Үндсээс AI хэрэгслүүд хүртэл, энэ курсийг дуусгаж өөрийн маркетингийн портфолио бүтээгээрэй!",
+      "modulesUnit": " модуль",
+      "hoursUnit": " цаг",
+      "toolsUnit": " хэрэгсэл",
+      "roadmapTitle": "Суралцах зураглал",
+      "lessonsUnit": " хичээл",
+      "moduleCount": " модуль",
+      "lessonsCount": "{{count}} хичээл",
+      "toolsCount": "{{count}} хэрэгсэл",
+      "practiceToolsCount": "{{count}} дадлагын хэрэгсэл"
+    },
+    "stages": {
+      "foundation": "Суурь бий болгох",
+      "practice": "Дадлага сурах",
+      "ai": "AI-аар дадлага хийх",
+      "foundationDesc": "Маркетингийн үндсийг эзэмших",
+      "practiceDesc": "SNS ба зарын дадлага",
+      "aiDesc": "AI-аар зар бүтээх",
+      "foundation_label": "Суурь",
+      "practice_label": "Дадлага",
+      "ai_label": "AI"
+    },
+    "modules": {
+      "basics": {
+        "title": "Маркетингийн үндэс",
+        "description": "Маркетингийн үндсэн ойлголт, нэр томъёо ойлгох",
+        "oneLine": "Маркетингийн тодорхойлолтоос 4P хүртэлх үндсэн ойлголт",
+        "learning": {
+          "whatIsMarketing": "마케팅이란?",
+          "whatIsMarketingDesc": "물건을 파는 것과 마케팅의 차이, 마케팅의 4P를 쉽게 배워요",
+          "trend2026": "2026년 마케팅 트렌드",
+          "trend2026Desc": "나노사회, 숏폼, 진정성 등 올해 꼭 알아야 할 트렌드",
+          "marketerJobs": "마케터가 하는 일",
+          "marketerJobsDesc": "한국 회사에서 마케터는 어떤 일을 하는지 알아봐요"
+        }
+      },
+      "research": {
+        "title": "Зах зээлийн судалгаа",
+        "description": "Хэрэглэгчдийг ойлгож өрсөлдөгчдийг шинжлэх",
+        "oneLine": "Хэрэглэгчийн дүр төрх, өрсөлдөгчийн шинжилгээ, зах зээлийн чиг хандлага",
+        "learning": {
+          "howToResearch": "시장 조사 방법",
+          "howToResearchDesc": "네이버 트렌드, SNS에서 시장 조사하는 방법",
+          "findTarget": "타겟 고객 찾기",
+          "findTargetDesc": "내 물건을 살 사람은 누구인지 정하는 방법",
+          "competitor": "경쟁자 분석",
+          "competitorDesc": "비슷한 물건을 파는 다른 사람들을 분석하는 방법"
+        }
+      },
+      "concept": {
+        "title": "Концепцийн стратеги",
+        "description": "Бүтээгдэхүүний концепц ба брэндийг бий болгох",
+        "oneLine": "USP, байршил, ялгах стратеги",
+        "learning": {
+          "usp": "USP 찾기",
+          "uspDesc": "나만의 특별한 장점을 찾는 방법",
+          "brandStory": "브랜드 스토리",
+          "brandStoryDesc": "사람들의 마음을 움직이는 이야기 만들기",
+          "slogan": "슬로건 만들기",
+          "sloganDesc": "기억에 남는 한 줄 소개 만들기"
+        }
+      },
+      "branding": {
+        "title": "Брэндийн дизайн",
+        "description": "Брэндийн баримжаа ба харааны стратеги",
+        "oneLine": "Лого, өнгө, үсэг, брэндийн танилцуулга заавар",
+        "learning": {
+          "brandColor": "브랜드 색상",
+          "brandColorDesc": "감정에 맞는 색상을 골라서 브랜드 느낌을 만들어요",
+          "logoFont": "로고와 글꼴",
+          "logoFontDesc": "무료 도구로 로고를 만들고 글꼴을 고르는 방법",
+          "detailPage": "상세 페이지",
+          "detailPageDesc": "사람들이 사고 싶게 만드는 상세 페이지 구성법"
+        }
+      },
+      "content": {
+        "title": "Контент маркетинг",
+        "description": "SNS ба контент маркетингийн стратеги",
+        "oneLine": "Instagram, YouTube, TikTok, хуулбар бичих",
+        "learning": {
+          "channels": "SNS 채널 이해",
+          "channelsDesc": "인스타그램, 유튜브, 틱톡의 특징과 활용법",
+          "cardNews": "카드뉴스 만들기",
+          "cardNewsDesc": "눈에 띄는 카드뉴스 디자인과 글쓰기",
+          "hashtag": "해시태그 전략",
+          "hashtagDesc": "더 많은 사람이 보게 만드는 해시태그 사용법"
+        }
+      },
+      "performance": {
+        "title": "Гүйцэтгэлийн маркетинг",
+        "description": "Дижитал зар ба ROI хэмжилт",
+        "oneLine": "Meta зар, Google Ads, өгөгдөл шинжилгээ",
+        "learning": {
+          "whatIs": "퍼포먼스 마케팅이란?",
+          "whatIsDesc": "돈을 써서 광고하는 것이 왜 필요한지 알아봐요",
+          "adTypes": "광고 종류",
+          "adTypesDesc": "네이버 광고, 인스타 광고, 구글 광고의 차이점",
+          "readData": "데이터 읽기",
+          "readDataDesc": "ROAS, CPC 같은 숫자를 읽고 이해하는 방법"
+        }
+      },
+      "aiPractice": {
+        "title": "AI хэрэгслийн дадлага",
+        "description": "AI хэрэгслээр маркетингийн материал бүтээх",
+        "oneLine": "AI хуулбар, зарын зураг үүсгэгч, хэштэг үүсгэгч",
+        "learning": {
+          "aiWorkflow": "AI 마케팅 워크플로",
+          "aiWorkflowDesc": "AI를 마케팅에 어떻게 활용하는지 전체 흐름을 배워요",
+          "promptEngineering": "프롬프트 쓰는 법",
+          "promptEngineeringDesc": "AI에게 잘 말해서 좋은 결과를 얻는 방법",
+          "practiceAd": "실전 광고 만들기",
+          "practiceAdDesc": "AI로 카피를 쓰고, 이미지를 만들어서 광고를 완성해요"
+        }
+      }
+    },
+    "tools": {
+      "glossary": {
+        "title": "Маркетингийн толь бичиг",
+        "description": "Хамгийн түгээмэл маркетингийн нэр томъёоны толь бичиг",
+        "termsCount": "{{count}}개의 용어",
+        "noResults": "Нэр томъёо олдсонгүй",
+        "categoryAll": "전체",
+        "categoryBasic": "기초",
+        "categoryDigital": "디지털",
+        "categorySNS": "SNS",
+        "categoryPerformance": "퍼포먼스",
+        "categoryBranding": "브랜딩",
+        "categoryAI": "AI",
+        "searchPlaceholder": "Маркетингийн нэр томъёо хайх..."
+      },
+      "personaMaker": {
+        "title": "Хэрэглэгчийн дүр төрх үүсгэгч",
+        "description": "Зорилтот хэрэглэгчийн дүр төрхөө үүсгэх",
+        "tipMessage": "💡 내 물건을 살 것 같은 사람을 한 명 상상해보세요",
+        "nameLabel": "이름",
+        "ageLabel": "나이",
+        "genderLabel": "성별",
+        "genderMale": "남성",
+        "genderFemale": "여성",
+        "genderOther": "기타",
+        "occupationLabel": "직업",
+        "interestsLabel": "관심사 / 취미",
+        "painPointsLabel": "고민 / 불편한 점",
+        "goalsLabel": "목표 / 원하는 것",
+        "createButton": "페르소나 카드 만들기",
+        "ageSuffix": "세",
+        "unspecified": "미지정",
+        "copySuccess": "복사 완료!",
+        "copyButton": "Хуулах",
+        "resetButton": "다시 만들기",
+        "personaCard": "[ 페르소나 카드 ]",
+        "nameLine": "이름",
+        "ageLine": "나이",
+        "genderLine": "성별",
+        "occupationLine": "직업",
+        "interestsLine": "관심사",
+        "painPointsLine": "고민",
+        "goalsLine": "목표"
+      },
+      "uspFinder": {
+        "title": "USP олох хэрэгсэл",
+        "description": "Бүтээгдэхүүнийхээ өвөрмөц давуу талыг олох",
+        "step1": "내 제품",
+        "step2": "경쟁자",
+        "step3": "강점",
+        "step4": "결과",
+        "step1Title": "내 제품/서비스는?",
+        "step1Placeholder": "예: 수제 쿠키, 네일아트 서비스...",
+        "step2Title": "경쟁자는 누구?",
+        "step2Placeholder": "예: 동네 빵집, 네일샵...",
+        "step3Title": "나만의 강점",
+        "step3Subtitle": "고객이 원하는 것",
+        "step3Placeholder": "예: 유기농 재료 사용...",
+        "step3CustomerPlaceholder": "예: 건강한 간식...",
+        "resultTitle": "Санал болгох USP",
+        "prevButton": "이전",
+        "nextButton": "다음",
+        "createButton": "USP 만들기",
+        "copySuccess": "복사 완료!",
+        "copyButton": "복사하기",
+        "resetButton": "다시 만들기"
+      },
+      "colorPicker": {
+        "title": "Брэндийн өнгө сонгогч",
+        "description": "Брэндийн баримжаанд тохирох өнгө олох",
+        "selectEmotion": "어떤 느낌을 주고 싶어요?",
+        "mainColor": "메인 컬러",
+        "subColors": "서브 컬러",
+        "preview": "미리보기",
+        "buyButton": "구매하기",
+        "previewTitle": "당신을 위한 특별한 제안",
+        "previewSubtitle": "지금 시작해보세요",
+        "resetButton": "다시 선택하기"
+      },
+      "hashtagGenerator": {
+        "title": "Хэштэг үүсгэгч",
+        "description": "SNS пост хийхэд оновчтой хэштэг үүсгэх",
+        "inputPlaceholder": "키워드를 입력하세요 (예: 맛집, 카페)",
+        "suggestedKeywords": "추천 키워드",
+        "hashtagCount": "{{count}}개의 해시태그",
+        "copyAllSuccess": "전체 복사됨!",
+        "copyAll": "Бүгдийг хуулах",
+        "popular": "🔥 인기",
+        "niche": "💎 니치",
+        "general": "🌐 일반",
+        "copied": "복사됨",
+        "tip": "인기 해시태그 3~5개 + 니치 해시태그 5~7개를 조합하면 효과가 좋아요!",
+        "generateButton": "생성"
+      },
+      "roiCalculator": {
+        "title": "Зарын ROI тооцоолуур",
+        "description": "Зарын кампанит ажлын үр дүнг тооцоолох",
+        "adSpendLabel": "💰 광고비 (원)",
+        "revenueLabel": "📈 매출 (원)",
+        "calculateButton": "계산하기",
+        "currencyUnit": "원",
+        "roasLabel": "ROAS",
+        "adSpendResult": "광고비",
+        "revenueResult": "매출",
+        "profitLabel": "Ашиг",
+        "roiLabel": "ROI",
+        "profitPerWon": "광고비 1원당",
+        "profitSuffix": "원의 이익",
+        "lossSuffix": "원의 손실",
+        "messageGreat": "대박이에요! 광고 효율이 정말 좋아요!",
+        "messageGood": "좋아요! 광고가 잘 되고 있어요!",
+        "messageOk": "나쁘지 않아요! 조금 더 최적화하면 좋겠어요.",
+        "messageEven": "본전이에요. 광고를 개선해볼까요?",
+        "messageLoss": "손해예요... 타겟이나 광고 내용을 바꿔보세요.",
+        "tip": "일반적으로 ROAS 300% 이상이면 좋은 광고라고 해요. 업종에 따라 다르지만, 처음에는 200% 이상을 목표로 해보세요!"
+      },
+      "kCopywriter": {
+        "title": "Солонгос хуулбар үүсгэгч",
+        "description": "Солонгос маягийн маркетингийн хуулбар үүсгэх",
+        "toneEmotional": "감성적",
+        "toneEmotionalDesc": "따뜻하고 마음을 움직이는",
+        "toneFun": "재미있게",
+        "toneFunDesc": "유쾌하고 친근한",
+        "toneProfessional": "전문적",
+        "toneProfessionalDesc": "신뢰감 있고 전문적인",
+        "productLabel": "상품/서비스 이름 *",
+        "productPlaceholder": "예: 수제 쿠키, 영어 과외...",
+        "targetLabel": "타겟 고객 (선택)",
+        "targetPlaceholder": "예: 20대 여성, 직장인...",
+        "toneLabel": "분위기",
+        "generating": "카피 생성 중...",
+        "generateButton": "카피 만들기",
+        "sampleLabel": "📝 샘플 카피",
+        "aiLabel": "✨ AI가 만든 카피",
+        "resetButton": "다시 만들기",
+        "optionPrefix": "옵션",
+        "copyButton": "복사하기",
+        "copySuccess": "복사 완료!",
+        "noAiMessage": "AI 비서가 연결되지 않았어요. 마케팅 홈에서 API 키를 먼저 연결해주세요."
+      },
+      "snsAdMaker": {
+        "title": "SNS зар үүсгэгч",
+        "description": "AI-аар SNS зарын концепц үүсгэх",
+        "settingsTitle": "설정",
+        "subjectLabel": "이미지 주제 *",
+        "subjectPlaceholder": "예: 맛있는 초콜릿 케이크",
+        "styleLabel": "스타일",
+        "styleRealistic": "사실적",
+        "styleIllustration": "일러스트",
+        "style3d": "3D",
+        "stylePopart": "팝아트",
+        "promptRealistic": "📸 사실적인 사진 느낌",
+        "promptIllustration": "✏️ 손으로 그린 듯한 일러스트",
+        "prompt3d": "🧊 입체적인 3D 렌더링",
+        "promptPopart": "🎉 화려한 팝아트 스타일",
+        "copyLabel": "광고 카피 (선택)",
+        "copyPlaceholder": "예: 지금 바로 주문하세요!",
+        "generatePreview": "미리보기 생성",
+        "instagramPreview": "인스타그램 미리보기",
+        "brandName": "my_brand",
+        "sponsored": "Sponsored",
+        "mockPreview": "Mock Preview",
+        "likes": "{{count}} likes",
+        "emptyMessage": "설정을 입력하고 미리보기를 생성하세요",
+        "resetButton": "다시 만들기"
+      },
+      "back": "Буцах"
+    },
+    "recommend": {
+      "title": "Танд зориулсан санал!",
+      "subtitle": "Та дараах зүйлсийн аль нэгтэй таарч байвал энэ курс тохиромжтой",
+      "target1": "Солонгост маркетингийн салбарт ажиллахыг хүсч буй гадаадын ажилчин",
+      "target2": "Онлайн бизнес эхлэх эсвэл бүтээгдэхүүн зарахыг хүсч байна",
+      "target3": "SNS маркетинг, контент үүсгэхэд сонирхолтой",
+      "target4": "AI хэрэгслээр практик маркетинг сурахыг хүсч байна"
+    },
+    "instructor": {
+      "sectionTitle": "강사 소개",
+      "title": "Дижитал маркетингийн мэргэжилтэн",
+      "description": "이주민과 유학생의 취업 역량을 키우는 마케팅 실무 교육 전문가입니다. 쉬운 한국어로 복잡한 마케팅을 알기 쉽게 가르쳐 드립니다.",
+      "credential1": "디지털 마케팅 전문가 자격증 보유",
+      "credential2": "이주민 대상 교육 경력 5년",
+      "credential3": "현직 온라인 마케팅 컨설턴트"
+    },
+    "moduleDetail": {
+      "back": "Маркетинг руу буцах",
+      "learningTitle": "Суралцах агуулга",
+      "toolsTitle": "Дадлагын хэрэгслүүд",
+      "tryTool": "Туршиж үзэх",
+      "notFound": "Модуль олдсонгүй.",
+      "backToMarketing": "Маркетингийн нүүр хуудас руу буцах"
+    },
+    "aiConnect": {
+      "title": "AI-тай холбогдох",
+      "description": "Практик AI хэрэгслээр маркетингийн материал бүтээх",
+      "helpLink": "키를 어디서 받나요?",
+      "guide": "Google AI Studio에서 무료로 API 키를 받을 수 있어요. \"Get API Key\" 버튼을 클릭하면 됩니다. 키는 내 컴퓨터에만 저장되고, 다른 사람에게 보이지 않아요.",
+      "keyLabel": "Gemini API 키",
+      "keyPlaceholder": "AIza...",
+      "connectButton": "연결 확인",
+      "connecting": "연결 확인 중...",
+      "connected": "AI 비서 연결 완료!",
+      "connectedHint": "이제 모든 AI 기능을 사용할 수 있어요",
+      "disconnect": "연결 해제",
+      "startLearning": "마케팅 학습 시작하기",
+      "skipHint": "API 키가 없어도 기본 학습은 할 수 있어요",
+      "errorEmpty": "API 키를 입력해주세요",
+      "errorInvalid": "키를 다시 확인해주세요. API 키가 올바르지 않아요.",
+      "errorQuota": "API 사용량이 초과되었어요. 잠시 후 다시 시도해주세요.",
+      "errorGeneral": "연결에 실패했어요. 키를 다시 확인하거나 잠시 후 시도해주세요."
+    }
   },
   "koreaApps": {
     "title": "Солонгосын шаардлагатай апп-ууд",
@@ -221,6 +561,78 @@
     "travelActivitiesDesc": "Солонгосын аялалын мэдээлэл ба захиалга",
     "safetyUtility": "Аюулгүй байдал & Хэрэгсэл",
     "safetyUtilityDesc": "Яаралтай мэдэгдэл ба хэрэгтэй хэрэгслүүд"
+  },
+  "profile": {
+    "loginRequired": "프로필을 보려면 로그인이 필요합니다.",
+    "tabs": {
+      "info": "내 정보",
+      "activity": "활동 내역",
+      "ideaBox": "아이디어 상자"
+    },
+    "personalInfo": "개인 정보",
+    "affiliationInfo": "소속 정보",
+    "subscriptionInfo": "구독 정보",
+    "age": "나이",
+    "ageSuffix": "세",
+    "country": "국적",
+    "joinDate": "가입일",
+    "notSet": "미설정",
+    "noOrg": "개인",
+    "instructorCode": "강사코드",
+    "orgCode": "기관코드",
+    "gender": {
+      "label": "성별",
+      "male": "남성",
+      "female": "여성",
+      "other": "기타"
+    },
+    "subscription": {
+      "typeLabel": "구독 유형",
+      "statusLabel": "상태",
+      "none": "미구독",
+      "individual": "개인 구독",
+      "organization": "기관 구독",
+      "active": "활성",
+      "expired": "만료",
+      "inactive": "없음",
+      "startDate": "시작일",
+      "endDate": "종료일",
+      "history": "이전 기관 기록"
+    },
+    "activity": {
+      "title": "활동 내역",
+      "countUnit": "건",
+      "description": "학습 활동과 도구 사용 기록을 확인할 수 있어요.",
+      "moduleStart": "모듈 시작",
+      "moduleComplete": "모듈 완료",
+      "toolUse": "도구 사용",
+      "trackStart": "트랙 시작",
+      "lessonStart": "학습 시작",
+      "lessonComplete": "학습 완료",
+      "modulesAccessed": "모듈 접근",
+      "toolsUsed": "도구 사용",
+      "completed": "완료",
+      "empty": "아직 활동 기록이 없어요.\n트랙을 선택하고 학습을 시작해보세요!"
+    },
+    "ideaBox": {
+      "title": "아이디어 상자",
+      "countUnit": "개",
+      "description": "마케팅 도구에서 만든 결과물을 모아두는 곳이에요. 나중에 다시 보고 활용할 수 있어요!",
+      "searchPlaceholder": "검색...",
+      "filterAll": "전체",
+      "typePersona": "페르소나",
+      "typeUSP": "USP",
+      "typeCopy": "카피",
+      "typeHashtag": "해시태그",
+      "typeColor": "컬러",
+      "typeROI": "ROI",
+      "typeAd": "광고",
+      "typeOther": "기타",
+      "copy": "복사",
+      "delete": "삭제",
+      "empty": "아직 저장된 아이디어가 없어요.\n마케팅 도구를 사용하고 결과를 저장해보세요!",
+      "noResults": "검색 결과가 없습니다."
+    }
   },
   "apps": {
     "naverMap": {
@@ -292,208 +704,6 @@
       "name": "XE Currency",
       "description": "Бодит цагийн ханш. Солонгос вон руу хөрвүүлэхэд хэрэгтэй дэлхийн валютын апп.",
       "tagline": "Бодит цагийн ханш"
-    }
-  },
-  "marketing": {
-    "landing": {
-      "badge": "Маркетингийн ур чадварын курс",
-      "heroTitle": "Солонгост маркетер\nболохыг хүсч байна уу?",
-      "heroDescription": "Үндсээс AI хэрэгслүүд хүртэл, энэ курсийг дуусгаж өөрийн маркетингийн портфолио бүтээгээрэй!",
-      "modulesUnit": " модуль",
-      "hoursUnit": " цаг",
-      "toolsUnit": " хэрэгсэл",
-      "roadmapTitle": "Суралцах зураглал",
-      "lessonsUnit": " хичээл",
-      "moduleCount": " модуль",
-      "lessonsCount": "{{count}} хичээл",
-      "toolsCount": "{{count}} хэрэгсэл",
-      "practiceToolsCount": "{{count}} дадлагын хэрэгсэл"
-    },
-    "stages": {
-      "foundation": "Суурь бий болгох",
-      "practice": "Дадлага сурах",
-      "ai": "AI-аар дадлага хийх",
-      "foundationDesc": "Маркетингийн үндсийг эзэмших",
-      "practiceDesc": "SNS ба зарын дадлага",
-      "aiDesc": "AI-аар зар бүтээх",
-      "foundation_label": "Суурь",
-      "practice_label": "Дадлага",
-      "ai_label": "AI"
-    },
-    "modules": {
-      "basics": {
-        "title": "Маркетингийн үндэс",
-        "description": "Маркетингийн үндсэн ойлголт, нэр томъёо ойлгох",
-        "oneLine": "Маркетингийн тодорхойлолтоос 4P хүртэлх үндсэн ойлголт"
-      },
-      "research": {
-        "title": "Зах зээлийн судалгаа",
-        "description": "Хэрэглэгчдийг ойлгож өрсөлдөгчдийг шинжлэх",
-        "oneLine": "Хэрэглэгчийн дүр төрх, өрсөлдөгчийн шинжилгээ, зах зээлийн чиг хандлага"
-      },
-      "concept": {
-        "title": "Концепцийн стратеги",
-        "description": "Бүтээгдэхүүний концепц ба брэндийг бий болгох",
-        "oneLine": "USP, байршил, ялгах стратеги"
-      },
-      "branding": {
-        "title": "Брэндийн дизайн",
-        "description": "Брэндийн баримжаа ба харааны стратеги",
-        "oneLine": "Лого, өнгө, үсэг, брэндийн танилцуулга заавар"
-      },
-      "content": {
-        "title": "Контент маркетинг",
-        "description": "SNS ба контент маркетингийн стратеги",
-        "oneLine": "Instagram, YouTube, TikTok, хуулбар бичих"
-      },
-      "performance": {
-        "title": "Гүйцэтгэлийн маркетинг",
-        "description": "Дижитал зар ба ROI хэмжилт",
-        "oneLine": "Meta зар, Google Ads, өгөгдөл шинжилгээ"
-      },
-      "aiPractice": {
-        "title": "AI хэрэгслийн дадлага",
-        "description": "AI хэрэгслээр маркетингийн материал бүтээх",
-        "oneLine": "AI хуулбар, зарын зураг үүсгэгч, хэштэг үүсгэгч"
-      }
-    },
-    "tools": {
-      "back": "Буцах",
-      "glossary": {
-        "title": "Маркетингийн толь бичиг",
-        "description": "Хамгийн түгээмэл маркетингийн нэр томъёоны толь бичиг",
-        "searchPlaceholder": "Маркетингийн нэр томъёо хайх...",
-        "allCategories": "Бүх ангилал",
-        "noResults": "Нэр томъёо олдсонгүй",
-        "termCount": "нэр томъёо"
-      },
-      "personaMaker": {
-        "title": "Хэрэглэгчийн дүр төрх үүсгэгч",
-        "description": "Зорилтот хэрэглэгчийн дүр төрхөө үүсгэх",
-        "productName": "Бүтээгдэхүүн/Үйлчилгээний нэр",
-        "productNamePlaceholder": "Жишээ: Солонгос хэлний онлайн курс",
-        "targetFeatures": "Зорилтот онцлог",
-        "targetFeaturesPlaceholder": "Жишээ: Нас 20-30, гадаадын ажилчин, Солонгос хэл сурах сонирхолтой",
-        "generate": "Дүр төрх үүсгэх",
-        "resultTitle": "Хэрэглэгчийн дүр төрх",
-        "copyButton": "Хуулах",
-        "downloadButton": "Зураг болгож татах"
-      },
-      "uspFinder": {
-        "title": "USP олох хэрэгсэл",
-        "description": "Бүтээгдэхүүнийхээ өвөрмөц давуу талыг олох",
-        "productName": "Бүтээгдэхүүн/Үйлчилгээний нэр",
-        "productNamePlaceholder": "Жишээ: Солонгос хэлний онлайн курс",
-        "productFeatures": "Бүтээгдэхүүний онцлог",
-        "productFeaturesPlaceholder": "Жишээ: Солонгосын эх видео, 1:1 шууд хичээл, хямд үнэ",
-        "competitors": "Өрсөлдөгчид",
-        "competitorsPlaceholder": "Жишээ: Duolingo, Talk To Me In Korean",
-        "generate": "USP олох",
-        "resultTitle": "Санал болгох USP"
-      },
-      "colorPicker": {
-        "title": "Брэндийн өнгө сонгогч",
-        "description": "Брэндийн баримжаанд тохирох өнгө олох",
-        "brandKeywords": "Брэндийн түлхүүр үг",
-        "brandKeywordsPlaceholder": "Жишээ: Мэргэжлийн, орчин үеийн, найдвартай",
-        "industry": "Салбар",
-        "industryPlaceholder": "Жишээ: Боловсрол, технологи, хоол уух",
-        "generate": "Өнгө санал болгох",
-        "resultTitle": "Санал болгох өнгөний палитр",
-        "primaryColor": "Үндсэн өнгө",
-        "secondaryColor": "Дэд өнгө",
-        "accentColor": "Онцлох өнгө"
-      },
-      "hashtagGenerator": {
-        "title": "Хэштэг үүсгэгч",
-        "description": "SNS пост хийхэд оновчтой хэштэг үүсгэх",
-        "platform": "Платформ",
-        "contentDescription": "Контентын тайлбар",
-        "contentDescriptionPlaceholder": "Жишээ: Солонгос хэлний хичээлийн талаарх пост",
-        "targetAudience": "Зорилтот үзэгчид",
-        "targetAudiencePlaceholder": "Жишээ: Солонгос дахь гадаадын ажилчид",
-        "generate": "Хэштэг үүсгэх",
-        "resultTitle": "Санал болгох хэштэгүүд",
-        "copyAll": "Бүгдийг хуулах"
-      },
-      "roiCalculator": {
-        "title": "Зарын ROI тооцоолуур",
-        "description": "Зарын кампанит ажлын үр дүнг тооцоолох",
-        "adSpend": "Зарын зардал",
-        "adSpendPlaceholder": "Жишээ: 1000000",
-        "revenue": "Орлого",
-        "revenuePlaceholder": "Жишээ: 3000000",
-        "calculate": "ROI тооцоолох",
-        "resultTitle": "Шинжилгээний үр дүн",
-        "roiLabel": "ROI",
-        "roasLabel": "ROAS",
-        "profitLabel": "Ашиг",
-        "interpretation": "Тайлбар"
-      },
-      "kCopywriter": {
-        "title": "Солонгос хуулбар үүсгэгч",
-        "description": "Солонгос маягийн маркетингийн хуулбар үүсгэх",
-        "productName": "Бүтээгдэхүүний нэр",
-        "productNamePlaceholder": "Жишээ: Солонгос хэлний онлайн курс",
-        "keyMessage": "Гол мессеж",
-        "keyMessagePlaceholder": "Жишээ: 3 сарын дотор Солонгос хэл сурах",
-        "tone": "Өнгө аяс",
-        "toneOptions": {
-          "professional": "Мэргэжлийн",
-          "friendly": "Найрсаг",
-          "trendy": "Трэнд",
-          "emotional": "Сэтгэл хөдлөлийн"
-        },
-        "generate": "Хуулбар үүсгэх",
-        "resultTitle": "Үүссэн хуулбар"
-      },
-      "snsAdMaker": {
-        "title": "SNS зар үүсгэгч",
-        "description": "AI-аар SNS зарын концепц үүсгэх",
-        "platform": "Платформ",
-        "platformOptions": {
-          "instagram": "Instagram",
-          "facebook": "Facebook",
-          "youtube": "YouTube",
-          "tiktok": "TikTok"
-        },
-        "productName": "Бүтээгдэхүүний нэр",
-        "productNamePlaceholder": "Жишээ: Солонгос хэлний онлайн курс",
-        "targetAudience": "Зорилтот үзэгчид",
-        "targetAudiencePlaceholder": "Жишээ: 20-30 насны гадаадын ажилчид",
-        "keyMessage": "Гол мессеж",
-        "keyMessagePlaceholder": "Жишээ: Солонгос хэл сурах нь амархан, хөгжөөнтэй",
-        "generate": "Зарын концепц үүсгэх",
-        "resultTitle": "Зарын концепц",
-        "imagePrompt": "Зургийн заавар",
-        "adCopy": "Зарын хуулбар",
-        "hashtags": "Хэштэг"
-      }
-    },
-    "recommend": {
-      "title": "Танд зориулсан санал!",
-      "subtitle": "Та дараах зүйлсийн аль нэгтэй таарч байвал энэ курс тохиромжтой",
-      "target1": "Солонгост маркетингийн салбарт ажиллахыг хүсч буй гадаадын ажилчин",
-      "target2": "Онлайн бизнес эхлэх эсвэл бүтээгдэхүүн зарахыг хүсч байна",
-      "target3": "SNS маркетинг, контент үүсгэхэд сонирхолтой",
-      "target4": "AI хэрэгслээр практик маркетинг сурахыг хүсч байна"
-    },
-    "instructor": {
-      "name": "Kiosk Seven баг",
-      "title": "Дижитал маркетингийн мэргэжилтэн",
-      "experience": "Дижитал маркетинг болон боловсролд 10+ жилийн туршлагатай"
-    },
-    "moduleDetail": {
-      "back": "Маркетинг руу буцах",
-      "learningTitle": "Суралцах агуулга",
-      "toolsTitle": "Дадлагын хэрэгслүүд",
-      "tryTool": "Туршиж үзэх",
-      "notFound": "Модуль олдсонгүй.",
-      "backToMarketing": "Маркетингийн нүүр хуудас руу буцах"
-    },
-    "aiConnect": {
-      "title": "AI-тай холбогдох",
-      "description": "Практик AI хэрэгслээр маркетингийн материал бүтээх"
     }
   }
 }
