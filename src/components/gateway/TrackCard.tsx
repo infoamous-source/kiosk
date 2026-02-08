@@ -9,6 +9,8 @@ import {
 import type { Track } from '../../types/track';
 import { handleActivityLog } from '../../utils/activityLogger';
 import { useAuth } from '../../contexts/AuthContext';
+import { useEnrollments } from '../../contexts/EnrollmentContext';
+import type { SchoolId } from '../../types/enrollment';
 
 const iconMap: Record<string, typeof Monitor> = {
   Monitor,
@@ -25,19 +27,31 @@ export default function TrackCard({ track, delay = 0 }: TrackCardProps) {
   const { t } = useTranslation('common');
   const navigate = useNavigate();
   const { isAuthenticated } = useAuth();
+  const { enrollments } = useEnrollments();
   const Icon = iconMap[track.icon] || Monitor;
 
   const handleClick = () => {
     handleActivityLog('click', track.id, undefined, { source: 'gateway' });
 
-    // 마케팅 → 허브로 이동
+    // 마케팅 → 허브로 이동 (신규/기존 사용자 구분)
     if (track.id === 'marketing') {
-      const targetPath = '/marketing/hub';
+      const schoolId: SchoolId = 'marketing';
+
+      // 로그인하지 않은 사용자 → 입학 축하 페이지
       if (!isAuthenticated) {
-        navigate('/login', { state: { redirectTo: targetPath } });
-      } else {
-        navigate(targetPath);
+        navigate('/congrats', { state: { schoolId } });
+        return;
       }
+
+      // 로그인했지만 등록 안 된 사용자 → 입학 축하 페이지
+      const isEnrolled = enrollments.some(e => e.school_id === schoolId);
+      if (!isEnrolled) {
+        navigate('/congrats', { state: { schoolId } });
+        return;
+      }
+
+      // 이미 등록된 사용자 → 바로 허브로
+      navigate('/marketing/hub');
       return;
     }
 

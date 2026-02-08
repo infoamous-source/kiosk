@@ -1,5 +1,7 @@
 import { createContext, useContext, useState, useEffect, useCallback, type ReactNode } from 'react';
-import type { User, UserRole, AuthState } from '../types/auth';
+import type { User, AuthState } from '../types/auth';
+import type { ProfileRow } from '../types/database';
+import { supabase } from '../lib/supabase';
 
 interface AuthContextType extends AuthState {
   login: (email: string, password: string, rememberMe?: boolean) => Promise<boolean>;
@@ -7,7 +9,7 @@ interface AuthContextType extends AuthState {
   register: (data: RegisterData, rememberMe?: boolean) => Promise<boolean>;
 }
 
-interface RegisterData {
+export interface RegisterData {
   name: string;
   email: string;
   password: string;
@@ -17,10 +19,25 @@ interface RegisterData {
   learningPurpose: string;
 }
 
-const STORAGE_KEY = 'kiosk-auth';
-const SESSION_KEY = 'kiosk-auth-session';
-
 const AuthContext = createContext<AuthContextType | null>(null);
+
+/** ProfileRow → User 변환 */
+function profileToUser(p: ProfileRow): User {
+  return {
+    id: p.id,
+    name: p.name,
+    email: p.email,
+    role: p.role,
+    organization: p.organization || '',
+    instructorCode: p.instructor_code || '',
+    orgCode: p.org_code || '',
+    learningPurpose: p.learning_purpose || '',
+    createdAt: p.created_at,
+    age: p.age ?? undefined,
+    gender: p.gender ?? undefined,
+    country: p.country ?? undefined,
+  };
+}
 
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [state, setState] = useState<AuthState>({
@@ -29,111 +46,96 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     isLoading: true,
   });
 
-  // 초기 로드 시 localStorage 또는 sessionStorage에서 인증 상태 복원
+  // Supabase 인증 상태 변화 감지
   useEffect(() => {
-    try {
-      // 먼저 localStorage (자동 로그인) 확인
-      const stored = localStorage.getItem(STORAGE_KEY);
-      if (stored) {
-        const data = JSON.parse(stored);
-        setState({
-          user: data.user,
-          isAuthenticated: true,
-          isLoading: false,
-        });
-        return;
+    // 현재 세션 확인
+    supabase.auth.getSession().then(async ({ data: { session } }) => {
+      if (session?.user) {
+        const profile = await fetchProfile(session.user.id);
+        if (profile) {
+          setState({
+            user: profileToUser(profile),
+            isAuthenticated: true,
+            isLoading: false,
+          });
+          return;
+        }
       }
-
-      // 그 다음 sessionStorage (일회성 로그인) 확인
-      const session = sessionStorage.getItem(SESSION_KEY);
-      if (session) {
-        const data = JSON.parse(session);
-        setState({
-          user: data.user,
-          isAuthenticated: true,
-          isLoading: false,
-        });
-        return;
-      }
-
       setState((prev) => ({ ...prev, isLoading: false }));
-    } catch {
-      setState((prev) => ({ ...prev, isLoading: false }));
-    }
+    });
+
+    // 인증 상태 변경 리스너
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(
+      async (event, session) => {
+        if (event === 'SIGNED_IN' && session?.user) {
+          const profile = await fetchProfile(session.user.id);
+          if (profile) {
+            setState({
+              user: profileToUser(profile),
+              isAuthenticated: true,
+              isLoading: false,
+            });
+          }
+        } else if (event === 'SIGNED_OUT') {
+          setState({ user: null, isAuthenticated: false, isLoading: false });
+        }
+      },
+    );
+
+    return () => subscription.unsubscribe();
   }, []);
 
-  const login = useCallback(async (email: string, _password: string, rememberMe = false): Promise<boolean> => {
-    // TODO: 실제 API 연동 - _password는 추후 인증 시 사용
-    // 현재는 더미 로그인 (instructor@test.com = 강사, 그 외 = 학생)
-    await new Promise((resolve) => setTimeout(resolve, 500));
-
-    const role: UserRole = email.includes('instructor') ? 'instructor' : 'student';
-    const user: User = {
-      id: crypto.randomUUID(),
-      name: email.split('@')[0],
-      email,
-      role,
-      organization: '테스트 기관',
-      instructorCode: 'INST-001',
-      orgCode: 'ORG-001',
-      learningPurpose: '학습 목적',
-      createdAt: new Date().toISOString(),
-      subscription: {
-        type: 'none',
-        status: 'none',
-      },
-    };
-
-    // 자동 로그인 체크 시 localStorage에, 아니면 sessionStorage에 저장
-    if (rememberMe) {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify({ user }));
-      sessionStorage.removeItem(SESSION_KEY);
-    } else {
-      sessionStorage.setItem(SESSION_KEY, JSON.stringify({ user }));
-      localStorage.removeItem(STORAGE_KEY);
+  const login = useCallback(async (email: string, password: string, _rememberMe = false): Promise<boolean> => {
+    const { error } = await supabase.auth.signInWithPassword({ email, password });
+    if (error) {
+      console.error('Login error:', error.message);
+      return false;
     }
-
-    setState({ user, isAuthenticated: true, isLoading: false });
     return true;
   }, []);
 
-  const logout = useCallback(() => {
-    localStorage.removeItem(STORAGE_KEY);
-    sessionStorage.removeItem(SESSION_KEY);
+  const logout = useCallback(async () => {
+    await supabase.auth.signOut();
     setState({ user: null, isAuthenticated: false, isLoading: false });
   }, []);
 
-  const register = useCallback(async (data: RegisterData, rememberMe = false): Promise<boolean> => {
-    // TODO: 실제 API 연동
-    await new Promise((resolve) => setTimeout(resolve, 500));
-
-    const user: User = {
-      id: crypto.randomUUID(),
-      name: data.name,
+  const register = useCallback(async (data: RegisterData, _rememberMe = false): Promise<{ success: boolean; error?: string }> => {
+    // 1) Supabase Auth 계정 생성
+    const { data: authData, error: authError } = await supabase.auth.signUp({
       email: data.email,
-      role: 'student',
-      organization: data.organization,
-      instructorCode: data.instructorCode,
-      orgCode: data.orgCode,
-      learningPurpose: data.learningPurpose,
-      createdAt: new Date().toISOString(),
-      subscription: {
-        type: 'none',
-        status: 'none',
+      password: data.password,
+      options: {
+        data: {
+          name: data.name,
+          role: 'student',
+        },
       },
-    };
+    });
 
-    // 자동 로그인 체크 시 localStorage에, 아니면 sessionStorage에 저장
-    if (rememberMe) {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify({ user }));
-      sessionStorage.removeItem(SESSION_KEY);
-    } else {
-      sessionStorage.setItem(SESSION_KEY, JSON.stringify({ user }));
-      localStorage.removeItem(STORAGE_KEY);
+    if (authError || !authData.user) {
+      console.error('Register error:', authError?.message);
+      return { success: false, error: authError?.message };
     }
 
-    setState({ user, isAuthenticated: true, isLoading: false });
-    return true;
+    // 2) profiles 테이블에 추가 정보 업데이트
+    //    (trigger가 기본 행을 생성하므로 UPDATE)
+    const { error: profileError } = await supabase
+      .from('profiles')
+      .update({
+        name: data.name,
+        organization: data.organization,
+        instructor_code: data.instructorCode,
+        org_code: data.orgCode,
+        learning_purpose: data.learningPurpose,
+      })
+      .eq('id', authData.user.id);
+
+    if (profileError) {
+      console.error('Profile update error:', profileError.message);
+      return { success: false, error: profileError.message };
+    }
+
+    return { success: true };
   }, []);
 
   return (
@@ -141,6 +143,21 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       {children}
     </AuthContext.Provider>
   );
+}
+
+/** Supabase에서 프로필 조회 */
+async function fetchProfile(userId: string): Promise<ProfileRow | null> {
+  const { data, error } = await supabase
+    .from('profiles')
+    .select('*')
+    .eq('id', userId)
+    .single();
+
+  if (error) {
+    console.error('Fetch profile error:', error.message);
+    return null;
+  }
+  return data as ProfileRow;
 }
 
 export function useAuth() {
