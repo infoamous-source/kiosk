@@ -24,6 +24,7 @@ import AISetupPage from './pages/marketing/school/AISetupPage';
 import ProfilePage from './pages/ProfilePage';
 import DigitalModulePage from './pages/DigitalModulePage';
 import CongratsPage from './pages/CongratsPage';
+import AIWelcomePage from './pages/AIWelcomePage';
 
 export default function App() {
   return (
@@ -39,6 +40,7 @@ export default function App() {
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/congrats" element={<CongratsPage />} />
+          <Route path="/ai-welcome" element={<AIWelcomePage />} />
 
           {/* 강사 전용 대시보드 */}
           <Route path="/admin" element={<AdminPage />} />
