@@ -1,5 +1,6 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { AuthProvider } from './contexts/AuthContext';
+import { EnrollmentProvider } from './contexts/EnrollmentContext';
 import { VisibilityProvider } from './contexts/VisibilityContext';
 import MainLayout from './components/common/MainLayout';
 import GatewayPage from './pages/GatewayPage';
@@ -21,10 +22,13 @@ import SchoolToolRouter from './pages/marketing/school/SchoolToolRouter';
 import ProToolsDashboard from './pages/marketing/ProToolsDashboard';
 import AISetupPage from './pages/marketing/school/AISetupPage';
 import ProfilePage from './pages/ProfilePage';
+import DigitalModulePage from './pages/DigitalModulePage';
+import CongratsPage from './pages/CongratsPage';
 
 export default function App() {
   return (
     <AuthProvider>
+      <EnrollmentProvider>
       <VisibilityProvider>
       <BrowserRouter basename="/kiosk">
         <Routes>
@@ -34,6 +38,7 @@ export default function App() {
           {/* 인증 페이지 */}
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
+          <Route path="/congrats" element={<CongratsPage />} />
 
           {/* 강사 전용 대시보드 */}
           <Route path="/admin" element={<AdminPage />} />
@@ -58,6 +63,7 @@ export default function App() {
           {/* 트랙 내부 페이지 (사이드바 레이아웃) */}
           <Route element={<MainLayout />}>
             <Route path="/track/:trackId" element={<TrackPage />} />
+            <Route path="/track/digital-basics/module/:moduleId" element={<DigitalModulePage />} />
             <Route path="/track/digital-basics/korea-apps" element={<KoreaAppsPage />} />
 
             {/* 기존 마케팅 (레거시, 코드 보존) */}
@@ -75,6 +81,7 @@ export default function App() {
         </Routes>
       </BrowserRouter>
       </VisibilityProvider>
+      </EnrollmentProvider>
     </AuthProvider>
   );
 }
