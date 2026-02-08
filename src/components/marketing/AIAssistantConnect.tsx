@@ -29,6 +29,7 @@ export default function AIAssistantConnect() {
   const [showKey, setShowKey] = useState(false);
   const [aiMessage, setAiMessage] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
+  const [retryCountdown, setRetryCountdown] = useState(0);
 
   // 연결 확인 함수
   const handleConnect = useCallback(async () => {
@@ -44,17 +45,18 @@ export default function AIAssistantConnect() {
 
     try {
       const genAI = new GoogleGenerativeAI(apiKey.trim());
-      const model = genAI.getGenerativeModel({ model: 'gemini-2.0-flash' });
+      // gemini-1.5-flash는 더 안정적이고 할당량이 넉넉함
+      const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
 
-      const result = await model.generateContent(
-        '당신은 마케팅 AI 비서입니다. 사용자가 처음 연결했습니다. 한국어로 한 문장만 반갑게 인사해주세요. "반갑습니다! 이제 제가 당신의 마케팅 비서입니다. 우리 함께 멋진 홍보를 시작해봐요!" 라고 말해주세요.'
-      );
+      // 짧은 프롬프트로 빠르게 검증
+      const result = await model.generateContent('안녕하세요');
 
+      // 응답이 오면 성공!
       const response = result.response;
-      const text = response.text();
+      response.text(); // 텍스트 추출 (에러 체크용)
 
-      // 성공!
-      setAiMessage(text || '반갑습니다! 이제 제가 당신의 마케팅 비서입니다. 우리 함께 멋진 홍보를 시작해봐요!');
+      // 성공 메시지
+      setAiMessage('반갑습니다! 이제 제가 당신의 마케팅 비서입니다. 우리 함께 멋진 홍보를 시작해봐요! 🚀');
       setConnectionState('success');
       setIsConnected(true);
 
@@ -87,13 +89,35 @@ export default function AIAssistantConnect() {
       setConnectionState('error');
       const errorMsg = err instanceof Error ? err.message : String(err);
 
-      if (errorMsg.includes('API_KEY_INVALID') || errorMsg.includes('401')) {
-        setErrorMessage(t('marketing.aiConnect.errorInvalid', '키를 다시 확인해주세요. API 키가 올바르지 않아요.'));
+      if (errorMsg.includes('API_KEY_INVALID') || errorMsg.includes('401') || errorMsg.includes('400')) {
+        setErrorMessage(
+          '❌ API 키가 올바르지 않아요.\n\n' +
+          '【해결 방법】\n' +
+          '1. Google AI Studio에서 새 키를 발급받아보세요\n' +
+          '2. 키를 복사할 때 앞뒤 공백이 없는지 확인하세요\n' +
+          '3. AIza로 시작하는지 확인해주세요'
+        );
       } else if (errorMsg.includes('QUOTA') || errorMsg.includes('429')) {
-        setErrorMessage(t('marketing.aiConnect.errorQuota', 'API 사용량이 초과되었어요. 잠시 후 다시 시도해주세요.'));
+        setErrorMessage(
+          '⏰ API 사용량이 초과되었어요.\n\n' +
+          '【무료 제한】\n' +
+          '• 하루 1,500번까지 무료로 사용 가능해요\n' +
+          '• 분당 15번까지만 요청할 수 있어요\n\n' +
+          '【해결 방법】\n' +
+          '1. 10초 후 다시 시도해보세요 (아래 버튼)\n' +
+          '2. Google AI Studio에서 새 API 키를 발급받으세요\n' +
+          '3. 잠시 후 (몇 분 뒤) 다시 시도해보세요'
+        );
       } else {
         setErrorMessage(
-          t('marketing.aiConnect.errorGeneral', '연결에 실패했어요. 키를 다시 확인하거나 잠시 후 시도해주세요.')
+          '🤔 연결에 실패했어요.\n\n' +
+          '【가능한 원인】\n' +
+          '• 일시적인 네트워크 오류\n' +
+          '• API 키 형식 오류\n\n' +
+          '【해결 방법】\n' +
+          '1. 아래 "10초 후 재시도" 버튼을 눌러보세요\n' +
+          '2. API 키를 다시 확인해주세요\n' +
+          '3. Google AI Studio에서 새 키를 발급받으세요'
         );
       }
     }
@@ -112,6 +136,23 @@ export default function AIAssistantConnect() {
       // ignore
     }
   }, []);
+
+  // 재시도 카운트다운
+  const handleRetryWithDelay = useCallback(() => {
+    setRetryCountdown(10);
+    setErrorMessage('');
+
+    const interval = setInterval(() => {
+      setRetryCountdown(prev => {
+        if (prev <= 1) {
+          clearInterval(interval);
+          handleConnect();
+          return 0;
+        }
+        return prev - 1;
+      });
+    }, 1000);
+  }, [handleConnect]);
 
   // confetti 애니메이션
   const fireConfetti = () => {
@@ -276,9 +317,31 @@ export default function AIAssistantConnect() {
 
             {/* 에러 메시지 */}
             {connectionState === 'error' && errorMessage && (
-              <div className="flex items-start gap-2 mb-4 p-3 bg-red-50 border border-red-100 rounded-xl">
-                <AlertCircle className="w-5 h-5 text-red-500 shrink-0 mt-0.5" />
-                <p className="text-sm text-red-600">{errorMessage}</p>
+              <div className="mb-4">
+                <div className="flex items-start gap-2 p-4 bg-red-50 border border-red-100 rounded-xl">
+                  <AlertCircle className="w-5 h-5 text-red-500 shrink-0 mt-0.5" />
+                  <p className="text-sm text-red-600 whitespace-pre-line leading-relaxed">{errorMessage}</p>
+                </div>
+
+                {/* 에러 발생 시 재시도 버튼 */}
+                <div className="mt-3">
+                  <button
+                    onClick={handleRetryWithDelay}
+                    disabled={retryCountdown > 0}
+                    className="w-full px-4 py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-xl transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                  >
+                    {retryCountdown > 0 ? (
+                      <>
+                        <Loader2 className="w-4 h-4 animate-spin" />
+                        {retryCountdown}초 후 자동 재시도...
+                      </>
+                    ) : (
+                      <>
+                        🔄 10초 후 다시 시도하기
+                      </>
+                    )}
+                  </button>
+                </div>
               </div>
             )}
 

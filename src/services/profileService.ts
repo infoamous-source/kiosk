@@ -1,0 +1,95 @@
+import { supabase } from '../lib/supabase';
+import type { ProfileRow } from '../types/database';
+
+/** 프로필 조회 */
+export async function getProfile(userId: string): Promise<ProfileRow | null> {
+  const { data, error } = await supabase
+    .from('profiles')
+    .select('*')
+    .eq('id', userId)
+    .single();
+
+  if (error) {
+    console.error('Get profile error:', error.message);
+    return null;
+  }
+  return data as ProfileRow;
+}
+
+/** 프로필 업데이트 */
+export async function updateProfile(
+  userId: string,
+  updates: Partial<Omit<ProfileRow, 'id' | 'email' | 'created_at'>>,
+): Promise<boolean> {
+  const { error } = await supabase
+    .from('profiles')
+    .update({ ...updates, updated_at: new Date().toISOString() })
+    .eq('id', userId);
+
+  if (error) {
+    console.error('Update profile error:', error.message);
+    return false;
+  }
+  return true;
+}
+
+/** 관리자: 모든 학생 프로필 조회 */
+export async function getAllStudents(): Promise<ProfileRow[]> {
+  const { data, error } = await supabase
+    .from('profiles')
+    .select('*')
+    .eq('role', 'student')
+    .order('created_at', { ascending: false });
+
+  if (error) {
+    console.error('Get all students error:', error.message);
+    return [];
+  }
+  return data as ProfileRow[];
+}
+
+/** 관리자: 학생 검색 (이름 또는 이메일) */
+export async function searchStudents(query: string): Promise<ProfileRow[]> {
+  const { data, error } = await supabase
+    .from('profiles')
+    .select('*')
+    .eq('role', 'student')
+    .or(`name.ilike.%${query}%,email.ilike.%${query}%`)
+    .order('created_at', { ascending: false })
+    .limit(50);
+
+  if (error) {
+    console.error('Search students error:', error.message);
+    return [];
+  }
+  return data as ProfileRow[];
+}
+
+/** Gemini API 키 저장 */
+export async function saveGeminiApiKey(userId: string, apiKey: string): Promise<boolean> {
+  const { error } = await supabase
+    .from('profiles')
+    .update({ gemini_api_key: apiKey, updated_at: new Date().toISOString() })
+    .eq('id', userId);
+
+  if (error) {
+    console.error('Save API key error:', error.message);
+    return false;
+  }
+  return true;
+}
+
+/** Gemini API 키 조회 */
+export async function getGeminiApiKey(userId: string): Promise<string | null> {
+  const { data, error } = await supabase
+    .from('profiles')
+    .select('gemini_api_key')
+    .eq('id', userId)
+    .single();
+
+  if (error) {
+    console.error('Get API key error:', error.message);
+    return null;
+  }
+  return data?.gemini_api_key || null;
+}

@@ -1,8 +1,9 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { Bot, Send, Sparkles, ArrowRight } from 'lucide-react';
+import { Bot, Sparkles, ArrowRight, Key, ExternalLink, Check, Loader2 } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
+import { saveGeminiApiKey } from '../services/profileService';
 import { type SchoolId } from '../types/enrollment';
 
 interface LocationState {
@@ -10,211 +11,262 @@ interface LocationState {
   userName?: string;
 }
 
-interface Message {
-  role: 'assistant' | 'user';
-  content: string;
-}
-
 export default function AIWelcomePage() {
   const { t } = useTranslation('common');
   const navigate = useNavigate();
   const location = useLocation();
   const { user } = useAuth();
-  const messagesEndRef = useRef<HTMLDivElement>(null);
 
   const { schoolId, userName } = (location.state as LocationState) || {};
-  const [messages, setMessages] = useState<Message[]>([]);
-  const [input, setInput] = useState('');
-  const [isTyping, setIsTyping] = useState(false);
-  const [showContinueButton, setShowContinueButton] = useState(false);
+  const [step, setStep] = useState<'welcome' | 'guide' | 'input'>('welcome');
+  const [apiKey, setApiKey] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState('');
+  const [success, setSuccess] = useState(false);
 
-  // 자동 인사 메시지
   useEffect(() => {
     if (!schoolId) {
       navigate('/');
       return;
     }
 
-    const name = userName || user?.user_metadata?.name || '학생';
-    const welcomeMessage = `안녕하세요. ${name}님 입학을 축하합니다! 🎉\n\n저는 이 마케팅학교에서 당신을 도와드릴 AI 비서예요. 졸업까지 힘내세요!\n\n궁금한 것이 있다면 언제든 물어보세요. 마케팅 전략, 도구 사용법, 학습 방법 등 무엇이든 도와드릴게요! 💪`;
+    // 환영 메시지 표시 후 자동으로 가이드 단계로
+    const timer = setTimeout(() => {
+      setStep('guide');
+    }, 2000);
 
-    // 타이핑 효과로 메시지 표시
-    setIsTyping(true);
-    let currentText = '';
-    let index = 0;
+    return () => clearTimeout(timer);
+  }, [schoolId, navigate]);
 
-    const typingInterval = setInterval(() => {
-      if (index < welcomeMessage.length) {
-        currentText += welcomeMessage[index];
-        setMessages([{ role: 'assistant', content: currentText }]);
-        index++;
-      } else {
-        clearInterval(typingInterval);
-        setIsTyping(false);
-        setShowContinueButton(true);
-      }
-    }, 20);
-
-    return () => clearInterval(typingInterval);
-  }, [schoolId, userName, user, navigate]);
-
-  // 메시지 자동 스크롤
-  useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-  }, [messages]);
-
-  const handleSend = async () => {
-    if (!input.trim() || isTyping) return;
-
-    const userMessage = input.trim();
-    setInput('');
-    setMessages((prev) => [...prev, { role: 'user', content: userMessage }]);
-    setIsTyping(true);
-
-    // 간단한 마케팅 AI 비서 응답 로직
-    const response = generateMarketingResponse(userMessage);
-
-    // 타이핑 효과
-    setTimeout(() => {
-      setMessages((prev) => [...prev, { role: 'assistant', content: response }]);
-      setIsTyping(false);
-    }, 500);
-  };
-
-  const handleContinue = () => {
-    // 학생 등록 완료 페이지 또는 허브로 이동
+  const handleSkip = () => {
     navigate(`/${schoolId}/hub`);
   };
+
+  const handleStartConnection = () => {
+    setStep('input');
+  };
+
+  const handleSaveApiKey = async () => {
+    if (!apiKey.trim()) {
+      setError('API 키를 입력해주세요');
+      return;
+    }
+
+    if (!user?.id) {
+      setError('로그인 정보를 찾을 수 없습니다');
+      return;
+    }
+
+    setIsLoading(true);
+    setError('');
+
+    // Supabase에 API 키 저장
+    const saved = await saveGeminiApiKey(user.id, apiKey.trim());
+
+    if (saved) {
+      setSuccess(true);
+      setTimeout(() => {
+        navigate(`/${schoolId}/hub`);
+      }, 1500);
+    } else {
+      setError('API 키 저장에 실패했습니다. 다시 시도해주세요.');
+    }
+
+    setIsLoading(false);
+  };
+
+  const name = userName || user?.user_metadata?.name || '학생';
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-50 via-pink-50 to-blue-50 flex items-center justify-center p-4">
       <div className="max-w-3xl w-full">
         {/* 헤더 */}
-        <div className="text-center mb-6">
-          <div className="w-20 h-20 bg-gradient-to-br from-purple-500 to-pink-500 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg">
+        <div className="text-center mb-8">
+          <div className="w-20 h-20 bg-gradient-to-br from-purple-500 to-pink-500 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg animate-pulse">
             <Bot className="w-10 h-10 text-white" strokeWidth={1.5} />
           </div>
           <h1 className="text-3xl font-bold text-gray-900 mb-2">
             <Sparkles className="w-6 h-6 inline mr-2 text-purple-500" />
-            연결 확인
+            AI 비서 연결하기
           </h1>
-          <p className="text-gray-600">마케팅 학교 AI 비서와 대화해보세요</p>
         </div>
 
-        {/* 채팅 영역 */}
-        <div className="bg-white rounded-3xl shadow-2xl border border-gray-100 overflow-hidden">
-          {/* 메시지 영역 */}
-          <div className="h-[400px] overflow-y-auto p-6 space-y-4">
-            {messages.map((msg, idx) => (
-              <div
-                key={idx}
-                className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}
-              >
-                <div
-                  className={`max-w-[80%] rounded-2xl px-4 py-3 ${
-                    msg.role === 'user'
-                      ? 'bg-gradient-to-r from-purple-600 to-pink-600 text-white'
-                      : 'bg-gray-100 text-gray-800'
-                  }`}
-                >
-                  {msg.role === 'assistant' && (
-                    <Bot className="w-4 h-4 inline mr-2 opacity-70" />
-                  )}
-                  <span className="whitespace-pre-wrap">{msg.content}</span>
-                </div>
-              </div>
-            ))}
-            {isTyping && (
-              <div className="flex justify-start">
-                <div className="bg-gray-100 rounded-2xl px-4 py-3">
-                  <div className="flex gap-1">
-                    <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0ms' }} />
-                    <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '150ms' }} />
-                    <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '300ms' }} />
-                  </div>
-                </div>
-              </div>
-            )}
-            <div ref={messagesEndRef} />
+        {/* Step 1: 환영 메시지 */}
+        {step === 'welcome' && (
+          <div className="bg-white rounded-3xl shadow-2xl border border-gray-100 p-8 text-center animate-fade-in">
+            <div className="mb-6">
+              <div className="text-6xl mb-4">🎉</div>
+              <h2 className="text-2xl font-bold text-gray-900 mb-3">
+                안녕하세요, {name}님!
+              </h2>
+              <p className="text-lg text-gray-600">
+                입학을 축하합니다!<br />
+                마케팅 학교의 AI 비서가 준비되었습니다.
+              </p>
+            </div>
+            <div className="flex gap-1 justify-center">
+              <div className="w-2 h-2 bg-purple-400 rounded-full animate-bounce" style={{ animationDelay: '0ms' }} />
+              <div className="w-2 h-2 bg-purple-400 rounded-full animate-bounce" style={{ animationDelay: '150ms' }} />
+              <div className="w-2 h-2 bg-purple-400 rounded-full animate-bounce" style={{ animationDelay: '300ms' }} />
+            </div>
           </div>
+        )}
 
-          {/* 입력 영역 */}
-          <div className="border-t border-gray-100 p-4">
-            <div className="flex gap-3">
-              <input
-                type="text"
-                value={input}
-                onChange={(e) => setInput(e.target.value)}
-                onKeyPress={(e) => e.key === 'Enter' && handleSend()}
-                placeholder="궁금한 것을 물어보세요..."
-                className="flex-1 px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
-                disabled={isTyping}
-              />
-              <button
-                onClick={handleSend}
-                disabled={!input.trim() || isTyping}
-                className="px-6 py-3 bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-xl hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed transition-all flex items-center gap-2"
+        {/* Step 2: 연결 가이드 */}
+        {step === 'guide' && (
+          <div className="bg-white rounded-3xl shadow-2xl border border-gray-100 p-8 animate-fade-in">
+            <h2 className="text-2xl font-bold text-gray-900 mb-6 text-center">
+              AI 비서를 연결해볼까요? 🤖
+            </h2>
+
+            <div className="mb-8 space-y-4">
+              <div className="bg-purple-50 border-2 border-purple-200 rounded-xl p-6">
+                <h3 className="font-bold text-gray-900 mb-3 flex items-center gap-2">
+                  <Key className="w-5 h-5 text-purple-600" />
+                  API 키가 뭔가요?
+                </h3>
+                <p className="text-gray-700 leading-relaxed">
+                  API 키는 여러분이 AI 도구를 사용할 수 있게 해주는 <strong>특별한 비밀번호</strong>예요.
+                  마치 집 열쇠처럼, 이 키가 있어야 AI 비서와 대화할 수 있답니다! 🔑
+                </p>
+              </div>
+
+              <div className="bg-blue-50 border-2 border-blue-200 rounded-xl p-6">
+                <h3 className="font-bold text-gray-900 mb-3">📚 왜 필요한가요?</h3>
+                <p className="text-gray-700 leading-relaxed mb-3">
+                  마케팅 학교에서는 다양한 AI 도구들을 사용하게 될 거예요:
+                </p>
+                <ul className="space-y-2 text-gray-700">
+                  <li>✨ 마케팅 전략 AI 조언</li>
+                  <li>📝 광고 문구 생성 도구</li>
+                  <li>🎯 타겟 분석 AI</li>
+                  <li>📊 데이터 해석 비서</li>
+                </ul>
+                <p className="text-gray-700 mt-3">
+                  이 모든 도구가 <strong>하나의 API 키</strong>로 작동해요!
+                </p>
+              </div>
+
+              <div className="bg-green-50 border-2 border-green-200 rounded-xl p-6">
+                <h3 className="font-bold text-gray-900 mb-3">🎁 무료로 받을 수 있어요!</h3>
+                <p className="text-gray-700 leading-relaxed">
+                  Google AI Studio에서 무료로 API 키를 발급받을 수 있습니다.
+                  아래 버튼을 눌러서 받아보세요!
+                </p>
+              </div>
+            </div>
+
+            <div className="space-y-3">
+              <a
+                href="https://aistudio.google.com/app/apikey"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-full py-4 bg-gradient-to-r from-blue-600 to-cyan-600 text-white font-semibold rounded-xl hover:shadow-lg transition-all flex items-center justify-center gap-2"
               >
-                <Send className="w-5 h-5" />
+                <ExternalLink className="w-5 h-5" />
+                Google AI Studio에서 API 키 받기
+              </a>
+
+              <button
+                onClick={handleStartConnection}
+                className="w-full py-4 bg-gradient-to-r from-purple-600 to-pink-600 text-white font-semibold rounded-xl hover:shadow-lg transition-all flex items-center justify-center gap-2"
+              >
+                <Key className="w-5 h-5" />
+                API 키 입력하기
+              </button>
+
+              <button
+                onClick={handleSkip}
+                className="w-full py-3 text-gray-500 hover:text-gray-700 text-sm font-medium transition-colors"
+              >
+                나중에 연결할게요 →
               </button>
             </div>
           </div>
-        </div>
+        )}
 
-        {/* 계속하기 버튼 */}
-        {showContinueButton && (
-          <div className="mt-6 text-center animate-fade-in">
-            <button
-              onClick={handleContinue}
-              className="group inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-purple-600 to-pink-600 text-white text-lg font-semibold rounded-xl shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-200"
-            >
-              <span>학습 시작하기</span>
-              <ArrowRight className="w-6 h-6 group-hover:translate-x-1 transition-transform" />
-            </button>
-            <p className="mt-3 text-sm text-gray-500">
-              또는 AI 비서와 더 대화를 나눈 후 시작할 수 있습니다
+        {/* Step 3: API 키 입력 */}
+        {step === 'input' && (
+          <div className="bg-white rounded-3xl shadow-2xl border border-gray-100 p-8 animate-fade-in">
+            <h2 className="text-2xl font-bold text-gray-900 mb-2 text-center">
+              API 키를 입력하세요 🔑
+            </h2>
+            <p className="text-center text-gray-600 mb-6">
+              Google AI Studio에서 받은 API 키를 붙여넣어주세요
             </p>
+
+            {error && (
+              <div className="mb-4 p-4 bg-red-50 border border-red-200 rounded-xl text-red-600 text-sm">
+                {error}
+              </div>
+            )}
+
+            {success ? (
+              <div className="text-center py-8">
+                <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <Check className="w-10 h-10 text-green-600" />
+                </div>
+                <h3 className="text-xl font-bold text-gray-900 mb-2">연결 완료! 🎉</h3>
+                <p className="text-gray-600">잠시 후 학습을 시작합니다...</p>
+              </div>
+            ) : (
+              <>
+                <div className="mb-6">
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Gemini API 키
+                  </label>
+                  <input
+                    type="text"
+                    value={apiKey}
+                    onChange={(e) => setApiKey(e.target.value)}
+                    placeholder="AIza... 로 시작하는 키를 입력하세요"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all font-mono text-sm"
+                    disabled={isLoading}
+                  />
+                  <p className="text-xs text-gray-500 mt-2">
+                    💡 팁: API 키는 안전하게 암호화되어 저장되며, 오직 여러분만 사용할 수 있어요.
+                  </p>
+                </div>
+
+                <div className="space-y-3">
+                  <button
+                    onClick={handleSaveApiKey}
+                    disabled={isLoading || !apiKey.trim()}
+                    className="w-full py-4 bg-gradient-to-r from-purple-600 to-pink-600 text-white font-semibold rounded-xl hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed transition-all flex items-center justify-center gap-2"
+                  >
+                    {isLoading ? (
+                      <>
+                        <Loader2 className="w-5 h-5 animate-spin" />
+                        저장 중...
+                      </>
+                    ) : (
+                      <>
+                        <Check className="w-5 h-5" />
+                        저장하고 시작하기
+                      </>
+                    )}
+                  </button>
+
+                  <button
+                    onClick={() => setStep('guide')}
+                    disabled={isLoading}
+                    className="w-full py-3 text-gray-500 hover:text-gray-700 text-sm font-medium transition-colors disabled:opacity-50"
+                  >
+                    ← 뒤로 가기
+                  </button>
+                </div>
+              </>
+            )}
           </div>
+        )}
+
+        {/* 안내 문구 */}
+        {step !== 'welcome' && !success && (
+          <p className="mt-6 text-center text-sm text-gray-500">
+            API 키는 언제든 프로필 설정에서 변경할 수 있습니다
+          </p>
         )}
       </div>
     </div>
   );
-}
-
-// 간단한 마케팅 AI 비서 응답 생성
-function generateMarketingResponse(userInput: string): string {
-  const input = userInput.toLowerCase();
-
-  // 인사말
-  if (input.includes('안녕') || input.includes('hi') || input.includes('hello')) {
-    return '안녕하세요! 무엇을 도와드릴까요? 😊';
-  }
-
-  // 마케팅 전략
-  if (input.includes('마케팅') || input.includes('전략')) {
-    return '마케팅 전략에 대해 궁금하신가요? 이 학교에서는 디지털 마케팅의 기초부터 고급 전략까지 배우실 수 있습니다.\n\n커리큘럼 탭에서 체계적인 학습 과정을 확인하시고, Lab 탭에서 실전 도구들을 직접 사용해보세요! 💡';
-  }
-
-  // SNS 관련
-  if (input.includes('sns') || input.includes('소셜') || input.includes('인스타') || input.includes('페북')) {
-    return 'SNS 마케팅은 현대 디지털 마케팅의 핵심입니다! 📱\n\n저희 학교에서는 Instagram, Facebook, YouTube 등 각 플랫폼별 특성과 효과적인 콘텐츠 전략을 배우실 수 있습니다. Lab에서 실습도 가능해요!';
-  }
-
-  // 도구 사용
-  if (input.includes('도구') || input.includes('툴') || input.includes('사용법')) {
-    return '마케팅 도구 사용법이 궁금하신가요? 🛠️\n\nLab 탭으로 가시면 다양한 실전 마케팅 도구들을 직접 체험해보실 수 있습니다. 각 도구마다 상세한 가이드가 준비되어 있으니 걱정하지 마세요!';
-  }
-
-  // 졸업 관련
-  if (input.includes('졸업') || input.includes('수료')) {
-    return '졸업을 위해서는 모든 커리큘럼을 이수하고 실습 과제를 완료하셔야 합니다. 📚\n\n출석 탭에서 학습 진도를 확인하시고, 스탬프를 모아보세요. 궁금한 점이 있으면 언제든 물어보세요!';
-  }
-
-  // 학습 방법
-  if (input.includes('어떻게') || input.includes('방법') || input.includes('시작')) {
-    return '학습을 시작하시려면 다음 단계를 따라해보세요:\n\n1️⃣ 출석 탭에서 오늘의 학습을 시작하세요\n2️⃣ 커리큘럼 탭에서 체계적인 강의를 수강하세요\n3️⃣ Lab 탭에서 실전 도구를 활용해보세요\n\n하나씩 차근차근 진행하시면 됩니다! 화이팅! 💪';
-  }
-
-  // 기본 응답
-  return '좋은 질문이네요! 😊\n\n저는 마케팅 학교 AI 비서로서 학습 방법, 도구 사용법, 마케팅 전략 등에 대해 도와드릴 수 있습니다.\n\n더 구체적으로 무엇이 궁금하신가요? 예를 들어:\n• 마케팅 전략에 대해 알려주세요\n• SNS 마케팅은 어떻게 하나요?\n• 어떤 도구들을 배울 수 있나요?\n• 졸업 요건이 궁금해요';
 }
