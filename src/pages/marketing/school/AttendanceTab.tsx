@@ -16,8 +16,8 @@ export default function AttendanceTab() {
   const [showGraduationModal, setShowGraduationModal] = useState(false);
   const [refreshKey, setRefreshKey] = useState(0);
 
-  if (isLoading) return <div className="flex justify-center py-12"><Loader2 className="w-8 h-8 animate-spin text-purple-500" /></div>;
-  if (!user) return null;
+  if (isLoading) return <div className="flex justify-center py-12"><Loader2 className="w-8 h-8 animate-spin text-kk-red" /></div>;
+  if (!user) return <div className="text-center py-12 text-kk-brown/60">로그인이 필요합니다</div>;
 
   const progress = loadSchoolProgress(user.id);
   const graduated = checkGraduated(user.id);

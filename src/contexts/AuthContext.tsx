@@ -165,8 +165,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       org_code: data.orgCode || '',
     });
 
-    // 5) 마케팅 학교 enrollment 자동 생성
-    await createEnrollment(authData.user.id, 'marketing', null);
+    // 5) 마케팅 학교 enrollment 자동 생성 (즉시 active)
+    await createEnrollment(authData.user.id, 'marketing', null, true);
 
     // 6) user 상태가 onAuthStateChange로 자동 업데이트됨
     return true;

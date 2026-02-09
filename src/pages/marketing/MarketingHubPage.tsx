@@ -24,11 +24,8 @@ export default function MarketingHubPage() {
   const remainingDays = user ? getProRemainingDays(user.id) : 0;
 
   const handleSchoolClick = () => {
-    if (!isGeminiConnected()) {
-      navigate('/marketing/school/ai-setup');
-    } else {
-      navigate('/marketing/school/attendance');
-    }
+    // AI 연결 여부와 무관하게 바로 학교로 이동 (AI는 선택 사항)
+    navigate('/marketing/school/attendance');
   };
 
   const handleProClick = () => {

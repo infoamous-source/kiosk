@@ -47,20 +47,26 @@ export async function getPendingEnrollments(studentId: string): Promise<Enrollme
   return (data as EnrollmentRow[]).map(rowToEnrollment);
 }
 
-/** 관리자: 학생을 학교에 연결 (enrollment 생성) */
+/** 학생을 학교에 연결 (enrollment 생성) */
 export async function createEnrollment(
   studentId: string,
   schoolId: SchoolId,
   instructorId: string | null,
+  autoActivate = false,
 ): Promise<Enrollment | null> {
+  const insertData: Record<string, unknown> = {
+    student_id: studentId,
+    school_id: schoolId,
+    instructor_id: instructorId,
+    status: autoActivate ? 'active' : 'pending_info',
+  };
+  if (autoActivate) {
+    insertData.activated_at = new Date().toISOString();
+  }
+
   const { data, error } = await supabase
     .from('enrollments')
-    .insert({
-      student_id: studentId,
-      school_id: schoolId,
-      instructor_id: instructorId,
-      status: 'pending_info',
-    })
+    .insert(insertData)
     .select()
     .single();
 
