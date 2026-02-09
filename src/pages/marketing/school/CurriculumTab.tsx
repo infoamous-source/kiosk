@@ -3,11 +3,13 @@ import { useAuth } from '../../../contexts/AuthContext';
 import { loadSchoolProgress } from '../../../utils/schoolStorage';
 import { SCHOOL_CURRICULUM } from '../../../types/school';
 import PeriodTimeline from '../../../components/school/PeriodTimeline';
+import { Loader2 } from 'lucide-react';
 
 export default function CurriculumTab() {
   const { t } = useTranslation('common');
-  const { user } = useAuth();
+  const { user, isLoading } = useAuth();
 
+  if (isLoading) return <div className="flex justify-center py-12"><Loader2 className="w-8 h-8 animate-spin text-purple-500" /></div>;
   if (!user) return null;
 
   const progress = loadSchoolProgress(user.id);

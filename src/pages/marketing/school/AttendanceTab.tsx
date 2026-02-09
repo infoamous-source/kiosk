@@ -6,14 +6,15 @@ import { isGraduated as checkGraduated } from '../../../utils/schoolStorage';
 import StudentCard from '../../../components/school/StudentCard';
 import StampBoard from '../../../components/school/StampBoard';
 import GraduationModal from '../../../components/school/GraduationModal';
-import { GraduationCap } from 'lucide-react';
+import { GraduationCap, Loader2 } from 'lucide-react';
 
 export default function AttendanceTab() {
   const { t } = useTranslation('common');
-  const { user } = useAuth();
+  const { user, isLoading } = useAuth();
   const [showGraduationModal, setShowGraduationModal] = useState(false);
   const [refreshKey, setRefreshKey] = useState(0);
 
+  if (isLoading) return <div className="flex justify-center py-12"><Loader2 className="w-8 h-8 animate-spin text-purple-500" /></div>;
   if (!user) return null;
 
   const progress = loadSchoolProgress(user.id);

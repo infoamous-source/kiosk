@@ -3,6 +3,7 @@ import type { User, AuthState } from '../types/auth';
 import type { ProfileRow } from '../types/database';
 import { supabase, isSupabaseConfigured } from '../lib/supabase';
 import { updateProfile } from '../services/profileService';
+import { createEnrollment } from '../services/enrollmentService';
 
 interface AuthContextType extends AuthState {
   login: (email: string, password: string, rememberMe?: boolean) => Promise<boolean>;
@@ -164,7 +165,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       org_code: data.orgCode || '',
     });
 
-    // 5) user 상태가 onAuthStateChange로 자동 업데이트됨
+    // 5) 마케팅 학교 enrollment 자동 생성
+    await createEnrollment(authData.user.id, 'marketing', null);
+
+    // 6) user 상태가 onAuthStateChange로 자동 업데이트됨
     return true;
   }, []);
 
