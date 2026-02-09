@@ -644,7 +644,8 @@
       "comingSoon": "This tool is coming soon. Stay tuned for updates!",
       "completeButton": "Complete Practice ✅",
       "alreadyCompleted": "Already completed!",
-      "graduationNote": "This is your graduation project. Completing the simulation fulfills the graduation requirement."
+      "graduationNote": "This is your graduation project. Completing the simulation fulfills the graduation requirement.",
+      "goToAttendance": "Back to Attendance"
     },
     "periods": {
       "aptitudeTest": {
@@ -724,6 +725,461 @@
       "step1": "Connect AI",
       "step2": "Enrolled",
       "skip": "Skip and enroll"
+    },
+    "aptitude": {
+      "intro": {
+        "title": "What marketing job is right for you?",
+        "subtitle": "Discover your marketing DNA with 15 questions",
+        "startButton": "Start Test",
+        "retakeButton": "Retake Test",
+        "previousResult": "Previous Result"
+      },
+      "progress": "{{current}}/{{total}}",
+      "loading": {
+        "step1": "Extracting your marketing DNA...",
+        "step2": "Analyzing your tendencies...",
+        "step3": "Found the perfect job for you!"
+      },
+      "result": {
+        "header": "Your calling is...",
+        "badge": "Add badge to student card",
+        "retake": "Retake Test",
+        "share": "Share Result",
+        "scoreChart": "Scores by Type",
+        "shareText": "My marketing type is {{emoji}} {{name}}! #KMarketerAptitudeTest",
+        "copied": "Copied!"
+      },
+      "personas": {
+        "CEO": {
+          "name": "Strategist CEO",
+          "title": "The Visionary",
+          "desc": "A leader who sees the big picture and sets the direction. Your strength is reading market trends and building strategies.",
+          "strength1": "Insight into market trends",
+          "strength2": "Leadership to guide teams",
+          "strength3": "Long-term vision and strategic planning"
+        },
+        "PM": {
+          "name": "Idea Bank PM",
+          "title": "The Creator",
+          "desc": "Creative planning is your forte! You bring projects to life with fresh ideas.",
+          "strength1": "Original idea generation",
+          "strength2": "Storytelling and planning skills",
+          "strength3": "Trend-setting intuition"
+        },
+        "CPO": {
+          "name": "Data Hunter CPO",
+          "title": "The Analyst",
+          "desc": "You prove with numbers and speak with data! Your analytical skills drive marketing decisions.",
+          "strength1": "Data-driven decision making",
+          "strength2": "Logical thinking and problem solving",
+          "strength3": "Performance measurement and optimization"
+        },
+        "CMO": {
+          "name": "Buzz Maker CMO",
+          "title": "The Viral Master",
+          "desc": "Trend-sensitive with great empathy! You spread brand awareness through SNS and content.",
+          "strength1": "Trend detection ability",
+          "strength2": "Creating empathetic content",
+          "strength3": "SNS and viral marketing sense"
+        },
+        "CSL": {
+          "name": "Sales Champion CSL",
+          "title": "The Closer",
+          "desc": "You win customers' hearts and convert them into buyers! Persuasion and drive are your top skills.",
+          "strength1": "Excellent persuasion and negotiation",
+          "strength2": "Understanding customer needs",
+          "strength3": "Drive to achieve goals"
+        }
+      },
+      "questions": {
+        "Q1": {
+          "situation": "A competitor launched a cheaper product! Your reaction?",
+          "A": "Price wars lead to failure. Let's differentiate on quality.",
+          "B": "Analyze costs right away to see if we can lower our price too."
+        },
+        "Q2": {
+          "situation": "Writing an Instagram promo post?",
+          "A": "List features and specs.",
+          "B": "Use aesthetic photos + empathetic captions."
+        },
+        "Q3": {
+          "situation": "Your role in a team project?",
+          "A": "Set the overall direction and assign roles.",
+          "B": "Lead the brainstorming session."
+        },
+        "Q4": {
+          "situation": "Not enough budget for a new product launch!",
+          "A": "Create buzz through SNS viral marketing.",
+          "B": "Directly sell to a small group of customers."
+        },
+        "Q5": {
+          "situation": "First thing you do at a marketing meeting?",
+          "A": "Prepare competitor analysis data.",
+          "B": "Propose a new campaign concept."
+        },
+        "Q6": {
+          "situation": "A customer filed a complaint!",
+          "A": "Analyze the root cause with data.",
+          "B": "Call them directly and sincerely apologize."
+        },
+        "Q7": {
+          "situation": "What defines good marketing results?",
+          "A": "Brand awareness and follower growth.",
+          "B": "Revenue and conversion rate increase."
+        },
+        "Q8": {
+          "situation": "You found a new business idea!",
+          "A": "Research market size and growth rate first.",
+          "B": "Build a prototype right away."
+        },
+        "Q9": {
+          "situation": "Choosing content for SNS?",
+          "A": "Use trending memes and challenges.",
+          "B": "Show product before & after comparisons."
+        },
+        "Q10": {
+          "situation": "You got 1 million won for ads!",
+          "A": "Optimize with A/B testing.",
+          "B": "Collaborate with influencers."
+        },
+        "Q11": {
+          "situation": "Business in crisis mode — you?",
+          "A": "Reset the long-term vision.",
+          "B": "Execute immediate revenue-boosting actions."
+        },
+        "Q12": {
+          "situation": "Writing a marketing plan?",
+          "A": "Focus on story and visuals.",
+          "B": "Focus on numerical goals and KPIs."
+        },
+        "Q13": {
+          "situation": "Secret to winning a competitive pitch?",
+          "A": "Original creative ideas.",
+          "B": "Persuasive presentation delivery."
+        },
+        "Q14": {
+          "situation": "Your goal as a marketer in 1 year?",
+          "A": "Recognized expert in the industry.",
+          "B": "Trend-setting influencer."
+        },
+        "Q15": {
+          "situation": "Why would a team pick you?",
+          "A": "Systematic strategy planning skills.",
+          "B": "Creative content planning abilities."
+        }
+      }
+    },
+    "marketCompass": {
+      "scanner": {
+        "headerBadge": "Period 2",
+        "title": "Market Compass Scanner",
+        "hero": "Know your enemy, know yourself",
+        "heroSub": "AI will find your competitors' weaknesses",
+        "inputTitle": "Enter market information to analyze",
+        "keyword": "Item Keyword",
+        "keywordPlaceholder": "e.g., vegan dumplings, handmade soap",
+        "targetAge": "Target Age",
+        "targetGender": "Target Gender",
+        "ages": {
+          "10s": "Teens",
+          "20s": "20s",
+          "30s": "30s",
+          "40s": "40s",
+          "50plus": "50+"
+        },
+        "genders": {
+          "female": "Female",
+          "male": "Male",
+          "all": "All"
+        },
+        "analyzeButton": "Start Market Analysis",
+        "reanalyzeButton": "Analyze Again",
+        "loading": {
+          "step1": "Collecting market data...",
+          "step2": "Analyzing competitors...",
+          "step3": "Analyzing customer voices..."
+        },
+        "result": {
+          "title": "Analysis Results",
+          "mockBadge": "Sample Data",
+          "aiBadge": "AI Analysis",
+          "keywordsTitle": "Top 5 Related Keywords",
+          "competitorsTitle": "Competitor Analysis",
+          "strengths": "Strengths",
+          "weaknesses": "Weaknesses",
+          "painPointsTitle": "Customer Voices",
+          "copied": "Copied!",
+          "copy": "Copy"
+        },
+        "next": {
+          "title": "Analysis Complete! Next Step",
+          "edgeMakerButton": "Create Differentiation Strategy with Edge Maker",
+          "attendanceButton": "Back to Attendance"
+        },
+        "previousResult": "Previous analysis results found",
+        "viewPrevious": "View Previous Results",
+        "startNew": "Start New Analysis"
+      },
+      "edgeMaker": {
+        "headerBadge": "Period 3",
+        "title": "Market Compass Edge Maker",
+        "hero": "Turn weakness into opportunity!",
+        "heroSub": "A branding strategy that targets competitors' gaps",
+        "stepIndicator": "Step {{current}} / {{total}}",
+        "step1Done": "Market Analysis Complete",
+        "step2Active": "Branding Strategy",
+        "noScannerData": "Please complete Market Scanner first!",
+        "goToScanner": "Go to Market Scanner",
+        "painPointsTitle": "Competitor Weaknesses (Auto-loaded)",
+        "painPointsFrom": "Loaded from Market Scanner results",
+        "strengthsTitle": "My Strengths",
+        "strengthsPlaceholder": "Enter a strength (e.g., uses local ingredients)",
+        "strengthsHint": "Add up to 5 strengths",
+        "addStrength": "Add",
+        "generateButton": "Generate Branding Strategy",
+        "loading": {
+          "step1": "Analyzing competitor weaknesses...",
+          "step2": "Building differentiation strategy...",
+          "step3": "Creating brand identity..."
+        },
+        "result": {
+          "title": "Branding Strategy",
+          "mockBadge": "Sample Data",
+          "aiBadge": "AI Generated",
+          "uspTitle": "USP (Unique Selling Proposition)",
+          "brandNamesTitle": "Brand Name Suggestions",
+          "nameTypes": {
+            "emotional": "Emotional",
+            "intuitive": "Intuitive",
+            "fun": "Fun"
+          },
+          "reasoning": "Reasoning",
+          "sloganTitle": "Slogan",
+          "brandMoodTitle": "Brand Mood",
+          "primaryColor": "Primary Color",
+          "secondaryColor": "Secondary Color",
+          "tone": "Tone & Manner",
+          "moodKeywords": "Keywords",
+          "copied": "Copied!",
+          "copy": "Copy"
+        },
+        "complete": {
+          "title": "Branding Strategy Complete!",
+          "completeButton": "Complete Class",
+          "attendanceButton": "Back to Attendance"
+        }
+      }
+    },
+    "viralCardMaker": {
+      "title": "Viral Card Maker",
+      "subtitle": "Create card news copy using the 4-step viral formula",
+      "formulaTitle": "4-Step Viral Card News Formula",
+      "formula": {
+        "hook": "HOOK: The first line that stops scrolling",
+        "empathy": "EMPATHY: Make them say 'That's so me!'",
+        "solution": "SOLUTION: Present the solution",
+        "action": "ACTION: Close with a call to action"
+      },
+      "edgeDataLoaded": "Loaded from Edge Maker",
+      "input": {
+        "productName": "Product/Brand Name",
+        "productNamePlaceholder": "e.g., Vegan Dumplings",
+        "targetPersona": "Target Customer",
+        "targetPersonaPlaceholder": "e.g., Health-conscious women in their 20-30s",
+        "usp": "Unique Selling Point (USP)",
+        "uspPlaceholder": "e.g., 100% plant-based, 50% fewer calories"
+      },
+      "toneLabel": "Select Tone",
+      "tone": {
+        "spicy": "Spicy",
+        "spicyDesc": "You're missing out if you don't know this!",
+        "emotional": "Emotional",
+        "emotionalDesc": "Made just for you",
+        "informative": "Informative",
+        "informativeDesc": "3 criteria to choose by"
+      },
+      "imageStyleLabel": "Image Style",
+      "imageStyle": {
+        "illustration": "Illustration",
+        "realistic": "Realistic",
+        "minimal": "Minimal",
+        "popart": "Pop Art"
+      },
+      "generateButton": "Generate Card News Copy",
+      "loading": {
+        "step1": "Writing copy with viral formula..."
+      },
+      "mockBadge": "Sample Data",
+      "aiBadge": "AI Generated",
+      "preview": "Card Preview",
+      "designTip": "Design Tip",
+      "strategy": "Strategy Summary",
+      "copy": "Copy",
+      "copied": "Copied!",
+      "copyAll": "Copy All"
+    },
+    "perfectPlanner": {
+      "title": "Perfect Planner",
+      "subtitle": "Custom sales strategies by channel to boost revenue",
+      "formulaTitle": "Sales Formulas Explained",
+      "formula": {
+        "aidaTitle": "Product Page: AIDA Formula",
+        "aidaDesc": "Persuade customers step by step: Attention → Interest → Desire → Action",
+        "liveTitle": "Live Commerce: 4-Step Formula",
+        "liveDesc": "Broadcast in order: Opening → Demo → Q&A → Closing"
+      },
+      "edgeDataLoaded": "Loaded from Edge Maker",
+      "input": {
+        "productName": "Product/Brand Name",
+        "productNamePlaceholder": "e.g., Vegan Dumplings",
+        "coreTarget": "Core Target",
+        "coreTargetPlaceholder": "e.g., Health-conscious people in their 30s",
+        "usp": "Unique Selling Point (USP)",
+        "uspPlaceholder": "e.g., 100% plant-based ingredients",
+        "strongOffer": "Strong Offer/Deal",
+        "strongOfferPlaceholder": "e.g., 50% off first purchase + free shipping"
+      },
+      "generateButton": "Generate Sales Strategy",
+      "loading": {
+        "step1": "Building sales strategy...",
+        "step2": "Writing channel-specific copy...",
+        "step3": "Finalizing the plan..."
+      },
+      "mockBadge": "Sample Data",
+      "aiBadge": "AI Generated",
+      "landing": {
+        "tab": "Product Page",
+        "title": "Product Page Plan",
+        "headline": "Headline",
+        "problem": "Problem Statement",
+        "features": "Key Features",
+        "trust": "Trust Signals",
+        "cta": "Closing CTA",
+        "button": "Button Text",
+        "checklist": "Product Page Checklist"
+      },
+      "live": {
+        "tab": "Live Commerce",
+        "title": "Live Commerce Cue Sheet",
+        "opening": "Opening",
+        "demo": "Demo Points",
+        "qna": "Expected Q&A",
+        "closing": "Closing",
+        "checklist": "Live Prep Checklist"
+      },
+      "copied": "Copied!",
+      "copyAll": "Copy All"
+    },
+    "roasSimulator": {
+      "title": "ROAS Simulator",
+      "subtitle": "Predict your ad performance in advance",
+      "educationTitle": "What is ROAS?",
+      "education": {
+        "whatIsROAS": "ROAS = Revenue / Ad Spend ratio",
+        "example": "Example",
+        "exampleText": "Ad budget ₩100K → Revenue ₩300K = ROAS 3.0x"
+      },
+      "grade": {
+        "excellent": "Excellent",
+        "good": "Good",
+        "average": "Average",
+        "poor": "Poor"
+      },
+      "prevDataLoaded": "Loaded data from previous periods",
+      "input": {
+        "productName": "Product Name",
+        "productNamePlaceholder": "e.g., Vegan Dumplings",
+        "productPrice": "Product Price (KRW)",
+        "adBudget": "Ad Budget",
+        "duration": "Ad Duration",
+        "adChannel": "Ad Channel"
+      },
+      "channel": {
+        "instagram": "Instagram",
+        "instagramDesc": "Target Gen MZ",
+        "naver": "Naver",
+        "naverDesc": "Search ads, broad reach",
+        "kakao": "KakaoTalk",
+        "kakaoDesc": "Message ads",
+        "youtube": "YouTube",
+        "youtubeDesc": "Video ads"
+      },
+      "days": "days",
+      "count": "conversions",
+      "simulateButton": "Start Simulation",
+      "loading": {
+        "step1": "Analyzing market data...",
+        "step2": "Predicting ad performance...",
+        "step3": "Generating strategic advice..."
+      },
+      "mockBadge": "Sample Data",
+      "aiBadge": "AI Analysis",
+      "expectedROAS": "Expected ROAS",
+      "simulationResult": "Simulation Results",
+      "metrics": {
+        "budget": "Ad Budget",
+        "revenue": "Expected Revenue",
+        "impressions": "Est. Impressions",
+        "clicks": "Est. Clicks",
+        "conversions": "Est. Conversions"
+      },
+      "funnelTitle": "Ad Funnel",
+      "funnel": {
+        "impressions": "Impressions",
+        "clicks": "Clicks",
+        "conversions": "Conversions"
+      },
+      "advice": "AI Advice",
+      "channelTip": "Channel Tip",
+      "copied": "Copied!",
+      "copyAll": "Copy Results",
+      "goToGraduation": "View Graduation Project"
+    },
+    "graduationProject": {
+      "title": "Graduation Project: Brand Plan",
+      "viewGuide": "View Graduation Guide",
+      "cardTitle": "Graduation Project: Create Brand Plan",
+      "cardReady": "All classes completed! Check your graduation project",
+      "cardLocked": "Complete periods 1-6 first",
+      "description": "Combine everything you learned in periods 1-6 to create your brand plan!",
+      "offlineNote": "Write it by hand on a large poster board",
+      "presentNote": "Present it to your classmates when done",
+      "completed": "completed",
+      "section1": {
+        "title": "My Marketer Type",
+        "guide": "Write your aptitude test result on the plan"
+      },
+      "section2": {
+        "title": "Market Analysis",
+        "guide": "Summarize competitors and customer pain points"
+      },
+      "section3": {
+        "title": "Brand Strategy",
+        "guide": "Write your USP, brand name, and slogan"
+      },
+      "section4": {
+        "title": "Content Strategy",
+        "guide": "Attach your card news copy to the plan"
+      },
+      "section5": {
+        "title": "Sales Strategy",
+        "guide": "Write your product page or live commerce plan"
+      },
+      "section6": {
+        "title": "Ad Performance Forecast",
+        "guide": "Write your ROAS simulation results"
+      },
+      "notCompleted": "Not completed yet",
+      "goToTool": "Go to Tool",
+      "copyAll": "Copy All Results",
+      "copiedAll": "Copied!",
+      "tipsTitle": "Writing Tips",
+      "tip1": "Write in large letters for easy reading",
+      "tip2": "Use colored pens to highlight key points",
+      "tip3": "Include drawings or tables",
+      "tip4": "Speak with confidence during your presentation",
+      "notReady": "Graduation requirements not yet met",
+      "completeAll": "Complete all periods 1-6 first"
     }
   },
   "apps": {

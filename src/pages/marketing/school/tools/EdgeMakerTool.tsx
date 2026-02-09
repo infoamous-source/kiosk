@@ -5,7 +5,7 @@ import { ArrowLeft, Zap, Plus, X, Copy, Check, AlertCircle } from 'lucide-react'
 import { useAuth } from '../../../../contexts/AuthContext';
 import { earnStamp, hasStamp, getMarketScannerResult, saveEdgeMakerResult, getEdgeMakerResult } from '../../../../utils/schoolStorage';
 import { generateBrandingStrategy } from '../../../../services/gemini/marketCompassService';
-import type { EdgeMakerResult } from '../../../../types/school';
+import type { EdgeMakerResult, CompetitorInfo } from '../../../../types/school';
 
 type Phase = 'input' | 'loading' | 'result';
 
@@ -17,6 +17,7 @@ export default function EdgeMakerTool() {
 
   const [phase, setPhase] = useState<Phase>('input');
   const [painPoints, setPainPoints] = useState<string[]>([]);
+  const [competitors, setCompetitors] = useState<CompetitorInfo[]>([]);
   const [strengths, setStrengths] = useState<string[]>([]);
   const [strengthInput, setStrengthInput] = useState('');
   const [result, setResult] = useState<EdgeMakerResult | null>(null);
@@ -36,14 +37,16 @@ export default function EdgeMakerTool() {
       setResult(prevEdge);
       setPainPoints(prevEdge.input.painPoints);
       setStrengths(prevEdge.input.myStrengths);
+      setCompetitors(prevEdge.input.competitors || []);
       setPhase('result');
       return;
     }
 
-    // MarketScanner 결과에서 painPoints 로드
+    // MarketScanner 결과에서 painPoints + competitors 로드
     const scannerResult = getMarketScannerResult(user.id);
     if (scannerResult) {
       setPainPoints(scannerResult.output.painPoints);
+      setCompetitors(scannerResult.output.competitors || []);
     } else {
       setNoScannerData(true);
     }
@@ -69,13 +72,13 @@ export default function EdgeMakerTool() {
     const timer2 = setTimeout(() => setLoadingStep(2), 2400);
 
     try {
-      const { result: output, isMock: mock } = await generateBrandingStrategy(painPoints, strengths);
+      const { result: output, isMock: mock } = await generateBrandingStrategy(painPoints, strengths, competitors);
 
       await new Promise((resolve) => setTimeout(resolve, 3500));
 
       const edgeResult: EdgeMakerResult = {
         completedAt: new Date().toISOString(),
-        input: { painPoints, myStrengths: strengths },
+        input: { painPoints, myStrengths: strengths, competitors },
         output,
       };
 
@@ -188,6 +191,29 @@ export default function EdgeMakerTool() {
         {/* ─── INPUT PHASE ─── */}
         {phase === 'input' && !noScannerData && (
           <div className="space-y-4">
+            {/* 경쟁사 요약 카드 */}
+            {competitors.length > 0 && (
+              <div className="bg-white rounded-2xl border border-gray-200 p-5">
+                <h3 className="font-semibold text-gray-800 mb-1">
+                  {t('school.marketCompass.edgeMaker.competitorSummaryTitle')}
+                </h3>
+                <p className="text-xs text-gray-400 mb-3">
+                  {t('school.marketCompass.edgeMaker.competitorSummaryFrom')}
+                </p>
+                <div className="space-y-2">
+                  {competitors.map((comp, i) => (
+                    <div key={i} className="flex items-start gap-3 bg-blue-50 rounded-xl px-4 py-3">
+                      <span className="text-blue-500 text-sm mt-0.5">🏢</span>
+                      <div>
+                        <span className="font-medium text-gray-800 text-sm">{comp.name}</span>
+                        <p className="text-xs text-gray-500 mt-0.5">{comp.description}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
             {/* Pain Points (읽기 전용) */}
             <div className="bg-white rounded-2xl border border-gray-200 p-5">
               <h3 className="font-semibold text-gray-800 mb-1">
@@ -428,6 +454,25 @@ export default function EdgeMakerTool() {
                 </div>
               </div>
             </div>
+
+            {/* 브랜딩 추천 레포트 */}
+            {result.output.brandingReport && (
+              <div className="bg-white rounded-2xl border border-gray-200 p-5">
+                <div className="flex items-center justify-between mb-3">
+                  <h3 className="font-semibold text-gray-800 flex items-center gap-2">
+                    <span className="text-lg">📋</span>
+                    {t('school.marketCompass.edgeMaker.result.brandingReportTitle')}
+                  </h3>
+                  <CopyButton
+                    text={result.output.brandingReport}
+                    field="brandingReport"
+                  />
+                </div>
+                <p className="text-sm text-gray-700 leading-relaxed whitespace-pre-line bg-gray-50 rounded-xl p-4">
+                  {result.output.brandingReport}
+                </p>
+              </div>
+            )}
 
             {/* 완료 섹션 */}
             <div className="bg-gradient-to-r from-amber-50 to-yellow-50 rounded-2xl border border-amber-200 p-5">

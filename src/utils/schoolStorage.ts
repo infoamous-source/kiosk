@@ -3,6 +3,8 @@ import type {
   AptitudeResult,
   MarketScannerResult,
   EdgeMakerResult,
+  ViralCardResult,
+  PerfectPlannerResult,
   SimulationResult,
   PeriodId,
 } from '../types/school';
@@ -188,7 +190,39 @@ export function getEdgeMakerResult(userId: string): EdgeMakerResult | undefined 
   return progress.marketCompassData?.edgeMakerResult;
 }
 
-// ─── 시뮬레이션 (졸업과제) ───
+// ─── Viral Card Maker ───
+
+/** Viral Card 결과 저장 */
+export function saveViralCardResult(userId: string, result: ViralCardResult): void {
+  const progress = loadSchoolProgress(userId);
+  if (!progress.marketCompassData) progress.marketCompassData = {};
+  progress.marketCompassData.viralCardResult = result;
+  saveSchoolProgress(userId, progress);
+}
+
+/** Viral Card 결과 조회 */
+export function getViralCardResult(userId: string): ViralCardResult | undefined {
+  const progress = loadSchoolProgress(userId);
+  return progress.marketCompassData?.viralCardResult;
+}
+
+// ─── Perfect Planner ───
+
+/** Perfect Planner 결과 저장 */
+export function savePerfectPlannerResult(userId: string, result: PerfectPlannerResult): void {
+  const progress = loadSchoolProgress(userId);
+  if (!progress.marketCompassData) progress.marketCompassData = {};
+  progress.marketCompassData.perfectPlannerResult = result;
+  saveSchoolProgress(userId, progress);
+}
+
+/** Perfect Planner 결과 조회 */
+export function getPerfectPlannerResult(userId: string): PerfectPlannerResult | undefined {
+  const progress = loadSchoolProgress(userId);
+  return progress.marketCompassData?.perfectPlannerResult;
+}
+
+// ─── 시뮬레이션 (6교시 ROAS) ───
 
 /** 시뮬레이션 결과 저장 */
 export function saveSimulationResult(userId: string, result: SimulationResult): void {

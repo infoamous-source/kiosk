@@ -22,6 +22,7 @@ import SchoolToolRouter from './pages/marketing/school/SchoolToolRouter';
 import PeriodDetailPage from './pages/marketing/school/PeriodDetailPage';
 import ProToolsDashboard from './pages/marketing/ProToolsDashboard';
 import AISetupPage from './pages/marketing/school/AISetupPage';
+import GraduationProjectPage from './pages/marketing/school/GraduationProjectPage';
 import ProfilePage from './pages/ProfilePage';
 import DigitalModulePage from './pages/DigitalModulePage';
 import KioskPracticePage from './pages/KioskPracticePage';
@@ -65,6 +66,9 @@ export default function App() {
 
           {/* 교시 상세 페이지 (독립 페이지) */}
           <Route path="/marketing/school/periods/:periodId" element={<PeriodDetailPage />} />
+
+          {/* 졸업과제 안내 페이지 */}
+          <Route path="/marketing/school/graduation-project" element={<GraduationProjectPage />} />
 
           {/* 학교 툴 (독립 페이지) */}
           <Route path="/marketing/school/tools/:toolId" element={<SchoolToolRouter />} />

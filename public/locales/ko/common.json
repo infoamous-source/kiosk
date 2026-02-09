@@ -734,7 +734,8 @@
       "comingSoon": "이 도구는 준비 중입니다. 곧 업데이트 됩니다!",
       "completeButton": "실습 완료 ✅",
       "alreadyCompleted": "이미 완료했어요!",
-      "graduationNote": "이 도구는 졸업과제입니다. 시뮬레이션을 완료하면 졸업 조건이 충족됩니다."
+      "graduationNote": "이 도구는 졸업과제입니다. 시뮬레이션을 완료하면 졸업 조건이 충족됩니다.",
+      "goToAttendance": "출석부로 돌아가기"
     },
     "periods": {
       "aptitudeTest": {
@@ -1058,6 +1059,217 @@
       "step1": "AI 연결",
       "step2": "입학 완료",
       "skip": "건너뛰고 입학하기"
+    },
+    "viralCardMaker": {
+      "title": "Viral Card Maker",
+      "subtitle": "4단계 바이럴 공식으로 카드뉴스 카피를 만들어요",
+      "formulaTitle": "바이럴 카드뉴스 4단계 공식",
+      "formula": {
+        "hook": "HOOK: 스크롤을 멈추게 하는 첫 문장",
+        "empathy": "EMPATHY: '나도 그래!' 공감을 끌어내기",
+        "solution": "SOLUTION: 해결책 제시하기",
+        "action": "ACTION: 행동을 유도하는 마무리"
+      },
+      "edgeDataLoaded": "Edge Maker에서 불러왔어요",
+      "input": {
+        "productName": "제품/브랜드명",
+        "productNamePlaceholder": "예: 비건 만두",
+        "targetPersona": "타겟 고객",
+        "targetPersonaPlaceholder": "예: 건강을 중요시하는 20-30대 여성",
+        "usp": "차별점 (USP)",
+        "uspPlaceholder": "예: 100% 식물성 재료, 칼로리 50% 감소"
+      },
+      "toneLabel": "톤 선택",
+      "tone": {
+        "spicy": "매운맛",
+        "spicyDesc": "이거 모르면 손해!",
+        "emotional": "감성맛",
+        "emotionalDesc": "당신을 위해 만들었어요",
+        "informative": "정보맛",
+        "informativeDesc": "3가지 선택 기준"
+      },
+      "imageStyleLabel": "이미지 스타일",
+      "imageStyle": {
+        "illustration": "일러스트",
+        "realistic": "실사",
+        "minimal": "미니멀",
+        "popart": "팝아트"
+      },
+      "generateButton": "카드뉴스 카피 생성",
+      "loading": {
+        "step1": "바이럴 공식으로 카피 작성 중..."
+      },
+      "mockBadge": "예시 데이터",
+      "aiBadge": "AI 생성",
+      "preview": "카드 프리뷰",
+      "designTip": "디자인 팁",
+      "strategy": "전략 요약",
+      "copy": "복사",
+      "copied": "복사됨!",
+      "copyAll": "전체 복사"
+    },
+    "perfectPlanner": {
+      "title": "Perfect Planner",
+      "subtitle": "판매 채널별 맞춤 설계로 매출을 올려요",
+      "formulaTitle": "판매 공식 알아보기",
+      "formula": {
+        "aidaTitle": "상세페이지: AIDA 공식",
+        "aidaDesc": "Attention → Interest → Desire → Action 순서로 고객을 설득해요",
+        "liveTitle": "라이브커머스: 4단계 공식",
+        "liveDesc": "오프닝 → 시연 → 소통 → 클로징 순서로 방송해요"
+      },
+      "edgeDataLoaded": "Edge Maker에서 불러왔어요",
+      "input": {
+        "productName": "제품/브랜드명",
+        "productNamePlaceholder": "예: 비건 만두",
+        "coreTarget": "핵심 타겟",
+        "coreTargetPlaceholder": "예: 건강을 중요하게 생각하는 30대",
+        "usp": "차별점 (USP)",
+        "uspPlaceholder": "예: 100% 식물성 재료",
+        "strongOffer": "강력한 혜택/제안",
+        "strongOfferPlaceholder": "예: 첫 구매 50% 할인 + 무료배송"
+      },
+      "generateButton": "판매 전략 생성",
+      "loading": {
+        "step1": "판매 전략 수립 중...",
+        "step2": "채널별 카피 작성 중...",
+        "step3": "최종 계획 완성 중..."
+      },
+      "mockBadge": "예시 데이터",
+      "aiBadge": "AI 생성",
+      "landing": {
+        "tab": "상세페이지",
+        "title": "상세페이지 기획안",
+        "headline": "헤드라인",
+        "problem": "문제 제기",
+        "features": "핵심 특장점",
+        "trust": "신뢰 장치",
+        "cta": "마감 CTA",
+        "button": "버튼 텍스트",
+        "checklist": "상세페이지 체크리스트"
+      },
+      "live": {
+        "tab": "라이브커머스",
+        "title": "라이브커머스 큐시트",
+        "opening": "오프닝",
+        "demo": "시연 포인트",
+        "qna": "예상 Q&A",
+        "closing": "클로징",
+        "checklist": "라이브 준비 체크리스트"
+      },
+      "copied": "복사됨!",
+      "copyAll": "전체 복사"
+    },
+    "roasSimulator": {
+      "title": "ROAS Simulator",
+      "subtitle": "광고 성과를 미리 예측해봐요",
+      "educationTitle": "ROAS란 무엇인가요?",
+      "education": {
+        "whatIsROAS": "ROAS = 광고비 대비 매출 비율",
+        "example": "예시",
+        "exampleText": "광고비 10만원 → 매출 30만원 = ROAS 3.0배"
+      },
+      "grade": {
+        "excellent": "대박",
+        "good": "좋음",
+        "average": "보통",
+        "poor": "손해"
+      },
+      "prevDataLoaded": "이전 교시 데이터를 불러왔어요",
+      "input": {
+        "productName": "상품명",
+        "productNamePlaceholder": "예: 비건 만두",
+        "productPrice": "상품 가격 (원)",
+        "adBudget": "광고 예산",
+        "duration": "광고 기간",
+        "adChannel": "광고 채널"
+      },
+      "channel": {
+        "instagram": "인스타그램",
+        "instagramDesc": "MZ세대 타겟",
+        "naver": "네이버",
+        "naverDesc": "검색 광고, 넓은 타겟",
+        "kakao": "카카오톡",
+        "kakaoDesc": "메시지 광고",
+        "youtube": "유튜브",
+        "youtubeDesc": "영상 광고"
+      },
+      "days": "일",
+      "count": "건",
+      "simulateButton": "시뮬레이션 시작",
+      "loading": {
+        "step1": "시장 데이터 분석 중...",
+        "step2": "광고 성과 예측 중...",
+        "step3": "전략 조언 생성 중..."
+      },
+      "mockBadge": "예시 데이터",
+      "aiBadge": "AI 분석",
+      "expectedROAS": "예상 ROAS",
+      "simulationResult": "시뮬레이션 결과",
+      "metrics": {
+        "budget": "광고 예산",
+        "revenue": "예상 매출",
+        "impressions": "예상 노출수",
+        "clicks": "예상 클릭수",
+        "conversions": "예상 전환수"
+      },
+      "funnelTitle": "광고 퍼널",
+      "funnel": {
+        "impressions": "노출",
+        "clicks": "클릭",
+        "conversions": "전환"
+      },
+      "advice": "AI 조언",
+      "channelTip": "채널 팁",
+      "copied": "복사됨!",
+      "copyAll": "결과 복사",
+      "goToGraduation": "졸업과제 보러가기"
+    },
+    "graduationProject": {
+      "title": "졸업과제: 브랜드 기획서",
+      "viewGuide": "졸업과제 안내 보기",
+      "cardTitle": "졸업과제: 브랜드 기획서 만들기",
+      "cardReady": "모든 수업을 완료했어요! 졸업과제를 확인하세요",
+      "cardLocked": "1~6교시를 먼저 완료하세요",
+      "description": "1~6교시에서 배운 모든 것을 모아 브랜드 기획서를 만드세요!",
+      "offlineNote": "전지(큰 종이)에 직접 손으로 작성합니다",
+      "presentNote": "완성 후 친구들 앞에서 발표합니다",
+      "completed": "완료",
+      "section1": {
+        "title": "나의 마케터 유형",
+        "guide": "적성검사 결과를 기획서에 적으세요"
+      },
+      "section2": {
+        "title": "시장 분석",
+        "guide": "경쟁사와 고객의 불만을 정리하세요"
+      },
+      "section3": {
+        "title": "브랜드 전략",
+        "guide": "USP, 브랜드명, 슬로건을 적으세요"
+      },
+      "section4": {
+        "title": "콘텐츠 전략",
+        "guide": "카드뉴스 카피를 기획서에 붙이세요"
+      },
+      "section5": {
+        "title": "판매 전략",
+        "guide": "상세페이지 또는 라이브 계획을 적으세요"
+      },
+      "section6": {
+        "title": "광고 성과 예측",
+        "guide": "ROAS 시뮬레이션 결과를 적으세요"
+      },
+      "notCompleted": "아직 완료하지 않았어요",
+      "goToTool": "도구로 이동",
+      "copyAll": "전체 결과 복사",
+      "copiedAll": "복사됨!",
+      "tipsTitle": "기획서 작성 팁",
+      "tip1": "큰 글씨로 읽기 쉽게 작성하세요",
+      "tip2": "색깔 펜으로 중요한 부분을 강조하세요",
+      "tip3": "그림이나 표를 활용하세요",
+      "tip4": "발표할 때 자신감 있게 말하세요",
+      "notReady": "아직 졸업 조건을 충족하지 못했어요",
+      "completeAll": "1~6교시를 모두 완료해야 해요"
     }
   },
   "download": {

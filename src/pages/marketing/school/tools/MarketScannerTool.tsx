@@ -11,6 +11,7 @@ type Phase = 'input' | 'loading' | 'result';
 
 const AGE_OPTIONS = ['10s', '20s', '30s', '40s', '50plus'] as const;
 const GENDER_OPTIONS = ['female', 'male', 'all'] as const;
+const ITEM_TYPE_OPTIONS = ['service', 'physical', 'digital', 'food', 'fashion', 'beauty', 'education', 'other'] as const;
 
 export default function MarketScannerTool() {
   const { t } = useTranslation('common');
@@ -22,6 +23,7 @@ export default function MarketScannerTool() {
   const [keyword, setKeyword] = useState('');
   const [targetAge, setTargetAge] = useState<string>('20s');
   const [targetGender, setTargetGender] = useState<string>('all');
+  const [itemType, setItemType] = useState<string>('other');
   const [result, setResult] = useState<MarketScannerResult | null>(null);
   const [isMock, setIsMock] = useState(false);
   const [loadingStep, setLoadingStep] = useState(0);
@@ -47,6 +49,7 @@ export default function MarketScannerTool() {
       setKeyword(prev.input.itemKeyword);
       setTargetAge(prev.input.targetAge);
       setTargetGender(prev.input.targetGender);
+      setItemType(prev.input.itemType || 'other');
       setPhase('result');
     }
   }, [user]);
@@ -62,14 +65,14 @@ export default function MarketScannerTool() {
     const timer2 = setTimeout(() => setLoadingStep(2), 2400);
 
     try {
-      const { result: output, isMock: mock } = await generateMarketAnalysis(keyword, targetAge, targetGender);
+      const { result: output, isMock: mock } = await generateMarketAnalysis(keyword, targetAge, targetGender, itemType);
 
       // 최소 3초 대기
       await new Promise((resolve) => setTimeout(resolve, 3500));
 
       const scannerResult: MarketScannerResult = {
         completedAt: new Date().toISOString(),
-        input: { itemKeyword: keyword, targetAge, targetGender },
+        input: { itemKeyword: keyword, targetAge, targetGender, itemType },
         output,
       };
 
@@ -200,6 +203,24 @@ export default function MarketScannerTool() {
                   className="w-full px-4 py-3 border border-gray-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                   maxLength={50}
                 />
+              </div>
+
+              {/* 아이템 형태 */}
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1.5">
+                  {t('school.marketCompass.scanner.itemType')}
+                </label>
+                <select
+                  value={itemType}
+                  onChange={(e) => setItemType(e.target.value)}
+                  className="w-full px-3 py-3 border border-gray-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white"
+                >
+                  {ITEM_TYPE_OPTIONS.map((type) => (
+                    <option key={type} value={type}>
+                      {t(`school.marketCompass.scanner.itemTypes.${type}`)}
+                    </option>
+                  ))}
+                </select>
               </div>
 
               {/* 타겟 연령 + 성별 */}
@@ -385,6 +406,25 @@ export default function MarketScannerTool() {
                 ))}
               </div>
             </div>
+
+            {/* 분석 레포트 */}
+            {result.output.analysisReport && (
+              <div className="bg-white rounded-2xl border border-gray-200 p-5">
+                <div className="flex items-center justify-between mb-3">
+                  <h3 className="font-semibold text-gray-800 flex items-center gap-2">
+                    <span className="text-lg">📋</span>
+                    {t('school.marketCompass.scanner.result.analysisReportTitle')}
+                  </h3>
+                  <CopyButton
+                    text={result.output.analysisReport}
+                    field="analysisReport"
+                  />
+                </div>
+                <p className="text-sm text-gray-700 leading-relaxed whitespace-pre-line bg-gray-50 rounded-xl p-4">
+                  {result.output.analysisReport}
+                </p>
+              </div>
+            )}
 
             {/* 다음 단계 */}
             <div className="bg-gradient-to-r from-blue-50 to-cyan-50 rounded-2xl border border-blue-200 p-5">

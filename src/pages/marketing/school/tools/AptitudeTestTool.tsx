@@ -5,7 +5,8 @@ import { ArrowLeft, Sparkles, LoaderCircle, Share2, RotateCcw } from 'lucide-rea
 import confetti from 'canvas-confetti';
 import { useAuth } from '../../../../contexts/AuthContext';
 import { earnStamp, saveAptitudeResult, hasStamp, getAptitudeResult } from '../../../../utils/schoolStorage';
-import { QUESTIONS, PERSONAS, calculateResult } from '../../../../data/aptitudeQuestions';
+import { PERSONAS, calculateResult, getQuestionSet } from '../../../../data/aptitudeQuestions';
+import type { AptitudeQuestion, QuestionSetId } from '../../../../data/aptitudeQuestions';
 import type { PersonaId, AptitudeResult } from '../../../../types/school';
 
 type Phase = 'intro' | 'test' | 'loading' | 'result';
@@ -61,6 +62,8 @@ export default function AptitudeTestTool() {
   const [isTransitioning, setIsTransitioning] = useState(false);
   const [loadingStep, setLoadingStep] = useState(0);
   const [previousResult, setPreviousResult] = useState<AptitudeResult | null>(null);
+  const [activeQuestions, setActiveQuestions] = useState<AptitudeQuestion[]>([]);
+  const [activeSetId, setActiveSetId] = useState<QuestionSetId>('set1');
 
   const completed = user ? hasStamp(user.id, 'aptitude-test') : false;
 
@@ -85,14 +88,14 @@ export default function AptitudeTestTool() {
     timers.push(setTimeout(() => setLoadingStep(2), 2000));
     timers.push(
       setTimeout(() => {
-        const computed = calculateResult(answers);
+        const computed = calculateResult(answers, activeQuestions);
         setResult(computed);
         setPhase('result');
       }, 3000),
     );
 
     return () => timers.forEach(clearTimeout);
-  }, [phase, answers]);
+  }, [phase, answers, activeQuestions]);
 
   // Confetti on result phase
   useEffect(() => {
@@ -107,24 +110,27 @@ export default function AptitudeTestTool() {
   }, [phase]);
 
   const handleStartTest = useCallback(() => {
+    const selectedSet = getQuestionSet(previousResult?.questionSetId);
+    setActiveQuestions(selectedSet.questions);
+    setActiveSetId(selectedSet.id);
     setAnswers({});
     setCurrentQuestion(0);
     setResult(null);
     setPhase('test');
-  }, []);
+  }, [previousResult]);
 
   const handleSelectOption = useCallback(
     (choice: 'A' | 'B') => {
       if (isTransitioning) return;
 
-      const question = QUESTIONS[currentQuestion];
+      const question = activeQuestions[currentQuestion];
       const newAnswers = { ...answers, [question.id]: choice };
       setAnswers(newAnswers);
 
       setIsTransitioning(true);
 
       setTimeout(() => {
-        if (currentQuestion + 1 < QUESTIONS.length) {
+        if (currentQuestion + 1 < activeQuestions.length) {
           setCurrentQuestion((prev) => prev + 1);
         } else {
           setPhase('loading');
@@ -132,7 +138,7 @@ export default function AptitudeTestTool() {
         setIsTransitioning(false);
       }, 400);
     },
-    [currentQuestion, answers, isTransitioning],
+    [currentQuestion, answers, isTransitioning, activeQuestions],
   );
 
   const handleSaveBadge = useCallback(() => {
@@ -143,12 +149,13 @@ export default function AptitudeTestTool() {
       answers,
       resultType: result.resultType,
       scores: result.scores,
+      questionSetId: activeSetId,
     };
 
     saveAptitudeResult(user.id, aptitudeResult);
     earnStamp(user.id, 'aptitude-test');
     navigate('/marketing/school/attendance');
-  }, [user, result, answers, navigate]);
+  }, [user, result, answers, navigate, activeSetId]);
 
   const handleShare = useCallback(async () => {
     if (!result) return;
@@ -182,7 +189,9 @@ export default function AptitudeTestTool() {
     setLoadingStep(0);
   }, []);
 
-  const progressPercent = Math.round(((currentQuestion + 1) / QUESTIONS.length) * 100);
+  const progressPercent = activeQuestions.length > 0
+    ? Math.round(((currentQuestion + 1) / activeQuestions.length) * 100)
+    : 0;
 
   // Find max score for chart scaling
   const maxScore = result
@@ -258,13 +267,13 @@ export default function AptitudeTestTool() {
         )}
 
         {/* ── Phase 2: Test ── */}
-        {phase === 'test' && (
+        {phase === 'test' && activeQuestions.length > 0 && (
           <div className="space-y-6">
             {/* Progress Bar */}
             <div className="space-y-2">
               <div className="flex justify-between items-center text-sm">
                 <span className="font-bold text-gray-700">
-                  {currentQuestion + 1}/{QUESTIONS.length}
+                  {currentQuestion + 1}/{activeQuestions.length}
                 </span>
                 <span className="text-gray-400">{progressPercent}%</span>
               </div>
@@ -290,7 +299,7 @@ export default function AptitudeTestTool() {
                   Q{currentQuestion + 1}.
                 </p>
                 <p className="text-gray-800 font-medium leading-relaxed">
-                  {t(QUESTIONS[currentQuestion].situationKey)}
+                  {t(activeQuestions[currentQuestion].situationKey)}
                 </p>
               </div>
 
@@ -306,7 +315,7 @@ export default function AptitudeTestTool() {
                       A
                     </span>
                     <p className="text-gray-700 text-sm leading-relaxed pt-0.5">
-                      {t(QUESTIONS[currentQuestion].optionAKey)}
+                      {t(activeQuestions[currentQuestion].optionAKey)}
                     </p>
                   </div>
                 </button>
@@ -321,7 +330,7 @@ export default function AptitudeTestTool() {
                       B
                     </span>
                     <p className="text-gray-700 text-sm leading-relaxed pt-0.5">
-                      {t(QUESTIONS[currentQuestion].optionBKey)}
+                      {t(activeQuestions[currentQuestion].optionBKey)}
                     </p>
                   </div>
                 </button>
@@ -371,7 +380,7 @@ export default function AptitudeTestTool() {
 
             {/* Description */}
             <div className="bg-white rounded-2xl border border-gray-200 p-6">
-              <p className="text-gray-700 text-sm leading-relaxed mb-4">
+              <p className="text-gray-700 text-sm leading-relaxed mb-4 whitespace-pre-line">
                 {t(PERSONAS[result.resultType].descriptionKey)}
               </p>
               <div className="space-y-2">

@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../../contexts/AuthContext';
 import { loadSchoolProgress, canGraduate, getAptitudeResult } from '../../../utils/schoolStorage';
 import { isGraduated as checkGraduated } from '../../../utils/schoolStorage';
@@ -10,6 +11,7 @@ import { GraduationCap, Loader2 } from 'lucide-react';
 
 export default function AttendanceTab() {
   const { t } = useTranslation('common');
+  const navigate = useNavigate();
   const { user, isLoading } = useAuth();
   const [showGraduationModal, setShowGraduationModal] = useState(false);
   const [refreshKey, setRefreshKey] = useState(0);
@@ -42,6 +44,14 @@ export default function AttendanceTab() {
           <GraduationCap className="w-5 h-5 text-purple-500" />
           {t('school.attendance.graduationSection')}
         </h3>
+
+        {/* 졸업과제 안내 링크 */}
+        <button
+          onClick={() => navigate('/marketing/school/graduation-project')}
+          className="w-full mb-3 py-2.5 text-sm text-purple-600 bg-purple-50 rounded-xl font-medium hover:bg-purple-100 transition-colors"
+        >
+          {t('school.graduationProject.viewGuide')}
+        </button>
 
         {graduated ? (
           <div className="text-center py-4">

@@ -1,24 +1,203 @@
+import { useState, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
-import { ArrowLeft, Share2 } from 'lucide-react';
+import {
+  ArrowLeft, Share2, Loader2, Sparkles, Copy, Check,
+  RefreshCw, ChevronDown, ChevronUp, ImageIcon,
+} from 'lucide-react';
 import { useAuth } from '../../../../contexts/AuthContext';
-import { earnStamp, hasStamp } from '../../../../utils/schoolStorage';
+import {
+  earnStamp, hasStamp, getEdgeMakerResult,
+  saveViralCardResult, getViralCardResult,
+} from '../../../../utils/schoolStorage';
+import { generateViralCards, generateAllSlideImages } from '../../../../services/gemini/viralCardService';
+import type { ViralTone, ImageStyle, ViralCardSlide, ViralCardResult } from '../../../../types/school';
+
+type Phase = 'input' | 'loading' | 'result';
+
+const STEP_ICONS: Record<string, string> = {
+  hook: '\uD83C\uDFA3',
+  empathy: '\uD83D\uDCAC',
+  solution: '\uD83D\uDCA1',
+  action: '\uD83D\uDE80',
+};
+
+const TONE_OPTIONS: { value: ViralTone; emoji: string; labelKey: string; descKey: string }[] = [
+  { value: 'spicy', emoji: '\uD83C\uDF36\uFE0F', labelKey: 'school.viralCardMaker.tone.spicy', descKey: 'school.viralCardMaker.tone.spicyDesc' },
+  { value: 'emotional', emoji: '\uD83D\uDC95', labelKey: 'school.viralCardMaker.tone.emotional', descKey: 'school.viralCardMaker.tone.emotionalDesc' },
+  { value: 'informative', emoji: '\uD83D\uDCCA', labelKey: 'school.viralCardMaker.tone.informative', descKey: 'school.viralCardMaker.tone.informativeDesc' },
+];
+
+const IMAGE_STYLE_OPTIONS: { value: ImageStyle; emoji: string; labelKey: string; gradient: string }[] = [
+  { value: 'illustration', emoji: '\uD83C\uDFA8', labelKey: 'school.viralCardMaker.imageStyle.illustration', gradient: 'linear-gradient(135deg, #FFB6C1 0%, #FFC3A0 50%, #D4FC79 100%)' },
+  { value: 'realistic', emoji: '\uD83D\uDCF7', labelKey: 'school.viralCardMaker.imageStyle.realistic', gradient: 'linear-gradient(135deg, #2C3E50 0%, #4CA1AF 100%)' },
+  { value: 'minimal', emoji: '\u2B1C', labelKey: 'school.viralCardMaker.imageStyle.minimal', gradient: 'linear-gradient(135deg, #F5F7FA 0%, #C3CFE2 100%)' },
+  { value: 'popart', emoji: '\uD83D\uDFE1', labelKey: 'school.viralCardMaker.imageStyle.popart', gradient: 'linear-gradient(135deg, #FF0099 0%, #FFD700 50%, #00FF88 100%)' },
+];
 
 export default function ViralCardMakerTool() {
   const { t } = useTranslation('common');
   const navigate = useNavigate();
   const { user } = useAuth();
   const completed = user ? hasStamp(user.id, 'viral-card-maker') : false;
+  const scrollRef = useRef<HTMLDivElement>(null);
 
+  // Phase
+  const [phase, setPhase] = useState<Phase>('input');
+
+  // Input
+  const [productName, setProductName] = useState('');
+  const [targetPersona, setTargetPersona] = useState('');
+  const [usp, setUsp] = useState('');
+  const [tone, setTone] = useState<ViralTone>('spicy');
+  const [imageStyle, setImageStyle] = useState<ImageStyle>('illustration');
+  const [showFormula, setShowFormula] = useState(false);
+  const [edgeDataLoaded, setEdgeDataLoaded] = useState(false);
+
+  // Loading
+  const [loadingStep, setLoadingStep] = useState(0);
+  const [loadingText, setLoadingText] = useState('');
+
+  // Result
+  const [result, setResult] = useState<ViralCardResult['output'] | null>(null);
+  const [slideImages, setSlideImages] = useState<(string | null)[]>([null, null, null, null]);
+  const [isMock, setIsMock] = useState(false);
+  const [copiedField, setCopiedField] = useState<string | null>(null);
+  const [activeSlide, setActiveSlide] = useState(0);
+  const [regeneratingImage, setRegeneratingImage] = useState<number | null>(null);
+
+  // Load previous result or Edge Maker data on mount
+  useEffect(() => {
+    if (!user) return;
+
+    const prevResult = getViralCardResult(user.id);
+    if (prevResult) {
+      setResult(prevResult.output);
+      setProductName(prevResult.input.productName);
+      setTargetPersona(prevResult.input.targetPersona);
+      setUsp(prevResult.input.usp);
+      setTone(prevResult.input.tone);
+      setImageStyle(prevResult.input.imageStyle);
+      setSlideImages([null, null, null, null]); // Images not saved
+      setPhase('result');
+      return;
+    }
+
+    const edgeResult = getEdgeMakerResult(user.id);
+    if (edgeResult) {
+      const brandName = edgeResult.output.brandNames?.[0]?.name || '';
+      if (brandName) setProductName(brandName);
+      if (edgeResult.output.usp) setUsp(edgeResult.output.usp);
+      setEdgeDataLoaded(true);
+    }
+  }, [user]);
+
+  // Copy helper
+  const copyToClipboard = async (text: string, field: string) => {
+    try {
+      await navigator.clipboard.writeText(text);
+      setCopiedField(field);
+      setTimeout(() => setCopiedField(null), 2000);
+    } catch { /* noop */ }
+  };
+
+  // Generate
+  const handleGenerate = async () => {
+    if (!productName.trim() || !targetPersona.trim()) return;
+
+    setPhase('loading');
+    setLoadingStep(0);
+    setLoadingText(t('school.viralCardMaker.loading.step1'));
+
+    try {
+      // Step 1: Generate copy
+      const { result: copyResult, isMock: mock } = await generateViralCards(
+        productName.trim(),
+        targetPersona.trim(),
+        usp.trim(),
+        tone,
+        imageStyle,
+      );
+
+      setResult(copyResult);
+      setIsMock(mock);
+      setSlideImages([null, null, null, null]);
+      setPhase('result');
+
+      // Save result (without images)
+      if (user) {
+        saveViralCardResult(user.id, {
+          completedAt: new Date().toISOString(),
+          input: { productName: productName.trim(), targetPersona: targetPersona.trim(), usp: usp.trim(), tone, imageStyle },
+          output: copyResult,
+        });
+      }
+
+      // Step 2: Generate images in background (only if not mock)
+      if (!mock) {
+        setLoadingStep(1);
+        generateAllSlideImages(copyResult.slides, imageStyle, (index, base64) => {
+          setSlideImages((prev) => {
+            const next = [...prev];
+            next[index] = base64;
+            return next;
+          });
+        });
+      }
+    } catch (err) {
+      console.error('[ViralCard] Generation failed:', err);
+      setPhase('input');
+    }
+  };
+
+  // Regenerate single image
+  const handleRegenerateImage = async (index: number) => {
+    if (!result || regeneratingImage !== null) return;
+    setRegeneratingImage(index);
+
+    try {
+      const { generateSlideImage } = await import('../../../../services/gemini/viralCardService');
+      const base64 = await generateSlideImage(result.slides[index].imagePrompt, imageStyle);
+      setSlideImages((prev) => {
+        const next = [...prev];
+        next[index] = base64;
+        return next;
+      });
+    } catch { /* noop */ }
+    setRegeneratingImage(null);
+  };
+
+  // Copy all
+  const handleCopyAll = () => {
+    if (!result) return;
+    const text = result.slides.map((slide, i) => {
+      return `━━ [${i + 1}/4] ${STEP_ICONS[slide.step]} ${slide.stepLabel} ━━\n${slide.copyText}\n\uD83D\uDCA1 ${t('school.viralCardMaker.designTip')}: ${slide.designTip}`;
+    }).join('\n\n');
+    copyToClipboard(`${text}\n\n${t('school.viralCardMaker.strategy')}: ${result.overallStrategy}`, 'all');
+  };
+
+  // Complete
   const handleComplete = () => {
     if (user && !completed) {
       earnStamp(user.id, 'viral-card-maker');
-      navigate('/marketing/school/attendance');
     }
+  };
+
+  const isInputValid = productName.trim().length > 0 && targetPersona.trim().length > 0;
+
+  // Scroll snap handler
+  const handleScroll = () => {
+    if (!scrollRef.current) return;
+    const el = scrollRef.current;
+    const scrollLeft = el.scrollLeft;
+    const cardWidth = el.offsetWidth;
+    const idx = Math.round(scrollLeft / cardWidth);
+    setActiveSlide(idx);
   };
 
   return (
     <div className="min-h-screen bg-gray-50">
+      {/* Header */}
       <header className="bg-white border-b border-gray-200 sticky top-0 z-40">
         <div className="max-w-lg mx-auto px-4 py-3 flex items-center gap-3">
           <button onClick={() => navigate(-1)} className="p-1.5 hover:bg-gray-100 rounded-lg">
@@ -31,27 +210,318 @@ export default function ViralCardMakerTool() {
         </div>
       </header>
 
-      <main className="max-w-lg mx-auto px-4 py-8">
-        <div className="bg-white rounded-2xl border border-gray-200 p-8 text-center">
-          <div className="w-16 h-16 mx-auto mb-4 bg-purple-50 rounded-2xl flex items-center justify-center">
-            <Share2 className="w-8 h-8 text-purple-500" />
-          </div>
-          <h2 className="text-xl font-bold text-gray-800 mb-2">{t('school.periods.viralCardMaker.name')}</h2>
-          <p className="text-sm text-gray-500 mb-6">{t('school.tools.comingSoon')}</p>
-
-          {completed ? (
-            <div className="py-3 bg-green-50 text-green-600 font-bold rounded-xl">
-              ✅ {t('school.tools.alreadyCompleted')}
+      <main className="max-w-lg mx-auto px-4 py-6 space-y-4">
+        {/* ══════ INPUT PHASE ══════ */}
+        {phase === 'input' && (
+          <>
+            {/* Hero */}
+            <div className="bg-white rounded-2xl border border-gray-200 p-5 text-center">
+              <div className="w-14 h-14 mx-auto mb-3 bg-purple-50 rounded-2xl flex items-center justify-center">
+                <Share2 className="w-7 h-7 text-purple-500" />
+              </div>
+              <h2 className="text-lg font-bold text-gray-800 mb-1">{t('school.viralCardMaker.title')}</h2>
+              <p className="text-sm text-gray-500">{t('school.viralCardMaker.subtitle')}</p>
             </div>
-          ) : (
+
+            {/* Formula Explanation */}
+            <div className="bg-white rounded-2xl border border-gray-200 overflow-hidden">
+              <button
+                onClick={() => setShowFormula(!showFormula)}
+                className="w-full px-5 py-3 flex items-center justify-between text-left"
+              >
+                <span className="text-sm font-semibold text-purple-700">{t('school.viralCardMaker.formulaTitle')}</span>
+                {showFormula ? <ChevronUp className="w-4 h-4 text-gray-400" /> : <ChevronDown className="w-4 h-4 text-gray-400" />}
+              </button>
+              {showFormula && (
+                <div className="px-5 pb-4 space-y-2">
+                  {['hook', 'empathy', 'solution', 'action'].map((step) => (
+                    <div key={step} className="flex items-start gap-2 text-sm">
+                      <span className="text-lg">{STEP_ICONS[step]}</span>
+                      <div>
+                        <span className="font-bold text-gray-700">{step.toUpperCase()}</span>
+                        <span className="text-gray-500 ml-1">- {t(`school.viralCardMaker.formula.${step}`)}</span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            {/* Edge Maker Badge */}
+            {edgeDataLoaded && (
+              <div className="bg-amber-50 border border-amber-200 rounded-xl px-4 py-2 text-xs text-amber-700 font-medium">
+                {t('school.viralCardMaker.edgeDataLoaded')}
+              </div>
+            )}
+
+            {/* Input Form */}
+            <div className="bg-white rounded-2xl border border-gray-200 p-5 space-y-4">
+              <div>
+                <label className="block text-sm font-semibold text-gray-700 mb-1">{t('school.viralCardMaker.input.productName')}</label>
+                <input
+                  type="text"
+                  value={productName}
+                  onChange={(e) => setProductName(e.target.value.slice(0, 30))}
+                  placeholder={t('school.viralCardMaker.input.productNamePlaceholder')}
+                  className="w-full px-3 py-2.5 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-purple-300"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-semibold text-gray-700 mb-1">{t('school.viralCardMaker.input.targetPersona')}</label>
+                <input
+                  type="text"
+                  value={targetPersona}
+                  onChange={(e) => setTargetPersona(e.target.value.slice(0, 80))}
+                  placeholder={t('school.viralCardMaker.input.targetPersonaPlaceholder')}
+                  className="w-full px-3 py-2.5 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-purple-300"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-semibold text-gray-700 mb-1">{t('school.viralCardMaker.input.usp')}</label>
+                <input
+                  type="text"
+                  value={usp}
+                  onChange={(e) => setUsp(e.target.value.slice(0, 100))}
+                  placeholder={t('school.viralCardMaker.input.uspPlaceholder')}
+                  className="w-full px-3 py-2.5 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-purple-300"
+                />
+              </div>
+            </div>
+
+            {/* Tone Selection */}
+            <div className="bg-white rounded-2xl border border-gray-200 p-5">
+              <label className="block text-sm font-semibold text-gray-700 mb-3">{t('school.viralCardMaker.toneLabel')}</label>
+              <div className="grid grid-cols-3 gap-2">
+                {TONE_OPTIONS.map((opt) => (
+                  <button
+                    key={opt.value}
+                    onClick={() => setTone(opt.value)}
+                    className={`p-3 rounded-xl border-2 text-center transition-all ${
+                      tone === opt.value
+                        ? 'border-purple-500 bg-purple-50'
+                        : 'border-gray-200 hover:border-gray-300'
+                    }`}
+                  >
+                    <div className="text-xl mb-1">{opt.emoji}</div>
+                    <div className="text-xs font-bold text-gray-700">{t(opt.labelKey)}</div>
+                    <div className="text-[10px] text-gray-500 mt-0.5">{t(opt.descKey)}</div>
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* Image Style Selection */}
+            <div className="bg-white rounded-2xl border border-gray-200 p-5">
+              <label className="block text-sm font-semibold text-gray-700 mb-3">{t('school.viralCardMaker.imageStyleLabel')}</label>
+              <div className="grid grid-cols-4 gap-2">
+                {IMAGE_STYLE_OPTIONS.map((opt) => (
+                  <button
+                    key={opt.value}
+                    onClick={() => setImageStyle(opt.value)}
+                    className={`rounded-xl border-2 overflow-hidden transition-all ${
+                      imageStyle === opt.value
+                        ? 'border-purple-500 ring-2 ring-purple-200'
+                        : 'border-gray-200 hover:border-gray-300'
+                    }`}
+                  >
+                    <div className="h-12 w-full" style={{ background: opt.gradient }} />
+                    <div className="p-1.5 text-center">
+                      <div className="text-xs font-bold text-gray-700">{t(opt.labelKey)}</div>
+                    </div>
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* Generate Button */}
             <button
-              onClick={handleComplete}
-              className="w-full py-3 bg-gradient-to-r from-purple-500 to-violet-500 text-white font-bold rounded-xl hover:opacity-90 transition-opacity"
+              onClick={handleGenerate}
+              disabled={!isInputValid}
+              className="w-full py-3.5 bg-gradient-to-r from-purple-600 to-violet-600 text-white font-bold rounded-xl hover:opacity-90 transition-opacity disabled:opacity-40 disabled:cursor-not-allowed flex items-center justify-center gap-2"
             >
-              {t('school.tools.completeButton')}
+              <Sparkles className="w-5 h-5" />
+              {t('school.viralCardMaker.generateButton')}
             </button>
-          )}
-        </div>
+          </>
+        )}
+
+        {/* ══════ LOADING PHASE ══════ */}
+        {phase === 'loading' && (
+          <div className="bg-white rounded-2xl border border-gray-200 p-8 text-center">
+            <div className="w-16 h-16 mx-auto mb-4 bg-purple-50 rounded-full flex items-center justify-center">
+              <Loader2 className="w-8 h-8 text-purple-500 animate-spin" />
+            </div>
+            <p className="text-sm font-medium text-gray-600">{loadingText}</p>
+            <div className="flex justify-center gap-1.5 mt-4">
+              {[0, 1, 2].map((i) => (
+                <div
+                  key={i}
+                  className={`w-2 h-2 rounded-full ${
+                    i <= loadingStep ? 'bg-purple-500' : 'bg-gray-200'
+                  }`}
+                />
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* ══════ RESULT PHASE ══════ */}
+        {phase === 'result' && result && (
+          <>
+            {/* AI/Mock Badge */}
+            <div className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold ${
+              isMock ? 'bg-amber-100 text-amber-700' : 'bg-green-100 text-green-700'
+            }`}>
+              <Sparkles className="w-3 h-3" />
+              {isMock ? t('school.viralCardMaker.mockBadge') : t('school.viralCardMaker.aiBadge')}
+            </div>
+
+            {/* Strategy Summary */}
+            <div className="bg-purple-50 border border-purple-200 rounded-xl p-4">
+              <p className="text-sm text-purple-800 font-medium">{result.overallStrategy}</p>
+            </div>
+
+            {/* Card Preview - Mobile Swipe */}
+            <div className="bg-white rounded-2xl border border-gray-200 p-4">
+              <h3 className="text-sm font-bold text-gray-700 mb-3">{t('school.viralCardMaker.preview')}</h3>
+
+              {/* Swipeable Cards */}
+              <div
+                ref={scrollRef}
+                onScroll={handleScroll}
+                className="flex gap-3 overflow-x-auto pb-3"
+                style={{ scrollSnapType: 'x mandatory', WebkitOverflowScrolling: 'touch' }}
+              >
+                {result.slides.map((slide, index) => (
+                  <div
+                    key={slide.step}
+                    className="flex-shrink-0 w-full rounded-xl overflow-hidden"
+                    style={{ scrollSnapAlign: 'center' }}
+                  >
+                    {/* Card Visual */}
+                    <div
+                      className="relative aspect-square rounded-xl overflow-hidden"
+                      style={{
+                        background: slideImages[index]
+                          ? undefined
+                          : slide.colorScheme.gradient,
+                      }}
+                    >
+                      {slideImages[index] && (
+                        <img
+                          src={`data:image/png;base64,${slideImages[index]}`}
+                          alt={slide.stepLabel}
+                          className="absolute inset-0 w-full h-full object-cover"
+                        />
+                      )}
+                      {/* Overlay */}
+                      <div className="absolute inset-0 bg-black/40 flex flex-col justify-between p-5">
+                        {/* Step Badge */}
+                        <div className="flex justify-between items-start">
+                          <span className="bg-white/90 text-gray-800 text-xs font-bold px-2.5 py-1 rounded-full">
+                            {STEP_ICONS[slide.step]} {slide.stepLabel}
+                          </span>
+                          <span className="text-white/80 text-xs font-bold">{index + 1}/4</span>
+                        </div>
+                        {/* Copy Text */}
+                        <div className="text-white font-bold text-lg leading-snug whitespace-pre-line drop-shadow-lg">
+                          {slide.copyText}
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Design Tip */}
+                    <div className="mt-2 flex items-start gap-1.5 text-xs text-gray-500">
+                      <span>\uD83D\uDCA1</span>
+                      <span>{slide.designTip}</span>
+                    </div>
+
+                    {/* Slide Actions */}
+                    <div className="flex gap-2 mt-2">
+                      <button
+                        onClick={() => copyToClipboard(slide.copyText, `slide-${index}`)}
+                        className="flex-1 flex items-center justify-center gap-1 py-2 bg-gray-100 rounded-lg text-xs font-medium text-gray-600 hover:bg-gray-200"
+                      >
+                        {copiedField === `slide-${index}` ? <Check className="w-3 h-3 text-green-500" /> : <Copy className="w-3 h-3" />}
+                        {copiedField === `slide-${index}` ? t('school.viralCardMaker.copied') : t('school.viralCardMaker.copy')}
+                      </button>
+                      {!isMock && (
+                        <button
+                          onClick={() => handleRegenerateImage(index)}
+                          disabled={regeneratingImage !== null}
+                          className="flex items-center justify-center gap-1 px-3 py-2 bg-gray-100 rounded-lg text-xs font-medium text-gray-600 hover:bg-gray-200 disabled:opacity-40"
+                        >
+                          {regeneratingImage === index
+                            ? <Loader2 className="w-3 h-3 animate-spin" />
+                            : <ImageIcon className="w-3 h-3" />}
+                        </button>
+                      )}
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              {/* Dot Indicators */}
+              <div className="flex justify-center gap-1.5 mt-2">
+                {result.slides.map((_, i) => (
+                  <div
+                    key={i}
+                    className={`w-2 h-2 rounded-full transition-colors ${
+                      i === activeSlide ? 'bg-purple-500' : 'bg-gray-200'
+                    }`}
+                  />
+                ))}
+              </div>
+            </div>
+
+            {/* Action Bar */}
+            <div className="flex gap-2">
+              <button
+                onClick={handleCopyAll}
+                className="flex-1 flex items-center justify-center gap-2 py-3 bg-purple-100 text-purple-700 font-bold rounded-xl hover:bg-purple-200 transition-colors"
+              >
+                {copiedField === 'all' ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
+                {copiedField === 'all' ? t('school.viralCardMaker.copied') : t('school.viralCardMaker.copyAll')}
+              </button>
+              <button
+                onClick={() => {
+                  setResult(null);
+                  setSlideImages([null, null, null, null]);
+                  setPhase('input');
+                }}
+                className="flex items-center justify-center gap-2 px-4 py-3 bg-gray-100 text-gray-600 font-bold rounded-xl hover:bg-gray-200 transition-colors"
+              >
+                <RefreshCw className="w-4 h-4" />
+              </button>
+            </div>
+
+            {/* Completion Section */}
+            <div className="bg-white rounded-2xl border border-gray-200 p-5">
+              {completed ? (
+                <div className="text-center py-2">
+                  <div className="py-3 bg-green-50 text-green-600 font-bold rounded-xl">
+                    {t('school.tools.alreadyCompleted')}
+                  </div>
+                </div>
+              ) : (
+                <div className="space-y-2">
+                  <button
+                    onClick={handleComplete}
+                    className="w-full py-3 bg-gradient-to-r from-purple-600 to-violet-600 text-white font-bold rounded-xl hover:opacity-90 transition-opacity"
+                  >
+                    {t('school.tools.completeButton')}
+                  </button>
+                </div>
+              )}
+              <button
+                onClick={() => navigate('/marketing/school/attendance')}
+                className="w-full mt-2 py-2.5 text-sm text-gray-500 hover:text-gray-700 font-medium"
+              >
+                {t('school.tools.goToAttendance')}
+              </button>
+            </div>
+          </>
+        )}
       </main>
     </div>
   );

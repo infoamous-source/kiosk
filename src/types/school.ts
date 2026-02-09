@@ -46,6 +46,7 @@ export interface AptitudeResult {
   answers: Record<string, string>;
   resultType: PersonaId;
   scores: Record<PersonaId, number>;
+  questionSetId?: string;  // 'set1' | 'set2' | 'set3'
 }
 
 // ─── Market Compass 타입 ───
@@ -53,15 +54,18 @@ export interface AptitudeResult {
 export interface MarketCompassData {
   marketScannerResult?: MarketScannerResult;
   edgeMakerResult?: EdgeMakerResult;
+  viralCardResult?: ViralCardResult;
+  perfectPlannerResult?: PerfectPlannerResult;
 }
 
 export interface MarketScannerResult {
   completedAt: string;
-  input: { itemKeyword: string; targetAge: string; targetGender: string };
+  input: { itemKeyword: string; targetAge: string; targetGender: string; itemType?: string };
   output: {
     relatedKeywords: string[];
     competitors: CompetitorInfo[];
     painPoints: string[];
+    analysisReport?: string;
   };
 }
 
@@ -74,18 +78,114 @@ export interface CompetitorInfo {
 
 export interface EdgeMakerResult {
   completedAt: string;
-  input: { painPoints: string[]; myStrengths: string[] };
+  input: { painPoints: string[]; myStrengths: string[]; competitors?: CompetitorInfo[] };
   output: {
     usp: string;
     brandNames: { name: string; type: 'emotional' | 'intuitive' | 'fun'; reasoning: string }[];
     slogan: string;
     brandMood: { primaryColor: string; secondaryColor: string; tone: string; keywords: string[] };
+    brandingReport?: string;
   };
 }
 
-/** 시뮬레이션 (졸업과제) 결과 */
+// ─── Viral Card Maker (4교시) 타입 ───
+
+export type ViralTone = 'spicy' | 'emotional' | 'informative';
+export type ImageStyle = 'illustration' | 'realistic' | 'minimal' | 'popart';
+
+export interface ViralCardSlide {
+  step: 'hook' | 'empathy' | 'solution' | 'action';
+  stepLabel: string;
+  copyText: string;
+  imagePrompt: string;
+  imageBase64?: string;
+  colorScheme: { primary: string; secondary: string; gradient: string };
+  designTip: string;
+}
+
+export interface ViralCardResult {
+  completedAt: string;
+  input: {
+    productName: string;
+    targetPersona: string;
+    usp: string;
+    tone: ViralTone;
+    imageStyle: ImageStyle;
+  };
+  output: {
+    slides: ViralCardSlide[];
+    overallStrategy: string;
+  };
+}
+
+// ─── Perfect Planner (5교시) 타입 ───
+
+export type PlannerMode = 'landing' | 'liveCommerce';
+
+export interface LandingPagePlan {
+  headline: string;
+  subheadline: string;
+  problemSection: { title: string; painPoints: string[] };
+  features: { title: string; description: string; benefit: string }[];
+  trustSignals: { type: 'review' | 'certification' | 'stats'; content: string }[];
+  closingCTA: { mainCopy: string; buttonText: string; urgency: string };
+  checklist: string[];
+}
+
+export interface LiveCommerceScript {
+  opening: { greeting: string; hook: string; todaysOffer: string };
+  demoPoints: { timestamp: string; action: string; talkingPoint: string }[];
+  qnaHandling: { commonQuestion: string; answer: string }[];
+  closing: { finalOffer: string; urgencyTactic: string; farewell: string };
+  checklist: string[];
+}
+
+export interface PerfectPlannerResult {
+  completedAt: string;
+  input: {
+    productName: string;
+    coreTarget: string;
+    usp: string;
+    strongOffer: string;
+  };
+  output: {
+    landingPage: LandingPagePlan;
+    liveCommerce: LiveCommerceScript;
+    salesLogic: string;
+  };
+}
+
+// ─── ROAS Simulator (6교시) 타입 ───
+
+export interface ROASSimulationInput {
+  productName: string;
+  productPrice: number;
+  adBudget: number;
+  adChannel: 'instagram' | 'naver' | 'kakao' | 'youtube';
+  targetAge: string;
+  duration: 7 | 14 | 30;
+}
+
+export interface ROASSimulationOutput {
+  estimatedImpressions: number;
+  estimatedClicks: number;
+  estimatedCTR: number;
+  estimatedConversions: number;
+  estimatedCVR: number;
+  estimatedRevenue: number;
+  estimatedROAS: number;
+  costPerClick: number;
+  costPerConversion: number;
+  roasGrade: 'excellent' | 'good' | 'average' | 'poor';
+  advice: string[];
+  channelTip: string;
+}
+
+/** 시뮬레이션 (6교시 ROAS) 결과 */
 export interface SimulationResult {
   completedAt: string;
+  input?: ROASSimulationInput;
+  output?: ROASSimulationOutput;
   roas?: number;
   budget?: number;
   revenue?: number;

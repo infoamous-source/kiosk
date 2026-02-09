@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../../contexts/AuthContext';
 import { loadSchoolProgress } from '../../../utils/schoolStorage';
 import { SCHOOL_CURRICULUM } from '../../../types/school';
@@ -8,6 +9,7 @@ import { FlaskConical, GraduationCap, Loader2 } from 'lucide-react';
 
 export default function LabTab() {
   const { t } = useTranslation('common');
+  const navigate = useNavigate();
   const { user, isLoading } = useAuth();
   const [graduationMode, setGraduationMode] = useState(false);
 
@@ -74,6 +76,14 @@ export default function LabTab() {
             <p className="text-center text-xs text-gray-400 mt-3">
               {t('school.lab.graduationHint')}
             </p>
+            {/* 졸업과제 안내 페이지 링크 */}
+            <button
+              onClick={() => navigate('/marketing/school/graduation-project')}
+              className="w-full mt-4 py-3 bg-gradient-to-r from-purple-600 to-pink-600 text-white font-bold rounded-xl hover:opacity-90 transition-opacity text-sm flex items-center justify-center gap-2"
+            >
+              <GraduationCap className="w-4 h-4" />
+              {t('school.graduationProject.viewGuide')}
+            </button>
           </div>
         )
       )}
