@@ -45,8 +45,7 @@ export default function AIAssistantConnect() {
 
     try {
       const genAI = new GoogleGenerativeAI(apiKey.trim());
-      // gemini-1.5-flash는 더 안정적이고 할당량이 넉넉함
-      const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
+      const model = genAI.getGenerativeModel({ model: 'gemini-2.0-flash' });
 
       // 짧은 프롬프트로 빠르게 검증
       const result = await model.generateContent('안녕하세요');
@@ -88,6 +87,7 @@ export default function AIAssistantConnect() {
     } catch (err: unknown) {
       setConnectionState('error');
       const errorMsg = err instanceof Error ? err.message : String(err);
+      console.error('[AI Connect] Error:', errorMsg);
 
       if (errorMsg.includes('API_KEY_INVALID') || errorMsg.includes('401') || errorMsg.includes('400')) {
         setErrorMessage(
@@ -111,13 +111,11 @@ export default function AIAssistantConnect() {
       } else {
         setErrorMessage(
           '🤔 연결에 실패했어요.\n\n' +
-          '【가능한 원인】\n' +
-          '• 일시적인 네트워크 오류\n' +
-          '• API 키 형식 오류\n\n' +
+          '【에러 내용】\n' + errorMsg + '\n\n' +
           '【해결 방법】\n' +
-          '1. 아래 "10초 후 재시도" 버튼을 눌러보세요\n' +
-          '2. API 키를 다시 확인해주세요\n' +
-          '3. Google AI Studio에서 새 키를 발급받으세요'
+          '1. API 키를 다시 확인해주세요\n' +
+          '2. Google AI Studio에서 새 키를 발급받으세요\n' +
+          '3. 잠시 후 다시 시도해보세요'
         );
       }
     }
