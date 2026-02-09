@@ -102,7 +102,7 @@ export default function RegisterForm() {
 
     setIsLoading(true);
     try {
-      const success = await register({
+      await register({
         name: formData.name,
         email: formData.email,
         password: formData.password,
@@ -112,11 +112,7 @@ export default function RegisterForm() {
         gender: formData.gender as 'male' | 'female',
         birthYear: parseInt(formData.birthYear, 10),
       });
-      if (success) {
-        navigate('/register-complete');
-      } else {
-        setError(parseAuthError(new Error('register_failed')));
-      }
+      navigate('/register-complete');
     } catch (err) {
       setError(parseAuthError(err));
     } finally {

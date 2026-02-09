@@ -113,64 +113,59 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const register = useCallback(async (data: RegisterData, _rememberMe = false): Promise<boolean> => {
     if (!isSupabaseConfigured) {
-      console.warn('[Auth] Supabase 미설정 — 회원가입 불가');
-      return false;
+      throw new Error('supabase_not_configured');
     }
-    try {
-      // 1) Supabase Auth 계정 생성 (트리거가 profiles 자동 생성)
-      const { data: authData, error: authError } = await supabase.auth.signUp({
-        email: data.email,
-        password: data.password,
-        options: {
-          data: {
-            name: data.name,
-            role: 'student',
-            instructor_code: data.instructorCode || '',
-            org_code: data.orgCode || '',
-          },
+
+    // 1) Supabase Auth 계정 생성 (트리거가 profiles 자동 생성)
+    const { data: authData, error: authError } = await supabase.auth.signUp({
+      email: data.email,
+      password: data.password,
+      options: {
+        data: {
+          name: data.name,
+          role: 'student',
+          instructor_code: data.instructorCode || '',
+          org_code: data.orgCode || '',
         },
-      });
+      },
+    });
 
-      if (authError) {
-        console.error('Register error:', authError.message);
-        return false;
-      }
-
-      if (!authData.user) {
-        console.error('No user returned from signUp');
-        return false;
-      }
-
-      // 2) 트리거가 profiles 행을 자동 생성하도록 대기
-      await new Promise(resolve => setTimeout(resolve, 500));
-
-      // 3) 자동 로그인 (세션 생성)
-      const { data: sessionData, error: loginError } = await supabase.auth.signInWithPassword({
-        email: data.email,
-        password: data.password,
-      });
-
-      if (loginError || !sessionData.session) {
-        console.error('Auto-login error:', loginError?.message);
-        return false;
-      }
-
-      // 4) 추가 프로필 정보 저장 (country, gender, age, instructor_code, org_code)
-      const currentYear = new Date().getFullYear();
-      await updateProfile(authData.user.id, {
-        country: data.country,
-        gender: data.gender,
-        age: currentYear - data.birthYear,
-        instructor_code: data.instructorCode || '',
-        org_code: data.orgCode || '',
-      });
-
-      // 5) user 상태가 onAuthStateChange로 자동 업데이트됨
-      return true;
-    } catch (error) {
-      console.error('Unexpected error during registration:', error);
-      return false;
+    if (authError) {
+      console.error('Register error:', authError.message);
+      throw new Error(authError.message);
     }
+
+    if (!authData.user) {
+      console.error('No user returned from signUp');
+      throw new Error('register_failed');
+    }
+
+    // 2) 트리거가 profiles 행을 자동 생성하도록 대기
+    await new Promise(resolve => setTimeout(resolve, 500));
+
+    // 3) 자동 로그인 (세션 생성)
+    const { error: loginError } = await supabase.auth.signInWithPassword({
+      email: data.email,
+      password: data.password,
+    });
+
+    if (loginError) {
+      console.error('Auto-login error:', loginError.message);
+      throw new Error(loginError.message);
+    }
+
+    // 4) 추가 프로필 정보 저장 (country, gender, age, instructor_code, org_code)
+    const currentYear = new Date().getFullYear();
+    await updateProfile(authData.user.id, {
+      country: data.country,
+      gender: data.gender,
+      age: currentYear - data.birthYear,
+      instructor_code: data.instructorCode || '',
+      org_code: data.orgCode || '',
+    });
+
+    // 5) user 상태가 onAuthStateChange로 자동 업데이트됨
+    return true;
   }, []);
 
   return (
