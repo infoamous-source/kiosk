@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider } from './contexts/AuthContext';
 import { EnrollmentProvider } from './contexts/EnrollmentContext';
 import { VisibilityProvider } from './contexts/VisibilityContext';
@@ -10,8 +10,7 @@ import RegisterPage from './pages/RegisterPage';
 import AdminPage from './pages/AdminPage';
 import OrganizationDetailPage from './pages/OrganizationDetailPage';
 import KoreaAppsPage from './pages/KoreaAppsPage';
-// MarketingLandingPage는 레거시 — /marketing은 /marketing/hub로 리다이렉트
-import { Navigate } from 'react-router-dom';
+// MarketingLandingPage 제거됨 — /marketing은 /marketing/hub로 리다이렉트
 import MarketingModuleDetailPage from './pages/marketing/MarketingModuleDetailPage';
 import MarketingToolRouter from './pages/marketing/MarketingToolRouter';
 import MarketingHubPage from './pages/marketing/MarketingHubPage';
@@ -34,7 +33,7 @@ export default function App() {
     <AuthProvider>
       <EnrollmentProvider>
       <VisibilityProvider>
-      <BrowserRouter basename="/kiosk">
+      <BrowserRouter>
         <Routes>
           {/* Gateway (첫 페이지 - 트리오 카드) */}
           <Route path="/" element={<GatewayPage />} />
