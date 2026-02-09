@@ -43,7 +43,7 @@ export default function CongratsPage() {
 
         <p className="text-xl text-gray-600 mb-12">
           {t('congrats.subtitle', '{{courseName}} 과정에 오신 것을 환영합니다', {
-            courseName: SCHOOL_NAMES[schoolId],
+            courseName: SCHOOL_NAMES[schoolId]?.ko ?? schoolId,
           })}
         </p>
 
