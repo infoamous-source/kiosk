@@ -1,7 +1,7 @@
 import { createContext, useContext, useState, useEffect, useCallback, type ReactNode } from 'react';
 import type { User, AuthState } from '../types/auth';
 import type { ProfileRow } from '../types/database';
-import { supabase } from '../lib/supabase';
+import { supabase, isSupabaseConfigured } from '../lib/supabase';
 
 interface AuthContextType extends AuthState {
   login: (email: string, password: string, rememberMe?: boolean) => Promise<boolean>;
@@ -48,6 +48,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   // Supabase 인증 상태 변화 감지
   useEffect(() => {
+    // Supabase 미설정 시 오프라인 모드
+    if (!isSupabaseConfigured) {
+      setState({ user: null, isAuthenticated: false, isLoading: false });
+      return;
+    }
+
     // 현재 세션 확인
     supabase.auth.getSession().then(async ({ data: { session } }) => {
       if (session?.user) {
@@ -86,6 +92,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }, []);
 
   const login = useCallback(async (email: string, password: string, _rememberMe = false): Promise<boolean> => {
+    if (!isSupabaseConfigured) {
+      console.warn('[Auth] Supabase 미설정 — 로그인 불가');
+      return false;
+    }
     const { error } = await supabase.auth.signInWithPassword({ email, password });
     if (error) {
       console.error('Login error:', error.message);
@@ -100,6 +110,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }, []);
 
   const register = useCallback(async (data: RegisterData, _rememberMe = false): Promise<boolean> => {
+    if (!isSupabaseConfigured) {
+      console.warn('[Auth] Supabase 미설정 — 회원가입 불가');
+      return false;
+    }
     try {
       // 1) Supabase Auth 계정 생성 (모든 메타데이터 포함 → 트리거가 profiles 자동 생성)
       const { data: authData, error: authError } = await supabase.auth.signUp({
