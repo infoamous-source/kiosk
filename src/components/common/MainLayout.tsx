@@ -8,7 +8,7 @@ export default function MainLayout() {
   const { trackId } = useParams<{ trackId: string }>();
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-kk-bg">
       <Sidebar currentTrack={trackId as TrackId} />
 
       {/* 모바일: ml-0, 태블릿/PC: ml-64 (사이드바 너비) */}

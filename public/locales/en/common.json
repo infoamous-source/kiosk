@@ -1,7 +1,7 @@
 {
   "header": {
-    "title": "Kiosk Seven",
-    "subtitle": "Migrant & Student Education Platform",
+    "title": "Kkakdugi School",
+    "subtitle": "Education School for Migrants & Students",
     "login": "Login",
     "register": "Sign Up",
     "logout": "Logout",
@@ -10,29 +10,31 @@
     "student": "Student"
   },
   "gateway": {
-    "subtitle": "Education Platform",
+    "subtitle": "Education School for Migrants & Students",
     "badge": "Education for Migrants & Students",
     "title": "Grow Together With Us",
     "description": "From digital basics to career skills, all the education you need for life in Korea in one place",
-    "selectPrompt": "Select a learning track below",
-    "modules": "Modules",
-    "footer": "© 2024 Kiosk Seven. Education platform for migrants and international students"
+    "selectPrompt": "Select a department below",
+    "modules": "Classrooms",
+    "footer": "© 2024 Kkakdugi School. Education school for migrants and international students"
   },
   "sidebar": {
-    "home": "Home",
-    "digitalBasics": "Digital Basics",
-    "marketing": "Marketing Skills",
-    "career": "Career Skills",
-    "resources": "Resources",
+    "home": "Entrance",
+    "digitalBasics": "Digital Dept.",
+    "marketing": "Marketing Dept.",
+    "career": "Career Dept.",
+    "resources": "Library",
     "help": "Help",
     "settings": "Settings",
     "dashboard": "Instructor Dashboard",
-    "profile": "My Profile"
+    "profile": "My Profile",
+    "marketingSchool": "Beginner Classroom",
+    "marketingPro": "Pro Classroom"
   },
   "tracks": {
     "digitalBasics": {
-      "name": "Digital Basics",
-      "description": "From computer and smartphone basics to using essential Korean apps",
+      "name": "Digital Dept.",
+      "description": "From smartphone basics to Korean apps and kiosk practice",
       "modules": {
         "computerBasics": "Computer Basics",
         "computerBasicsDesc": "Turning on a computer, using mouse and keyboard, file management basics",
@@ -45,8 +47,8 @@
       }
     },
     "marketing": {
-      "name": "Marketing Skills",
-      "description": "SNS marketing, content creation, and online sales practical skills",
+      "name": "Marketing Dept.",
+      "description": "From marketing basics to AI practice, build your business skills",
       "modules": {
         "socialMedia": "SNS Marketing",
         "socialMediaDesc": "Instagram, YouTube, TikTok channel management and marketing strategies",
@@ -59,7 +61,7 @@
       }
     },
     "career": {
-      "name": "Career Skills",
+      "name": "Career Dept.",
       "description": "Resume writing, interview prep, and understanding Korean workplace culture",
       "modules": {
         "resume": "Resume Writing",
@@ -74,9 +76,9 @@
     }
   },
   "track": {
-    "modules": "Modules",
+    "modules": "Classrooms",
     "totalTime": "Total Time",
-    "curriculum": "Curriculum"
+    "curriculum": "Timetable"
   },
   "banners": {
     "digital": {

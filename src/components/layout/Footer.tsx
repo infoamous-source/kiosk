@@ -1,20 +1,22 @@
 import { useTranslation } from 'react-i18next';
+import KkakdugiMascot from '../brand/KkakdugiMascot';
+import { PencilIcon, StarIcon } from '../brand/SchoolIllustrations';
 
 export default function Footer() {
   const { t } = useTranslation('common');
 
   return (
-    <footer className="bg-sand-100 border-t-2 border-sand-200 py-8 mt-12">
+    <footer className="bg-kk-cream border-t-2 border-kk-warm py-8 mt-12">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 text-center">
-        <div className="flex justify-center gap-1.5 text-lg mb-3">
-          <span>🇰🇷</span>
-          <span>❤️</span>
-          <span>🌏</span>
+        <div className="flex items-center justify-center gap-3 mb-3">
+          <PencilIcon size={18} className="opacity-40" />
+          <KkakdugiMascot size={28} />
+          <StarIcon size={18} className="opacity-40" />
         </div>
-        <p className="text-sm text-sand-300 font-medium">
+        <p className="text-sm text-kk-brown/50 font-medium">
           {t('footer.madeWith')}
         </p>
-        <p className="text-xs text-sand-300 mt-1">
+        <p className="text-xs text-kk-brown/40 mt-1">
           {t('footer.disclaimer')}
         </p>
       </div>

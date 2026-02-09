@@ -59,12 +59,12 @@ export default function TopHeader() {
   };
 
   return (
-    <header className="h-16 bg-white border-b border-gray-100 flex items-center justify-end px-6 gap-4">
+    <header className="h-16 bg-kk-bg border-b border-kk-warm flex items-center justify-end px-6 gap-4">
       {/* 언어 선택 */}
       <div ref={langRef} className="relative">
         <button
           onClick={() => setLangOpen(!langOpen)}
-          className="flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-gray-50 transition-colors text-sm font-medium text-gray-600"
+          className="flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-kk-cream/60 transition-colors text-sm font-medium text-kk-brown/60"
         >
           <Globe className="w-4 h-4" />
           <span>{currentLang.flag}</span>
@@ -73,13 +73,13 @@ export default function TopHeader() {
         </button>
 
         {langOpen && (
-          <div className="absolute right-0 top-full mt-2 bg-white rounded-xl shadow-lg border border-gray-100 py-2 min-w-[180px] max-h-[400px] overflow-y-auto z-50">
+          <div className="absolute right-0 top-full mt-2 bg-white rounded-xl shadow-lg border border-kk-warm py-2 min-w-[180px] max-h-[400px] overflow-y-auto z-50">
             {languages.map((lang) => (
               <button
                 key={lang.code}
                 onClick={() => handleLanguageChange(lang.code)}
-                className={`w-full flex items-center gap-3 px-4 py-2.5 text-sm hover:bg-gray-50 transition-colors ${
-                  lang.code === i18n.language ? 'text-blue-600 font-semibold bg-blue-50' : 'text-gray-700'
+                className={`w-full flex items-center gap-3 px-4 py-2.5 text-sm hover:bg-kk-cream/40 transition-colors ${
+                  lang.code === i18n.language ? 'text-kk-red-deep font-semibold bg-kk-cream' : 'text-kk-brown/70'
                 }`}
               >
                 <span>{lang.flag}</span>
@@ -95,22 +95,22 @@ export default function TopHeader() {
         <div ref={userRef} className="relative">
           <button
             onClick={() => setUserMenuOpen(!userMenuOpen)}
-            className="flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-gray-50 transition-colors"
+            className="flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-kk-cream/60 transition-colors"
           >
-            <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-purple-500 rounded-full flex items-center justify-center">
-              <span className="text-white text-sm font-bold">{user.name[0].toUpperCase()}</span>
+            <div className="w-8 h-8 bg-gradient-to-br from-kk-cream to-kk-peach rounded-full flex items-center justify-center border border-kk-warm">
+              <span className="text-kk-brown text-sm font-bold">{user.name[0].toUpperCase()}</span>
             </div>
-            <span className="text-sm font-medium text-gray-700 hidden sm:inline">{user.name}</span>
-            <ChevronDown className={`w-4 h-4 text-gray-400 transition-transform ${userMenuOpen ? 'rotate-180' : ''}`} />
+            <span className="text-sm font-medium text-kk-brown hidden sm:inline">{user.name}</span>
+            <ChevronDown className={`w-4 h-4 text-kk-brown/40 transition-transform ${userMenuOpen ? 'rotate-180' : ''}`} />
           </button>
 
           {userMenuOpen && (
-            <div className="absolute right-0 top-full mt-2 bg-white rounded-xl shadow-lg border border-gray-100 py-2 min-w-[180px] z-50">
-              <div className="px-4 py-2 border-b border-gray-100">
-                <p className="text-sm font-semibold text-gray-800">{user.name}</p>
-                <p className="text-xs text-gray-400">{user.email}</p>
+            <div className="absolute right-0 top-full mt-2 bg-white rounded-xl shadow-lg border border-kk-warm py-2 min-w-[180px] z-50">
+              <div className="px-4 py-2 border-b border-kk-warm">
+                <p className="text-sm font-semibold text-kk-brown">{user.name}</p>
+                <p className="text-xs text-kk-brown/40">{user.email}</p>
                 <span className={`inline-block mt-1 px-2 py-0.5 rounded text-xs font-medium ${
-                  user.role === 'instructor' ? 'bg-purple-100 text-purple-700' : 'bg-blue-100 text-blue-700'
+                  user.role === 'instructor' ? 'bg-kk-red/10 text-kk-red-deep' : 'bg-kk-cream text-kk-brown'
                 }`}>
                   {user.role === 'instructor' ? t('header.instructor') : t('header.student')}
                 </span>
@@ -119,7 +119,7 @@ export default function TopHeader() {
               {user.role === 'instructor' && (
                 <button
                   onClick={() => { navigate('/admin'); setUserMenuOpen(false); }}
-                  className="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 transition-colors"
+                  className="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-kk-brown/70 hover:bg-kk-cream/40 transition-colors"
                 >
                   <Settings className="w-4 h-4" />
                   {t('header.dashboard')}
@@ -128,7 +128,7 @@ export default function TopHeader() {
 
               <button
                 onClick={handleLogout}
-                className="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-red-600 hover:bg-red-50 transition-colors"
+                className="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-kk-red hover:bg-red-50 transition-colors"
               >
                 <LogOut className="w-4 h-4" />
                 {t('header.logout')}
@@ -140,14 +140,14 @@ export default function TopHeader() {
         <div className="flex items-center gap-2">
           <button
             onClick={() => navigate('/login')}
-            className="flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium text-gray-600 hover:bg-gray-50 transition-colors"
+            className="flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium text-kk-brown/60 hover:bg-kk-cream/60 transition-colors"
           >
             <LogIn className="w-4 h-4" />
             <span>{t('header.login')}</span>
           </button>
           <button
             onClick={() => navigate('/register')}
-            className="flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 transition-colors"
+            className="flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium text-white bg-kk-red hover:bg-kk-red-deep transition-colors"
           >
             <User className="w-4 h-4" />
             <span>{t('header.register')}</span>

@@ -20,6 +20,7 @@ import {
 import { SCHOOL_NAMES } from '../types/enrollment';
 import IdeaBox from '../components/profile/IdeaBox';
 import ActivityHistory from '../components/profile/ActivityHistory';
+import KkakdugiMascot from '../components/brand/KkakdugiMascot';
 
 type ProfileTab = 'info' | 'activity' | 'ideabox';
 
@@ -32,10 +33,10 @@ export default function ProfilePage() {
   if (!user) {
     return (
       <div className="max-w-3xl mx-auto px-4 py-12 text-center">
-        <p className="text-gray-500 text-lg">{t('profile.loginRequired', '프로필을 보려면 로그인이 필요합니다.')}</p>
+        <p className="text-kk-brown/50 text-lg">{t('profile.loginRequired', '프로필을 보려면 로그인이 필요합니다.')}</p>
         <button
           onClick={() => navigate('/login')}
-          className="mt-4 text-blue-600 hover:underline"
+          className="mt-4 text-kk-red hover:underline"
         >
           {t('auth.loginButton')}
         </button>
@@ -65,23 +66,23 @@ export default function ProfilePage() {
   return (
     <div className="max-w-4xl mx-auto px-4 py-6">
       {/* 프로필 헤더 카드 */}
-      <div className="bg-gradient-to-r from-blue-500 to-purple-600 rounded-2xl p-6 text-white mb-6 shadow-lg">
+      <div className="bg-gradient-to-r from-kk-cream via-kk-warm to-kk-peach rounded-2xl p-6 mb-6 shadow-lg border border-kk-warm">
         <div className="flex items-center gap-4">
-          <div className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center backdrop-blur-sm">
-            <User className="w-8 h-8" />
+          <div className="w-16 h-16 bg-white/60 rounded-full flex items-center justify-center backdrop-blur-sm border border-kk-warm">
+            <KkakdugiMascot size={36} />
           </div>
           <div className="flex-1">
-            <h1 className="text-2xl font-bold">{user.name}</h1>
-            <p className="text-white/80">{user.email}</p>
+            <h1 className="text-2xl font-bold text-kk-brown">{user.name}</h1>
+            <p className="text-kk-brown/50">{user.email}</p>
             <div className="flex items-center gap-3 mt-2">
               <span className={`px-3 py-0.5 rounded-full text-xs font-medium ${
                 user.role === 'instructor'
-                  ? 'bg-yellow-400/20 text-yellow-100'
-                  : 'bg-white/20 text-white'
+                  ? 'bg-kk-red/10 text-kk-red-deep'
+                  : 'bg-white/50 text-kk-brown'
               }`}>
                 {user.role === 'instructor' ? t('header.instructor') : t('header.student')}
               </span>
-              <span className="px-3 py-0.5 rounded-full text-xs font-medium bg-white/20">
+              <span className="px-3 py-0.5 rounded-full text-xs font-medium bg-white/50 text-kk-brown">
                 {enrollments.filter(e => e.status === 'active').length > 0
                   ? `${enrollments.filter(e => e.status === 'active').length}개 학교 등록`
                   : '미등록'}
@@ -92,7 +93,7 @@ export default function ProfilePage() {
       </div>
 
       {/* 탭 네비게이션 */}
-      <div className="flex gap-1 bg-gray-100 p-1 rounded-xl mb-6">
+      <div className="flex gap-1 bg-kk-cream p-1 rounded-xl mb-6">
         {tabs.map((tab) => {
           const Icon = tab.icon;
           return (
@@ -101,8 +102,8 @@ export default function ProfilePage() {
               onClick={() => setActiveTab(tab.id)}
               className={`flex items-center gap-2 px-4 py-2.5 rounded-lg text-sm font-medium transition-all flex-1 justify-center ${
                 activeTab === tab.id
-                  ? 'bg-white text-blue-600 shadow-sm'
-                  : 'text-gray-500 hover:text-gray-700'
+                  ? 'bg-white text-kk-red-deep shadow-sm'
+                  : 'text-kk-brown/50 hover:text-kk-brown'
               }`}
             >
               <Icon className="w-4 h-4" />
@@ -116,9 +117,9 @@ export default function ProfilePage() {
       {activeTab === 'info' && (
         <div className="space-y-4">
           {/* 개인 정보 */}
-          <div className="bg-white rounded-xl border border-gray-200 p-5">
-            <h2 className="text-lg font-semibold text-gray-800 mb-4 flex items-center gap-2">
-              <User className="w-5 h-5 text-blue-500" />
+          <div className="bg-white rounded-xl border border-kk-warm p-5">
+            <h2 className="text-lg font-semibold text-kk-brown mb-4 flex items-center gap-2">
+              <User className="w-5 h-5 text-kk-red" />
               {t('profile.personalInfo', '개인 정보')}
             </h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -141,38 +142,38 @@ export default function ProfilePage() {
               <InfoRow
                 label={t('profile.country', '국적')}
                 value={user.country || t('profile.notSet', '미설정')}
-                icon={<Globe className="w-4 h-4 text-gray-400" />}
+                icon={<Globe className="w-4 h-4 text-kk-brown/30" />}
               />
               <InfoRow
                 label={t('profile.joinDate', '가입일')}
                 value={new Date(user.createdAt).toLocaleDateString('ko-KR')}
-                icon={<CalendarDays className="w-4 h-4 text-gray-400" />}
+                icon={<CalendarDays className="w-4 h-4 text-kk-brown/30" />}
               />
             </div>
           </div>
 
           {/* 소속 & 강사 정보 */}
-          <div className="bg-white rounded-xl border border-gray-200 p-5">
-            <h2 className="text-lg font-semibold text-gray-800 mb-4 flex items-center gap-2">
-              <Building2 className="w-5 h-5 text-purple-500" />
+          <div className="bg-white rounded-xl border border-kk-warm p-5">
+            <h2 className="text-lg font-semibold text-kk-brown mb-4 flex items-center gap-2">
+              <Building2 className="w-5 h-5 text-kk-red" />
               {t('profile.affiliationInfo', '소속 정보')}
             </h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <InfoRow
                 label={t('auth.organization')}
                 value={user.organization || t('profile.notSet', '미설정')}
-                icon={<Building2 className="w-4 h-4 text-gray-400" />}
+                icon={<Building2 className="w-4 h-4 text-kk-brown/30" />}
               />
               <InfoRow
                 label={t('profile.instructorCode', '강사코드')}
                 value={user.instructorCode || t('profile.notSet', '미설정')}
-                icon={<GraduationCap className="w-4 h-4 text-gray-400" />}
+                icon={<GraduationCap className="w-4 h-4 text-kk-brown/30" />}
                 mono
               />
               <InfoRow
                 label={t('profile.orgCode', '기관코드')}
                 value={user.orgCode || t('profile.noOrg', '개인')}
-                icon={<Shield className="w-4 h-4 text-gray-400" />}
+                icon={<Shield className="w-4 h-4 text-kk-brown/30" />}
                 mono
               />
               <InfoRow
@@ -186,13 +187,13 @@ export default function ProfilePage() {
           </div>
 
           {/* 내 학교 (Enrollment) */}
-          <div className="bg-white rounded-xl border border-gray-200 p-5">
-            <h2 className="text-lg font-semibold text-gray-800 mb-4 flex items-center gap-2">
-              <School className="w-5 h-5 text-green-500" />
+          <div className="bg-white rounded-xl border border-kk-warm p-5">
+            <h2 className="text-lg font-semibold text-kk-brown mb-4 flex items-center gap-2">
+              <School className="w-5 h-5 text-kk-red" />
               내 학교
             </h2>
             {enrollments.length === 0 ? (
-              <p className="text-sm text-gray-400 text-center py-4">등록된 학교가 없습니다.</p>
+              <p className="text-sm text-kk-brown/30 text-center py-4">등록된 학교가 없습니다.</p>
             ) : (
               <div className="space-y-3">
                 {enrollments.map((enrollment) => {
@@ -202,19 +203,19 @@ export default function ProfilePage() {
                     enrollment.status === 'pending_info' ? AlertCircle : XCircle;
                   const statusColor =
                     enrollment.status === 'active' ? 'text-green-500' :
-                    enrollment.status === 'pending_info' ? 'text-orange-500' : 'text-gray-400';
+                    enrollment.status === 'pending_info' ? 'text-orange-500' : 'text-kk-brown/30';
                   const statusLabel =
                     enrollment.status === 'active' ? '수강 중' :
                     enrollment.status === 'pending_info' ? '추가 정보 필요' :
                     enrollment.status === 'suspended' ? '일시정지' : '수료';
 
                   return (
-                    <div key={enrollment.id} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                    <div key={enrollment.id} className="flex items-center justify-between p-3 bg-kk-cream/50 rounded-lg">
                       <div className="flex items-center gap-3">
                         <StatusIcon className={`w-5 h-5 ${statusColor}`} />
                         <div>
-                          <p className="text-sm font-medium text-gray-800">{schoolName?.ko}</p>
-                          <p className="text-xs text-gray-400">
+                          <p className="text-sm font-medium text-kk-brown">{schoolName?.ko}</p>
+                          <p className="text-xs text-kk-brown/40">
                             {new Date(enrollment.enrolled_at).toLocaleDateString('ko-KR')} 등록
                           </p>
                         </div>
@@ -222,7 +223,7 @@ export default function ProfilePage() {
                       <span className={`px-2 py-1 rounded-full text-xs font-medium ${
                         enrollment.status === 'active' ? 'bg-green-50 text-green-600' :
                         enrollment.status === 'pending_info' ? 'bg-orange-50 text-orange-600' :
-                        'bg-gray-100 text-gray-500'
+                        'bg-kk-cream text-kk-brown/50'
                       }`}>
                         {statusLabel}
                       </span>
@@ -255,12 +256,12 @@ function InfoRow({
   mono?: boolean;
 }) {
   return (
-    <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
-      <div className="flex items-center gap-2 text-sm text-gray-500">
+    <div className="flex items-center justify-between p-3 bg-kk-cream/50 rounded-lg">
+      <div className="flex items-center gap-2 text-sm text-kk-brown/50">
         {icon}
         {label}
       </div>
-      <span className={`text-sm font-medium text-gray-800 ${mono ? 'font-mono' : ''}`}>
+      <span className={`text-sm font-medium text-kk-brown ${mono ? 'font-mono' : ''}`}>
         {value}
       </span>
     </div>

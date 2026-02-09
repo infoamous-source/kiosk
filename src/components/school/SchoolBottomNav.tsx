@@ -1,11 +1,15 @@
 import { useTranslation } from 'react-i18next';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { UserCircle, Calendar, Wrench } from 'lucide-react';
+import {
+  NotebookIcon,
+  ChalkboardIcon,
+  BackpackIcon,
+} from '../brand/SchoolIllustrations';
 
 const tabs = [
-  { id: 'attendance', path: '/marketing/school/attendance', icon: UserCircle, labelKey: 'school.nav.attendance' },
-  { id: 'curriculum', path: '/marketing/school/curriculum', icon: Calendar, labelKey: 'school.nav.curriculum' },
-  { id: 'lab', path: '/marketing/school/lab', icon: Wrench, labelKey: 'school.nav.lab' },
+  { id: 'attendance', path: '/marketing/school/attendance', svgIcon: NotebookIcon, labelKey: 'school.nav.attendance' },
+  { id: 'curriculum', path: '/marketing/school/curriculum', svgIcon: ChalkboardIcon, labelKey: 'school.nav.curriculum' },
+  { id: 'lab', path: '/marketing/school/lab', svgIcon: BackpackIcon, labelKey: 'school.nav.lab' },
 ] as const;
 
 export default function SchoolBottomNav() {
@@ -16,10 +20,10 @@ export default function SchoolBottomNav() {
   const activeTab = tabs.find((tab) => location.pathname.startsWith(tab.path))?.id || 'attendance';
 
   return (
-    <nav className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 z-50">
+    <nav className="fixed bottom-0 left-0 right-0 bg-kk-bg border-t border-kk-warm z-50">
       <div className="max-w-lg mx-auto flex">
         {tabs.map((tab) => {
-          const Icon = tab.icon;
+          const SvgIcon = tab.svgIcon;
           const isActive = activeTab === tab.id;
 
           return (
@@ -28,11 +32,11 @@ export default function SchoolBottomNav() {
               onClick={() => navigate(tab.path)}
               className={`flex-1 flex flex-col items-center gap-1 py-3 transition-colors ${
                 isActive
-                  ? 'text-purple-600'
-                  : 'text-gray-400 hover:text-gray-600'
+                  ? 'text-kk-red-deep'
+                  : 'text-kk-brown/40 hover:text-kk-brown/60'
               }`}
             >
-              <Icon className={`w-5 h-5 ${isActive ? 'stroke-[2.5]' : ''}`} />
+              <SvgIcon size={20} />
               <span className={`text-xs ${isActive ? 'font-bold' : 'font-medium'}`}>
                 {t(tab.labelKey)}
               </span>

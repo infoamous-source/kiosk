@@ -29,6 +29,7 @@ import KioskPracticePage from './pages/KioskPracticePage';
 import CongratsPage from './pages/CongratsPage';
 import AIWelcomePage from './pages/AIWelcomePage';
 import RegisterCompletePage from './pages/RegisterCompletePage';
+import AboutPage from './pages/AboutPage';
 
 export default function App() {
   return (
@@ -39,6 +40,9 @@ export default function App() {
         <Routes>
           {/* Gateway (첫 페이지 - 트리오 카드) */}
           <Route path="/" element={<GatewayPage />} />
+
+          {/* 깍두기 학교란? 상세 페이지 */}
+          <Route path="/about" element={<AboutPage />} />
 
           {/* 인증 페이지 */}
           <Route path="/login" element={<LoginPage />} />
