@@ -25,8 +25,8 @@ export default function AIWelcomePage() {
   const [error, setError] = useState('');
   const [success, setSuccess] = useState(false);
 
-  // schoolId가 없어도 동작 (회원가입 완료 후 진입 시)
-  const redirectPath = schoolId ? `/${schoolId}/hub` : '/';
+  // 완료 후 커리큘럼으로 이동 (schoolId 유무 관계없이)
+  const redirectPath = '/marketing/school/curriculum';
 
   useEffect(() => {
     // 환영 메시지 표시 후 자동으로 가이드 단계로

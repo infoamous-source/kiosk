@@ -38,7 +38,7 @@ export default function RegisterCompletePage() {
 
         {/* CTA 버튼: AI 비서 연결 */}
         <button
-          onClick={() => navigate('/ai-welcome')}
+          onClick={() => navigate('/ai-welcome', { state: { schoolId: 'marketing' } })}
           className="group w-full inline-flex items-center justify-center gap-3 px-8 py-4 bg-gradient-to-r from-purple-600 to-pink-600 text-white text-lg font-semibold rounded-xl shadow-lg hover:shadow-xl transform hover:scale-[1.02] transition-all duration-200 mb-4"
         >
           <Sparkles className="w-5 h-5" />
@@ -48,7 +48,7 @@ export default function RegisterCompletePage() {
 
         {/* 스킵 링크 */}
         <button
-          onClick={() => navigate('/')}
+          onClick={() => navigate('/marketing/hub')}
           className="inline-flex items-center gap-2 text-gray-400 hover:text-gray-600 text-sm transition-colors"
         >
           <Home className="w-4 h-4" />

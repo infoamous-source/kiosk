@@ -1,9 +1,12 @@
 import { useState, useRef, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router-dom';
 import { GraduationCap, Globe, ChevronDown } from 'lucide-react';
 import TrackCard from '../components/gateway/TrackCard';
 import { tracks } from '../data/tracks';
 import { useVisibility } from '../contexts/VisibilityContext';
+import { useAuth } from '../contexts/AuthContext';
+import { useEnrollments } from '../contexts/EnrollmentContext';
 import PendingEnrollmentBanner from '../components/enrollment/PendingEnrollmentBanner';
 
 const languages = [
@@ -25,10 +28,21 @@ const languages = [
 
 export default function GatewayPage() {
   const { t, i18n } = useTranslation('common');
+  const navigate = useNavigate();
+  const { isAuthenticated, isLoading: authLoading } = useAuth();
+  const { enrollments, isLoading: enrollLoading } = useEnrollments();
   const { isTrackVisible } = useVisibility();
   const [langOpen, setLangOpen] = useState(false);
   const langRef = useRef<HTMLDivElement>(null);
   const currentLang = languages.find((l) => l.code === i18n.language) || languages[0];
+
+  // 이미 로그인 + 마케팅 등록된 사용자 → 자동으로 허브로 이동
+  useEffect(() => {
+    if (authLoading || enrollLoading) return;
+    if (isAuthenticated && enrollments.some(e => e.school_id === 'marketing')) {
+      navigate('/marketing/hub', { replace: true });
+    }
+  }, [isAuthenticated, enrollments, authLoading, enrollLoading, navigate]);
 
   useEffect(() => {
     const handler = (e: MouseEvent) => {
