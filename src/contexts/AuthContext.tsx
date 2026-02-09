@@ -2,6 +2,7 @@ import { createContext, useContext, useState, useEffect, useCallback, type React
 import type { User, AuthState } from '../types/auth';
 import type { ProfileRow } from '../types/database';
 import { supabase, isSupabaseConfigured } from '../lib/supabase';
+import { updateProfile } from '../services/profileService';
 
 interface AuthContextType extends AuthState {
   login: (email: string, password: string, rememberMe?: boolean) => Promise<boolean>;
@@ -13,10 +14,11 @@ export interface RegisterData {
   name: string;
   email: string;
   password: string;
-  organization: string;
   instructorCode: string;
   orgCode: string;
-  learningPurpose: string;
+  country: string;
+  gender: 'male' | 'female';
+  birthYear: number;
 }
 
 const AuthContext = createContext<AuthContextType | null>(null);
@@ -115,7 +117,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       return false;
     }
     try {
-      // 1) Supabase Auth 계정 생성 (모든 메타데이터 포함 → 트리거가 profiles 자동 생성)
+      // 1) Supabase Auth 계정 생성 (트리거가 profiles 자동 생성)
       const { data: authData, error: authError } = await supabase.auth.signUp({
         email: data.email,
         password: data.password,
@@ -123,10 +125,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
           data: {
             name: data.name,
             role: 'student',
-            organization: data.organization || '',
             instructor_code: data.instructorCode || '',
             org_code: data.orgCode || '',
-            learning_purpose: data.learningPurpose || '',
           },
         },
       });
@@ -155,7 +155,17 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         return false;
       }
 
-      // 4) user 상태가 onAuthStateChange로 자동 업데이트됨
+      // 4) 추가 프로필 정보 저장 (country, gender, age, instructor_code, org_code)
+      const currentYear = new Date().getFullYear();
+      await updateProfile(authData.user.id, {
+        country: data.country,
+        gender: data.gender,
+        age: currentYear - data.birthYear,
+        instructor_code: data.instructorCode || '',
+        org_code: data.orgCode || '',
+      });
+
+      // 5) user 상태가 onAuthStateChange로 자동 업데이트됨
       return true;
     } catch (error) {
       console.error('Unexpected error during registration:', error);

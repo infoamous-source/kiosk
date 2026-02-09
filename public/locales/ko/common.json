@@ -131,6 +131,38 @@
     "loginError": "로그인에 실패했습니다. 다시 시도해주세요.",
     "registerError": "회원가입에 실패했습니다. 다시 시도해주세요."
   },
+  "register": {
+    "title": "학생등록 (Student Registration)",
+    "subtitle": "학습을 시작하기 위해 등록해주세요 (Register to start learning)",
+    "nameLabel": "이름 (Name)",
+    "nameHint": "여권상의 이름을 입력해주세요 (Enter your name as shown on your passport)",
+    "countryLabel": "국가 선택 (Country)",
+    "countryPlaceholder": "국가를 선택해주세요 (Select your country)",
+    "genderLabel": "성별 (Gender)",
+    "genderMale": "남성 (Male)",
+    "genderFemale": "여성 (Female)",
+    "birthYearLabel": "출생년도 (Year of Birth)",
+    "birthYearPlaceholder": "예: 1995 (e.g. 1995)",
+    "emailLabel": "이메일 (Email)",
+    "passwordLabel": "비밀번호 (Password)",
+    "passwordHint": "영문 + 숫자 + 특수문자 혼합, 8자 이상 (Letters + numbers + special characters, 8+ chars)",
+    "passwordConfirmLabel": "비밀번호 확인 (Confirm Password)",
+    "passwordMismatch": "비밀번호가 일치하지 않습니다 (Passwords do not match)",
+    "instructorCodeLabel": "강사코드 (Instructor Code)",
+    "instructorCodePlaceholder": "강사에게 받은 코드를 입력하세요 (Enter the code from your instructor)",
+    "orgCodeLabel": "기관코드 (Institution Code)",
+    "orgCodePlaceholder": "기관에서 받은 코드를 입력하세요 (Enter the code from your institution)",
+    "submitButton": "가입하기 (Sign Up)",
+    "loginLink": "이미 계정이 있으신가요? 로그인 (Already have an account? Log in)"
+  },
+  "registerComplete": {
+    "title": "학생등록이 완료되었습니다!",
+    "titleEn": "Registration Complete!",
+    "subtitle": "나만의 AI 비서를 연결하면 더 스마트하게 학습할 수 있어요",
+    "subtitleEn": "Connect your AI assistant for a smarter learning experience",
+    "ctaButton": "나만의 AI 비서 연결하기 (Connect My AI Assistant)",
+    "skipLink": "나중에 하기 (Do it later)"
+  },
   "admin": {
     "title": "강사 대시보드",
     "welcome": "{{name}}님 환영합니다",

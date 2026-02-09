@@ -16,11 +16,19 @@ export function parseAuthError(error: unknown): AuthError {
       };
     }
 
-    if (message.includes('weak_password') || message.includes('Password should be')) {
+    if (message.includes('register_failed') || message.includes('supabase')) {
       return {
-        title: '회원가입 실패',
-        reason: '비밀번호가 너무 짧습니다.',
-        solution: '최소 6자 이상의 비밀번호를 입력하세요.',
+        title: '등록 실패 (Registration Failed)',
+        reason: '서버 연결에 실패했습니다 (Could not connect to server)',
+        solution: '잠시 후 다시 시도해주세요 (Please try again later)',
+      };
+    }
+
+    if (message.includes('weak_password') || message.includes('Password should be') || message.includes('password')) {
+      return {
+        title: '비밀번호 오류 (Password Error)',
+        reason: '비밀번호가 너무 약합니다 (Password is too weak)',
+        solution: '영문, 숫자, 특수문자를 포함하여 8자 이상 입력하세요 (Use 8+ chars with letters, numbers, special chars)',
       };
     }
 

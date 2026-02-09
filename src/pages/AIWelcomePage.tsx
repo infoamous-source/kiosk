@@ -24,22 +24,20 @@ export default function AIWelcomePage() {
   const [error, setError] = useState('');
   const [success, setSuccess] = useState(false);
 
-  useEffect(() => {
-    if (!schoolId) {
-      navigate('/');
-      return;
-    }
+  // schoolId가 없어도 동작 (회원가입 완료 후 진입 시)
+  const redirectPath = schoolId ? `/${schoolId}/hub` : '/';
 
+  useEffect(() => {
     // 환영 메시지 표시 후 자동으로 가이드 단계로
     const timer = setTimeout(() => {
       setStep('guide');
     }, 2000);
 
     return () => clearTimeout(timer);
-  }, [schoolId, navigate]);
+  }, []);
 
   const handleSkip = () => {
-    navigate(`/${schoolId}/hub`);
+    navigate(redirectPath);
   };
 
   const handleStartConnection = () => {
@@ -66,7 +64,7 @@ export default function AIWelcomePage() {
     if (saved) {
       setSuccess(true);
       setTimeout(() => {
-        navigate(`/${schoolId}/hub`);
+        navigate(redirectPath);
       }, 1500);
     } else {
       setError('API 키 저장에 실패했습니다. 다시 시도해주세요.');
