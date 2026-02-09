@@ -19,10 +19,12 @@ import AttendanceTab from './pages/marketing/school/AttendanceTab';
 import CurriculumTab from './pages/marketing/school/CurriculumTab';
 import LabTab from './pages/marketing/school/LabTab';
 import SchoolToolRouter from './pages/marketing/school/SchoolToolRouter';
+import PeriodDetailPage from './pages/marketing/school/PeriodDetailPage';
 import ProToolsDashboard from './pages/marketing/ProToolsDashboard';
 import AISetupPage from './pages/marketing/school/AISetupPage';
 import ProfilePage from './pages/ProfilePage';
 import DigitalModulePage from './pages/DigitalModulePage';
+import KioskPracticePage from './pages/KioskPracticePage';
 import CongratsPage from './pages/CongratsPage';
 import AIWelcomePage from './pages/AIWelcomePage';
 
@@ -59,6 +61,9 @@ export default function App() {
             <Route path="lab" element={<LabTab />} />
           </Route>
 
+          {/* 교시 상세 페이지 (독립 페이지) */}
+          <Route path="/marketing/school/periods/:periodId" element={<PeriodDetailPage />} />
+
           {/* 학교 툴 (독립 페이지) */}
           <Route path="/marketing/school/tools/:toolId" element={<SchoolToolRouter />} />
 
@@ -66,6 +71,7 @@ export default function App() {
           <Route element={<MainLayout />}>
             <Route path="/track/:trackId" element={<TrackPage />} />
             <Route path="/track/digital-basics/module/:moduleId" element={<DigitalModulePage />} />
+            <Route path="/track/digital-basics/kiosk-practice" element={<KioskPracticePage />} />
             <Route path="/track/digital-basics/korea-apps" element={<KoreaAppsPage />} />
 
             {/* 기존 마케팅 (레거시, 코드 보존) */}

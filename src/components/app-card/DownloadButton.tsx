@@ -6,6 +6,7 @@ interface DownloadButtonProps {
   storeLinks: Partial<AppStoreLinks>;
   deepLinks?: DeepLinks;
   isInstalled: boolean;
+  internalLink?: string;
 }
 
 function AppleIcon() {
@@ -39,9 +40,22 @@ function buildIntentUrl(deepLinks: DeepLinks, fallbackUrl: string): string {
   return `intent://#Intent;scheme=${scheme};package=${pkg};S.browser_fallback_url=${encoded};end`;
 }
 
-export default function DownloadButton({ storeLinks, deepLinks, isInstalled }: DownloadButtonProps) {
+export default function DownloadButton({ storeLinks, deepLinks, isInstalled, internalLink }: DownloadButtonProps) {
   const { t } = useTranslation('common');
   const os = useOSDetection();
+
+  // 내부 링크 앱 처리
+  if (internalLink) {
+    return (
+      <a
+        href={`/kiosk${internalLink}`}
+        className="inline-flex items-center gap-1.5 px-4 py-2.5 bg-purple-500 text-white rounded-xl text-sm font-bold btn-duo border-b-4 border-purple-700 hover:bg-purple-600 transition-colors"
+      >
+        <OpenIcon />
+        {t('download.tryNow', '지금 체험하기')}
+      </a>
+    );
+  }
 
   // 개발 예정 앱 처리
   if (!storeLinks.ios && !storeLinks.android) {

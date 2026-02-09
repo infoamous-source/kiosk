@@ -19,6 +19,8 @@ const MASTER_LANG = 'ko';
 // 수동 번역 언어 (동기화 대상에서 제외)
 const MANUAL_LANGS = ['en'];
 // 동기화할 네임스페이스 파일들
+// 지원 언어: ko (마스터) + en (수동 번역)만 유지
+// 동기화할 대상이 없으므로 (en은 수동) 스크립트는 검증 용도로만 동작
 const NAMESPACES = ['common.json'];
 
 // ─── 헬퍼 함수 ───

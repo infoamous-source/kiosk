@@ -22,6 +22,7 @@ import { useEnrollments } from '../../contexts/EnrollmentContext';
 import { createEnrollment, submitSchoolProfile } from '../../services/enrollmentService';
 import { SCHOOL_IDS, SCHOOL_NAMES, type SchoolId } from '../../types/enrollment';
 import SchoolEnrollmentForm from '../enrollment/SchoolEnrollmentForm';
+import { parseAuthError, type AuthError } from '../../utils/authErrors';
 
 type Step = 'common' | 'school-select' | 'school-info';
 
@@ -62,7 +63,7 @@ export default function RegisterForm() {
   });
   const [selectedSchool, setSelectedSchool] = useState<SchoolId | null>(null);
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState('');
+  const [error, setError] = useState<AuthError | null>(null);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     setFormData((prev) => ({
@@ -74,7 +75,7 @@ export default function RegisterForm() {
   // Step 1: 공통 정보 제출 → 계정 생성
   const handleCommonSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setError('');
+    setError(null);
     setIsLoading(true);
 
     try {
@@ -82,10 +83,10 @@ export default function RegisterForm() {
       if (success) {
         setStep('school-select');
       } else {
-        setError(t('auth.registerError'));
+        setError(parseAuthError(new Error('register_failed')));
       }
-    } catch {
-      setError(t('auth.registerError'));
+    } catch (err) {
+      setError(parseAuthError(err));
     } finally {
       setIsLoading(false);
     }
@@ -192,8 +193,12 @@ export default function RegisterForm() {
         {step === 'common' && (
           <form onSubmit={handleCommonSubmit} className="bg-white rounded-2xl shadow-xl border border-gray-100 p-8">
             {error && (
-              <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-lg text-red-600 text-sm">
-                {error}
+              <div className="mb-4 p-4 bg-red-50 border-2 border-red-200 rounded-xl space-y-2">
+                <p className="font-bold text-red-700 text-sm">{error.title}</p>
+                <div className="text-sm text-red-600 space-y-1">
+                  <p><span className="font-semibold">원인:</span> {error.reason}</p>
+                  <p><span className="font-semibold">해결:</span> {error.solution}</p>
+                </div>
               </div>
             )}
 

@@ -26,6 +26,7 @@ export interface AppItem {
   koreanName: string;
   deepLinks?: DeepLinks;
   comingSoon?: boolean; // 개발 예정 여부
+  internalLink?: string; // 내부 페이지 링크
 }
 
 export interface Category {

@@ -12,7 +12,6 @@ import {
   getAllSchoolProgressKeys,
   loadSchoolProgress,
   extendProAccess,
-  getCompletedStampCount,
 } from '../../utils/schoolStorage';
 import { TOTAL_PERIODS } from '../../types/school';
 

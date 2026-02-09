@@ -1,13 +1,16 @@
 import { useTranslation } from 'react-i18next';
 import { GraduationCap, Award } from 'lucide-react';
 import type { User } from '../../types/auth';
+import type { PersonaId } from '../../types/school';
+import { PERSONAS } from '../../data/aptitudeQuestions';
 
 interface StudentCardProps {
   user: User;
   isGraduated: boolean;
+  personaId?: PersonaId | null;
 }
 
-export default function StudentCard({ user, isGraduated }: StudentCardProps) {
+export default function StudentCard({ user, isGraduated, personaId }: StudentCardProps) {
   const { t } = useTranslation('common');
 
   return (
@@ -47,6 +50,15 @@ export default function StudentCard({ user, isGraduated }: StudentCardProps) {
           </div>
         </div>
       </div>
+
+      {/* 페르소나 배지 */}
+      {personaId && PERSONAS[personaId] && (
+        <div className="relative mt-3 flex items-center gap-2">
+          <span className="bg-white/20 backdrop-blur-sm px-3 py-1 rounded-full text-sm font-bold">
+            {PERSONAS[personaId].emoji} {t(PERSONAS[personaId].nameKey)}
+          </span>
+        </div>
+      )}
 
       {/* 하단 */}
       <div className="relative mt-4 pt-3 border-t border-white/20 flex items-center justify-between">

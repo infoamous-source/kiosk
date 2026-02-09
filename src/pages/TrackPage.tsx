@@ -18,9 +18,11 @@ import {
   Play,
 } from 'lucide-react';
 import { tracks } from '../data/tracks';
+import { getModuleContent } from '../data/digital/modules';
 import RollingBanner from '../components/common/RollingBanner';
 import { handleActivityLog } from '../utils/activityLogger';
 import { useVisibility } from '../contexts/VisibilityContext';
+import { useDigitalProgress } from '../hooks/useDigitalProgress';
 import type { TrackId, TrackModule } from '../types/track';
 
 const iconMap: Record<string, typeof Laptop> = {
@@ -42,9 +44,10 @@ interface ModuleCardProps {
   module: TrackModule;
   trackId: TrackId;
   trackColor: string;
+  completionRate?: number;
 }
 
-function ModuleCard({ module, trackId, trackColor }: ModuleCardProps) {
+function ModuleCard({ module, trackId, trackColor, completionRate = 0 }: ModuleCardProps) {
   const { t } = useTranslation('common');
   const navigate = useNavigate();
   const Icon = iconMap[module.icon] || BookOpen;
@@ -66,7 +69,11 @@ function ModuleCard({ module, trackId, trackColor }: ModuleCardProps) {
       return;
     }
 
-    // TODO: 다른 모듈들도 상세 페이지로 이동
+    // 디지털 기초 모듈 상세 페이지
+    if (trackId === 'digital-basics') {
+      navigate(`/track/digital-basics/module/${module.id}`);
+      return;
+    }
   };
 
   return (
@@ -76,7 +83,13 @@ function ModuleCard({ module, trackId, trackColor }: ModuleCardProps) {
     >
       <div className="flex items-start gap-4">
         <div className={`w-12 h-12 rounded-xl ${colors.bg} flex items-center justify-center shrink-0`}>
-          <Icon className={`w-6 h-6 ${colors.text}`} />
+          {completionRate >= 100 ? (
+            <svg className="w-6 h-6 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
+            </svg>
+          ) : (
+            <Icon className={`w-6 h-6 ${colors.text}`} />
+          )}
         </div>
 
         <div className="flex-1 min-w-0">
@@ -92,7 +105,30 @@ function ModuleCard({ module, trackId, trackColor }: ModuleCardProps) {
               <BookOpen className="w-3.5 h-3.5" />
               {module.lessons} lessons
             </span>
+            {completionRate > 0 && (
+              <span className={`text-xs font-bold px-2 py-0.5 rounded-full ${
+                completionRate >= 100
+                  ? 'bg-green-100 text-green-700'
+                  : 'bg-blue-100 text-blue-700'
+              }`}>
+                {completionRate}%
+              </span>
+            )}
           </div>
+
+          {/* Progress bar */}
+          {completionRate > 0 && (
+            <div className="w-full h-1.5 bg-gray-100 rounded-full mt-2 overflow-hidden">
+              <div
+                className={`h-full rounded-full transition-all duration-500 ${
+                  completionRate >= 100
+                    ? 'bg-green-500'
+                    : 'bg-gradient-to-r from-blue-500 to-blue-600'
+                }`}
+                style={{ width: `${completionRate}%` }}
+              />
+            </div>
+          )}
         </div>
 
         <div className={`w-10 h-10 rounded-full ${colors.bg} flex items-center justify-center shrink-0`}>
@@ -107,8 +143,15 @@ export default function TrackPage() {
   const { trackId } = useParams<{ trackId: string }>();
   const { t } = useTranslation('common');
   const { isModuleVisible } = useVisibility();
+  const { getModuleCompletionRate } = useDigitalProgress();
 
   const track = tracks.find((tr) => tr.id === trackId);
+
+  const getDigitalModuleCompletion = (moduleId: string): number => {
+    const content = getModuleContent(moduleId);
+    if (!content) return 0;
+    return getModuleCompletionRate(moduleId, content.steps.length, content.practices.length);
+  };
 
   if (!track) {
     return (
@@ -160,7 +203,12 @@ export default function TrackPage() {
               {index + 1}
             </div>
             <div className="flex-1">
-              <ModuleCard module={module} trackId={track.id} trackColor={track.color} />
+              <ModuleCard
+                module={module}
+                trackId={track.id}
+                trackColor={track.color}
+                completionRate={track.id === 'digital-basics' ? getDigitalModuleCompletion(module.id) : undefined}
+              />
             </div>
           </div>
         ))}

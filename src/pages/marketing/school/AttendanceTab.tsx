@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useAuth } from '../../../contexts/AuthContext';
-import { loadSchoolProgress, canGraduate } from '../../../utils/schoolStorage';
+import { loadSchoolProgress, canGraduate, getAptitudeResult } from '../../../utils/schoolStorage';
 import { isGraduated as checkGraduated } from '../../../utils/schoolStorage';
 import StudentCard from '../../../components/school/StudentCard';
 import StampBoard from '../../../components/school/StampBoard';
@@ -19,6 +19,8 @@ export default function AttendanceTab() {
   const progress = loadSchoolProgress(user.id);
   const graduated = checkGraduated(user.id);
   const canGrad = canGraduate(user.id);
+  const aptitudeResult = getAptitudeResult(user.id);
+  const personaId = aptitudeResult?.resultType ?? null;
 
   const handleGraduationComplete = () => {
     setShowGraduationModal(false);
@@ -28,7 +30,7 @@ export default function AttendanceTab() {
   return (
     <div className="space-y-5" key={refreshKey}>
       {/* 학생증 */}
-      <StudentCard user={user} isGraduated={graduated} />
+      <StudentCard user={user} isGraduated={graduated} personaId={personaId} />
 
       {/* 도장판 */}
       <StampBoard stamps={progress.stamps} />

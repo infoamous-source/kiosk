@@ -29,11 +29,58 @@ export interface GraduationStatus {
   proExpiresAt?: string;     // Pro 도구 만료일 (졸업 후 180일)
 }
 
-/** 적성검사 결과 (추후 구체화) */
+export type PersonaId = 'CEO' | 'PM' | 'CPO' | 'CMO' | 'CSL';
+
+export interface PersonaInfo {
+  id: PersonaId;
+  emoji: string;
+  nameKey: string;
+  titleKey: string;
+  descriptionKey: string;
+  color: string;
+  strengths: string[];
+}
+
 export interface AptitudeResult {
   completedAt: string;
   answers: Record<string, string>;
-  resultType?: string;
+  resultType: PersonaId;
+  scores: Record<PersonaId, number>;
+}
+
+// ─── Market Compass 타입 ───
+
+export interface MarketCompassData {
+  marketScannerResult?: MarketScannerResult;
+  edgeMakerResult?: EdgeMakerResult;
+}
+
+export interface MarketScannerResult {
+  completedAt: string;
+  input: { itemKeyword: string; targetAge: string; targetGender: string };
+  output: {
+    relatedKeywords: string[];
+    competitors: CompetitorInfo[];
+    painPoints: string[];
+  };
+}
+
+export interface CompetitorInfo {
+  name: string;
+  description: string;
+  strengths: string[];
+  weaknesses: string[];
+}
+
+export interface EdgeMakerResult {
+  completedAt: string;
+  input: { painPoints: string[]; myStrengths: string[] };
+  output: {
+    usp: string;
+    brandNames: { name: string; type: 'emotional' | 'intuitive' | 'fun'; reasoning: string }[];
+    slogan: string;
+    brandMood: { primaryColor: string; secondaryColor: string; tone: string; keywords: string[] };
+  };
 }
 
 /** 시뮬레이션 (졸업과제) 결과 */
@@ -49,6 +96,7 @@ export interface SchoolProgress {
   stamps: StampProgress[];
   graduation: GraduationStatus;
   aptitudeResult?: AptitudeResult;
+  marketCompassData?: MarketCompassData;
   simulationResult?: SimulationResult;
   enrolledAt: string;        // 입학일
 }

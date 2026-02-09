@@ -1,8 +1,8 @@
 import type {
   SchoolProgress,
-  StampProgress,
-  GraduationStatus,
   AptitudeResult,
+  MarketScannerResult,
+  EdgeMakerResult,
   SimulationResult,
   PeriodId,
 } from '../types/school';
@@ -150,6 +150,42 @@ export function saveAptitudeResult(userId: string, result: AptitudeResult): void
 export function hasAptitudeResult(userId: string): boolean {
   const progress = loadSchoolProgress(userId);
   return !!progress.aptitudeResult;
+}
+
+/** 적성검사 결과 조회 */
+export function getAptitudeResult(userId: string): AptitudeResult | undefined {
+  const progress = loadSchoolProgress(userId);
+  return progress.aptitudeResult;
+}
+
+// ─── Market Compass ───
+
+/** Market Scanner 결과 저장 */
+export function saveMarketScannerResult(userId: string, result: MarketScannerResult): void {
+  const progress = loadSchoolProgress(userId);
+  if (!progress.marketCompassData) progress.marketCompassData = {};
+  progress.marketCompassData.marketScannerResult = result;
+  saveSchoolProgress(userId, progress);
+}
+
+/** Market Scanner 결과 조회 */
+export function getMarketScannerResult(userId: string): MarketScannerResult | undefined {
+  const progress = loadSchoolProgress(userId);
+  return progress.marketCompassData?.marketScannerResult;
+}
+
+/** Edge Maker 결과 저장 */
+export function saveEdgeMakerResult(userId: string, result: EdgeMakerResult): void {
+  const progress = loadSchoolProgress(userId);
+  if (!progress.marketCompassData) progress.marketCompassData = {};
+  progress.marketCompassData.edgeMakerResult = result;
+  saveSchoolProgress(userId, progress);
+}
+
+/** Edge Maker 결과 조회 */
+export function getEdgeMakerResult(userId: string): EdgeMakerResult | undefined {
+  const progress = loadSchoolProgress(userId);
+  return progress.marketCompassData?.edgeMakerResult;
 }
 
 // ─── 시뮬레이션 (졸업과제) ───

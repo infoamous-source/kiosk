@@ -88,6 +88,7 @@ export default function AppCard({ app, isInstalled, onToggleInstalled }: AppCard
           storeLinks={app.storeLinks}
           deepLinks={app.deepLinks}
           isInstalled={isInstalled}
+          internalLink={app.internalLink}
         />
       </div>
     </div>

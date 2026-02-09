@@ -99,43 +99,54 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     setState({ user: null, isAuthenticated: false, isLoading: false });
   }, []);
 
-  const register = useCallback(async (data: RegisterData, _rememberMe = false): Promise<{ success: boolean; error?: string }> => {
-    // 1) Supabase Auth 계정 생성
-    const { data: authData, error: authError } = await supabase.auth.signUp({
-      email: data.email,
-      password: data.password,
-      options: {
-        data: {
-          name: data.name,
-          role: 'student',
+  const register = useCallback(async (data: RegisterData, _rememberMe = false): Promise<boolean> => {
+    try {
+      // 1) Supabase Auth 계정 생성 (모든 메타데이터 포함 → 트리거가 profiles 자동 생성)
+      const { data: authData, error: authError } = await supabase.auth.signUp({
+        email: data.email,
+        password: data.password,
+        options: {
+          data: {
+            name: data.name,
+            role: 'student',
+            organization: data.organization || '',
+            instructor_code: data.instructorCode || '',
+            org_code: data.orgCode || '',
+            learning_purpose: data.learningPurpose || '',
+          },
         },
-      },
-    });
+      });
 
-    if (authError || !authData.user) {
-      console.error('Register error:', authError?.message);
-      return { success: false, error: authError?.message };
+      if (authError) {
+        console.error('Register error:', authError.message);
+        return false;
+      }
+
+      if (!authData.user) {
+        console.error('No user returned from signUp');
+        return false;
+      }
+
+      // 2) 트리거가 profiles 행을 자동 생성하도록 대기
+      await new Promise(resolve => setTimeout(resolve, 500));
+
+      // 3) 자동 로그인 (세션 생성)
+      const { data: sessionData, error: loginError } = await supabase.auth.signInWithPassword({
+        email: data.email,
+        password: data.password,
+      });
+
+      if (loginError || !sessionData.session) {
+        console.error('Auto-login error:', loginError?.message);
+        return false;
+      }
+
+      // 4) user 상태가 onAuthStateChange로 자동 업데이트됨
+      return true;
+    } catch (error) {
+      console.error('Unexpected error during registration:', error);
+      return false;
     }
-
-    // 2) profiles 테이블에 추가 정보 업데이트
-    //    (trigger가 기본 행을 생성하므로 UPDATE)
-    const { error: profileError } = await supabase
-      .from('profiles')
-      .update({
-        name: data.name,
-        organization: data.organization,
-        instructor_code: data.instructorCode,
-        org_code: data.orgCode,
-        learning_purpose: data.learningPurpose,
-      })
-      .eq('id', authData.user.id);
-
-    if (profileError) {
-      console.error('Profile update error:', profileError.message);
-      return { success: false, error: profileError.message };
-    }
-
-    return { success: true };
   }, []);
 
   return (

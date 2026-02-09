@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { ArrowLeft, TrendingUp } from 'lucide-react';
@@ -10,7 +9,6 @@ export default function ROASSimulatorTool() {
   const navigate = useNavigate();
   const { user } = useAuth();
   const completed = user ? hasStamp(user.id, 'roas-simulator') : false;
-  const [simDone, setSimDone] = useState(false);
 
   const handleComplete = () => {
     if (!user || completed) return;
@@ -25,7 +23,6 @@ export default function ROASSimulatorTool() {
 
     // 스탬프 획득
     earnStamp(user.id, 'roas-simulator');
-    setSimDone(true);
     navigate('/marketing/school/attendance');
   };
 

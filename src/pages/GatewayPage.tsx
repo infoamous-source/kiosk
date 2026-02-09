@@ -4,6 +4,7 @@ import { GraduationCap, Globe, ChevronDown } from 'lucide-react';
 import TrackCard from '../components/gateway/TrackCard';
 import { tracks } from '../data/tracks';
 import { useVisibility } from '../contexts/VisibilityContext';
+import PendingEnrollmentBanner from '../components/enrollment/PendingEnrollmentBanner';
 
 const languages = [
   { code: 'ko', label: '한국어', flag: '🇰🇷' },
@@ -41,6 +42,9 @@ export default function GatewayPage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-slate-50 to-white">
+      {/* Pending Enrollment 알림 배너 */}
+      <PendingEnrollmentBanner />
+
       {/* 간소화된 헤더 */}
       <header className="py-4 px-4 sm:py-6 sm:px-8">
         <div className="max-w-6xl mx-auto flex items-center justify-between">

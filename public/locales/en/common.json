@@ -672,6 +672,14 @@
         "description": "Simulate your ad return on spend"
       }
     },
+    "periodDetail": {
+      "summary": "What you'll learn in this class",
+      "aiTools": "AI Tools",
+      "clickToStart": "Click to start",
+      "hint": "Use the tool to practice, and you'll get a stamp when you complete it!",
+      "notFound": "Period not found.",
+      "backToCurriculum": "Back to Curriculum"
+    },
     "graduation": {
       "reviewTitle": "Graduation 🎓",
       "reviewSubtitle": "Leave a message for your instructor",
@@ -788,6 +796,554 @@
       "name": "XE Currency",
       "description": "Real-time exchange rates. Useful global currency app for converting to Korean Won.",
       "tagline": "Real-time exchange rates"
+    }
+  },
+  "enrollment": {
+    "selectSchool": "Select a school",
+    "completeProfile": "Please complete your enrollment info",
+    "pendingBanner": "You have been enrolled in {{school}}. Please complete your profile.",
+    "submitted": "Enrollment info submitted!",
+    "fields": {
+      "computerExperience": "Computer experience",
+      "hasOwnDevice": "Do you have your own device?",
+      "digitalGoals": "Digital learning goals",
+      "snsAccounts": "Social media accounts",
+      "businessType": "Business status",
+      "marketingExperience": "Marketing experience",
+      "visaType": "Visa type",
+      "workExperienceKorea": "Work experience in Korea",
+      "desiredIndustry": "Desired industry",
+      "koreanLevel": "Korean language level",
+      "expNone": "None",
+      "expBasic": "Basic",
+      "expIntermediate": "Intermediate",
+      "expExperienced": "Experienced",
+      "smartphoneOnly": "Smartphone only",
+      "hasComputer": "Has PC/Laptop",
+      "noDevice": "No device",
+      "noSNS": "No SNS",
+      "noBusiness": "No business",
+      "planningBusiness": "Planning a business",
+      "runningBusiness": "Running a business",
+      "otherVisa": "Other",
+      "under1year": "Less than 1 year",
+      "1to3years": "1-3 years",
+      "over3years": "Over 3 years"
+    }
+  },
+  "download": {
+    "tryNow": "Try Now"
+  },
+  "digital": {
+    "common": {
+      "markComplete": "Mark Complete",
+      "completed": "Completed",
+      "practiceComplete": "Practice Complete",
+      "progress": "{{current}}/{{total}} done",
+      "nextModule": "Next Module",
+      "learningGoals": "Learning Goals",
+      "preparation": "Prerequisites",
+      "learningContent": "Learning Content",
+      "tips": "Tips",
+      "practiceTitle": "Practice Assignments",
+      "relatedApps": "Related Apps",
+      "backToTrack": "Back to Digital Basics",
+      "stepGuide": "Guide",
+      "stepPractice": "Practice",
+      "stepReference": "Reference"
+    },
+    "modules": {
+      "setup": {
+        "title": "Essential App Setup",
+        "description": "Naver account, email, and map basics",
+        "session": "Day 1, Periods 1-2",
+        "goals": {
+          "0": "Create a Naver account and log in",
+          "1": "Write and send Naver email",
+          "2": "Know the Korean names for common symbols",
+          "3": "Search for places and get directions on Naver Map"
+        },
+        "preparation": {
+          "0": "Smartphone registered under your name",
+          "1": "Alien Registration Card",
+          "2": "Wi-Fi or mobile data connection"
+        },
+        "steps": {
+          "naverAccount": {
+            "title": "Create a Naver Account",
+            "description": "The starting point for life in Korea! With a Naver account, you can use email, maps, shopping, and many other services.",
+            "substeps": {
+              "0": "Search for 'Naver' in the app store and install it",
+              "1": "Open the app and tap 'Sign Up' at the bottom",
+              "2": "Enter your phone number and receive a verification code",
+              "3": "Create an ID and password (at least 8 characters with letters and numbers)",
+              "4": "Sign up complete! Log into the Naver app"
+            }
+          },
+          "email": {
+            "title": "Using Naver Email",
+            "description": "Email is essential for sending and receiving official documents. Learn how to send emails using Naver Mail.",
+            "substeps": {
+              "0": "Naver app → top-left menu (≡) → tap 'Mail'",
+              "1": "Tap the 'Compose' button to write a new email",
+              "2": "Enter recipient address, subject, and message",
+              "3": "Tap 'Send' to send the email"
+            }
+          },
+          "symbols": {
+            "title": "Korean Names for Common Symbols",
+            "description": "Knowing the Korean names for symbols used in email addresses and websites is very useful.",
+            "substeps": {
+              "0": "@ → 골뱅이 (gol-baeng-i) - 'snail'",
+              "1": ". → 쩜 / 점 (jjeom / jeom) - 'dot'",
+              "2": "- → 다시 / 빼기 (da-si / ppae-gi) - 'dash/minus'",
+              "3": "_ → 밑줄 / 언더바 (mit-jul / eon-deo-ba) - 'underscore'",
+              "4": "# → 샵 / 우물정 (syap / u-mul-jeong) - 'hash/pound'",
+              "5": "* → 별표 (byeol-pyo) - 'asterisk/star'",
+              "6": "/ → 슬래시 (seul-lae-si) - 'slash'"
+            }
+          },
+          "naverMap": {
+            "title": "Using Naver Map",
+            "description": "Naver Map is the most accurate map app in Korea. Learn how to search places, get directions, and bookmark favorites.",
+            "substeps": {
+              "0": "Install 'Naver Map' from the app store",
+              "1": "Type where you want to go in the search bar (e.g., nearest convenience store)",
+              "2": "Use the 'Directions' button to check transit/walking routes",
+              "3": "Tap the ☆ star icon to bookmark your frequently visited places"
+            }
+          }
+        },
+        "tips": {
+          "0": "Use at least 8 characters with letters, numbers, and special characters for a secure password",
+          "1": "Choose your Naver ID carefully — it cannot be changed once created",
+          "2": "Tap 'Nearby' on Naver Map to easily find convenience stores, pharmacies, and more"
+        },
+        "practices": {
+          "emailAndMap": {
+            "title": "Send Email & Bookmark Map Locations",
+            "description": "Practice what you've learned!",
+            "checklist": {
+              "0": "Log in to your Naver account",
+              "1": "Send a test email to the person next to you",
+              "2": "Search for our classroom location on Naver Map",
+              "3": "Bookmark 3 places you visit frequently"
+            }
+          }
+        }
+      },
+      "kakao": {
+        "title": "Kakao Certificate & Kiosk",
+        "description": "Certificate issuance, card registration, kiosk practice",
+        "session": "Day 1, Periods 3-4",
+        "goals": {
+          "0": "Issue a Kakao Certificate",
+          "1": "Register a card on KakaoPay",
+          "2": "Understand the importance of identity verification",
+          "3": "Order and pay using a kiosk"
+        },
+        "preparation": {
+          "0": "Smartphone with KakaoTalk installed",
+          "1": "Alien Registration Card (for identity verification)",
+          "2": "Debit or credit card registered under your name"
+        },
+        "steps": {
+          "certificate": {
+            "title": "Issue a Kakao Certificate",
+            "description": "A Kakao Certificate is a digital ID used for logging into government sites, banking, and more.",
+            "substeps": {
+              "0": "KakaoTalk → tap the 'More (···)' tab at the bottom",
+              "1": "Find and tap 'Certificate' or 'Wallet'",
+              "2": "Select 'Issue Certificate'",
+              "3": "Enter your name, date of birth, and phone number",
+              "4": "After identity verification, set a 6-digit password"
+            }
+          },
+          "kakaoPay": {
+            "title": "Register Card on KakaoPay",
+            "description": "Registering a card on KakaoPay lets you easily send money and make payments.",
+            "substeps": {
+              "0": "KakaoTalk → 'More' → tap 'KakaoPay'",
+              "1": "Select 'Register Card' or 'Add Payment Method'",
+              "2": "Enter your card number, expiry date, and CVC",
+              "3": "Complete identity verification and you're done!"
+            }
+          },
+          "identity": {
+            "title": "Why Identity Verification Matters",
+            "description": "In Korea, having things registered under your own name is very important. Using a phone or card under someone else's name can restrict your access to services.",
+            "substeps": {
+              "0": "Always register your phone under your own name — certificates, banking, and government services all require a phone under your name",
+              "1": "Using a phone under someone else's name means you can't verify your identity, blocking most services",
+              "2": "Bank accounts and cards must also be under your own name"
+            }
+          },
+          "kioskIntro": {
+            "title": "Kiosk Basics",
+            "description": "A kiosk is a touchscreen machine at cafes, restaurants, and theaters that lets you order without talking to staff.",
+            "substeps": {
+              "0": "What is a kiosk? → A self-service touchscreen machine for ordering and paying",
+              "1": "Basic flow: Select menu → Choose options → Review cart → Dine-in/Takeout → Pay → Done",
+              "2": "Payment methods: Card payment (most common), easy pay (KakaoPay, NaverPay, etc.), cash",
+              "3": "Common buttons: 'Home', 'Cancel', 'Add to Cart', 'Pay'",
+              "4": "If you get confused, press 'Home' to start over!"
+            }
+          }
+        },
+        "tips": {
+          "0": "Remember your Kakao Certificate password! You'll need to reissue it if you forget",
+          "1": "If the kiosk is confusing, it's okay to ask staff for help by saying '도와주세요' (do-wa-ju-se-yo)",
+          "2": "Paying with KakaoPay may give you discounts or points"
+        },
+        "practices": {
+          "kiosk": {
+            "title": "Cafe Kiosk Order Practice",
+            "description": "Practice ordering at a cafe kiosk using the simulator!",
+            "checklist": {
+              "0": "Order one drink on the kiosk simulator",
+              "1": "Try selecting options (extra shot, syrup, etc.)",
+              "2": "Choose between dine-in and takeout",
+              "3": "Complete the card payment"
+            }
+          }
+        }
+      },
+      "gov24": {
+        "title": "Gov24 Document Issuance",
+        "description": "Registration, terms, and document issuance",
+        "session": "Day 2, Periods 1-2",
+        "goals": {
+          "0": "Register on Gov24",
+          "1": "Understand common terms used on Gov24",
+          "2": "Search for and issue official documents",
+          "3": "Save issued documents as PDF and send by email"
+        },
+        "preparation": {
+          "0": "Smartphone under your name (with Kakao Certificate issued)",
+          "1": "Alien Registration Card",
+          "2": "Naver email (account created on Day 1)"
+        },
+        "steps": {
+          "register": {
+            "title": "Register on Gov24",
+            "description": "Gov24 is Korea's official government service portal. Foreigners can also register and issue documents.",
+            "substeps": {
+              "0": "Install the 'Gov24' app from the app store",
+              "1": "'Sign Up' → Select 'Foreigner'",
+              "2": "Enter your Alien Registration Number, name, and phone number",
+              "3": "Verify your identity with Kakao Certificate and complete registration!"
+            }
+          },
+          "terms": {
+            "title": "Gov24 Glossary",
+            "description": "Knowing common Korean terms used on Gov24 will make document issuance much easier.",
+            "substeps": {
+              "0": "체류지 (che-ryu-ji) → Current residential address",
+              "1": "동거가족 (dong-geo-ga-jok) → Family members living together",
+              "2": "세대주 (se-dae-ju) → Head of household (usually the oldest person)",
+              "3": "민원 (min-won) → Government service request or document",
+              "4": "발급 (bal-geup) → Issuance / getting a document issued",
+              "5": "외국인등록 사실증명 → Certificate proving you are a registered foreigner in Korea"
+            }
+          },
+          "search": {
+            "title": "Search & Issue Documents",
+            "description": "Learn how to search for and issue documents on Gov24.",
+            "substeps": {
+              "0": "Gov24 app → type the document name in the search bar (e.g., 'Alien Registration Certificate')",
+              "1": "Select the document you want from the search results",
+              "2": "Fill in the required info and tap 'Apply'",
+              "3": "Done! Check your document in 'My Services' → 'Issued Documents'"
+            }
+          },
+          "pdf": {
+            "title": "Save Documents as PDF",
+            "description": "Save issued documents as PDF files so you can access them later.",
+            "substeps": {
+              "0": "Open the document in your Issued Documents and tap 'Download' or 'Save'",
+              "1": "Choose a save location (My Files → Downloads folder recommended)",
+              "2": "You can find saved files in the 'My Files' app"
+            }
+          },
+          "emailSend": {
+            "title": "Send Documents by Email",
+            "description": "Send issued documents via email to submit them to companies, schools, etc.",
+            "substeps": {
+              "0": "In Naver Mail, select 'Compose'",
+              "1": "Tap the 📎 clip icon to attach the PDF file",
+              "2": "Enter the recipient address and subject, then send"
+            }
+          }
+        },
+        "tips": {
+          "0": "The Alien Registration Certificate is the most basic document needed for bank accounts, phone contracts, and more",
+          "1": "Most document issuances are free. If there's a fee, it will be shown in advance",
+          "2": "Always save issued documents as PDF. You may need them again later"
+        },
+        "practices": {
+          "certificate": {
+            "title": "Alien Registration Certificate Practice",
+            "description": "Actually issue a document on Gov24!",
+            "checklist": {
+              "0": "Log in to the Gov24 app",
+              "1": "Search for 'Alien Registration Certificate'",
+              "2": "Issue the document and save it as PDF",
+              "3": "Send the saved PDF by email"
+            }
+          }
+        }
+      },
+      "translation": {
+        "title": "Translation Apps & Digital Safety",
+        "description": "ChatGPT, Papago, Google Translate, security settings",
+        "session": "Day 2, Periods 3-4",
+        "goals": {
+          "0": "Translate images (medicine packets, notices, etc.) with ChatGPT",
+          "1": "Use Papago's text, voice, and image translation",
+          "2": "Use Google Translate's live camera translation",
+          "3": "Compare the pros and cons of the three translation apps",
+          "4": "Manage smartphone app permissions",
+          "5": "Set up spam message blocking"
+        },
+        "preparation": {
+          "0": "ChatGPT, Papago, and Google Translate apps installed",
+          "1": "Korean text to translate (notices, menus, etc.)",
+          "2": "Wi-Fi or mobile data connection"
+        },
+        "steps": {
+          "chatgpt": {
+            "title": "ChatGPT Image Translation",
+            "description": "ChatGPT can read and translate photos you upload. Great for translating medicine packets, contracts, and notices.",
+            "substeps": {
+              "0": "Open the ChatGPT app and log in",
+              "1": "In the chat, tap the 📎 (clip) or 📷 (camera) icon",
+              "2": "Take a photo of the Korean document or select from gallery",
+              "3": "Type 'Translate this to [your language]' and send"
+            }
+          },
+          "papago": {
+            "title": "Using Papago Translation",
+            "description": "Papago is Naver's translation app. It offers the most natural and accurate Korean translations.",
+            "substeps": {
+              "0": "Text translation: Type or paste the content to translate",
+              "1": "Voice translation: Tap the 🎤 mic button and speak for instant translation",
+              "2": "Image translation: Tap the 📷 camera button to take a photo and it will recognize and translate text",
+              "3": "Conversation translation: Two people take turns speaking for real-time interpretation"
+            }
+          },
+          "googleTranslate": {
+            "title": "Using Google Translate",
+            "description": "Google Translate supports over 100 languages, including languages not available on Papago (Nepali, Myanmar, etc.).",
+            "substeps": {
+              "0": "Text translation: Type the content in the input box",
+              "1": "Camera translation: Tap 📷 and point your camera at signs or menus for real-time translation",
+              "2": "Voice translation: Tap 🎤 and speak for translation",
+              "3": "Offline translation: Download language files in advance to translate without internet"
+            }
+          },
+          "comparison": {
+            "title": "Translation App Comparison",
+            "description": "Each of the three translation apps has different strengths. Use the right app for each situation.",
+            "substeps": {
+              "0": "ChatGPT → Pros: Best context understanding, great for documents/contracts | Cons: Requires internet, limited free use",
+              "1": "Papago → Pros: Most natural Korean translation, conversation translation | Cons: Fewer languages (about 15)",
+              "2": "Google Translate → Pros: 100+ languages, live camera translation | Cons: Korean translation less natural than Papago"
+            }
+          },
+          "kakaoGpt": {
+            "title": "Using GPT in KakaoTalk",
+            "description": "You can ask GPT questions and request translations directly within KakaoTalk.",
+            "substeps": {
+              "0": "Search for 'ChatGPT' or 'AskUp' channel in KakaoTalk and add it",
+              "1": "Send the content you want translated in the channel chat",
+              "2": "Example: 'Translate this Korean to English: 오늘 회의는 3시에 시작합니다'"
+            }
+          },
+          "permissions": {
+            "title": "Managing App Permissions",
+            "description": "Learn how to manage what information (location, photos, contacts, etc.) apps can access.",
+            "substeps": {
+              "0": "Settings → Apps → Select an app → check 'Permissions'",
+              "1": "Deny unnecessary permissions (e.g., a game accessing your contacts)",
+              "2": "For location permission, 'Allow only while using the app' is recommended",
+              "3": "Denying permissions still allows most basic app functions"
+            }
+          },
+          "spam": {
+            "title": "Spam Message Blocking",
+            "description": "Korea has a lot of advertising and phishing messages. Learn how to block spam.",
+            "substeps": {
+              "0": "Messages app → Settings (⚙️) → Turn on 'Spam Blocking' or 'Message Filtering'",
+              "1": "Never tap links in messages from unknown numbers!",
+              "2": "Messages starting with '[Web발신]' that claim to be from banks or delivery services are 99% scams"
+            }
+          }
+        },
+        "tips": {
+          "0": "For medicine packets and hospital documents, ChatGPT photo translation is most accurate",
+          "1": "Use Papago for everyday conversations, Google Translate for rare languages",
+          "2": "Never click links from unknown numbers! Especially messages about 'delivery confirmation' or 'fine payment' are scams",
+          "3": "Be cautious if an app requests too many permissions during installation"
+        },
+        "practices": {
+          "translate": {
+            "title": "Translation Practice & Security Check",
+            "description": "Use translation apps and check your security settings!",
+            "checklist": {
+              "0": "Use ChatGPT to translate a photo of a Korean notice",
+              "1": "Translate the same content with Papago and compare results",
+              "2": "Try Google Translate's camera translation feature",
+              "3": "Check your smartphone's app permission settings",
+              "4": "Turn on spam blocking in your Messages app"
+            }
+          }
+        }
+      }
+    }
+  },
+  "kiosk": {
+    "title": "Kiosk Practice",
+    "subtitle": "Order drinks at a cafe",
+    "description": "Practice ordering and paying on a screen that looks just like a real cafe kiosk.",
+    "whatIsKiosk": "What is a Kiosk?",
+    "whatIsKioskDesc": "A kiosk is a self-service touchscreen machine found at cafes, restaurants, theaters, and more. In Korea, they're in almost every store.",
+    "whatYouLearn": "What You'll Learn",
+    "learn": {
+      "touchScreen": "Start ordering by touching the screen",
+      "selectMenu": "Select menu items and options",
+      "cart": "Review cart and adjust quantities",
+      "payment": "Choose payment method and pay"
+    },
+    "startPractice": "Start Kiosk Practice",
+    "backToModule": "Back to Module",
+    "exitSimulator": "Exit Practice",
+    "retryPractice": "Try Again",
+    "tryAgain": "Try Again",
+    "practiceNote": "Practice on a screen similar to a real cafe",
+    "step": "Step",
+    "helper": {
+      "welcome": "Touch the screen to start ordering!",
+      "menu": "Choose a drink you'd like!",
+      "options": "Select your options and tap 'Add to Cart'!",
+      "cart": "Review your order and tap 'Pay'!",
+      "orderConfirm": "Choose 'Dine-in' or 'Takeout'!",
+      "payment": "Choose a payment method! Card is most common.",
+      "card": "In real life, you'd insert a card. Here, tap 'Approve'!",
+      "points": "It's okay to tap 'No'!",
+      "receipt": "Many people choose 'No Print' for the environment!",
+      "complete": "Congratulations! You completed the kiosk order!"
+    },
+    "screens": {
+      "welcome": {
+        "title": "Cafe",
+        "touch": "Touch to order"
+      },
+      "menu": {
+        "all": "All Menu",
+        "coffee": "Coffee",
+        "decaf": "Decaf",
+        "smoothie": "Smoothie",
+        "tea": "Tea",
+        "dessert": "Dessert",
+        "home": "Home",
+        "language": "LANGUAGE",
+        "cartHeader": {
+          "menu": "Menu",
+          "quantity": "Qty",
+          "price": "Price"
+        },
+        "emptyCart": "Please select a menu item"
+      },
+      "options": {
+        "header": "Select options for your item.",
+        "selectedOptions": "Selected Options",
+        "reset": "Reset",
+        "tumbler": "Tumbler",
+        "personalCup": "Personal Cup",
+        "shot": "Shot",
+        "addShot": "Add Shot",
+        "addDoubleShot": "Add Double Shot",
+        "sweetness": "Sweetness",
+        "vanillaSyrup": "Vanilla Syrup",
+        "caramelSyrup": "Caramel Syrup",
+        "hazelnutSyrup": "Hazelnut Syrup",
+        "cancel": "Cancel",
+        "addToCart": "Add to Cart"
+      },
+      "cart": {
+        "timeLeft": "Time Left",
+        "seconds": "sec",
+        "clearAll": "Clear All",
+        "selectedItems": "Selected Items",
+        "itemUnit": "items",
+        "pay": "Pay"
+      },
+      "orderConfirm": {
+        "header": "Please review your order details.",
+        "noDisposableCup": "No disposable cups for dine-in",
+        "totalQuantity": "Total Quantity",
+        "totalAmount": "Total Amount",
+        "recommend": "You might also like",
+        "dineIn": "Dine-in",
+        "dineInSub": "(Reusable cup)",
+        "takeout": "Takeout",
+        "takeoutSub": "(Disposable cup)",
+        "back": "Go Back"
+      },
+      "payment": {
+        "title": "Select Payment Method",
+        "step1": "Select a partner discount (optional)",
+        "step2": "Select a payment method.",
+        "card": "Card Payment",
+        "cardSub": "Samsung Pay / LG Pay",
+        "appCard": "App Card",
+        "appCardSub": "QR / Barcode",
+        "kakaoPay": "KakaoPay",
+        "payco": "PAYCO",
+        "naverPay": "Naver Pay",
+        "zeroPay": "Zero Pay",
+        "coupon": "Use Coupon",
+        "giftCard": "Gift Card",
+        "orderAmount": "Order Amount",
+        "payAmount": "Amount to Pay"
+      },
+      "cardPayment": {
+        "title": "Card Payment (Easy Pay)",
+        "total": "Total Amount",
+        "installment": "Installments",
+        "lumpSum": "One-time",
+        "cardNumber": "Card Number",
+        "cancel": "Cancel",
+        "approve": "Approve",
+        "insertGuide": "Please insert your credit/debit card as shown below."
+      },
+      "points": {
+        "ask": "Would you like to earn points?",
+        "yes": "Yes",
+        "no": "No"
+      },
+      "receipt": {
+        "approved": "Approved",
+        "ask": "Would you like to print the receipt?",
+        "print": "Print",
+        "noPrint": "No Print"
+      },
+      "complete": {
+        "receiptTitle": "Receipt",
+        "receiptCollect": "Please collect your receipt.",
+        "paymentDetail": "Payment details.",
+        "icApproval": "IC Credit Approval",
+        "amount": "Amount",
+        "tax": "Tax",
+        "total": "Total",
+        "cardName": "Practice Card",
+        "cardNumber": "1234-1234-1234",
+        "thanks": "Thank you.",
+        "confirm": "OK",
+        "congrats": "Kiosk Practice Complete!",
+        "message": "You can now confidently order at a real cafe!",
+        "done": "Finish Practice"
+      }
     }
   }
 }

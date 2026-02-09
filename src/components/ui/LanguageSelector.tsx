@@ -2,10 +2,8 @@ import { useState, useRef, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 
 const languages = [
-  { code: 'en', label: 'English', flag: '🇺🇸' },
   { code: 'ko', label: '한국어', flag: '🇰🇷' },
-  { code: 'zh', label: '中文', flag: '🇨🇳' },
-  { code: 'ja', label: '日本語', flag: '🇯🇵' },
+  { code: 'en', label: 'English', flag: '🇺🇸' },
 ];
 
 export default function LanguageSelector() {

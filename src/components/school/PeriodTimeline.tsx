@@ -70,7 +70,7 @@ export default function PeriodTimeline({ periods, stamps }: PeriodTimelineProps)
 
             {/* 카드 */}
             <button
-              onClick={() => navigate(period.toolRoute)}
+              onClick={() => navigate(`/marketing/school/periods/${period.id}`)}
               className={`flex-1 mb-3 p-4 rounded-xl border transition-all text-left group hover:shadow-md ${
                 isCompleted
                   ? 'bg-green-50/50 border-green-200'

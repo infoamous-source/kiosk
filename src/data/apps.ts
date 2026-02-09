@@ -167,7 +167,7 @@ export const apps: AppItem[] = [
     koreanName: '카카오톡',
   },
 
-  // 8. 키오스크 연습 앱 (개발 예정)
+  // 8. 키오스크 연습 앱
   {
     id: 'kiosk-practice',
     categoryId: 'essential',
@@ -175,11 +175,9 @@ export const apps: AppItem[] = [
     nameKey: 'apps.kioskPractice.name',
     descriptionKey: 'apps.kioskPractice.description',
     taglineKey: 'apps.kioskPractice.tagline',
-    storeLinks: {
-      // 개발 예정
-    },
+    storeLinks: {},
     badges: [],
     koreanName: '키오스크 연습',
-    comingSoon: true,
+    internalLink: '/track/digital-basics/kiosk-practice',
   },
 ];

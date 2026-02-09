@@ -1,18 +1,23 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useAuth } from '../contexts/AuthContext';
+import { useEnrollments } from '../contexts/EnrollmentContext';
 import { useNavigate } from 'react-router-dom';
 import {
   User,
   Building2,
   GraduationCap,
-  CreditCard,
+  School,
   Clock,
   Lightbulb,
   Shield,
   Globe,
   CalendarDays,
+  CheckCircle2,
+  AlertCircle,
+  XCircle,
 } from 'lucide-react';
+import { SCHOOL_NAMES } from '../types/enrollment';
 import IdeaBox from '../components/profile/IdeaBox';
 import ActivityHistory from '../components/profile/ActivityHistory';
 
@@ -44,22 +49,7 @@ export default function ProfilePage() {
     { id: 'ideabox', labelKey: 'profile.tabs.ideaBox', icon: Lightbulb },
   ];
 
-  // 구독 상태 라벨
-  const getSubscriptionLabel = () => {
-    if (!user.subscription || user.subscription.status === 'none') {
-      return t('profile.subscription.none', '미구독');
-    }
-    if (user.subscription.type === 'organization') {
-      return t('profile.subscription.organization', '기관 구독');
-    }
-    return t('profile.subscription.individual', '개인 구독');
-  };
-
-  const getSubscriptionColor = () => {
-    if (!user.subscription || user.subscription.status === 'none') return 'text-gray-400 bg-gray-50';
-    if (user.subscription.status === 'expired') return 'text-orange-600 bg-orange-50';
-    return 'text-green-600 bg-green-50';
-  };
+  const { enrollments } = useEnrollments();
 
   // 성별 라벨
   const getGenderLabel = () => {
@@ -92,7 +82,9 @@ export default function ProfilePage() {
                 {user.role === 'instructor' ? t('header.instructor') : t('header.student')}
               </span>
               <span className="px-3 py-0.5 rounded-full text-xs font-medium bg-white/20">
-                {getSubscriptionLabel()}
+                {enrollments.filter(e => e.status === 'active').length > 0
+                  ? `${enrollments.filter(e => e.status === 'active').length}개 학교 등록`
+                  : '미등록'}
               </span>
             </div>
           </div>
@@ -193,54 +185,50 @@ export default function ProfilePage() {
             </div>
           </div>
 
-          {/* 구독 정보 */}
+          {/* 내 학교 (Enrollment) */}
           <div className="bg-white rounded-xl border border-gray-200 p-5">
             <h2 className="text-lg font-semibold text-gray-800 mb-4 flex items-center gap-2">
-              <CreditCard className="w-5 h-5 text-green-500" />
-              {t('profile.subscriptionInfo', '구독 정보')}
+              <School className="w-5 h-5 text-green-500" />
+              내 학교
             </h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
-                <span className="text-sm text-gray-500">{t('profile.subscription.typeLabel', '구독 유형')}</span>
-                <span className={`px-3 py-1 rounded-full text-xs font-medium ${getSubscriptionColor()}`}>
-                  {getSubscriptionLabel()}
-                </span>
-              </div>
-              <InfoRow
-                label={t('profile.subscription.statusLabel', '상태')}
-                value={
-                  user.subscription?.status === 'active'
-                    ? t('profile.subscription.active', '활성')
-                    : user.subscription?.status === 'expired'
-                    ? t('profile.subscription.expired', '만료')
-                    : t('profile.subscription.inactive', '없음')
-                }
-              />
-              {user.subscription?.startDate && (
-                <InfoRow
-                  label={t('profile.subscription.startDate', '시작일')}
-                  value={new Date(user.subscription.startDate).toLocaleDateString('ko-KR')}
-                />
-              )}
-              {user.subscription?.endDate && (
-                <InfoRow
-                  label={t('profile.subscription.endDate', '종료일')}
-                  value={new Date(user.subscription.endDate).toLocaleDateString('ko-KR')}
-                />
-              )}
-            </div>
+            {enrollments.length === 0 ? (
+              <p className="text-sm text-gray-400 text-center py-4">등록된 학교가 없습니다.</p>
+            ) : (
+              <div className="space-y-3">
+                {enrollments.map((enrollment) => {
+                  const schoolName = SCHOOL_NAMES[enrollment.school_id];
+                  const StatusIcon =
+                    enrollment.status === 'active' ? CheckCircle2 :
+                    enrollment.status === 'pending_info' ? AlertCircle : XCircle;
+                  const statusColor =
+                    enrollment.status === 'active' ? 'text-green-500' :
+                    enrollment.status === 'pending_info' ? 'text-orange-500' : 'text-gray-400';
+                  const statusLabel =
+                    enrollment.status === 'active' ? '수강 중' :
+                    enrollment.status === 'pending_info' ? '추가 정보 필요' :
+                    enrollment.status === 'suspended' ? '일시정지' : '수료';
 
-            {/* 기관코드 히스토리 */}
-            {user.subscription?.orgCodeHistory && user.subscription.orgCodeHistory.length > 0 && (
-              <div className="mt-4 pt-4 border-t border-gray-100">
-                <p className="text-xs text-gray-400 mb-2">{t('profile.subscription.history', '이전 기관 기록')}</p>
-                <div className="flex gap-2 flex-wrap">
-                  {user.subscription.orgCodeHistory.map((code, i) => (
-                    <span key={i} className="px-2 py-1 bg-gray-100 text-gray-500 rounded text-xs font-mono">
-                      {code}
-                    </span>
-                  ))}
-                </div>
+                  return (
+                    <div key={enrollment.id} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                      <div className="flex items-center gap-3">
+                        <StatusIcon className={`w-5 h-5 ${statusColor}`} />
+                        <div>
+                          <p className="text-sm font-medium text-gray-800">{schoolName?.ko}</p>
+                          <p className="text-xs text-gray-400">
+                            {new Date(enrollment.enrolled_at).toLocaleDateString('ko-KR')} 등록
+                          </p>
+                        </div>
+                      </div>
+                      <span className={`px-2 py-1 rounded-full text-xs font-medium ${
+                        enrollment.status === 'active' ? 'bg-green-50 text-green-600' :
+                        enrollment.status === 'pending_info' ? 'bg-orange-50 text-orange-600' :
+                        'bg-gray-100 text-gray-500'
+                      }`}>
+                        {statusLabel}
+                      </span>
+                    </div>
+                  );
+                })}
               </div>
             )}
           </div>
