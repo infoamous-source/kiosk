@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import {
@@ -11,12 +11,16 @@ import {
   HelpCircle,
   ChevronLeft,
   ChevronRight,
+  ChevronDown,
   GraduationCap,
   LayoutDashboard,
   UserCircle,
 } from 'lucide-react';
 import type { TrackId } from '../../types/track';
+import type { SchoolId } from '../../types/enrollment';
 import { useAuth } from '../../contexts/AuthContext';
+import { useEnrollments } from '../../contexts/EnrollmentContext';
+import { isGraduated, isProAccessValid } from '../../utils/schoolStorage';
 
 interface SidebarProps {
   currentTrack?: TrackId;
@@ -28,12 +32,23 @@ interface NavItem {
   icon: typeof Home;
   path: string;
   trackId?: TrackId;
+  children?: NavItem[];
 }
 
 const mainNavItems: NavItem[] = [
   { id: 'home', labelKey: 'sidebar.home', icon: Home, path: '/' },
   { id: 'digital', labelKey: 'sidebar.digitalBasics', icon: Monitor, path: '/track/digital-basics', trackId: 'digital-basics' },
-  { id: 'marketing', labelKey: 'sidebar.marketing', icon: TrendingUp, path: '/marketing', trackId: 'marketing' },
+  {
+    id: 'marketing',
+    labelKey: 'sidebar.marketing',
+    icon: TrendingUp,
+    path: '/marketing/hub',
+    trackId: 'marketing',
+    children: [
+      { id: 'marketing-school', labelKey: 'sidebar.marketingSchool', icon: GraduationCap, path: '/marketing/hub' },
+      { id: 'marketing-pro', labelKey: 'sidebar.marketingPro', icon: Briefcase, path: '/marketing/pro' },
+    ],
+  },
   { id: 'career', labelKey: 'sidebar.career', icon: Briefcase, path: '/track/career', trackId: 'career' },
 ];
 
@@ -47,45 +62,159 @@ export default function Sidebar({ currentTrack }: SidebarProps) {
   const { t } = useTranslation('common');
   const navigate = useNavigate();
   const location = useLocation();
-  const { user } = useAuth();
+  const { user, isAuthenticated } = useAuth();
+  const { enrollments } = useEnrollments();
   const [collapsed, setCollapsed] = useState(false);
+  const [expandedMenu, setExpandedMenu] = useState<string | null>(null);
 
   // 강사인지 확인
   const isInstructor = user?.role === 'instructor';
+
+  // /marketing 경로에 있으면 자동으로 마케팅 메뉴 펼치기
+  useEffect(() => {
+    if (location.pathname.startsWith('/marketing')) {
+      setExpandedMenu('marketing');
+    }
+  }, [location.pathname]);
 
   const isActive = (item: NavItem) => {
     if (item.trackId && currentTrack) {
       return item.trackId === currentTrack;
     }
-    // 마케팅 하위 경로 (/marketing/modules/..., /marketing/tools/...) 에서도 활성화
+    // 마케팅 하위 경로에서도 활성화
     if (item.path !== '/' && location.pathname.startsWith(item.path)) {
       return true;
     }
     return location.pathname === item.path;
   };
 
+  const isChildActive = (item: NavItem) => {
+    if (item.id === 'marketing-school') {
+      // /marketing/hub, /marketing/school/* 에서 활성화
+      return location.pathname.startsWith('/marketing/hub') ||
+             location.pathname.startsWith('/marketing/school');
+    }
+    if (item.id === 'marketing-pro') {
+      return location.pathname.startsWith('/marketing/pro');
+    }
+    return location.pathname === item.path;
+  };
+
+  const handleNavClick = (item: NavItem) => {
+    // children이 있는 항목 → 토글
+    if (item.children && !collapsed) {
+      setExpandedMenu(expandedMenu === item.id ? null : item.id);
+      return;
+    }
+
+    // 마케팅 (collapsed 상태에서 클릭)
+    if (item.id === 'marketing') {
+      handleMarketingSchoolClick();
+      return;
+    }
+
+    navigate(item.path);
+  };
+
+  const handleMarketingSchoolClick = () => {
+    const schoolId: SchoolId = 'marketing';
+    if (!isAuthenticated) {
+      navigate('/congrats', { state: { schoolId } });
+      return;
+    }
+    const isEnrolled = enrollments.some(e => e.school_id === schoolId);
+    if (!isEnrolled) {
+      navigate('/congrats', { state: { schoolId } });
+      return;
+    }
+    navigate('/marketing/hub');
+  };
+
+  const handleMarketingProClick = () => {
+    if (!user) return;
+    const graduated = isGraduated(user.id);
+    if (!graduated) {
+      alert(t('school.hub.proLocked'));
+      return;
+    }
+    if (!isProAccessValid(user.id)) {
+      alert(t('school.hub.proExpired'));
+      return;
+    }
+    navigate('/marketing/pro');
+  };
+
+  const handleChildClick = (child: NavItem) => {
+    if (child.id === 'marketing-school') {
+      handleMarketingSchoolClick();
+    } else if (child.id === 'marketing-pro') {
+      handleMarketingProClick();
+    } else {
+      navigate(child.path);
+    }
+  };
+
   const NavButton = ({ item }: { item: NavItem }) => {
     const active = isActive(item);
+    const hasChildren = item.children && item.children.length > 0;
+    const isExpanded = expandedMenu === item.id;
     const Icon = item.icon;
 
     return (
-      <button
-        onClick={() => navigate(item.path)}
-        className={`
-          w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200
-          ${active
-            ? 'bg-blue-50 text-blue-600 font-semibold'
-            : 'text-gray-600 hover:bg-gray-50 hover:text-gray-800'
-          }
-          ${collapsed ? 'justify-center' : ''}
-        `}
-        title={collapsed ? t(item.labelKey) : undefined}
-      >
-        <Icon className="w-5 h-5 shrink-0" />
-        {!collapsed && (
-          <span className="truncate">{t(item.labelKey)}</span>
+      <div>
+        <button
+          onClick={() => handleNavClick(item)}
+          className={`
+            w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200
+            ${active
+              ? 'bg-blue-50 text-blue-600 font-semibold'
+              : 'text-gray-600 hover:bg-gray-50 hover:text-gray-800'
+            }
+            ${collapsed ? 'justify-center' : ''}
+          `}
+          title={collapsed ? t(item.labelKey) : undefined}
+        >
+          <Icon className="w-5 h-5 shrink-0" />
+          {!collapsed && (
+            <>
+              <span className="truncate flex-1 text-left">{t(item.labelKey)}</span>
+              {hasChildren && (
+                <ChevronDown
+                  className={`w-4 h-4 shrink-0 transition-transform duration-200 ${
+                    isExpanded ? 'rotate-180' : ''
+                  }`}
+                />
+              )}
+            </>
+          )}
+        </button>
+
+        {/* 하위 메뉴 */}
+        {hasChildren && isExpanded && !collapsed && (
+          <div className="ml-4 mt-1 space-y-0.5 border-l-2 border-gray-100 pl-2">
+            {item.children!.map((child) => {
+              const childActive = isChildActive(child);
+              const ChildIcon = child.icon;
+              return (
+                <button
+                  key={child.id}
+                  onClick={() => handleChildClick(child)}
+                  className={`
+                    w-full flex items-center gap-2.5 px-3 py-2 rounded-lg transition-all duration-200 text-sm
+                    ${childActive
+                      ? 'bg-purple-50 text-purple-600 font-semibold'
+                      : 'text-gray-500 hover:bg-gray-50 hover:text-gray-700'
+                    }
+                  `}
+                >
+                  <ChildIcon className="w-4 h-4 shrink-0" />
+                  <span className="truncate">{t(child.labelKey)}</span>
+                </button>
+              );
+            })}
+          </div>
         )}
-      </button>
+      </div>
     );
   };
 
@@ -163,9 +292,30 @@ export default function Sidebar({ currentTrack }: SidebarProps) {
 
       {/* 하단 내비게이션 */}
       <div className="p-3 border-t border-gray-100 space-y-1">
-        {bottomNavItems.map((item) => (
-          <NavButton key={item.id} item={item} />
-        ))}
+        {bottomNavItems.map((item) => {
+          const active = isActive(item);
+          const Icon = item.icon;
+          return (
+            <button
+              key={item.id}
+              onClick={() => navigate(item.path)}
+              className={`
+                w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200
+                ${active
+                  ? 'bg-blue-50 text-blue-600 font-semibold'
+                  : 'text-gray-600 hover:bg-gray-50 hover:text-gray-800'
+                }
+                ${collapsed ? 'justify-center' : ''}
+              `}
+              title={collapsed ? t(item.labelKey) : undefined}
+            >
+              <Icon className="w-5 h-5 shrink-0" />
+              {!collapsed && (
+                <span className="truncate">{t(item.labelKey)}</span>
+              )}
+            </button>
+          );
+        })}
       </div>
 
       {/* 접기/펼치기 버튼 */}

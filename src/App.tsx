@@ -10,7 +10,8 @@ import RegisterPage from './pages/RegisterPage';
 import AdminPage from './pages/AdminPage';
 import OrganizationDetailPage from './pages/OrganizationDetailPage';
 import KoreaAppsPage from './pages/KoreaAppsPage';
-import MarketingLandingPage from './pages/marketing/MarketingLandingPage';
+// MarketingLandingPage는 레거시 — /marketing은 /marketing/hub로 리다이렉트
+import { Navigate } from 'react-router-dom';
 import MarketingModuleDetailPage from './pages/marketing/MarketingModuleDetailPage';
 import MarketingToolRouter from './pages/marketing/MarketingToolRouter';
 import MarketingHubPage from './pages/marketing/MarketingHubPage';
@@ -74,8 +75,8 @@ export default function App() {
             <Route path="/track/digital-basics/kiosk-practice" element={<KioskPracticePage />} />
             <Route path="/track/digital-basics/korea-apps" element={<KoreaAppsPage />} />
 
-            {/* 기존 마케팅 (레거시, 코드 보존) */}
-            <Route path="/marketing" element={<MarketingLandingPage />} />
+            {/* 기존 마케팅 (레거시) → 허브로 리다이렉트 */}
+            <Route path="/marketing" element={<Navigate to="/marketing/hub" replace />} />
             <Route path="/marketing/modules/:moduleId" element={<MarketingModuleDetailPage />} />
             <Route path="/marketing/tools/:toolId" element={<MarketingToolRouter />} />
 

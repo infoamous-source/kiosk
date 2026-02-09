@@ -27,7 +27,9 @@
     "help": "도움말",
     "settings": "설정",
     "dashboard": "강사 대시보드",
-    "profile": "내 프로필"
+    "profile": "내 프로필",
+    "marketingSchool": "예비 마케터 학교",
+    "marketingPro": "Pro 도구"
   },
   "tracks": {
     "digitalBasics": {
