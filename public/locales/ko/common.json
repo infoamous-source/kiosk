@@ -725,46 +725,111 @@
       "completed": "완료",
       "periods": {
         "1": {
-          "title": "마케팅의 기초",
-          "items": ["마케팅이란?", "2026 마케팅 트렌드", "마케팅의 종류"],
-          "toolLabel": "적성 검사기"
+          "title": "기초 다지기",
+          "items": ["마케팅이란? & 2026 트렌드", "마케터의 역할", "직무 적성 테스트"],
+          "toolLabel": "직무 적성 테스트 (Marketer DNA Test)"
         },
         "2": {
-          "title": "시장 분석하기",
-          "items": ["시장 조사의 기본", "타겟 고객 분석", "경쟁사 분석"],
-          "toolLabel": "시장 탐색기"
+          "title": "시장 조사",
+          "items": ["경쟁자 조사", "타겟 고객 정하기", "시장 스캐너"],
+          "toolLabel": "시장 스캐너 (Market Scanner AI)"
         },
         "3": {
-          "title": "브랜드 만들기",
-          "items": ["브랜드 기본 개념", "USP와 차별화", "브랜드 네이밍과 슬로건"],
-          "toolLabel": "브랜드 메이커"
+          "title": "브랜드 기획",
+          "items": ["특별한 점 찾기 (USP)", "기획의 뼈대", "브랜드 빌더"],
+          "toolLabel": "브랜드 빌더 (Brand Builder AI)"
         },
         "4": {
-          "title": "SNS 광고와 바이럴",
-          "items": ["SNS 마케팅 기초", "카드뉴스 제작", "바이럴 전략"],
-          "toolLabel": "SNS광고 메이커"
+          "title": "광고 만들기",
+          "items": ["시선 잡기", "잘 팔리는 공식", "콘텐츠 메이커"],
+          "toolLabel": "콘텐츠 메이커 (Content Maker AI)"
         },
         "5": {
-          "title": "상세페이지 제작과 라이브커머스",
-          "items": ["상세페이지 구성", "설득 카피라이팅", "라이브커머스 기초"],
-          "toolLabel": "설득카피 메이커"
+          "title": "설득의 기술",
+          "items": ["지갑을 여는 심리", "상세페이지 구조", "세일즈 라이터"],
+          "toolLabel": "세일즈 라이터 (Sales Writer AI)"
         },
         "6": {
-          "title": "마케팅 비용과 목표",
-          "items": ["광고 예산 설계", "ROAS와 성과 측정", "마케팅 목표 설정"],
-          "toolLabel": "ROAS 분석기"
+          "title": "성과 측정",
+          "items": ["광고비와 수익", "예산 세우기", "ROAS 예측기"],
+          "toolLabel": "ROAS 예측기 (ROAS Forecast AI)"
         }
       },
       "aiToolPractice": "AI 도구로 실습",
       "graduationProject": "졸업 과제",
       "graduationCeremony": "졸업식",
-      "testLabel": "테스트"
+      "testLabel": "학습"
+    },
+    "sections": {
+      "entrance": {
+        "title": "입학식: 환영합니다",
+        "subtitle": "Pre-School",
+        "step1": { "title": "웰컴 오리엔테이션", "desc": "학교 소개 및 전체 과정 안내" },
+        "step2": { "title": "마케터 선서", "desc": "좋은 마케터가 되기 위한 약속과 마음가짐 세우기" },
+        "step3": { "title": "학생증 발급", "desc": "시스템 접속 및 프로필 설정" }
+      },
+      "period1": {
+        "title": "기초 다지기",
+        "subtitle": "1교시",
+        "step1": { "title": "마케팅이란? & 2026 트렌드", "desc": "고객의 문제 해결법 배우기 + 최신 마케팅 흐름 파악" },
+        "step2": { "title": "마케터의 역할", "desc": "기획, 분석, 디자인 등 다양한 직무 이해하기" },
+        "step3": { "title": "[실습] 직무 적성 테스트 (Marketer DNA Test)", "desc": "나의 마케팅 DNA 분석 (Find My Role)" }
+      },
+      "period2": {
+        "title": "시장 조사",
+        "subtitle": "2교시",
+        "step1": { "title": "경쟁자 조사", "desc": "다른 회사 제품의 장점과 단점 비교하기" },
+        "step2": { "title": "타겟 고객 정하기", "desc": "내 물건을 살 사람들의 특징 구체적으로 그려보기" },
+        "step3": { "title": "[실습] 시장 스캐너 (Market Scanner AI)", "desc": "경쟁사 및 타겟 분석 (Market Analysis)" }
+      },
+      "period3": {
+        "title": "브랜드 기획",
+        "subtitle": "3교시",
+        "step1": { "title": "특별한 점 찾기 (USP)", "desc": "\"왜 우리 제품인가?\"에 대한 단 하나의 이유 정하기" },
+        "step2": { "title": "기획의 뼈대", "desc": "논리적인 마케팅 계획을 세우는 6단계 학습" },
+        "step3": { "title": "[실습] 브랜드 빌더 (Brand Builder AI)", "desc": "브랜드 전략 및 슬로건 (Brand Strategy)" }
+      },
+      "period4": {
+        "title": "광고 만들기",
+        "subtitle": "4교시",
+        "step1": { "title": "시선 잡기", "desc": "사람들의 관심을 끄는 강렬한 제목(Headline) 쓰기" },
+        "step2": { "title": "잘 팔리는 공식", "desc": "4단계 구조(Hook-공감-해결-행동) 배우기" },
+        "step3": { "title": "[실습] 콘텐츠 메이커 (Content Maker AI)", "desc": "바이럴 카드뉴스 기획 (Content Planning)" }
+      },
+      "period5": {
+        "title": "설득의 기술",
+        "subtitle": "5교시",
+        "step1": { "title": "지갑을 여는 심리", "desc": "고객이 구매를 결정하게 만드는 설득의 기술" },
+        "step2": { "title": "상세페이지 구조", "desc": "이탈을 줄이고 판매를 높이는 웹페이지 구성 배우기" },
+        "step3": { "title": "[실습] 세일즈 라이터 (Sales Writer AI)", "desc": "설득 문구 및 상세페이지 (Copywriting)" }
+      },
+      "period6": {
+        "title": "성과 측정",
+        "subtitle": "6교시",
+        "step1": { "title": "광고비와 수익", "desc": "마케팅 성적표(ROAS, CPC 등) 읽는 법 배우기" },
+        "step2": { "title": "예산 세우기", "desc": "한정된 돈을 어디에 써야 효율적일지 계획하기" },
+        "step3": { "title": "[실습] ROAS 예측기 (ROAS Forecast AI)", "desc": "광고 수익률 및 성과 시뮬레이션 (ROAS Forecast)" }
+      },
+      "finalProject": {
+        "title": "졸업 과제: 팀 프로젝트",
+        "subtitle": "Final Step",
+        "step1": { "title": "아이템 선정 아이디어 회의", "desc": "팀원과 함께 실전 마케팅 아이템 결정하기" },
+        "step2": { "title": "통합 기획서 완성", "desc": "1~6교시 실습 데이터를 합쳐 하나의 제안서 완성하기" },
+        "step3": { "title": "최종 발표", "desc": "우리가 기획한 브랜드를 사람들 앞에 소개하기" }
+      },
+      "graduation": {
+        "title": "졸업식: 마케터 데뷔",
+        "subtitle": "After-School",
+        "step1": { "title": "졸업장 수여", "desc": "전 과정을 마친 공식 수료증 획득" },
+        "step2": { "title": "특별 혜택 활성화", "desc": "프로 마케팅 교실 권한 OPEN" },
+        "step3": { "title": "작별 인사", "desc": "선생님 및 동료 마케터들과 인사 나누기" }
+      }
     },
     "lab": {
       "title": "AI 도구함",
       "subtitle": "마케팅 AI 도구로 실습해보세요",
       "graduationToggle": "졸업과제",
-      "graduationSubtitle": "ROAS 시뮬레이터로 졸업과제를 완료하세요",
+      "graduationSubtitle": "ROAS 예측기로 졸업과제를 완료하세요",
       "graduationProject": "졸업과제",
       "graduationHint": "이 시뮬레이션을 완료해야 졸업할 수 있어요"
     },
@@ -777,28 +842,28 @@
     },
     "periods": {
       "aptitudeTest": {
-        "name": "적성 검사기",
-        "description": "나에게 맞는 마케팅 유형을 알아봐요"
+        "name": "직무 적성 테스트 (Marketer DNA Test)",
+        "description": "나의 마케팅 DNA 분석"
       },
       "marketScanner": {
-        "name": "시장 탐색기",
-        "description": "시장 트렌드와 경쟁자를 분석해요"
+        "name": "시장 스캐너 (Market Scanner AI)",
+        "description": "경쟁사 및 타겟 분석"
       },
       "edgeMaker": {
-        "name": "브랜드 메이커",
-        "description": "차별화 포인트를 만들어요"
+        "name": "브랜드 빌더 (Brand Builder AI)",
+        "description": "브랜드 전략 및 슬로건"
       },
       "viralCardMaker": {
-        "name": "SNS광고 메이커",
-        "description": "바이럴 콘텐츠 카드를 만들어요"
+        "name": "콘텐츠 메이커 (Content Maker AI)",
+        "description": "바이럴 카드뉴스 기획"
       },
       "perfectPlanner": {
-        "name": "설득카피 메이커",
-        "description": "마케팅 계획을 세워요"
+        "name": "세일즈 라이터 (Sales Writer AI)",
+        "description": "설득 문구 및 상세페이지"
       },
       "roasSimulator": {
-        "name": "ROAS 분석기",
-        "description": "광고 수익률을 시뮬레이션해요"
+        "name": "ROAS 예측기 (ROAS Forecast AI)",
+        "description": "광고 수익률 및 성과 시뮬레이션"
       }
     },
     "periodDetail": {
@@ -1112,7 +1177,7 @@
     "marketCompass": {
       "scanner": {
         "headerBadge": "2교시",
-        "title": "Market Compass 스캐너",
+        "title": "시장 스캐너 (Market Scanner AI)",
         "hero": "적을 알고 나를 알자",
         "heroSub": "AI가 경쟁사의 약점을 찾아드립니다",
         "inputTitle": "분석할 시장 정보를 입력하세요",
@@ -1174,7 +1239,7 @@
       },
       "edgeMaker": {
         "headerBadge": "3교시",
-        "title": "Market Compass 엣지메이커",
+        "title": "브랜드 빌더 (Brand Builder AI)",
         "hero": "약점을 기회로!",
         "heroSub": "경쟁사의 빈틈을 파고드는 브랜딩 전략",
         "stepIndicator": "Step {{current}} / {{total}}",
@@ -1198,7 +1263,7 @@
           "title": "브랜딩 전략",
           "brandingReportTitle": "브랜딩 전략 레포트",
           "competitorSummaryTitle": "경쟁사 분석 요약",
-          "competitorSummaryFrom": "시장 탐색기 결과 기반",
+          "competitorSummaryFrom": "시장 스캐너 결과 기반",
           "mockBadge": "예시 데이터",
           "aiBadge": "AI 생성",
           "uspTitle": "USP (핵심 가치 제안)",

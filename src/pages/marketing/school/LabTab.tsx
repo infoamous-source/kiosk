@@ -5,16 +5,15 @@ import { useAuth } from '../../../contexts/AuthContext';
 import { loadSchoolProgress } from '../../../utils/schoolStorage';
 import { SCHOOL_CURRICULUM } from '../../../types/school';
 import ToolCard from '../../../components/school/ToolCard';
-import { FlaskConical, GraduationCap, Loader2 } from 'lucide-react';
+import { FlaskConical, GraduationCap } from 'lucide-react';
 
 export default function LabTab() {
   const { t } = useTranslation('common');
   const navigate = useNavigate();
-  const { user, isLoading } = useAuth();
+  const { user } = useAuth();
   const [graduationMode, setGraduationMode] = useState(false);
 
-  if (isLoading) return <div className="flex justify-center py-12"><Loader2 className="w-8 h-8 animate-spin text-kk-red" /></div>;
-  if (!user) return <div className="text-center py-12 text-kk-brown/60">로그인이 필요합니다</div>;
+  if (!user) return null; // MarketingSchoolLayout이 이미 auth guard 역할
 
   const progress = loadSchoolProgress(user.id);
 

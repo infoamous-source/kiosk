@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, useEffect, useCallback, type ReactNode } from 'react';
+import { createContext, useContext, useState, useEffect, useCallback, useRef, type ReactNode } from 'react';
 import type { User, AuthState } from '../types/auth';
 import type { ProfileRow } from '../types/database';
 import { supabase, isSupabaseConfigured } from '../lib/supabase';
@@ -49,6 +49,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     isLoading: true,
   });
 
+  // login() 완료를 대기하기 위한 resolve 함수 보관
+  const loginResolveRef = useRef<((value: boolean) => void) | null>(null);
+
   // Supabase 인증 상태 변화 감지
   useEffect(() => {
     // Supabase 미설정 시 오프라인 모드
@@ -84,6 +87,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
               isAuthenticated: true,
               isLoading: false,
             });
+            // 대기 중인 login() Promise를 resolve
+            if (loginResolveRef.current) {
+              loginResolveRef.current(true);
+              loginResolveRef.current = null;
+            }
           }
         } else if (event === 'SIGNED_OUT') {
           setState({ user: null, isAuthenticated: false, isLoading: false });
@@ -104,7 +112,18 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       console.error('Login error:', error.message);
       return false;
     }
-    return true;
+
+    // onAuthStateChange + fetchProfile 완료까지 대기
+    return new Promise<boolean>((resolve) => {
+      loginResolveRef.current = resolve;
+      // 안전장치: 5초 후에도 응답 없으면 true 반환 (네트워크 지연 대비)
+      setTimeout(() => {
+        if (loginResolveRef.current) {
+          loginResolveRef.current(true);
+          loginResolveRef.current = null;
+        }
+      }, 5000);
+    });
   }, []);
 
   const logout = useCallback(async () => {

@@ -8,18 +8,17 @@ import StudentCard from '../../../components/school/StudentCard';
 import StampBoard from '../../../components/school/StampBoard';
 import GraduationModal from '../../../components/school/GraduationModal';
 import GraduationCertificate from '../../../components/school/GraduationCertificate';
-import { GraduationCap, Loader2, UserCircle, Award } from 'lucide-react';
+import { GraduationCap, UserCircle, Award } from 'lucide-react';
 
 export default function AttendanceTab() {
   const { t } = useTranslation('common');
   const navigate = useNavigate();
-  const { user, isLoading } = useAuth();
+  const { user } = useAuth();
   const [showGraduationModal, setShowGraduationModal] = useState(false);
   const [showCertificate, setShowCertificate] = useState(false);
   const [refreshKey, setRefreshKey] = useState(0);
 
-  if (isLoading) return <div className="flex justify-center py-12"><Loader2 className="w-8 h-8 animate-spin text-kk-red" /></div>;
-  if (!user) return <div className="text-center py-12 text-kk-brown/60">로그인이 필요합니다</div>;
+  if (!user) return null; // MarketingSchoolLayout이 이미 auth guard 역할
 
   const progress = loadSchoolProgress(user.id);
   const graduated = checkGraduated(user.id);
