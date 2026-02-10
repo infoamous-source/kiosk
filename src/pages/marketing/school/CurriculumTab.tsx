@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../../contexts/AuthContext';
@@ -7,9 +7,9 @@ import {
   isGraduated as checkGraduated, canGraduate,
 } from '../../../utils/schoolStorage';
 import { CURRICULUM_SECTIONS } from '../../../types/school';
-import type { PeriodId, CurriculumSection, CurriculumStep, SectionType } from '../../../types/school';
+import type { PeriodId, CurriculumSection, SectionType } from '../../../types/school';
 import {
-  ChevronDown, Sparkles, Trophy,
+  Sparkles, Trophy,
   ClipboardCheck, Radar, Zap, Share2, CalendarCheck, TrendingUp,
   PartyPopper, FileText, Award, BookOpen, GraduationCap,
 } from 'lucide-react';
@@ -58,26 +58,6 @@ const periodColorMap: Record<string, { bg: string; text: string; iconBg: string 
   violet:  { bg: 'bg-violet-50',  text: 'text-violet-600',  iconBg: 'bg-violet-100' },
 };
 
-// ─── 부드러운 아코디언 컴포넌트 ───
-
-function AnimatedAccordion({ isOpen, children }: { isOpen: boolean; children: React.ReactNode }) {
-  const ref = useRef<HTMLDivElement>(null);
-  const [height, setHeight] = useState(0);
-
-  useEffect(() => {
-    if (ref.current) setHeight(ref.current.scrollHeight);
-  }, [isOpen, children]);
-
-  return (
-    <div
-      className="overflow-hidden transition-all duration-300 ease-in-out"
-      style={{ maxHeight: isOpen ? `${height}px` : '0px', opacity: isOpen ? 1 : 0 }}
-    >
-      <div ref={ref}>{children}</div>
-    </div>
-  );
-}
-
 // ─── 섹션 배지 라벨 ───
 
 function getSectionBadge(section: CurriculumSection, periodLabel: string): string {
@@ -88,14 +68,28 @@ function getSectionBadge(section: CurriculumSection, periodLabel: string): strin
   return '';
 }
 
+// ─── 섹션 클릭 핸들러 유틸 ───
+
+function getSectionRoute(section: CurriculumSection): string | null {
+  // 입학식 → 프로필
+  if (section.id === 'entrance') return '/profile';
+  // 졸업과제 → 졸업과제 페이지
+  if (section.id === 'final-project') return '/marketing/school/graduation-project';
+  // 교시(period) → 실습 step의 toolRoute
+  if (section.type === 'period') {
+    const practiceStep = section.steps.find(s => s.isPractice && s.toolRoute);
+    return practiceStep?.toolRoute ?? null;
+  }
+  // 졸업식 → null (모달로 처리)
+  return null;
+}
+
 // ─── 메인 컴포넌트 ───
 
 export default function CurriculumTab() {
   const { t } = useTranslation('common');
   const navigate = useNavigate();
   const { user } = useAuth();
-  const [expandedSection, setExpandedSection] = useState<string | null>('entrance');
-  const [expandedStep, setExpandedStep] = useState<string | null>(null);
   const [showGraduationModal, setShowGraduationModal] = useState(false);
   const [refreshKey, setRefreshKey] = useState(0);
 
@@ -104,6 +98,24 @@ export default function CurriculumTab() {
   const allDone = hasAllStamps(user.id);
   const graduated = checkGraduated(user.id);
   const canGrad = canGraduate(user.id);
+
+  const handleSectionClick = (section: CurriculumSection) => {
+    // 졸업식은 모달로 처리
+    if (section.id === 'graduation-ceremony') {
+      if (canGrad && !graduated) {
+        setShowGraduationModal(true);
+      }
+      return;
+    }
+
+    // final-project 잠금 체크
+    if ((section.type === 'final-project' || section.type === 'after-school') && !allDone) {
+      return; // 잠금 상태면 무시
+    }
+
+    const route = getSectionRoute(section);
+    if (route) navigate(route);
+  };
 
   return (
     <div className="space-y-3" key={refreshKey}>
@@ -115,9 +127,8 @@ export default function CurriculumTab() {
         <p className="text-sm text-gray-500">{t('school.curriculum.subtitle', '예비 마케터 교실 커리큘럼')}</p>
       </div>
 
-      {/* 9개 섹션 */}
+      {/* 9개 섹션 — 항상 펼침 */}
       {CURRICULUM_SECTIONS.map((section) => {
-        const isExpanded = expandedSection === section.id;
         const styles = section.type === 'period'
           ? { ...sectionStyles.period, ...(periodColorMap[section.color] || {}) }
           : sectionStyles[section.type];
@@ -133,18 +144,20 @@ export default function CurriculumTab() {
         // final-project/graduation-ceremony 잠금 상태
         const isLocked = (section.type === 'final-project' || section.type === 'after-school') && !allDone;
 
+        const isClickable = !isLocked && (getSectionRoute(section) !== null || section.id === 'graduation-ceremony');
+
         return (
           <div
             key={section.id}
+            onClick={() => handleSectionClick(section)}
             className={`rounded-2xl border overflow-hidden transition-all duration-200 ${
               stamped ? 'border-green-200' : styles.border
-            } ${isLocked ? 'opacity-60' : ''}`}
+            } ${isLocked ? 'opacity-60' : ''} ${isClickable ? 'cursor-pointer hover:shadow-md active:scale-[0.99]' : ''}`}
           >
             {/* 섹션 헤더 */}
-            <button
-              onClick={() => setExpandedSection(isExpanded ? null : section.id)}
-              className={`w-full p-4 flex items-center gap-3 transition-colors text-left ${
-                section.type !== 'period' ? sectionStyles[section.type].headerBg : 'hover:bg-gray-50'
+            <div
+              className={`w-full p-4 flex items-center gap-3 transition-colors ${
+                section.type !== 'period' ? sectionStyles[section.type].headerBg : ''
               }`}
             >
               <div className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 ${colors.iconBg || 'bg-gray-100'}`}>
@@ -166,112 +179,105 @@ export default function CurriculumTab() {
                 </h3>
               </div>
 
-              <ChevronDown className={`w-5 h-5 text-gray-400 shrink-0 transition-transform duration-300 ${
-                isExpanded ? 'rotate-180' : ''
-              }`} />
-            </button>
+              {/* 클릭 유도 화살표 (클릭 가능한 섹션만) */}
+              {isClickable && (
+                <span className="text-gray-300 text-lg shrink-0">›</span>
+              )}
+            </div>
 
-            {/* 섹션 내용 */}
-            <AnimatedAccordion isOpen={isExpanded}>
-              <div className="border-t border-gray-100 px-4 pb-4">
-                <div className="mt-3 space-y-2">
-                  {section.steps.map((step) => {
-                    const stepKey = `${section.id}-${step.stepNumber}`;
-                    const isStepExpanded = expandedStep === stepKey;
+            {/* 섹션 내용 — 항상 펼침 */}
+            <div className="border-t border-gray-100 px-4 pb-4">
+              <div className="mt-3 space-y-2">
+                {section.steps.map((step) => {
+                  const stepKey = `${section.id}-${step.stepNumber}`;
 
-                    return (
-                      <div key={stepKey} className="bg-gray-50 rounded-xl overflow-hidden">
-                        {/* Step 헤더 */}
-                        <button
-                          onClick={() => setExpandedStep(isStepExpanded ? null : stepKey)}
-                          className="w-full flex items-center gap-3 px-3 py-2.5 hover:bg-gray-100 transition-colors"
-                        >
-                          <span className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold shrink-0 ${
-                            step.isPractice ? 'bg-purple-100 text-purple-600' : 'bg-gray-200 text-gray-500'
-                          }`}>
-                            {step.stepNumber}
+                  return (
+                    <div key={stepKey} className="bg-gray-50 rounded-xl overflow-hidden">
+                      {/* Step 헤더 */}
+                      <div className="w-full flex items-center gap-3 px-3 py-2.5">
+                        <span className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold shrink-0 ${
+                          step.isPractice ? 'bg-purple-100 text-purple-600' : 'bg-gray-200 text-gray-500'
+                        }`}>
+                          {step.stepNumber}
+                        </span>
+                        <span className="text-sm text-gray-700 flex-1 text-left truncate">
+                          {t(step.titleKey)}
+                        </span>
+                        {step.isPractice ? (
+                          <span className="text-[10px] text-purple-600 px-1.5 py-0.5 bg-purple-50 rounded-full font-bold shrink-0">
+                            실습
                           </span>
-                          <span className="text-sm text-gray-700 flex-1 text-left truncate">
-                            {t(step.titleKey)}
+                        ) : (
+                          <span className="text-[10px] text-gray-400 px-1.5 py-0.5 bg-gray-100 rounded-full shrink-0">
+                            이론
                           </span>
-                          {step.isPractice ? (
-                            <span className="text-[10px] text-purple-600 px-1.5 py-0.5 bg-purple-50 rounded-full font-bold shrink-0">
-                              실습
-                            </span>
-                          ) : (
-                            <span className="text-[10px] text-gray-400 px-1.5 py-0.5 bg-gray-100 rounded-full shrink-0">
-                              이론
-                            </span>
-                          )}
-                        </button>
+                        )}
+                      </div>
 
-                        {/* Step 상세 (서브 아코디언) */}
-                        <AnimatedAccordion isOpen={isStepExpanded}>
-                          <div className="px-3 pb-3">
-                            <p className="text-xs text-gray-500 mb-2 pl-9">
-                              {t(step.descriptionKey)}
-                            </p>
+                      {/* Step 상세 — 항상 펼침 */}
+                      <div className="px-3 pb-3">
+                        <p className="text-xs text-gray-500 mb-2 pl-9">
+                          {t(step.descriptionKey)}
+                        </p>
 
-                            {/* 실습 step → AI 도구 버튼 */}
-                            {step.isPractice && step.toolRoute && (
+                        {/* 실습 step → AI 도구 버튼 */}
+                        {step.isPractice && step.toolRoute && (
+                          <button
+                            onClick={(e) => { e.stopPropagation(); navigate(step.toolRoute!); }}
+                            className="ml-9 flex items-center gap-2 px-3 py-2 bg-purple-50 text-purple-600 rounded-lg text-xs font-bold hover:bg-purple-100 transition-colors"
+                          >
+                            <Sparkles className="w-3.5 h-3.5" />
+                            AI 도구로 실습하기 →
+                          </button>
+                        )}
+
+                        {/* 입학식 step3 → 학생증 보기 */}
+                        {section.id === 'entrance' && step.stepNumber === 3 && (
+                          <button
+                            onClick={(e) => { e.stopPropagation(); navigate('/profile'); }}
+                            className="ml-9 flex items-center gap-2 px-3 py-2 bg-kk-cream text-kk-brown rounded-lg text-xs font-bold hover:bg-kk-warm transition-colors"
+                          >
+                            학생증 보기 →
+                          </button>
+                        )}
+
+                        {/* 졸업과제 step2 → 기획서 페이지 */}
+                        {section.id === 'final-project' && step.stepNumber === 2 && (
+                          <button
+                            onClick={(e) => { e.stopPropagation(); navigate('/marketing/school/graduation-project'); }}
+                            disabled={!allDone}
+                            className="ml-9 flex items-center gap-2 px-3 py-2 bg-violet-50 text-violet-600 rounded-lg text-xs font-bold hover:bg-violet-100 transition-colors disabled:opacity-50"
+                          >
+                            <FileText className="w-3.5 h-3.5" />
+                            통합 기획서 보기 →
+                          </button>
+                        )}
+
+                        {/* 졸업식 step1 → 졸업장 수여 */}
+                        {section.id === 'graduation-ceremony' && step.stepNumber === 1 && (
+                          <div className="ml-9 mt-1">
+                            {graduated ? (
+                              <p className="text-green-600 text-xs font-bold flex items-center gap-1">
+                                <Trophy className="w-3.5 h-3.5" /> 졸업 완료!
+                              </p>
+                            ) : canGrad ? (
                               <button
-                                onClick={() => navigate(step.toolRoute!)}
-                                className="ml-9 flex items-center gap-2 px-3 py-2 bg-purple-50 text-purple-600 rounded-lg text-xs font-bold hover:bg-purple-100 transition-colors"
+                                onClick={(e) => { e.stopPropagation(); setShowGraduationModal(true); }}
+                                className="flex items-center gap-2 px-3 py-2 bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-lg text-xs font-bold hover:opacity-90 transition-opacity"
                               >
-                                <Sparkles className="w-3.5 h-3.5" />
-                                AI 도구로 실습하기 →
+                                🎓 졸업하기
                               </button>
-                            )}
-
-                            {/* 입학식 step3 → 학생증 보기 */}
-                            {section.id === 'entrance' && step.stepNumber === 3 && (
-                              <button
-                                onClick={() => navigate('/profile')}
-                                className="ml-9 flex items-center gap-2 px-3 py-2 bg-kk-cream text-kk-brown rounded-lg text-xs font-bold hover:bg-kk-warm transition-colors"
-                              >
-                                학생증 보기 →
-                              </button>
-                            )}
-
-                            {/* 졸업과제 step2 → 기획서 페이지 */}
-                            {section.id === 'final-project' && step.stepNumber === 2 && (
-                              <button
-                                onClick={() => navigate('/marketing/school/graduation-project')}
-                                disabled={!allDone}
-                                className="ml-9 flex items-center gap-2 px-3 py-2 bg-violet-50 text-violet-600 rounded-lg text-xs font-bold hover:bg-violet-100 transition-colors disabled:opacity-50"
-                              >
-                                <FileText className="w-3.5 h-3.5" />
-                                통합 기획서 보기 →
-                              </button>
-                            )}
-
-                            {/* 졸업식 step1 → 졸업장 수여 */}
-                            {section.id === 'graduation-ceremony' && step.stepNumber === 1 && (
-                              <div className="ml-9 mt-1">
-                                {graduated ? (
-                                  <p className="text-green-600 text-xs font-bold flex items-center gap-1">
-                                    <Trophy className="w-3.5 h-3.5" /> 졸업 완료!
-                                  </p>
-                                ) : canGrad ? (
-                                  <button
-                                    onClick={() => setShowGraduationModal(true)}
-                                    className="flex items-center gap-2 px-3 py-2 bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-lg text-xs font-bold hover:opacity-90 transition-opacity"
-                                  >
-                                    🎓 졸업하기
-                                  </button>
-                                ) : (
-                                  <p className="text-xs text-gray-400">모든 교시를 완료해야 합니다</p>
-                                )}
-                              </div>
+                            ) : (
+                              <p className="text-xs text-gray-400">모든 교시를 완료해야 합니다</p>
                             )}
                           </div>
-                        </AnimatedAccordion>
+                        )}
                       </div>
-                    );
-                  })}
-                </div>
+                    </div>
+                  );
+                })}
               </div>
-            </AnimatedAccordion>
+            </div>
           </div>
         );
       })}
