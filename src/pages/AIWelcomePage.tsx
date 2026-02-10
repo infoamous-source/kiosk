@@ -55,32 +55,36 @@ export default function AIWelcomePage() {
     setIsLoading(true);
     setError('');
 
-    // localStorage에 항상 저장 (오프라인에서도 동작)
     try {
-      localStorage.setItem('kiosk-gemini-api-key', apiKey.trim());
-      localStorage.setItem('kiosk-gemini-connected', 'true');
-    } catch {
-      // storage full 등 무시
+      // localStorage에 항상 저장 (오프라인에서도 동작)
+      try {
+        localStorage.setItem('kiosk-gemini-api-key', apiKey.trim());
+        localStorage.setItem('kiosk-gemini-connected', 'true');
+      } catch {
+        // storage full 등 무시
+      }
+
+      // Supabase DB에도 저장 시도 (user가 있으면)
+      let userId = user?.id;
+      if (!userId) {
+        const { data: { session } } = await supabase.auth.getSession();
+        userId = session?.user?.id;
+      }
+
+      if (userId) {
+        await saveGeminiApiKey(userId, apiKey.trim());
+      }
+
+      setSuccess(true);
+      setTimeout(() => {
+        navigate(redirectPath);
+      }, 1500);
+    } catch (err) {
+      console.error('API 키 저장 실패:', err);
+      setError('저장 중 오류가 발생했습니다. 다시 시도해주세요.');
+    } finally {
+      setIsLoading(false);
     }
-
-    // Supabase DB에도 저장 시도 (user가 있으면)
-    let userId = user?.id;
-    if (!userId) {
-      // AuthContext에 user가 아직 없으면 Supabase 세션에서 직접 가져오기
-      const { data: { session } } = await supabase.auth.getSession();
-      userId = session?.user?.id;
-    }
-
-    if (userId) {
-      await saveGeminiApiKey(userId, apiKey.trim());
-    }
-
-    setSuccess(true);
-    setTimeout(() => {
-      navigate(redirectPath);
-    }, 1500);
-
-    setIsLoading(false);
   };
 
   const name = userName || (user as Record<string, any>)?.user_metadata?.name || '학생';
