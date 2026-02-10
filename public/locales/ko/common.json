@@ -794,7 +794,7 @@
         "subtitle": "4교시",
         "step1": { "title": "시선 잡기", "desc": "사람들의 관심을 끄는 강렬한 제목(Headline) 쓰기" },
         "step2": { "title": "잘 팔리는 공식", "desc": "4단계 구조(Hook-공감-해결-행동) 배우기" },
-        "step3": { "title": "[실습] 콘텐츠 메이커 (Content Maker AI)", "desc": "바이럴 카드뉴스 기획 (Content Planning)" }
+        "step3": { "title": "[실습] 콘텐츠 메이커 (Content Maker AI)", "desc": "SNS 광고 만들기 (Create SNS Ads)" }
       },
       "period5": {
         "title": "설득의 기술",
@@ -855,7 +855,7 @@
       },
       "viralCardMaker": {
         "name": "콘텐츠 메이커 (Content Maker AI)",
-        "description": "바이럴 카드뉴스 기획"
+        "description": "SNS 광고 만들기"
       },
       "perfectPlanner": {
         "name": "세일즈 라이터 (Sales Writer AI)",

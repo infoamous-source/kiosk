@@ -1,5 +1,5 @@
 import { generateText, isGeminiEnabled, getStoredApiKey } from './geminiClient';
-import { GoogleGenerativeAI } from '@google/generative-ai';
+import { GoogleGenAI } from '@google/genai';
 import type { ViralCardSlide, ViralCardResult, ViralTone, ImageStyle } from '../../types/school';
 
 // ─── JSON 파싱 헬퍼 ───
@@ -133,25 +133,20 @@ export async function generateSlideImage(
   if (!apiKey) return null;
 
   try {
-    const genAI = new GoogleGenerativeAI(apiKey);
-    const model = genAI.getGenerativeModel({
-      model: 'gemini-2.0-flash-exp',
-      generationConfig: {
-        // @ts-expect-error Gemini image generation requires responseModalities
-        responseModalities: ['IMAGE', 'TEXT'],
+    const ai = new GoogleGenAI({ apiKey });
+    const fullPrompt = `${IMAGE_STYLE_PREFIX[imageStyle]}, ${imagePrompt}. NO text, NO letters, NO words, NO logos in the image. Leave space in center for text overlay. Square 1:1 aspect ratio.`;
+
+    const response = await ai.models.generateContent({
+      model: 'gemini-2.5-flash-preview-image-generation',
+      contents: fullPrompt,
+      config: {
+        responseModalities: ['Text', 'Image'],
       },
     });
 
-    const fullPrompt = `${IMAGE_STYLE_PREFIX[imageStyle]}, ${imagePrompt}. NO text, NO letters, NO words, NO logos in the image. Leave space in center for text overlay. Square 1:1 aspect ratio.`;
-
-    const result = await model.generateContent(fullPrompt);
-    const response = result.response;
-
-    for (const candidate of response.candidates || []) {
-      for (const part of candidate.content?.parts || []) {
-        if (part.inlineData) {
-          return part.inlineData.data;
-        }
+    for (const part of response.candidates?.[0]?.content?.parts || []) {
+      if (part.inlineData) {
+        return part.inlineData.data ?? null;
       }
     }
     return null;

@@ -64,6 +64,7 @@ export default function ViralCardMakerTool() {
   // Result
   const [result, setResult] = useState<ViralCardResult['output'] | null>(null);
   const [slideImages, setSlideImages] = useState<(string | null)[]>([null, null, null, null]);
+  const [imageLoadingDone, setImageLoadingDone] = useState(false);
   const [isMock, setIsMock] = useState(false);
   const [copiedField, setCopiedField] = useState<string | null>(null);
   const [activeSlide, setActiveSlide] = useState(0);
@@ -153,15 +154,19 @@ export default function ViralCardMakerTool() {
       if (imageStyle === 'custom' && customImageBase64) {
         // Use uploaded image for all 4 slides
         setSlideImages([customImageBase64, customImageBase64, customImageBase64, customImageBase64]);
+        setImageLoadingDone(true);
       } else if (!mock) {
         setLoadingStep(1);
+        setImageLoadingDone(false);
         generateAllSlideImages(copyResult.slides, imageStyle, (index, base64) => {
           setSlideImages((prev) => {
             const next = [...prev];
             next[index] = base64;
             return next;
           });
-        });
+        }).then(() => setImageLoadingDone(true));
+      } else {
+        setImageLoadingDone(true);
       }
     } catch (err) {
       console.error('[ViralCard] Generation failed:', err);
@@ -558,13 +563,20 @@ export default function ViralCardMakerTool() {
                           : slide.colorScheme.gradient,
                       }}
                     >
-                      {slideImages[index] && (
+                      {slideImages[index] ? (
                         <img
                           src={`data:image/png;base64,${slideImages[index]}`}
                           alt={slide.stepLabel}
                           className="absolute inset-0 w-full h-full object-cover"
                         />
-                      )}
+                      ) : !imageLoadingDone && !isMock ? (
+                        <div className="absolute inset-0 flex items-center justify-center">
+                          <div className="text-center">
+                            <Loader2 className="w-8 h-8 text-white/70 animate-spin mx-auto mb-2" />
+                            <span className="text-white/70 text-xs">{t('school.viralCardMaker.loading.image', '이미지 생성 중...')}</span>
+                          </div>
+                        </div>
+                      ) : null}
                       {/* Overlay */}
                       <div className="absolute inset-0 bg-black/40 flex flex-col justify-between p-5">
                         {/* Step Badge */}
