@@ -52,8 +52,8 @@ export default function TopHeader() {
     setLangOpen(false);
   };
 
-  const handleLogout = () => {
-    logout();
+  const handleLogout = async () => {
+    await logout();
     setUserMenuOpen(false);
     navigate('/');
   };

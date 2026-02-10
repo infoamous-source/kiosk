@@ -58,8 +58,8 @@ export default function GlobalLogoutButton() {
   if (!isAuthenticated || !user) return null;
   if (shouldHideButton(location.pathname)) return null;
 
-  const handleLogout = () => {
-    logout();
+  const handleLogout = async () => {
+    await logout();
     setMenuOpen(false);
     navigate('/');
   };
