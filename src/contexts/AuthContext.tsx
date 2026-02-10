@@ -1,4 +1,5 @@
 import { createContext, useContext, useState, useEffect, useCallback, useRef, type ReactNode } from 'react';
+import type { User as SupabaseUser } from '@supabase/supabase-js';
 import type { User, AuthState } from '../types/auth';
 import type { ProfileRow } from '../types/database';
 import { supabase, isSupabaseConfigured } from '../lib/supabase';
@@ -42,6 +43,22 @@ function profileToUser(p: ProfileRow): User {
   };
 }
 
+/** Supabase session.user → User fallback (RLS 에러 시 사용) */
+function sessionToUser(su: SupabaseUser): User {
+  const meta = su.user_metadata || {};
+  return {
+    id: su.id,
+    name: meta.name || '',
+    email: su.email || '',
+    role: meta.role || 'student',
+    organization: '',
+    instructorCode: meta.instructor_code || '',
+    orgCode: meta.org_code || '',
+    learningPurpose: '',
+    createdAt: su.created_at || new Date().toISOString(),
+  };
+}
+
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [state, setState] = useState<AuthState>({
     user: null,
@@ -64,14 +81,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     supabase.auth.getSession().then(async ({ data: { session } }) => {
       if (session?.user) {
         const profile = await fetchProfile(session.user.id);
-        if (profile) {
-          setState({
-            user: profileToUser(profile),
-            isAuthenticated: true,
-            isLoading: false,
-          });
-          return;
-        }
+        const user = profile ? profileToUser(profile) : sessionToUser(session.user);
+        setState({ user, isAuthenticated: true, isLoading: false });
+        return;
       }
       setState((prev) => ({ ...prev, isLoading: false }));
     });
@@ -81,17 +93,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       async (event, session) => {
         if (event === 'SIGNED_IN' && session?.user) {
           const profile = await fetchProfile(session.user.id);
-          if (profile) {
-            setState({
-              user: profileToUser(profile),
-              isAuthenticated: true,
-              isLoading: false,
-            });
-            // 대기 중인 login() Promise를 resolve
-            if (loginResolveRef.current) {
-              loginResolveRef.current(true);
-              loginResolveRef.current = null;
-            }
+          const user = profile ? profileToUser(profile) : sessionToUser(session.user);
+          setState({ user, isAuthenticated: true, isLoading: false });
+          // 대기 중인 login() Promise를 resolve
+          if (loginResolveRef.current) {
+            loginResolveRef.current(true);
+            loginResolveRef.current = null;
           }
         } else if (event === 'SIGNED_OUT') {
           setState({ user: null, isAuthenticated: false, isLoading: false });
