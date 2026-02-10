@@ -1,7 +1,8 @@
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, LogIn } from 'lucide-react';
 import { type SchoolId, SCHOOL_NAMES } from '../types/enrollment';
+import { useAuth } from '../contexts/AuthContext';
 import KkakdugiCharacter from '../components/brand/KkakdugiCharacter';
 import { SchoolPatternBg, StarIcon, PencilIcon } from '../components/brand/SchoolIllustrations';
 
@@ -13,6 +14,7 @@ export default function CongratsPage() {
   const { t } = useTranslation('common');
   const navigate = useNavigate();
   const location = useLocation();
+  const { user } = useAuth();
 
   const { schoolId } = (location.state as LocationState) || {};
 
@@ -21,13 +23,23 @@ export default function CongratsPage() {
     return null;
   }
 
+  const handleLogin = () => {
+    navigate('/login', {
+      state: { redirectTo: '/marketing/hub' },
+    });
+  };
+
   const handleRegister = () => {
     navigate('/register', {
       state: {
         preSelectedSchool: schoolId,
-        redirectTo: `/${schoolId}`
-      }
+        redirectTo: `/${schoolId}`,
+      },
     });
+  };
+
+  const handleGoToSchool = () => {
+    navigate('/marketing/hub');
   };
 
   return (
@@ -63,14 +75,36 @@ export default function CongratsPage() {
           })}
         </p>
 
-        {/* 학생 등록 버튼 */}
-        <button
-          onClick={handleRegister}
-          className="group inline-flex items-center gap-3 px-8 py-4 bg-kk-red hover:bg-kk-red-deep text-white text-lg font-semibold rounded-xl shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-200"
-        >
-          <span>{t('congrats.registerButton', '학생 등록하기')}</span>
-          <ArrowRight className="w-6 h-6 group-hover:translate-x-1 transition-transform" />
-        </button>
+        {user ? (
+          /* 로그인된 유저 → 교실 바로가기 */
+          <button
+            onClick={handleGoToSchool}
+            className="group inline-flex items-center gap-3 px-8 py-4 bg-kk-red hover:bg-kk-red-deep text-white text-lg font-semibold rounded-xl shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-200"
+          >
+            <span>{t('congrats.goToSchool', '교실로 이동하기')}</span>
+            <ArrowRight className="w-6 h-6 group-hover:translate-x-1 transition-transform" />
+          </button>
+        ) : (
+          /* 미로그인 → 로그인 버튼(1차) + 학생등록 링크(2차) */
+          <div className="space-y-4">
+            <button
+              onClick={handleLogin}
+              className="group inline-flex items-center gap-3 px-8 py-4 bg-kk-red hover:bg-kk-red-deep text-white text-lg font-semibold rounded-xl shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-200"
+            >
+              <LogIn className="w-6 h-6" />
+              <span>{t('congrats.loginButton', '로그인하기')}</span>
+            </button>
+
+            <div>
+              <button
+                onClick={handleRegister}
+                className="text-kk-brown/50 hover:text-kk-red text-sm underline underline-offset-4 transition-colors"
+              >
+                {t('congrats.registerLink', '아직 계정이 없으신가요? 학생 등록하기')}
+              </button>
+            </div>
+          </div>
+        )}
 
         {/* 안내 문구 */}
         <p className="mt-8 text-sm text-kk-brown/40">

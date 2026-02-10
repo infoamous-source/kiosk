@@ -7,7 +7,7 @@ import {
 } from 'lucide-react';
 import { useAuth } from '../../../../contexts/AuthContext';
 import {
-  earnStamp, hasStamp, getEdgeMakerResult,
+  autoStampAndGraduate, hasStamp, getEdgeMakerResult,
   saveViralCardResult, getViralCardResult,
 } from '../../../../utils/schoolStorage';
 import { generateViralCards, generateAllSlideImages } from '../../../../services/gemini/viralCardService';
@@ -124,13 +124,14 @@ export default function ViralCardMakerTool() {
       setSlideImages([null, null, null, null]);
       setPhase('result');
 
-      // Save result (without images)
+      // Save result (without images) + 자동 스탬프
       if (user) {
         saveViralCardResult(user.id, {
           completedAt: new Date().toISOString(),
           input: { productName: productName.trim(), targetPersona: targetPersona.trim(), usp: usp.trim(), tone, imageStyle },
           output: copyResult,
         });
+        autoStampAndGraduate(user.id, 'viral-card-maker');
       }
 
       // Step 2: Generate images in background (only if not mock)
@@ -176,11 +177,9 @@ export default function ViralCardMakerTool() {
     copyToClipboard(`${text}\n\n${t('school.viralCardMaker.strategy')}: ${result.overallStrategy}`, 'all');
   };
 
-  // Complete
+  // Complete (stamp already earned on result save)
   const handleComplete = () => {
-    if (user && !completed) {
-      earnStamp(user.id, 'viral-card-maker');
-    }
+    // stamp already auto-applied on result generation
   };
 
   const isInputValid = productName.trim().length > 0 && targetPersona.trim().length > 0;

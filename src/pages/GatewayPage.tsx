@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
-import { Globe, ChevronDown, ChevronRight } from 'lucide-react';
+import { Globe, ChevronDown, ChevronRight, UserCircle } from 'lucide-react';
 import TrackCard from '../components/gateway/TrackCard';
 import { tracks } from '../data/tracks';
 import { useVisibility } from '../contexts/VisibilityContext';
@@ -76,7 +76,17 @@ export default function GatewayPage() {
             </div>
           </div>
 
-          {/* 언어 선택기 */}
+          {/* 내 학생증 + 언어 선택기 */}
+          <div className="flex items-center gap-2">
+          {isAuthenticated && (
+            <button
+              onClick={() => navigate('/profile')}
+              className="flex items-center gap-1.5 px-3 py-2 rounded-lg hover:bg-kk-cream/60 transition-colors text-sm font-medium text-kk-brown"
+            >
+              <UserCircle className="w-4 h-4" />
+              <span className="hidden sm:inline">{t('sidebar.profile', '내 학생증')}</span>
+            </button>
+          )}
           <div ref={langRef} className="relative">
             <button
               onClick={() => setLangOpen(!langOpen)}
@@ -104,6 +114,7 @@ export default function GatewayPage() {
                 ))}
               </div>
             )}
+          </div>
           </div>
         </div>
       </header>

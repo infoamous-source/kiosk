@@ -8,7 +8,7 @@ import {
 import { BarChart, Bar, XAxis, YAxis, ResponsiveContainer, Cell, Tooltip } from 'recharts';
 import { useAuth } from '../../../../contexts/AuthContext';
 import {
-  earnStamp, hasStamp, getMarketScannerResult, getEdgeMakerResult,
+  autoStampAndGraduate, hasStamp, getMarketScannerResult, getEdgeMakerResult,
   saveSimulationResult, loadSchoolProgress,
 } from '../../../../utils/schoolStorage';
 import { simulateROAS } from '../../../../services/gemini/roasSimulatorService';
@@ -181,6 +181,7 @@ export default function ROASSimulatorTool() {
           budget: adBudget,
           revenue: simResult.estimatedRevenue,
         });
+        autoStampAndGraduate(user.id, 'roas-simulator');
       }
     } catch (err) {
       console.error('[ROASSimulator] Simulation failed:', err);
@@ -213,11 +214,9 @@ export default function ROASSimulatorTool() {
     copyToClipboard(text, 'all');
   };
 
-  // Complete
+  // Complete (stamp already earned on result save)
   const handleComplete = () => {
-    if (user && !completed) {
-      earnStamp(user.id, 'roas-simulator');
-    }
+    // stamp already auto-applied on result generation
   };
 
   const isInputValid = productName.trim().length > 0 && Number(productPrice) > 0;
@@ -334,16 +333,24 @@ export default function ROASSimulatorTool() {
 
             {/* Budget Selection */}
             <div className="bg-white rounded-2xl border border-gray-200 p-5">
-              <label className="block text-sm font-semibold text-gray-700 mb-3">{t('school.roasSimulator.input.adBudget')}</label>
-              <div className="grid grid-cols-4 gap-2">
+              <label className="block text-sm font-semibold text-gray-700 mb-1">{t('school.roasSimulator.input.adBudget')}</label>
+              <p className="text-xs text-gray-400 mb-3">{t('school.roasSimulator.input.adBudgetHint', '광고에 사용할 예산을 원 단위로 입력하세요')}</p>
+              <input
+                type="number"
+                value={adBudget || ''}
+                onChange={(e) => setAdBudget(Number(e.target.value))}
+                placeholder="300000"
+                className="w-full px-3 py-2.5 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-orange-300 mb-2"
+              />
+              <div className="flex gap-1.5 flex-wrap">
                 {BUDGET_PRESETS.map((preset) => (
                   <button
                     key={preset}
                     onClick={() => setAdBudget(preset)}
-                    className={`py-2 rounded-xl text-xs font-bold transition-all ${
+                    className={`px-3 py-1 rounded-full text-xs font-medium transition-all ${
                       adBudget === preset
                         ? 'bg-orange-500 text-white'
-                        : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                        : 'bg-gray-100 text-gray-500 hover:bg-gray-200'
                     }`}
                   >
                     {formatWon(preset)}

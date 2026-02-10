@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { ArrowLeft, Zap, Plus, X, Copy, Check, AlertCircle } from 'lucide-react';
 import { useAuth } from '../../../../contexts/AuthContext';
-import { earnStamp, hasStamp, getMarketScannerResult, saveEdgeMakerResult, getEdgeMakerResult } from '../../../../utils/schoolStorage';
+import { autoStampAndGraduate, hasStamp, getMarketScannerResult, saveEdgeMakerResult, getEdgeMakerResult } from '../../../../utils/schoolStorage';
 import { generateBrandingStrategy } from '../../../../services/gemini/marketCompassService';
 import type { EdgeMakerResult, CompetitorInfo } from '../../../../types/school';
 
@@ -87,6 +87,7 @@ export default function EdgeMakerTool() {
 
       if (user) {
         saveEdgeMakerResult(user.id, edgeResult);
+        autoStampAndGraduate(user.id, 'edge-maker');
       }
 
       setPhase('result');
@@ -99,9 +100,6 @@ export default function EdgeMakerTool() {
   };
 
   const handleComplete = () => {
-    if (user && !completed) {
-      earnStamp(user.id, 'edge-maker');
-    }
     navigate('/marketing/school/attendance');
   };
 

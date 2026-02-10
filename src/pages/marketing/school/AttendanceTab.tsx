@@ -7,13 +7,15 @@ import { isGraduated as checkGraduated } from '../../../utils/schoolStorage';
 import StudentCard from '../../../components/school/StudentCard';
 import StampBoard from '../../../components/school/StampBoard';
 import GraduationModal from '../../../components/school/GraduationModal';
-import { GraduationCap, Loader2 } from 'lucide-react';
+import GraduationCertificate from '../../../components/school/GraduationCertificate';
+import { GraduationCap, Loader2, UserCircle, Award } from 'lucide-react';
 
 export default function AttendanceTab() {
   const { t } = useTranslation('common');
   const navigate = useNavigate();
   const { user, isLoading } = useAuth();
   const [showGraduationModal, setShowGraduationModal] = useState(false);
+  const [showCertificate, setShowCertificate] = useState(false);
   const [refreshKey, setRefreshKey] = useState(0);
 
   if (isLoading) return <div className="flex justify-center py-12"><Loader2 className="w-8 h-8 animate-spin text-kk-red" /></div>;
@@ -34,6 +36,26 @@ export default function AttendanceTab() {
     <div className="space-y-5" key={refreshKey}>
       {/* 학생증 */}
       <StudentCard user={user} isGraduated={graduated} personaId={personaId} />
+
+      {/* 내 학생증 보기 + 졸업증 받기 */}
+      <div className="flex gap-2">
+        <button
+          onClick={() => navigate('/profile')}
+          className="flex-1 flex items-center justify-center gap-2 py-2.5 bg-kk-cream text-kk-brown text-sm font-medium rounded-xl hover:bg-kk-warm transition-colors"
+        >
+          <UserCircle className="w-4 h-4" />
+          {t('school.attendance.viewStudentCard', '내 학생증 보기')}
+        </button>
+        {graduated && (
+          <button
+            onClick={() => setShowCertificate(true)}
+            className="flex-1 flex items-center justify-center gap-2 py-2.5 bg-gradient-to-r from-amber-100 to-yellow-100 text-amber-700 text-sm font-bold rounded-xl hover:opacity-90 transition-opacity border border-amber-200"
+          >
+            <Award className="w-4 h-4" />
+            {t('school.graduation.certificate.getCertificate', '졸업증 받기')}
+          </button>
+        )}
+      </div>
 
       {/* 도장판 */}
       <StampBoard stamps={progress.stamps} />
@@ -83,6 +105,14 @@ export default function AttendanceTab() {
           userId={user.id}
           onClose={() => setShowGraduationModal(false)}
           onComplete={handleGraduationComplete}
+        />
+      )}
+
+      {/* 졸업증서 팝업 */}
+      {showCertificate && (
+        <GraduationCertificate
+          userName={user.name}
+          onClose={() => setShowCertificate(false)}
         />
       )}
     </div>

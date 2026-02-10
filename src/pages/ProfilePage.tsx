@@ -16,11 +16,13 @@ import {
   CheckCircle2,
   AlertCircle,
   XCircle,
+  ArrowRight,
 } from 'lucide-react';
 import { SCHOOL_NAMES } from '../types/enrollment';
 import IdeaBox from '../components/profile/IdeaBox';
 import ActivityHistory from '../components/profile/ActivityHistory';
 import KkakdugiMascot from '../components/brand/KkakdugiMascot';
+import { isGraduated as checkGraduated } from '../utils/schoolStorage';
 
 type ProfileTab = 'info' | 'activity' | 'ideabox';
 
@@ -51,6 +53,8 @@ export default function ProfilePage() {
   ];
 
   const { enrollments } = useEnrollments();
+  const graduated = checkGraduated(user.id);
+  const isMarketingEnrolled = enrollments.some(e => e.school_id === 'marketing' && e.status === 'active');
 
   // 성별 라벨
   const getGenderLabel = () => {
@@ -74,7 +78,7 @@ export default function ProfilePage() {
           <div className="flex-1">
             <h1 className="text-2xl font-bold text-kk-brown">{user.name}</h1>
             <p className="text-kk-brown/50">{user.email}</p>
-            <div className="flex items-center gap-3 mt-2">
+            <div className="flex items-center gap-3 mt-2 flex-wrap">
               <span className={`px-3 py-0.5 rounded-full text-xs font-medium ${
                 user.role === 'instructor'
                   ? 'bg-kk-red/10 text-kk-red-deep'
@@ -82,6 +86,15 @@ export default function ProfilePage() {
               }`}>
                 {user.role === 'instructor' ? t('header.instructor') : t('header.student')}
               </span>
+              {isMarketingEnrolled && (
+                <span className={`px-3 py-0.5 rounded-full text-xs font-medium ${
+                  graduated
+                    ? 'bg-kk-gold/20 text-kk-brown font-bold'
+                    : 'bg-white/50 text-kk-brown'
+                }`}>
+                  {graduated ? '🎓 졸업' : '📚 재학 중'}
+                </span>
+              )}
               <span className="px-3 py-0.5 rounded-full text-xs font-medium bg-white/50 text-kk-brown">
                 {enrollments.filter(e => e.status === 'active').length > 0
                   ? `${enrollments.filter(e => e.status === 'active').length}개 학교 등록`
@@ -90,6 +103,18 @@ export default function ProfilePage() {
             </div>
           </div>
         </div>
+
+        {/* 교실 바로가기 */}
+        {isMarketingEnrolled && (
+          <button
+            onClick={() => navigate('/marketing/hub')}
+            className="mt-3 flex items-center gap-2 px-4 py-2 bg-white/40 hover:bg-white/60 rounded-xl transition-colors text-sm font-medium text-kk-brown"
+          >
+            <School className="w-4 h-4" />
+            <span>{t('profile.goToClassroom', '교실로 이동하기')}</span>
+            <ArrowRight className="w-4 h-4" />
+          </button>
+        )}
       </div>
 
       {/* 탭 네비게이션 */}

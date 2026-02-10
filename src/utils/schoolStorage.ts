@@ -88,14 +88,42 @@ export function hasStamp(userId: string, periodId: PeriodId): boolean {
   return stamp?.completed ?? false;
 }
 
+/**
+ * AI 도구 사용 시 자동 스탬프 + 자동 졸업 처리
+ * - 해당 교시 도장 자동 적립
+ * - 모든 도장 완료 시 자동 졸업 + 프로 교실 오픈
+ */
+export function autoStampAndGraduate(userId: string, periodId: PeriodId): { stamped: boolean; graduated: boolean } {
+  const progress = earnStamp(userId, periodId);
+  const allDone = progress.stamps.every((s) => s.completed);
+
+  if (allDone && !progress.graduation.isGraduated) {
+    // 자동 졸업 처리
+    const now = new Date();
+    const expiresAt = new Date(now);
+    expiresAt.setDate(expiresAt.getDate() + PRO_DURATION_DAYS);
+
+    progress.graduation = {
+      isGraduated: true,
+      graduatedAt: now.toISOString(),
+      review: '(자동 졸업)',
+      proExpiresAt: expiresAt.toISOString(),
+    };
+
+    saveSchoolProgress(userId, progress);
+    return { stamped: true, graduated: true };
+  }
+
+  return { stamped: true, graduated: false };
+}
+
 // ─── 졸업 관련 ───
 
-/** 졸업 가능 여부 (모든 스탬프 + 시뮬레이션 완료) */
+/** 졸업 가능 여부 (모든 스탬프 완료) */
 export function canGraduate(userId: string): boolean {
   const progress = loadSchoolProgress(userId);
   const allStamps = progress.stamps.every((s) => s.completed);
-  const simDone = !!progress.simulationResult;
-  return allStamps && simDone && !progress.graduation.isGraduated;
+  return allStamps && !progress.graduation.isGraduated;
 }
 
 /** 졸업 처리 */

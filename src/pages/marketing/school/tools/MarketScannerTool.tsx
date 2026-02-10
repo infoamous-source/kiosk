@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { ArrowLeft, Radar, Search, Copy, Check, ChevronDown, ChevronUp, ArrowRight } from 'lucide-react';
 import { useAuth } from '../../../../contexts/AuthContext';
-import { earnStamp, hasStamp, getMarketScannerResult, saveMarketScannerResult } from '../../../../utils/schoolStorage';
+import { autoStampAndGraduate, hasStamp, getMarketScannerResult, saveMarketScannerResult } from '../../../../utils/schoolStorage';
 import { generateMarketAnalysis } from '../../../../services/gemini/marketCompassService';
 import type { MarketScannerResult } from '../../../../types/school';
 
@@ -79,9 +79,10 @@ export default function MarketScannerTool() {
       setResult(scannerResult);
       setIsMock(mock);
 
-      // 저장
+      // 저장 + 자동 스탬프
       if (user) {
         saveMarketScannerResult(user.id, scannerResult);
+        autoStampAndGraduate(user.id, 'market-scanner');
       }
 
       setPhase('result');
@@ -104,9 +105,6 @@ export default function MarketScannerTool() {
   };
 
   const handleComplete = () => {
-    if (user && !completed) {
-      earnStamp(user.id, 'market-scanner');
-    }
     navigate('/marketing/school/tools/edge-maker');
   };
 
