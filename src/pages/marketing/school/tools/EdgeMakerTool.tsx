@@ -137,7 +137,7 @@ export default function EdgeMakerTool() {
   const CopyButton = ({ text, field }: { text: string; field: string }) => (
     <button
       onClick={() => handleCopy(text, field)}
-      className="flex items-center gap-1 text-xs text-gray-400 hover:text-amber-500 transition-colors"
+      className="flex items-center gap-1 text-xs text-gray-400 hover:text-kk-red transition-colors"
     >
       {copiedField === field ? (
         <>
@@ -154,7 +154,7 @@ export default function EdgeMakerTool() {
   );
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-kk-bg">
       {/* Header */}
       <header className="bg-white border-b border-gray-200 sticky top-0 z-40">
         <div className="max-w-lg mx-auto px-4 py-3 flex items-center gap-3">
@@ -162,10 +162,10 @@ export default function EdgeMakerTool() {
             <ArrowLeft className="w-5 h-5 text-gray-600" />
           </button>
           <div className="flex items-center gap-2">
-            <span className="text-xs font-bold text-amber-600 bg-amber-50 px-2 py-0.5 rounded">
+            <span className="text-xs font-bold text-kk-brown bg-kk-cream px-2 py-0.5 rounded">
               {t('school.marketCompass.edgeMaker.headerBadge')}
             </span>
-            <h1 className="font-bold text-gray-800">{t('school.marketCompass.edgeMaker.title')}</h1>
+            <h1 className="font-bold text-kk-brown">{t('school.marketCompass.edgeMaker.title')}</h1>
           </div>
         </div>
       </header>
@@ -173,34 +173,34 @@ export default function EdgeMakerTool() {
       <main className="max-w-lg mx-auto px-4 py-6 space-y-5">
         {/* Hero */}
         <div className="text-center py-4">
-          <div className="w-16 h-16 mx-auto mb-3 bg-amber-50 rounded-2xl flex items-center justify-center">
-            <Zap className="w-8 h-8 text-amber-500" />
+          <div className="w-16 h-16 mx-auto mb-3 bg-kk-cream rounded-2xl flex items-center justify-center">
+            <Zap className="w-8 h-8 text-kk-gold" />
           </div>
-          <h2 className="text-xl font-bold text-gray-800">{t('school.marketCompass.edgeMaker.hero')}</h2>
+          <h2 className="text-xl font-bold text-kk-brown">{t('school.marketCompass.edgeMaker.hero')}</h2>
           <p className="text-sm text-gray-500 mt-1">{t('school.marketCompass.edgeMaker.heroSub')}</p>
         </div>
 
         {/* Step Indicator */}
         <div className="flex items-center gap-2 justify-center">
-          <div className="flex items-center gap-1.5 px-3 py-1.5 bg-green-50 text-green-600 rounded-full text-xs font-bold">
+          <div className="flex items-center gap-1.5 px-3 py-1.5 bg-kk-cream text-kk-brown rounded-full text-xs font-bold">
             ✅ {t('school.marketCompass.edgeMaker.step1Done')}
           </div>
           <div className="w-6 h-0.5 bg-gray-300" />
-          <div className="flex items-center gap-1.5 px-3 py-1.5 bg-amber-50 text-amber-600 rounded-full text-xs font-bold">
+          <div className="flex items-center gap-1.5 px-3 py-1.5 bg-kk-warm text-kk-brown rounded-full text-xs font-bold">
             🔥 {t('school.marketCompass.edgeMaker.step2Active')}
           </div>
         </div>
 
         {/* ─── NO SCANNER DATA ─── */}
         {noScannerData && (
-          <div className="bg-amber-50 border border-amber-200 rounded-2xl p-6 text-center">
-            <AlertCircle className="w-10 h-10 text-amber-400 mx-auto mb-3" />
-            <p className="text-sm text-amber-700 font-medium mb-3">
+          <div className="bg-kk-cream border border-kk-warm rounded-2xl p-6 text-center">
+            <AlertCircle className="w-10 h-10 text-kk-gold mx-auto mb-3" />
+            <p className="text-sm text-kk-brown font-medium mb-3">
               {t('school.marketCompass.edgeMaker.noScannerData')}
             </p>
             <button
               onClick={() => navigate('/marketing/school/tools/market-scanner')}
-              className="px-6 py-2.5 bg-blue-500 text-white rounded-xl font-medium text-sm hover:bg-blue-600 transition-colors"
+              className="px-6 py-2.5 bg-kk-navy text-white rounded-xl font-medium text-sm hover:bg-kk-navy-deep transition-colors"
             >
               {t('school.marketCompass.edgeMaker.goToScanner')}
             </button>
@@ -213,7 +213,7 @@ export default function EdgeMakerTool() {
             {/* 경쟁사 요약 카드 */}
             {competitors.length > 0 && (
               <div className="bg-white rounded-2xl border border-gray-200 p-5">
-                <h3 className="font-semibold text-gray-800 mb-1">
+                <h3 className="font-semibold text-kk-brown mb-1">
                   {t('school.marketCompass.edgeMaker.competitorSummaryTitle')}
                 </h3>
                 <p className="text-xs text-gray-400 mb-3">
@@ -221,8 +221,8 @@ export default function EdgeMakerTool() {
                 </p>
                 <div className="space-y-2">
                   {competitors.map((comp, i) => (
-                    <div key={i} className="flex items-start gap-3 bg-blue-50 rounded-xl px-4 py-3">
-                      <span className="text-blue-500 text-sm mt-0.5">🏢</span>
+                    <div key={i} className="flex items-start gap-3 bg-kk-cream rounded-xl px-4 py-3">
+                      <span className="text-kk-navy text-sm mt-0.5">🏢</span>
                       <div>
                         <span className="font-medium text-gray-800 text-sm">{comp.name}</span>
                         <p className="text-xs text-gray-500 mt-0.5">{comp.description}</p>
@@ -235,7 +235,7 @@ export default function EdgeMakerTool() {
 
             {/* Pain Points (읽기 전용) */}
             <div className="bg-white rounded-2xl border border-gray-200 p-5">
-              <h3 className="font-semibold text-gray-800 mb-1">
+              <h3 className="font-semibold text-kk-brown mb-1">
                 {t('school.marketCompass.edgeMaker.painPointsTitle')}
               </h3>
               <p className="text-xs text-gray-400 mb-3">
@@ -243,8 +243,8 @@ export default function EdgeMakerTool() {
               </p>
               <div className="space-y-2">
                 {painPoints.map((pain, i) => (
-                  <div key={i} className="flex items-start gap-2 bg-red-50 rounded-xl px-4 py-2.5">
-                    <span className="text-red-400 text-sm">💬</span>
+                  <div key={i} className="flex items-start gap-2 bg-kk-cream rounded-xl px-4 py-2.5">
+                    <span className="text-kk-red text-sm">💬</span>
                     <p className="text-sm text-gray-700">"{pain}"</p>
                   </div>
                 ))}
@@ -253,7 +253,7 @@ export default function EdgeMakerTool() {
 
             {/* 나의 강점 입력 */}
             <div className="bg-white rounded-2xl border border-gray-200 p-5">
-              <h3 className="font-semibold text-gray-800 mb-1">
+              <h3 className="font-semibold text-kk-brown mb-1">
                 {t('school.marketCompass.edgeMaker.strengthsTitle')}
               </h3>
               <p className="text-xs text-gray-400 mb-3">
@@ -268,14 +268,14 @@ export default function EdgeMakerTool() {
                   onChange={(e) => setStrengthInput(e.target.value)}
                   onKeyDown={(e) => e.key === 'Enter' && addStrength()}
                   placeholder={t('school.marketCompass.edgeMaker.strengthsPlaceholder')}
-                  className="flex-1 px-4 py-2.5 border border-gray-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent"
+                  className="flex-1 px-4 py-2.5 border border-gray-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-kk-red focus:border-transparent"
                   maxLength={30}
                   disabled={strengths.length >= 5}
                 />
                 <button
                   onClick={addStrength}
                   disabled={!strengthInput.trim() || strengths.length >= 5}
-                  className="px-4 py-2.5 bg-amber-500 text-white rounded-xl font-medium text-sm hover:bg-amber-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="px-4 py-2.5 bg-kk-red text-white rounded-xl font-medium text-sm hover:bg-kk-red-deep transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   <Plus className="w-4 h-4" />
                 </button>
@@ -287,7 +287,7 @@ export default function EdgeMakerTool() {
                   {strengths.map((s, i) => (
                     <div
                       key={i}
-                      className="flex items-center gap-1.5 px-3 py-1.5 bg-amber-50 text-amber-700 rounded-full text-sm"
+                      className="flex items-center gap-1.5 px-3 py-1.5 bg-kk-cream text-kk-brown rounded-full text-sm"
                     >
                       <span>🏷 {s}</span>
                       <button onClick={() => removeStrength(i)} className="hover:text-red-500 transition-colors">
@@ -302,7 +302,7 @@ export default function EdgeMakerTool() {
             {/* 생성 버튼 */}
             <button
               onClick={handleGenerate}
-              className="w-full py-3.5 bg-gradient-to-r from-amber-500 to-yellow-500 text-white font-bold rounded-xl hover:opacity-90 transition-opacity flex items-center justify-center gap-2"
+              className="w-full py-3.5 bg-kk-red hover:bg-kk-red-deep text-white font-bold rounded-xl transition-colors flex items-center justify-center gap-2"
             >
               <Zap className="w-5 h-5" />
               {t('school.marketCompass.edgeMaker.generateButton')}
@@ -314,17 +314,17 @@ export default function EdgeMakerTool() {
         {phase === 'loading' && (
           <div className="bg-white rounded-2xl border border-gray-200 p-8 text-center">
             <div className="w-16 h-16 mx-auto mb-6 relative">
-              <Zap className="w-16 h-16 text-amber-500 animate-pulse" />
+              <Zap className="w-16 h-16 text-kk-gold animate-pulse" />
             </div>
             <div className="space-y-3">
               {[0, 1, 2].map((step) => (
                 <div
                   key={step}
                   className={`flex items-center gap-3 px-4 py-2.5 rounded-lg transition-all duration-500 ${
-                    loadingStep >= step ? 'bg-amber-50 text-amber-700' : 'bg-gray-50 text-gray-400'
+                    loadingStep >= step ? 'bg-kk-cream text-kk-brown' : 'bg-gray-50 text-gray-400'
                   }`}
                 >
-                  <div className={`w-2 h-2 rounded-full transition-colors ${loadingStep >= step ? 'bg-amber-500' : 'bg-gray-300'}`} />
+                  <div className={`w-2 h-2 rounded-full transition-colors ${loadingStep >= step ? 'bg-kk-gold' : 'bg-gray-300'}`} />
                   <span className="text-sm font-medium">
                     {t(`school.marketCompass.edgeMaker.loading.step${step + 1}`)}
                   </span>
@@ -345,9 +345,9 @@ export default function EdgeMakerTool() {
             </div>
 
             {/* USP */}
-            <div className="bg-gradient-to-br from-amber-50 to-yellow-50 rounded-2xl border border-amber-200 p-5">
+            <div className="bg-kk-cream rounded-2xl border border-kk-warm p-5">
               <div className="flex items-center justify-between mb-3">
-                <h3 className="font-semibold text-gray-800 flex items-center gap-2">
+                <h3 className="font-semibold text-kk-brown flex items-center gap-2">
                   <span className="text-lg">💎</span>
                   {t('school.marketCompass.edgeMaker.result.uspTitle')}
                 </h3>
@@ -360,7 +360,7 @@ export default function EdgeMakerTool() {
 
             {/* 브랜드 네이밍 */}
             <div className="bg-white rounded-2xl border border-gray-200 p-5">
-              <h3 className="font-semibold text-gray-800 flex items-center gap-2 mb-3">
+              <h3 className="font-semibold text-kk-brown flex items-center gap-2 mb-3">
                 <span className="text-lg">🏷</span>
                 {t('school.marketCompass.edgeMaker.result.brandNamesTitle')}
               </h3>
@@ -373,7 +373,7 @@ export default function EdgeMakerTool() {
                     onClick={() => setActiveNameTab(i)}
                     className={`flex-1 py-2 text-xs font-bold rounded-md transition-all ${
                       activeNameTab === i
-                        ? 'bg-white text-amber-600 shadow-sm'
+                        ? 'bg-white text-kk-red shadow-sm'
                         : 'text-gray-500 hover:text-gray-700'
                     }`}
                   >
@@ -407,7 +407,7 @@ export default function EdgeMakerTool() {
             {/* 슬로건 */}
             <div className="bg-white rounded-2xl border border-gray-200 p-5">
               <div className="flex items-center justify-between mb-3">
-                <h3 className="font-semibold text-gray-800 flex items-center gap-2">
+                <h3 className="font-semibold text-kk-brown flex items-center gap-2">
                   <span className="text-lg">✨</span>
                   {t('school.marketCompass.edgeMaker.result.sloganTitle')}
                 </h3>
@@ -421,7 +421,7 @@ export default function EdgeMakerTool() {
             {/* 브랜드 무드 */}
             <div className="bg-white rounded-2xl border border-gray-200 p-5">
               <div className="flex items-center justify-between mb-3">
-                <h3 className="font-semibold text-gray-800 flex items-center gap-2">
+                <h3 className="font-semibold text-kk-brown flex items-center gap-2">
                   <span className="text-lg">🎨</span>
                   {t('school.marketCompass.edgeMaker.result.brandMoodTitle')}
                 </h3>
@@ -478,7 +478,7 @@ export default function EdgeMakerTool() {
             {result.output.brandingReport && (
               <div className="bg-white rounded-2xl border border-gray-200 p-5">
                 <div className="flex items-center justify-between mb-3">
-                  <h3 className="font-semibold text-gray-800 flex items-center gap-2">
+                  <h3 className="font-semibold text-kk-brown flex items-center gap-2">
                     <span className="text-lg">📋</span>
                     {t('school.marketCompass.edgeMaker.result.brandingReportTitle')}
                   </h3>
@@ -497,7 +497,7 @@ export default function EdgeMakerTool() {
             {myTeamId && (
               <button
                 onClick={handleSaveToTeamBox}
-                className="w-full py-3 bg-gradient-to-r from-amber-100 to-yellow-100 text-amber-700 font-bold rounded-xl hover:from-amber-200 hover:to-yellow-200 transition-colors flex items-center justify-center gap-2"
+                className="w-full py-3 bg-kk-cream hover:bg-kk-warm text-kk-brown font-bold rounded-xl transition-colors flex items-center justify-center gap-2"
               >
                 <Gem className="w-4 h-4" />
                 {savedToTeamBox ? '보석함에 저장 완료!' : '💎 보석함에 넣기'}
@@ -505,8 +505,8 @@ export default function EdgeMakerTool() {
             )}
 
             {/* 완료 섹션 */}
-            <div className="bg-gradient-to-r from-amber-50 to-yellow-50 rounded-2xl border border-amber-200 p-5">
-              <h3 className="font-semibold text-gray-800 text-center mb-3">
+            <div className="bg-kk-cream rounded-2xl border border-kk-warm p-5">
+              <h3 className="font-semibold text-kk-brown text-center mb-3">
                 {t('school.marketCompass.edgeMaker.complete.title')}
               </h3>
               <div className="space-y-2">

@@ -208,7 +208,7 @@ export default function PerfectPlannerTool() {
   ];
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-kk-bg">
       {/* Header */}
       <header className="bg-white border-b border-gray-200 sticky top-0 z-40">
         <div className="max-w-lg mx-auto px-4 py-3 flex items-center gap-3">
@@ -216,8 +216,8 @@ export default function PerfectPlannerTool() {
             <ArrowLeft className="w-5 h-5 text-gray-600" />
           </button>
           <div className="flex items-center gap-2">
-            <span className="text-xs font-bold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded">5{t('school.curriculum.period')}</span>
-            <h1 className="font-bold text-gray-800">{t('school.periods.perfectPlanner.name')}</h1>
+            <span className="text-xs font-bold text-kk-brown bg-kk-cream px-2 py-0.5 rounded">5{t('school.curriculum.period')}</span>
+            <h1 className="font-bold text-kk-brown">{t('school.periods.perfectPlanner.name')}</h1>
           </div>
         </div>
       </header>
@@ -228,10 +228,10 @@ export default function PerfectPlannerTool() {
           <>
             {/* Hero */}
             <div className="bg-white rounded-2xl border border-gray-200 p-5 text-center">
-              <div className="w-14 h-14 mx-auto mb-3 bg-emerald-50 rounded-2xl flex items-center justify-center">
-                <CalendarCheck className="w-7 h-7 text-emerald-500" />
+              <div className="w-14 h-14 mx-auto mb-3 bg-kk-cream rounded-2xl flex items-center justify-center">
+                <CalendarCheck className="w-7 h-7 text-kk-red" />
               </div>
-              <h2 className="text-lg font-bold text-gray-800 mb-1">{t('school.perfectPlanner.title')}</h2>
+              <h2 className="text-lg font-bold text-kk-brown mb-1">{t('school.perfectPlanner.title')}</h2>
               <p className="text-sm text-gray-500">{t('school.perfectPlanner.subtitle')}</p>
             </div>
 
@@ -241,7 +241,7 @@ export default function PerfectPlannerTool() {
                 onClick={() => setShowFormula(!showFormula)}
                 className="w-full px-5 py-3 flex items-center justify-between text-left"
               >
-                <span className="text-sm font-semibold text-emerald-700">{t('school.perfectPlanner.formulaTitle')}</span>
+                <span className="text-sm font-semibold text-kk-brown">{t('school.perfectPlanner.formulaTitle')}</span>
                 {showFormula ? <ChevronUp className="w-4 h-4 text-gray-400" /> : <ChevronDown className="w-4 h-4 text-gray-400" />}
               </button>
               {showFormula && (
@@ -249,13 +249,13 @@ export default function PerfectPlannerTool() {
                   {/* AIDA */}
                   <div>
                     <div className="flex items-center gap-2 mb-2">
-                      <FileText className="w-4 h-4 text-emerald-500" />
+                      <FileText className="w-4 h-4 text-kk-red" />
                       <span className="text-sm font-bold text-gray-700">{t('school.perfectPlanner.formula.aidaTitle')}</span>
                     </div>
                     <div className="flex items-center gap-1 text-xs text-gray-500">
                       {['A', 'I', 'D', 'A'].map((letter, i) => (
                         <span key={i} className="flex items-center gap-1">
-                          <span className="bg-emerald-100 text-emerald-700 font-bold px-1.5 py-0.5 rounded">{letter}</span>
+                          <span className="bg-kk-cream text-kk-red font-bold px-1.5 py-0.5 rounded">{letter}</span>
                           {i < 3 && <span className="text-gray-300">&rarr;</span>}
                         </span>
                       ))}
@@ -265,7 +265,7 @@ export default function PerfectPlannerTool() {
                   {/* Live */}
                   <div>
                     <div className="flex items-center gap-2 mb-2">
-                      <Mic className="w-4 h-4 text-pink-500" />
+                      <Mic className="w-4 h-4 text-kk-red" />
                       <span className="text-sm font-bold text-gray-700">{t('school.perfectPlanner.formula.liveTitle')}</span>
                     </div>
                     <p className="text-xs text-gray-500">{t('school.perfectPlanner.formula.liveDesc')}</p>
@@ -276,7 +276,7 @@ export default function PerfectPlannerTool() {
 
             {/* Edge Maker Badge */}
             {edgeDataLoaded && (
-              <div className="bg-amber-50 border border-amber-200 rounded-xl px-4 py-2 text-xs text-amber-700 font-medium">
+              <div className="bg-kk-cream border border-kk-warm rounded-xl px-4 py-2 text-xs text-kk-brown font-medium">
                 {t('school.perfectPlanner.edgeDataLoaded')}
               </div>
             )}
@@ -290,7 +290,7 @@ export default function PerfectPlannerTool() {
                   value={productName}
                   onChange={(e) => setProductName(e.target.value.slice(0, 30))}
                   placeholder={t('school.perfectPlanner.input.productNamePlaceholder')}
-                  className="w-full px-3 py-2.5 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-emerald-300"
+                  className="w-full px-3 py-2.5 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-kk-red"
                 />
               </div>
               <div>
@@ -300,7 +300,7 @@ export default function PerfectPlannerTool() {
                   value={coreTarget}
                   onChange={(e) => setCoreTarget(e.target.value.slice(0, 80))}
                   placeholder={t('school.perfectPlanner.input.coreTargetPlaceholder')}
-                  className="w-full px-3 py-2.5 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-emerald-300"
+                  className="w-full px-3 py-2.5 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-kk-red"
                 />
               </div>
               <div>
@@ -310,7 +310,7 @@ export default function PerfectPlannerTool() {
                   value={usp}
                   onChange={(e) => setUsp(e.target.value.slice(0, 100))}
                   placeholder={t('school.perfectPlanner.input.uspPlaceholder')}
-                  className="w-full px-3 py-2.5 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-emerald-300"
+                  className="w-full px-3 py-2.5 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-kk-red"
                 />
               </div>
               <div>
@@ -320,7 +320,7 @@ export default function PerfectPlannerTool() {
                   value={strongOffer}
                   onChange={(e) => setStrongOffer(e.target.value.slice(0, 100))}
                   placeholder={t('school.perfectPlanner.input.strongOfferPlaceholder')}
-                  className="w-full px-3 py-2.5 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-emerald-300"
+                  className="w-full px-3 py-2.5 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-kk-red"
                 />
               </div>
             </div>
@@ -329,7 +329,7 @@ export default function PerfectPlannerTool() {
             <button
               onClick={handleGenerate}
               disabled={!isInputValid}
-              className="w-full py-3.5 bg-gradient-to-r from-emerald-600 to-teal-600 text-white font-bold rounded-xl hover:opacity-90 transition-opacity disabled:opacity-40 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+              className="w-full py-3.5 bg-kk-red hover:bg-kk-red-deep text-white font-bold rounded-xl transition-colors disabled:opacity-40 disabled:cursor-not-allowed flex items-center justify-center gap-2"
             >
               <Sparkles className="w-5 h-5" />
               {t('school.perfectPlanner.generateButton')}
@@ -340,13 +340,13 @@ export default function PerfectPlannerTool() {
         {/* ══════ LOADING PHASE ══════ */}
         {phase === 'loading' && (
           <div className="bg-white rounded-2xl border border-gray-200 p-8 text-center">
-            <div className="w-16 h-16 mx-auto mb-4 bg-emerald-50 rounded-full flex items-center justify-center">
-              <Loader2 className="w-8 h-8 text-emerald-500 animate-spin" />
+            <div className="w-16 h-16 mx-auto mb-4 bg-kk-cream rounded-full flex items-center justify-center">
+              <Loader2 className="w-8 h-8 text-kk-red animate-spin" />
             </div>
             <p className="text-sm font-medium text-gray-600">{loadingSteps[loadingStep]}</p>
             <div className="flex justify-center gap-1.5 mt-4">
               {[0, 1, 2].map((i) => (
-                <div key={i} className={`w-2 h-2 rounded-full ${i <= loadingStep ? 'bg-emerald-500' : 'bg-gray-200'}`} />
+                <div key={i} className={`w-2 h-2 rounded-full ${i <= loadingStep ? 'bg-kk-red' : 'bg-gray-200'}`} />
               ))}
             </div>
           </div>
@@ -364,8 +364,8 @@ export default function PerfectPlannerTool() {
             </div>
 
             {/* Sales Logic */}
-            <div className="bg-emerald-50 border border-emerald-200 rounded-xl p-4">
-              <p className="text-sm text-emerald-800 font-medium">{result.salesLogic}</p>
+            <div className="bg-kk-cream border border-kk-warm rounded-xl p-4">
+              <p className="text-sm text-kk-brown font-medium">{result.salesLogic}</p>
             </div>
 
             {/* Mode Tabs */}
@@ -374,8 +374,8 @@ export default function PerfectPlannerTool() {
                 onClick={() => setActiveMode('landing')}
                 className={`flex-1 flex items-center justify-center gap-2 py-3 rounded-xl font-bold text-sm transition-all ${
                   activeMode === 'landing'
-                    ? 'bg-emerald-600 text-white'
-                    : 'bg-gray-100 text-gray-500 hover:bg-gray-200'
+                    ? 'bg-kk-red text-white'
+                    : 'bg-kk-cream text-kk-brown hover:bg-kk-warm'
                 }`}
               >
                 <FileText className="w-4 h-4" />
@@ -385,8 +385,8 @@ export default function PerfectPlannerTool() {
                 onClick={() => setActiveMode('liveCommerce')}
                 className={`flex-1 flex items-center justify-center gap-2 py-3 rounded-xl font-bold text-sm transition-all ${
                   activeMode === 'liveCommerce'
-                    ? 'bg-pink-600 text-white'
-                    : 'bg-gray-100 text-gray-500 hover:bg-gray-200'
+                    ? 'bg-kk-navy text-white'
+                    : 'bg-kk-cream text-kk-brown hover:bg-kk-warm'
                 }`}
               >
                 <Mic className="w-4 h-4" />
@@ -417,11 +417,11 @@ export default function PerfectPlannerTool() {
                       {copiedField === 'problem' ? <Check className="w-3.5 h-3.5 text-green-500" /> : <Copy className="w-3.5 h-3.5 text-gray-400" />}
                     </button>
                   </div>
-                  <p className="text-sm font-medium text-red-700 mb-2">{result.landingPage.problemSection.title}</p>
+                  <p className="text-sm font-medium text-kk-red mb-2">{result.landingPage.problemSection.title}</p>
                   <div className="space-y-1.5">
                     {result.landingPage.problemSection.painPoints.map((pain, i) => (
-                      <div key={i} className="flex items-start gap-2 text-sm text-red-600 bg-red-50 p-2 rounded-lg">
-                        <span className="text-red-400 mt-0.5">!</span>
+                      <div key={i} className="flex items-start gap-2 text-sm text-kk-red bg-kk-cream p-2 rounded-lg">
+                        <span className="text-kk-coral mt-0.5">!</span>
                         <span>{pain}</span>
                       </div>
                     ))}
@@ -438,7 +438,7 @@ export default function PerfectPlannerTool() {
                       <div key={i} className="bg-gray-50 rounded-xl p-3">
                         <p className="text-sm font-bold text-gray-800">{feat.title}</p>
                         <p className="text-xs text-gray-500 mt-1">{feat.description}</p>
-                        <p className="text-xs text-emerald-600 font-medium mt-1">&rarr; {feat.benefit}</p>
+                        <p className="text-xs text-kk-red font-medium mt-1">&rarr; {feat.benefit}</p>
                       </div>
                     ))}
                   </div>
@@ -449,11 +449,11 @@ export default function PerfectPlannerTool() {
                   <span className="text-sm font-bold text-gray-700 block mb-3">{t('school.perfectPlanner.landing.trust')}</span>
                   <div className="space-y-2">
                     {result.landingPage.trustSignals.map((ts, i) => (
-                      <div key={i} className="flex items-start gap-2 text-sm bg-blue-50 p-2.5 rounded-lg">
-                        <span className="text-blue-500">
+                      <div key={i} className="flex items-start gap-2 text-sm bg-kk-cream p-2.5 rounded-lg">
+                        <span className="text-kk-navy">
                           {ts.type === 'review' ? '\u2B50' : ts.type === 'stats' ? '\uD83D\uDCCA' : '\uD83C\uDFC6'}
                         </span>
-                        <span className="text-blue-700">{ts.content}</span>
+                        <span className="text-kk-navy">{ts.content}</span>
                       </div>
                     ))}
                   </div>
@@ -467,12 +467,12 @@ export default function PerfectPlannerTool() {
                       {copiedField === 'cta' ? <Check className="w-3.5 h-3.5 text-green-500" /> : <Copy className="w-3.5 h-3.5 text-gray-400" />}
                     </button>
                   </div>
-                  <div className="bg-orange-50 border border-orange-200 rounded-xl p-4 text-center">
-                    <p className="font-bold text-gray-800">{result.landingPage.closingCTA.mainCopy}</p>
-                    <div className="mt-2 inline-block bg-orange-500 text-white font-bold text-sm px-6 py-2 rounded-full">
+                  <div className="bg-kk-cream border border-kk-warm rounded-xl p-4 text-center">
+                    <p className="font-bold text-kk-brown">{result.landingPage.closingCTA.mainCopy}</p>
+                    <div className="mt-2 inline-block bg-kk-red text-white font-bold text-sm px-6 py-2 rounded-full">
                       {result.landingPage.closingCTA.buttonText}
                     </div>
-                    <p className="text-xs text-orange-600 mt-2 font-medium">{result.landingPage.closingCTA.urgency}</p>
+                    <p className="text-xs text-kk-red mt-2 font-medium">{result.landingPage.closingCTA.urgency}</p>
                   </div>
                 </div>
 
@@ -509,8 +509,8 @@ export default function PerfectPlannerTool() {
                   </div>
                   <div className="space-y-2">
                     <p className="text-sm text-gray-600">{result.liveCommerce.opening.greeting}</p>
-                    <p className="text-sm font-bold text-pink-600">{result.liveCommerce.opening.hook}</p>
-                    <p className="text-sm text-orange-600 bg-orange-50 p-2 rounded-lg">{result.liveCommerce.opening.todaysOffer}</p>
+                    <p className="text-sm font-bold text-kk-red">{result.liveCommerce.opening.hook}</p>
+                    <p className="text-sm text-kk-brown bg-kk-cream p-2 rounded-lg">{result.liveCommerce.opening.todaysOffer}</p>
                   </div>
                 </div>
 
@@ -518,12 +518,12 @@ export default function PerfectPlannerTool() {
                 <div className="bg-white rounded-2xl border border-gray-200 p-5">
                   <span className="text-sm font-bold text-gray-700 block mb-3">{t('school.perfectPlanner.live.demo')}</span>
                   <div className="relative pl-6 space-y-4">
-                    <div className="absolute left-2 top-1 bottom-1 w-0.5 bg-pink-200" />
+                    <div className="absolute left-2 top-1 bottom-1 w-0.5 bg-kk-peach" />
                     {result.liveCommerce.demoPoints.map((demo, i) => (
                       <div key={i} className="relative">
-                        <div className="absolute -left-[18px] top-1 w-3 h-3 rounded-full bg-pink-500 border-2 border-white" />
+                        <div className="absolute -left-[18px] top-1 w-3 h-3 rounded-full bg-kk-red border-2 border-white" />
                         <div className="bg-gray-50 rounded-xl p-3">
-                          <span className="text-[10px] font-bold text-pink-600 bg-pink-100 px-2 py-0.5 rounded">{demo.timestamp}</span>
+                          <span className="text-[10px] font-bold text-kk-red bg-kk-cream px-2 py-0.5 rounded">{demo.timestamp}</span>
                           <p className="text-xs font-medium text-gray-700 mt-1">{demo.action}</p>
                           <p className="text-xs text-gray-500 mt-0.5 italic">"{demo.talkingPoint}"</p>
                         </div>
@@ -547,7 +547,7 @@ export default function PerfectPlannerTool() {
                         </button>
                         {expandedTip === `qa-${i}` && (
                           <div className="px-3 pb-3">
-                            <p className="text-sm text-emerald-700 bg-emerald-50 p-2 rounded-lg">A: {qa.answer}</p>
+                            <p className="text-sm text-kk-brown bg-kk-cream p-2 rounded-lg">A: {qa.answer}</p>
                           </div>
                         )}
                       </div>
@@ -564,8 +564,8 @@ export default function PerfectPlannerTool() {
                     </button>
                   </div>
                   <div className="space-y-2">
-                    <p className="text-sm font-bold text-orange-600">{result.liveCommerce.closing.finalOffer}</p>
-                    <p className="text-sm text-red-600 bg-red-50 p-2 rounded-lg">{result.liveCommerce.closing.urgencyTactic}</p>
+                    <p className="text-sm font-bold text-kk-red">{result.liveCommerce.closing.finalOffer}</p>
+                    <p className="text-sm text-kk-red bg-kk-cream p-2 rounded-lg">{result.liveCommerce.closing.urgencyTactic}</p>
                     <p className="text-sm text-gray-600">{result.liveCommerce.closing.farewell}</p>
                   </div>
                 </div>
@@ -594,7 +594,7 @@ export default function PerfectPlannerTool() {
             <div className="flex gap-2">
               <button
                 onClick={handleCopyAll}
-                className="flex-1 flex items-center justify-center gap-2 py-3 bg-emerald-100 text-emerald-700 font-bold rounded-xl hover:bg-emerald-200 transition-colors"
+                className="flex-1 flex items-center justify-center gap-2 py-3 bg-kk-cream text-kk-brown font-bold rounded-xl hover:bg-kk-warm transition-colors"
               >
                 {copiedField === 'all' ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
                 {copiedField === 'all' ? t('school.perfectPlanner.copied') : t('school.perfectPlanner.copyAll')}
@@ -615,7 +615,7 @@ export default function PerfectPlannerTool() {
             {myTeamId && (
               <button
                 onClick={handleSaveToTeamBox}
-                className="w-full py-3 bg-gradient-to-r from-amber-100 to-yellow-100 text-amber-700 font-bold rounded-xl hover:from-amber-200 hover:to-yellow-200 transition-colors flex items-center justify-center gap-2"
+                className="w-full py-3 bg-kk-cream hover:bg-kk-warm text-kk-brown font-bold rounded-xl transition-colors flex items-center justify-center gap-2"
               >
                 <Gem className="w-4 h-4" />
                 {savedToTeamBox ? '보석함에 저장 완료!' : '💎 보석함에 넣기'}

@@ -43,11 +43,11 @@ export default function LoginForm() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-slate-50 to-white flex items-center justify-center px-4">
+    <div className="min-h-screen bg-gradient-to-b from-kk-bg to-kk-cream flex items-center justify-center px-4">
       <div className="w-full max-w-md">
         {/* 헤더 */}
         <div className="text-center mb-8">
-          <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-purple-600 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg">
+          <div className="w-16 h-16 bg-gradient-to-br from-kk-red to-kk-red-deep rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg">
             <LogIn className="w-8 h-8 text-white" />
           </div>
           <h1 className="text-2xl font-bold text-gray-800">{t('auth.loginTitle')}</h1>
@@ -75,7 +75,7 @@ export default function LoginForm() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="email@example.com"
-                  className="w-full pl-11 pr-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+                  className="w-full pl-11 pr-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-kk-red focus:border-transparent transition-all"
                   required
                 />
               </div>
@@ -93,7 +93,7 @@ export default function LoginForm() {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="••••••••"
-                  className="w-full pl-11 pr-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+                  className="w-full pl-11 pr-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-kk-red focus:border-transparent transition-all"
                   required
                 />
               </div>
@@ -106,7 +106,7 @@ export default function LoginForm() {
                 id="rememberMe"
                 checked={rememberMe}
                 onChange={(e) => setRememberMe(e.target.checked)}
-                className="w-5 h-5 text-blue-600 border-gray-300 rounded focus:ring-blue-500 cursor-pointer"
+                className="w-5 h-5 text-kk-red border-gray-300 rounded focus:ring-kk-red cursor-pointer"
               />
               <label htmlFor="rememberMe" className="text-sm text-gray-600 cursor-pointer select-none">
                 {t('auth.rememberMe')}
@@ -117,7 +117,7 @@ export default function LoginForm() {
             <button
               type="submit"
               disabled={isLoading}
-              className="w-full py-3 bg-blue-600 hover:bg-blue-700 disabled:bg-blue-400 text-white font-semibold rounded-xl transition-colors flex items-center justify-center gap-2"
+              className="w-full py-3 bg-kk-red hover:bg-kk-red-deep disabled:bg-kk-peach text-white font-semibold rounded-xl transition-colors flex items-center justify-center gap-2"
             >
               {isLoading ? (
                 <Loader2 className="w-5 h-5 animate-spin" />
@@ -140,7 +140,7 @@ export default function LoginForm() {
           {/* 회원가입 링크 */}
           <p className="mt-6 text-center text-sm text-gray-500">
             {t('auth.noAccount')}{' '}
-            <Link to="/register" state={{ redirectTo }} className="text-blue-600 font-semibold hover:underline">
+            <Link to="/register" state={{ redirectTo }} className="text-kk-red font-semibold hover:underline">
               {t('auth.registerLink')}
             </Link>
           </p>

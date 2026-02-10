@@ -121,11 +121,11 @@ export default function RegisterForm() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-slate-50 to-white flex items-center justify-center px-4 py-12">
+    <div className="min-h-screen bg-gradient-to-b from-kk-bg to-kk-cream flex items-center justify-center px-4 py-12">
       <div className="w-full max-w-md">
         {/* 헤더 */}
         <div className="text-center mb-8">
-          <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-purple-600 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg">
+          <div className="w-16 h-16 bg-gradient-to-br from-kk-red to-kk-red-deep rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg">
             <UserPlus className="w-8 h-8 text-white" />
           </div>
           <h1 className="text-2xl font-bold text-gray-800">
@@ -162,7 +162,7 @@ export default function RegisterForm() {
                   value={formData.name}
                   onChange={handleChange}
                   placeholder="홍길동 / Hong Gildong"
-                  className="w-full pl-11 pr-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+                  className="w-full pl-11 pr-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-kk-red focus:border-transparent transition-all"
                   required
                 />
               </div>
@@ -182,7 +182,7 @@ export default function RegisterForm() {
                   name="country"
                   value={formData.country}
                   onChange={handleChange}
-                  className="w-full pl-11 pr-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all appearance-none bg-white"
+                  className="w-full pl-11 pr-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-kk-red focus:border-transparent transition-all appearance-none bg-white"
                   required
                 >
                   <option value="">{t('register.countryPlaceholder', '국가를 선택해주세요 (Select your country)')}</option>
@@ -203,7 +203,7 @@ export default function RegisterForm() {
               <div className="flex gap-3">
                 <label className={`flex-1 flex items-center justify-center gap-2 py-3 rounded-xl border-2 cursor-pointer transition-all ${
                   formData.gender === 'male'
-                    ? 'border-blue-500 bg-blue-50 text-blue-700'
+                    ? 'border-kk-navy bg-kk-cream text-kk-navy'
                     : 'border-gray-200 hover:border-gray-300 text-gray-600'
                 }`}>
                   <input
@@ -218,7 +218,7 @@ export default function RegisterForm() {
                 </label>
                 <label className={`flex-1 flex items-center justify-center gap-2 py-3 rounded-xl border-2 cursor-pointer transition-all ${
                   formData.gender === 'female'
-                    ? 'border-pink-500 bg-pink-50 text-pink-700'
+                    ? 'border-kk-coral bg-kk-cream text-kk-coral'
                     : 'border-gray-200 hover:border-gray-300 text-gray-600'
                 }`}>
                   <input
@@ -245,7 +245,7 @@ export default function RegisterForm() {
                   name="birthYear"
                   value={formData.birthYear}
                   onChange={handleChange}
-                  className="w-full pl-11 pr-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all appearance-none bg-white"
+                  className="w-full pl-11 pr-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-kk-red focus:border-transparent transition-all appearance-none bg-white"
                   required
                 >
                   <option value="">{t('register.birthYearPlaceholder', '예: 1995 (e.g. 1995)')}</option>
@@ -269,7 +269,7 @@ export default function RegisterForm() {
                   value={formData.email}
                   onChange={handleChange}
                   placeholder="example@email.com"
-                  className="w-full pl-11 pr-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+                  className="w-full pl-11 pr-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-kk-red focus:border-transparent transition-all"
                   required
                 />
               </div>
@@ -288,7 +288,7 @@ export default function RegisterForm() {
                   value={formData.password}
                   onChange={handleChange}
                   placeholder="••••••••"
-                  className="w-full pl-11 pr-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+                  className="w-full pl-11 pr-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-kk-red focus:border-transparent transition-all"
                   required
                 />
               </div>
@@ -328,7 +328,7 @@ export default function RegisterForm() {
                   value={formData.passwordConfirm}
                   onChange={handleChange}
                   placeholder="••••••••"
-                  className={`w-full pl-11 pr-4 py-3 border rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all ${
+                  className={`w-full pl-11 pr-4 py-3 border rounded-xl focus:ring-2 focus:ring-kk-red focus:border-transparent transition-all ${
                     pwMismatch ? 'border-red-400 bg-red-50' : 'border-gray-200'
                   }`}
                   required
@@ -360,7 +360,7 @@ export default function RegisterForm() {
                     }));
                   }}
                   placeholder={t('register.instructorCodePlaceholder', '강사에게 받은 코드를 입력하세요 (Enter the code from your instructor)')}
-                  className="w-full pl-11 pr-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+                  className="w-full pl-11 pr-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-kk-red focus:border-transparent transition-all"
                   required
                 />
               </div>
@@ -384,7 +384,7 @@ export default function RegisterForm() {
                     }));
                   }}
                   placeholder={t('register.orgCodePlaceholder', '기관에서 받은 코드를 입력하세요 (Enter the code from your institution)')}
-                  className="w-full pl-11 pr-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+                  className="w-full pl-11 pr-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-kk-red focus:border-transparent transition-all"
                   required
                 />
               </div>
@@ -394,7 +394,7 @@ export default function RegisterForm() {
             <button
               type="submit"
               disabled={isLoading || pwMismatch || (formData.password.length > 0 && !isStrongPassword(formData.password))}
-              className="w-full py-3.5 bg-blue-600 hover:bg-blue-700 disabled:bg-blue-300 text-white font-semibold rounded-xl transition-colors flex items-center justify-center gap-2 mt-6"
+              className="w-full py-3.5 bg-kk-red hover:bg-kk-red-deep disabled:bg-kk-peach text-white font-semibold rounded-xl transition-colors flex items-center justify-center gap-2 mt-6"
             >
               {isLoading ? (
                 <Loader2 className="w-5 h-5 animate-spin" />
@@ -407,7 +407,7 @@ export default function RegisterForm() {
           {/* 로그인 링크 */}
           <p className="mt-6 text-center text-sm text-gray-500">
             {t('register.loginLink', '이미 계정이 있으신가요? 로그인 (Already have an account? Log in)').split('?')[0]}?{' '}
-            <Link to="/login" className="text-blue-600 font-semibold hover:underline">
+            <Link to="/login" className="text-kk-red font-semibold hover:underline">
               {t('auth.loginLink', '로그인')}
             </Link>
           </p>

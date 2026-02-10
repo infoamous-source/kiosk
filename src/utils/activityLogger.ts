@@ -19,9 +19,6 @@ export function handleActivityLog(
     metadata,
   };
 
-  // 콘솔에 로그 출력 (개발용)
-  console.log('[Activity Log]', log);
-
   // localStorage에 저장 (임시 저장소)
   saveLogToLocalStorage(log);
 

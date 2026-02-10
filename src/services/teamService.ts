@@ -18,10 +18,6 @@ export async function createClassroomGroup(
   track: string,
   classroomName: string,
 ): Promise<ClassroomGroup | null> {
-  // Debug: auth 상태 확인
-  const { data: { user: authUser } } = await supabase.auth.getUser();
-  console.log('[createClassroom] auth.uid:', authUser?.id, 'instructorId:', instructorId, 'match:', authUser?.id === instructorId);
-
   const { data, error } = await supabase
     .from('classroom_groups')
     .insert({

@@ -141,7 +141,7 @@ export default function MarketScannerTool() {
   const CopyButton = ({ text, field }: { text: string; field: string }) => (
     <button
       onClick={() => handleCopy(text, field)}
-      className="flex items-center gap-1 text-xs text-gray-400 hover:text-blue-500 transition-colors"
+      className="flex items-center gap-1 text-xs text-gray-400 hover:text-kk-navy transition-colors"
     >
       {copiedField === field ? (
         <>
@@ -158,7 +158,7 @@ export default function MarketScannerTool() {
   );
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-kk-bg">
       {/* Header */}
       <header className="bg-white border-b border-gray-200 sticky top-0 z-40">
         <div className="max-w-lg mx-auto px-4 py-3 flex items-center gap-3">
@@ -166,10 +166,10 @@ export default function MarketScannerTool() {
             <ArrowLeft className="w-5 h-5 text-gray-600" />
           </button>
           <div className="flex items-center gap-2">
-            <span className="text-xs font-bold text-blue-600 bg-blue-50 px-2 py-0.5 rounded">
+            <span className="text-xs font-bold text-kk-navy bg-kk-cream px-2 py-0.5 rounded">
               {t('school.marketCompass.scanner.headerBadge')}
             </span>
-            <h1 className="font-bold text-gray-800">{t('school.marketCompass.scanner.title')}</h1>
+            <h1 className="font-bold text-kk-brown">{t('school.marketCompass.scanner.title')}</h1>
           </div>
         </div>
       </header>
@@ -177,10 +177,10 @@ export default function MarketScannerTool() {
       <main className="max-w-lg mx-auto px-4 py-6 space-y-5">
         {/* Hero */}
         <div className="text-center py-4">
-          <div className="w-16 h-16 mx-auto mb-3 bg-blue-50 rounded-2xl flex items-center justify-center">
-            <Radar className="w-8 h-8 text-blue-500" />
+          <div className="w-16 h-16 mx-auto mb-3 bg-kk-cream rounded-2xl flex items-center justify-center">
+            <Radar className="w-8 h-8 text-kk-navy" />
           </div>
-          <h2 className="text-xl font-bold text-gray-800">{t('school.marketCompass.scanner.hero')}</h2>
+          <h2 className="text-xl font-bold text-kk-brown">{t('school.marketCompass.scanner.hero')}</h2>
           <p className="text-sm text-gray-500 mt-1">{t('school.marketCompass.scanner.heroSub')}</p>
         </div>
 
@@ -189,18 +189,18 @@ export default function MarketScannerTool() {
           <div className="space-y-4">
             {/* 이전 결과 배너 */}
             {hasPreviousResult && (
-              <div className="bg-blue-50 border border-blue-200 rounded-xl p-4">
-                <p className="text-sm text-blue-700 font-medium">{t('school.marketCompass.scanner.previousResult')}</p>
+              <div className="bg-kk-cream border border-kk-warm rounded-xl p-4">
+                <p className="text-sm text-kk-navy font-medium">{t('school.marketCompass.scanner.previousResult')}</p>
                 <div className="flex gap-2 mt-2">
                   <button
                     onClick={loadPreviousResult}
-                    className="flex-1 py-2 text-sm bg-blue-500 text-white rounded-lg font-medium hover:bg-blue-600 transition-colors"
+                    className="flex-1 py-2 text-sm bg-kk-navy text-white rounded-lg font-medium hover:bg-kk-navy-deep transition-colors"
                   >
                     {t('school.marketCompass.scanner.viewPrevious')}
                   </button>
                   <button
                     onClick={() => setHasPreviousResult(false)}
-                    className="flex-1 py-2 text-sm bg-white text-blue-600 border border-blue-300 rounded-lg font-medium hover:bg-blue-50 transition-colors"
+                    className="flex-1 py-2 text-sm bg-white text-kk-navy border border-kk-navy/30 rounded-lg font-medium hover:bg-kk-cream transition-colors"
                   >
                     {t('school.marketCompass.scanner.startNew')}
                   </button>
@@ -210,7 +210,7 @@ export default function MarketScannerTool() {
 
             {/* 입력 폼 */}
             <div className="bg-white rounded-2xl border border-gray-200 p-5 space-y-4">
-              <h3 className="font-semibold text-gray-800">{t('school.marketCompass.scanner.inputTitle')}</h3>
+              <h3 className="font-semibold text-kk-brown">{t('school.marketCompass.scanner.inputTitle')}</h3>
 
               {/* 키워드 */}
               <div>
@@ -222,7 +222,7 @@ export default function MarketScannerTool() {
                   value={keyword}
                   onChange={(e) => setKeyword(e.target.value)}
                   placeholder={t('school.marketCompass.scanner.keywordPlaceholder')}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-kk-navy focus:border-transparent"
                   maxLength={50}
                 />
               </div>
@@ -235,7 +235,7 @@ export default function MarketScannerTool() {
                 <select
                   value={itemType}
                   onChange={(e) => setItemType(e.target.value)}
-                  className="w-full px-3 py-3 border border-gray-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white"
+                  className="w-full px-3 py-3 border border-gray-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-kk-navy bg-white"
                 >
                   {ITEM_TYPE_OPTIONS.map((type) => (
                     <option key={type} value={type}>
@@ -254,7 +254,7 @@ export default function MarketScannerTool() {
                   <select
                     value={targetAge}
                     onChange={(e) => setTargetAge(e.target.value)}
-                    className="w-full px-3 py-3 border border-gray-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white"
+                    className="w-full px-3 py-3 border border-gray-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-kk-navy bg-white"
                   >
                     {AGE_OPTIONS.map((age) => (
                       <option key={age} value={age}>
@@ -270,7 +270,7 @@ export default function MarketScannerTool() {
                   <select
                     value={targetGender}
                     onChange={(e) => setTargetGender(e.target.value)}
-                    className="w-full px-3 py-3 border border-gray-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white"
+                    className="w-full px-3 py-3 border border-gray-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-kk-navy bg-white"
                   >
                     {GENDER_OPTIONS.map((g) => (
                       <option key={g} value={g}>
@@ -285,7 +285,7 @@ export default function MarketScannerTool() {
               <button
                 onClick={handleAnalyze}
                 disabled={!keyword.trim()}
-                className="w-full py-3.5 bg-gradient-to-r from-blue-500 to-cyan-500 text-white font-bold rounded-xl hover:opacity-90 transition-opacity disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                className="w-full py-3.5 bg-kk-navy hover:bg-kk-navy-deep text-white font-bold rounded-xl transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
               >
                 <Search className="w-5 h-5" />
                 {t('school.marketCompass.scanner.analyzeButton')}
@@ -298,17 +298,17 @@ export default function MarketScannerTool() {
         {phase === 'loading' && (
           <div className="bg-white rounded-2xl border border-gray-200 p-8 text-center">
             <div className="w-16 h-16 mx-auto mb-6 relative">
-              <Radar className="w-16 h-16 text-blue-500 animate-spin" style={{ animationDuration: '3s' }} />
+              <Radar className="w-16 h-16 text-kk-navy animate-spin" style={{ animationDuration: '3s' }} />
             </div>
             <div className="space-y-3">
               {[0, 1, 2].map((step) => (
                 <div
                   key={step}
                   className={`flex items-center gap-3 px-4 py-2.5 rounded-lg transition-all duration-500 ${
-                    loadingStep >= step ? 'bg-blue-50 text-blue-700' : 'bg-gray-50 text-gray-400'
+                    loadingStep >= step ? 'bg-kk-cream text-kk-navy' : 'bg-gray-50 text-gray-400'
                   }`}
                 >
-                  <div className={`w-2 h-2 rounded-full transition-colors ${loadingStep >= step ? 'bg-blue-500' : 'bg-gray-300'}`} />
+                  <div className={`w-2 h-2 rounded-full transition-colors ${loadingStep >= step ? 'bg-kk-navy' : 'bg-gray-300'}`} />
                   <span className="text-sm font-medium">
                     {t(`school.marketCompass.scanner.loading.step${step + 1}`)}
                   </span>
@@ -331,7 +331,7 @@ export default function MarketScannerTool() {
             {/* 연관 검색어 TOP 5 */}
             <div className="bg-white rounded-2xl border border-gray-200 p-5">
               <div className="flex items-center justify-between mb-3">
-                <h3 className="font-semibold text-gray-800 flex items-center gap-2">
+                <h3 className="font-semibold text-kk-brown flex items-center gap-2">
                   <span className="text-lg">🔍</span>
                   {t('school.marketCompass.scanner.result.keywordsTitle')}
                 </h3>
@@ -344,7 +344,7 @@ export default function MarketScannerTool() {
                 {result.output.relatedKeywords.map((kw, i) => (
                   <span
                     key={i}
-                    className="px-3 py-1.5 bg-blue-50 text-blue-700 rounded-full text-sm font-medium"
+                    className="px-3 py-1.5 bg-kk-cream text-kk-navy rounded-full text-sm font-medium"
                   >
                     #{kw}
                   </span>
@@ -354,7 +354,7 @@ export default function MarketScannerTool() {
 
             {/* 경쟁사 분석 */}
             <div className="bg-white rounded-2xl border border-gray-200 p-5">
-              <h3 className="font-semibold text-gray-800 flex items-center gap-2 mb-3">
+              <h3 className="font-semibold text-kk-brown flex items-center gap-2 mb-3">
                 <span className="text-lg">🏢</span>
                 {t('school.marketCompass.scanner.result.competitorsTitle')}
               </h3>
@@ -407,7 +407,7 @@ export default function MarketScannerTool() {
             {/* 고객의 소리 */}
             <div className="bg-white rounded-2xl border border-gray-200 p-5">
               <div className="flex items-center justify-between mb-3">
-                <h3 className="font-semibold text-gray-800 flex items-center gap-2">
+                <h3 className="font-semibold text-kk-brown flex items-center gap-2">
                   <span className="text-lg">💬</span>
                   {t('school.marketCompass.scanner.result.painPointsTitle')}
                 </h3>
@@ -420,9 +420,9 @@ export default function MarketScannerTool() {
                 {result.output.painPoints.map((pain, i) => (
                   <div
                     key={i}
-                    className="flex items-start gap-3 bg-red-50 rounded-xl px-4 py-3"
+                    className="flex items-start gap-3 bg-kk-cream rounded-xl px-4 py-3"
                   >
-                    <span className="text-red-400 text-sm mt-0.5">★</span>
+                    <span className="text-kk-red text-sm mt-0.5">★</span>
                     <p className="text-sm text-gray-700 leading-relaxed">"{pain}"</p>
                   </div>
                 ))}
@@ -433,7 +433,7 @@ export default function MarketScannerTool() {
             {result.output.analysisReport && (
               <div className="bg-white rounded-2xl border border-gray-200 p-5">
                 <div className="flex items-center justify-between mb-3">
-                  <h3 className="font-semibold text-gray-800 flex items-center gap-2">
+                  <h3 className="font-semibold text-kk-brown flex items-center gap-2">
                     <span className="text-lg">📋</span>
                     {t('school.marketCompass.scanner.result.analysisReportTitle')}
                   </h3>
@@ -442,7 +442,7 @@ export default function MarketScannerTool() {
                     field="analysisReport"
                   />
                 </div>
-                <p className="text-sm text-gray-700 leading-relaxed whitespace-pre-line bg-gray-50 rounded-xl p-4">
+                <p className="text-sm text-gray-700 leading-relaxed whitespace-pre-line bg-kk-bg rounded-xl p-4">
                   {result.output.analysisReport}
                 </p>
               </div>
@@ -452,7 +452,7 @@ export default function MarketScannerTool() {
             {myTeamId && (
               <button
                 onClick={handleSaveToTeamBox}
-                className="w-full py-3 bg-gradient-to-r from-amber-100 to-yellow-100 text-amber-700 font-bold rounded-xl hover:from-amber-200 hover:to-yellow-200 transition-colors flex items-center justify-center gap-2"
+                className="w-full py-3 bg-kk-cream hover:bg-kk-warm text-kk-brown font-bold rounded-xl transition-colors flex items-center justify-center gap-2"
               >
                 <Gem className="w-4 h-4" />
                 {savedToTeamBox ? '보석함에 저장 완료!' : '💎 보석함에 넣기'}
@@ -460,14 +460,14 @@ export default function MarketScannerTool() {
             )}
 
             {/* 다음 단계 */}
-            <div className="bg-gradient-to-r from-blue-50 to-cyan-50 rounded-2xl border border-blue-200 p-5">
-              <h3 className="font-semibold text-gray-800 text-center mb-3">
+            <div className="bg-kk-cream rounded-2xl border border-kk-warm p-5">
+              <h3 className="font-semibold text-kk-brown text-center mb-3">
                 {t('school.marketCompass.scanner.next.title')}
               </h3>
               <div className="space-y-2">
                 <button
                   onClick={handleComplete}
-                  className="w-full py-3 bg-gradient-to-r from-amber-500 to-yellow-500 text-white font-bold rounded-xl hover:opacity-90 transition-opacity flex items-center justify-center gap-2"
+                  className="w-full py-3 bg-kk-red hover:bg-kk-red-deep text-white font-bold rounded-xl transition-colors flex items-center justify-center gap-2"
                 >
                   <ArrowRight className="w-5 h-5" />
                   {t('school.marketCompass.scanner.next.edgeMakerButton')}

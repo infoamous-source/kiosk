@@ -651,15 +651,15 @@
     },
     "periods": {
       "aptitudeTest": {
-        "name": "Marketing Aptitude Test",
+        "name": "Aptitude Finder",
         "description": "Discover your marketing type"
       },
       "marketScanner": {
-        "name": "Market Compass Scanner",
+        "name": "Market Explorer",
         "description": "Analyze market trends and competitors"
       },
       "edgeMaker": {
-        "name": "Market Compass Edge Maker",
+        "name": "Brand Builder",
         "description": "Create your differentiation points"
       },
       "viralCardMaker": {
@@ -737,6 +737,7 @@
         "previousResult": "Previous Result"
       },
       "progress": "{{current}}/{{total}}",
+      "shareTitle": "My Marketing Aptitude Result",
       "loading": {
         "step1": "Extracting your marketing DNA...",
         "step2": "Analyzing your tendencies...",
@@ -745,6 +746,7 @@
       "result": {
         "header": "Your calling is...",
         "badge": "Add badge to student card",
+        "saveBadge": "Save badge to student card",
         "retake": "Retake Test",
         "share": "Share Result",
         "scoreChart": "Scores by Type",
@@ -753,133 +755,300 @@
       },
       "personas": {
         "CEO": {
-          "name": "Strategist CEO",
-          "title": "The Visionary",
-          "desc": "A leader who sees the big picture and sets the direction. Your strength is reading market trends and building strategies.",
+          "name": "Big Picture Person",
+          "title": "Brand Marketing",
+          "desc": "You are someone who draws the big picture.\nYou can see how the world is changing.\nYou always think about \"Where should our brand go?\"\nYou discover opportunities that others miss.\nYou are great at setting direction for your team.\nBrand marketing is the perfect fit for you.\nYou create the image and values of a company.\nYou plan things like ads, logos, and slogans.\nYou make people feel \"This brand is great!\"\nYou are a marketer who grows brands with big dreams.",
           "strength1": "Insight into market trends",
           "strength2": "Leadership to guide teams",
           "strength3": "Long-term vision and strategic planning"
         },
         "PM": {
-          "name": "Idea Bank PM",
-          "title": "The Creator",
-          "desc": "Creative planning is your forte! You bring projects to life with fresh ideas.",
+          "name": "Storyteller",
+          "title": "Content Marketing",
+          "desc": "You are someone who creates stories.\nYour head is full of fun ideas.\nYou imagine \"What if I make this? People would love it!\"\nYou enjoy sharing stories through writing, photos, and videos.\nYou create content that moves people's hearts.\nContent marketing is the perfect fit for you.\nYou plan content for blogs, SNS, and YouTube.\nYou tell brand stories in an interesting way.\nYou read trends quickly and try new things.\nYou are a marketer who makes brands shine with creativity.",
           "strength1": "Original idea generation",
           "strength2": "Storytelling and planning skills",
           "strength3": "Trend-setting intuition"
         },
         "CPO": {
-          "name": "Data Hunter CPO",
-          "title": "The Analyst",
-          "desc": "You prove with numbers and speak with data! Your analytical skills drive marketing decisions.",
+          "name": "Numbers Person",
+          "title": "Performance Marketing",
+          "desc": "You are someone who speaks with numbers.\nYou always check \"How effective was it?\"\nWhen you see data, you instantly know what the problem is.\nYou make decisions based on numbers, not feelings.\nYou analyze ad results and find better methods.\nPerformance marketing is the perfect fit for you.\nYou calculate how much revenue each ad dollar brings.\nYou check clicks, conversion rates, and other numbers daily.\nYou advertise efficiently without wasting money.\nYou are a smart marketer who proves results with data.",
           "strength1": "Data-driven decision making",
           "strength2": "Logical thinking and problem solving",
           "strength3": "Performance measurement and optimization"
         },
         "CMO": {
-          "name": "Buzz Maker CMO",
-          "title": "The Viral Master",
-          "desc": "Trend-sensitive with great empathy! You spread brand awareness through SNS and content.",
+          "name": "People Gatherer",
+          "title": "CRM Marketing",
+          "desc": "You are someone who gathers people.\nYou understand how others feel very well.\nYou are great at figuring out \"What does this person like?\"\nYou have a talent for making customers come back again.\nYou value relationships between people.\nCRM marketing is the perfect fit for you.\nYou send personalized messages to customers.\nYou plan things like membership levels, points, and coupons.\nYou make customers feel \"This place is the best!\"\nYou are a marketer who grows brands by building relationships.",
           "strength1": "Trend detection ability",
           "strength2": "Creating empathetic content",
           "strength3": "SNS and viral marketing sense"
         },
         "CSL": {
-          "name": "Sales Champion CSL",
-          "title": "The Closer",
-          "desc": "You win customers' hearts and convert them into buyers! Persuasion and drive are your top skills.",
+          "name": "Sales Person",
+          "title": "Live Commerce",
+          "desc": "You are someone who sells things.\nYou enjoy talking in front of people.\nWhen you explain \"Why this product is great,\" everyone wants to buy it.\nWhen customers hesitate, you say just the right words to persuade them.\nWhen you set a goal, you follow through to the end.\nLive commerce is the perfect fit for you.\nYou introduce and sell products in front of a camera.\nYou sell things while chatting with customers in real time.\nSaying \"If you don't buy now, you'll regret it!\" comes naturally to you.\nYou are a marketer who creates sales through action.",
           "strength1": "Excellent persuasion and negotiation",
           "strength2": "Understanding customer needs",
           "strength3": "Drive to achieve goals"
         }
       },
       "questions": {
-        "Q1": {
-          "situation": "A competitor launched a cheaper product! Your reaction?",
-          "A": "Price wars lead to failure. Let's differentiate on quality.",
-          "B": "Analyze costs right away to see if we can lower our price too."
+        "set1": {
+          "Q1": {
+            "situation": "A competitor launched a cheaper product! Your reaction?",
+            "A": "Price wars lead to failure. Let's differentiate on quality.",
+            "B": "Analyze costs right away to see if we can lower our price too."
+          },
+          "Q2": {
+            "situation": "Writing an Instagram promo post?",
+            "A": "List features and specs.",
+            "B": "Use aesthetic photos + empathetic captions."
+          },
+          "Q3": {
+            "situation": "Your role in a team project?",
+            "A": "Set the overall direction and assign roles.",
+            "B": "Lead the brainstorming session."
+          },
+          "Q4": {
+            "situation": "Not enough budget for a new product launch!",
+            "A": "Create buzz through SNS viral marketing.",
+            "B": "Directly sell to a small group of customers."
+          },
+          "Q5": {
+            "situation": "First thing you do at a marketing meeting?",
+            "A": "Prepare competitor analysis data.",
+            "B": "Propose a new campaign concept."
+          },
+          "Q6": {
+            "situation": "A customer filed a complaint!",
+            "A": "Analyze the root cause with data.",
+            "B": "Call them directly and sincerely apologize."
+          },
+          "Q7": {
+            "situation": "What defines good marketing results?",
+            "A": "Brand awareness and follower growth.",
+            "B": "Revenue and conversion rate increase."
+          },
+          "Q8": {
+            "situation": "You found a new business idea!",
+            "A": "Research market size and growth rate first.",
+            "B": "Build a prototype right away."
+          },
+          "Q9": {
+            "situation": "Choosing content for SNS?",
+            "A": "Use trending memes and challenges.",
+            "B": "Show product before & after comparisons."
+          },
+          "Q10": {
+            "situation": "You got 1 million won for ads!",
+            "A": "Optimize with A/B testing.",
+            "B": "Collaborate with influencers."
+          },
+          "Q11": {
+            "situation": "Business in crisis mode - you?",
+            "A": "Reset the long-term vision.",
+            "B": "Execute immediate revenue-boosting actions."
+          },
+          "Q12": {
+            "situation": "Writing a marketing plan?",
+            "A": "Focus on story and visuals.",
+            "B": "Focus on numerical goals and KPIs."
+          },
+          "Q13": {
+            "situation": "Secret to winning a competitive pitch?",
+            "A": "Original creative ideas.",
+            "B": "Persuasive presentation delivery."
+          },
+          "Q14": {
+            "situation": "Your goal as a marketer in 1 year?",
+            "A": "Recognized expert in the industry.",
+            "B": "Trend-setting influencer."
+          },
+          "Q15": {
+            "situation": "Why would a team pick you?",
+            "A": "Systematic strategy planning skills.",
+            "B": "Creative content planning abilities."
+          }
         },
-        "Q2": {
-          "situation": "Writing an Instagram promo post?",
-          "A": "List features and specs.",
-          "B": "Use aesthetic photos + empathetic captions."
+        "set2": {
+          "Q1": {
+            "situation": "A friend asks you to recommend a restaurant!",
+            "A": "Analyze blog reviews, ratings, and visitor counts to pick one.",
+            "B": "Recommend a place with great atmosphere that I've been to."
+          },
+          "Q2": {
+            "situation": "Your club is running a booth at the school festival!",
+            "A": "Survey what menu items sell best first.",
+            "B": "Plan a visually stunning menu that would go viral on SNS."
+          },
+          "Q3": {
+            "situation": "Your cooking style is?",
+            "A": "Follow the recipe exactly step by step.",
+            "B": "Mix ingredients by feeling and create something original."
+          },
+          "Q4": {
+            "situation": "Starting a new hobby!",
+            "A": "Research YouTube videos and reviews thoroughly before starting.",
+            "B": "Just start and learn as I go."
+          },
+          "Q5": {
+            "situation": "Preparing a school presentation?",
+            "A": "Prepare a logical presentation with data and charts.",
+            "B": "Build a story that moves the audience's hearts."
+          },
+          "Q6": {
+            "situation": "Planning a friend's birthday party?",
+            "A": "Set a budget and systematically plan the venue, food, and gifts.",
+            "B": "Create a surprise event and a touching video letter."
+          },
+          "Q7": {
+            "situation": "Your favorite cafe is losing customers!",
+            "A": "Compare prices and menus with nearby cafes.",
+            "B": "Suggest SNS marketing ideas to the cafe owner."
+          },
+          "Q8": {
+            "situation": "Selling a used item!",
+            "A": "Research similar items' prices to set a fair price.",
+            "B": "Take nice photos and write an attractive description."
+          },
+          "Q9": {
+            "situation": "You're in charge of promoting a school club!",
+            "A": "Analyze last year's signup data to define the target.",
+            "B": "Create fun memes and challenges to attract attention."
+          },
+          "Q10": {
+            "situation": "Choosing delivery food?",
+            "A": "Carefully compare review counts, ratings, and reorder rates.",
+            "B": "Choose a place with tasty-looking photos and appealing descriptions."
+          },
+          "Q11": {
+            "situation": "Your convenience store wants to boost sales!",
+            "A": "Analyze sales data by time slot and place popular items up front.",
+            "B": "Talk to customers directly and recommend products."
+          },
+          "Q12": {
+            "situation": "Starting a YouTube channel?",
+            "A": "Analyze popular keywords and choose search-friendly topics.",
+            "B": "Create unique content about topics I truly love."
+          },
+          "Q13": {
+            "situation": "Adding a new menu to the school cafeteria?",
+            "A": "Survey students to understand demand.",
+            "B": "Immediately introduce whatever's trending on SNS."
+          },
+          "Q14": {
+            "situation": "A new store opened in your neighborhood!",
+            "A": "Check how many similar stores exist and assess competition.",
+            "B": "Create an Instagram account and plan an opening event."
+          },
+          "Q15": {
+            "situation": "A friend suggests selling homemade cookies!",
+            "A": "Calculate ingredient costs, packaging, and break-even point first.",
+            "B": "Design pretty packaging and a brand name first."
+          }
         },
-        "Q3": {
-          "situation": "Your role in a team project?",
-          "A": "Set the overall direction and assign roles.",
-          "B": "Lead the brainstorming session."
-        },
-        "Q4": {
-          "situation": "Not enough budget for a new product launch!",
-          "A": "Create buzz through SNS viral marketing.",
-          "B": "Directly sell to a small group of customers."
-        },
-        "Q5": {
-          "situation": "First thing you do at a marketing meeting?",
-          "A": "Prepare competitor analysis data.",
-          "B": "Propose a new campaign concept."
-        },
-        "Q6": {
-          "situation": "A customer filed a complaint!",
-          "A": "Analyze the root cause with data.",
-          "B": "Call them directly and sincerely apologize."
-        },
-        "Q7": {
-          "situation": "What defines good marketing results?",
-          "A": "Brand awareness and follower growth.",
-          "B": "Revenue and conversion rate increase."
-        },
-        "Q8": {
-          "situation": "You found a new business idea!",
-          "A": "Research market size and growth rate first.",
-          "B": "Build a prototype right away."
-        },
-        "Q9": {
-          "situation": "Choosing content for SNS?",
-          "A": "Use trending memes and challenges.",
-          "B": "Show product before & after comparisons."
-        },
-        "Q10": {
-          "situation": "You got 1 million won for ads!",
-          "A": "Optimize with A/B testing.",
-          "B": "Collaborate with influencers."
-        },
-        "Q11": {
-          "situation": "Business in crisis mode — you?",
-          "A": "Reset the long-term vision.",
-          "B": "Execute immediate revenue-boosting actions."
-        },
-        "Q12": {
-          "situation": "Writing a marketing plan?",
-          "A": "Focus on story and visuals.",
-          "B": "Focus on numerical goals and KPIs."
-        },
-        "Q13": {
-          "situation": "Secret to winning a competitive pitch?",
-          "A": "Original creative ideas.",
-          "B": "Persuasive presentation delivery."
-        },
-        "Q14": {
-          "situation": "Your goal as a marketer in 1 year?",
-          "A": "Recognized expert in the industry.",
-          "B": "Trend-setting influencer."
-        },
-        "Q15": {
-          "situation": "Why would a team pick you?",
-          "A": "Systematic strategy planning skills.",
-          "B": "Creative content planning abilities."
+        "set3": {
+          "Q1": {
+            "situation": "Your company asks you to plan a welcome party for new hires!",
+            "A": "Check the budget and headcount, then pick an efficient venue.",
+            "B": "Prepare a surprise event that will touch the new employees."
+          },
+          "Q2": {
+            "situation": "First thing you do when you get paid?",
+            "A": "Organize income and expenses in a spreadsheet and plan savings.",
+            "B": "Buy things I've been wanting and enjoy a nice meal."
+          },
+          "Q3": {
+            "situation": "Choosing an anniversary gift for your partner?",
+            "A": "Buy something practical based on what they've shown interest in.",
+            "B": "Write a letter by hand and gift a special experience."
+          },
+          "Q4": {
+            "situation": "You've become the leader of a new project at work!",
+            "A": "Set the project timeline and KPIs first.",
+            "B": "Identify team members' strengths and motivate them."
+          },
+          "Q5": {
+            "situation": "You want to earn money with a side job!",
+            "A": "Research which side jobs have the best hourly returns.",
+            "B": "Create content using skills I'm good at."
+          },
+          "Q6": {
+            "situation": "A misunderstanding happened between friends!",
+            "A": "Organize the situation objectively and explain logically.",
+            "B": "Meet in person and have a heartfelt conversation."
+          },
+          "Q7": {
+            "situation": "If you were opening a store, what would you do first?",
+            "A": "Analyze the commercial area and foot traffic.",
+            "B": "Decide on the store interior and brand concept."
+          },
+          "Q8": {
+            "situation": "Starting to invest!",
+            "A": "Carefully analyze financial statements and market data.",
+            "B": "Boldly invest in areas that feel like they have growth potential."
+          },
+          "Q9": {
+            "situation": "A colleague complains about their work!",
+            "A": "Analyze process problems and suggest improvements.",
+            "B": "Show empathy first and find solutions together."
+          },
+          "Q10": {
+            "situation": "Your social media posts aren't getting views!",
+            "A": "Analyze insight data to find optimal posting times and hashtags.",
+            "B": "Create more emotional and relatable content."
+          },
+          "Q11": {
+            "situation": "You need to negotiate your salary at work!",
+            "A": "Prepare industry average salary data and my performance records.",
+            "B": "Sincerely express my contributions and passion."
+          },
+          "Q12": {
+            "situation": "A friend brings a startup idea!",
+            "A": "Ask about market size, competitors, and revenue model.",
+            "B": "Suggest fun additional ideas to develop the concept."
+          },
+          "Q13": {
+            "situation": "Your company wants to improve customer satisfaction!",
+            "A": "Analyze customer review data to find complaint patterns.",
+            "B": "Send a personal thank-you message to each customer."
+          },
+          "Q14": {
+            "situation": "Thinking about changing jobs!",
+            "A": "Create a comparison chart of salary, benefits, and growth potential.",
+            "B": "First think about what I really want to do."
+          },
+          "Q15": {
+            "situation": "Your team didn't meet the sales target!",
+            "A": "Analyze data to identify where drop-offs occurred.",
+            "B": "Boost team morale and discuss new strategies together."
+          }
         }
       }
     },
     "marketCompass": {
       "scanner": {
         "headerBadge": "Period 2",
-        "title": "Market Compass Scanner",
+        "title": "Market Explorer",
         "hero": "Know your enemy, know yourself",
         "heroSub": "AI will find your competitors' weaknesses",
         "inputTitle": "Enter market information to analyze",
         "keyword": "Item Keyword",
         "keywordPlaceholder": "e.g., vegan dumplings, handmade soap",
+        "itemType": "Item Type",
+        "itemTypes": {
+          "service": "Service",
+          "physical": "Physical Product",
+          "digital": "Digital Product",
+          "food": "Food / Beverage",
+          "fashion": "Fashion / Clothing",
+          "beauty": "Beauty / Cosmetics",
+          "education": "Education / Courses",
+          "other": "Other"
+        },
         "targetAge": "Target Age",
         "targetGender": "Target Gender",
         "ages": {
@@ -903,6 +1072,7 @@
         },
         "result": {
           "title": "Analysis Results",
+          "analysisReportTitle": "Market Analysis Report",
           "mockBadge": "Sample Data",
           "aiBadge": "AI Analysis",
           "keywordsTitle": "Top 5 Related Keywords",
@@ -915,7 +1085,7 @@
         },
         "next": {
           "title": "Analysis Complete! Next Step",
-          "edgeMakerButton": "Create Differentiation Strategy with Edge Maker",
+          "edgeMakerButton": "Create Differentiation Strategy with Brand Builder",
           "attendanceButton": "Back to Attendance"
         },
         "previousResult": "Previous analysis results found",
@@ -924,16 +1094,18 @@
       },
       "edgeMaker": {
         "headerBadge": "Period 3",
-        "title": "Market Compass Edge Maker",
+        "title": "Brand Builder",
         "hero": "Turn weakness into opportunity!",
         "heroSub": "A branding strategy that targets competitors' gaps",
         "stepIndicator": "Step {{current}} / {{total}}",
         "step1Done": "Market Analysis Complete",
         "step2Active": "Branding Strategy",
-        "noScannerData": "Please complete Market Scanner first!",
-        "goToScanner": "Go to Market Scanner",
+        "noScannerData": "Please complete Market Explorer first!",
+        "goToScanner": "Go to Market Explorer",
+        "competitorSummaryTitle": "Competitor Summary",
+        "competitorSummaryFrom": "Loaded from Market Explorer analysis results",
         "painPointsTitle": "Competitor Weaknesses (Auto-loaded)",
-        "painPointsFrom": "Loaded from Market Scanner results",
+        "painPointsFrom": "Loaded from Market Explorer results",
         "strengthsTitle": "My Strengths",
         "strengthsPlaceholder": "Enter a strength (e.g., uses local ingredients)",
         "strengthsHint": "Add up to 5 strengths",
@@ -946,6 +1118,7 @@
         },
         "result": {
           "title": "Branding Strategy",
+          "brandingReportTitle": "Branding Recommendation Report",
           "mockBadge": "Sample Data",
           "aiBadge": "AI Generated",
           "uspTitle": "USP (Unique Selling Proposition)",
@@ -1005,9 +1178,10 @@
         "illustration": "Illustration",
         "realistic": "Realistic",
         "minimal": "Minimal",
-        "popart": "Pop Art"
+        "popart": "Pop Art",
+        "custom": "Custom"
       },
-      "generateButton": "Generate Card News Copy",
+      "generateButton": "Create SNS Ad",
       "loading": {
         "step1": "Writing copy with viral formula..."
       },
@@ -1018,7 +1192,14 @@
       "strategy": "Strategy Summary",
       "copy": "Copy",
       "copied": "Copied!",
-      "copyAll": "Copy All"
+      "copyAll": "Copy All",
+      "saveAsImage": "Save as Image",
+      "saveAll": "Save All",
+      "saveToIdeaBox": "Save to Idea Box",
+      "savedToIdeaBox": "Saved!",
+      "saveToTeamBox": "Save to Gem Box",
+      "savedToTeamBox": "Saved to Gem Box!",
+      "noTeam": "No Team"
     },
     "perfectPlanner": {
       "title": "Perfect Planner",
@@ -1803,5 +1984,9 @@
         "done": "Finish Practice"
       }
     }
+  },
+  "footer": {
+    "madeWith": "Growing together at Kkakdugi School",
+    "disclaimer": "© 2024 Kkakdugi School. Education school for migrants and international students"
   }
 }

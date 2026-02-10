@@ -6,6 +6,7 @@ import { useAuth } from '../contexts/AuthContext';
 import { saveGeminiApiKey } from '../services/profileService';
 import { supabase } from '../lib/supabase';
 import { type SchoolId } from '../types/enrollment';
+import KkakdugiCharacter from '@/components/brand/KkakdugiCharacter';
 
 interface LocationState {
   schoolId: SchoolId;
@@ -85,15 +86,18 @@ export default function AIWelcomePage() {
   const name = userName || (user as Record<string, any>)?.user_metadata?.name || '학생';
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-50 via-pink-50 to-blue-50 flex items-center justify-center p-4">
+    <div className="min-h-screen bg-gradient-to-br from-kk-cream via-kk-warm to-kk-bg flex items-center justify-center p-4">
       <div className="max-w-3xl w-full">
         {/* 헤더 */}
         <div className="text-center mb-8">
-          <div className="w-20 h-20 bg-gradient-to-br from-purple-500 to-pink-500 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg animate-pulse">
+          <div className="mb-2">
+            <KkakdugiCharacter size="half" animated />
+          </div>
+          <div className="w-20 h-20 bg-gradient-to-br from-kk-red to-kk-red-deep rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg animate-pulse">
             <Bot className="w-10 h-10 text-white" strokeWidth={1.5} />
           </div>
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">
-            <Sparkles className="w-6 h-6 inline mr-2 text-purple-500" />
+          <h1 className="text-3xl font-bold text-kk-brown mb-2">
+            <Sparkles className="w-6 h-6 inline mr-2 text-kk-red" />
             AI 비서 연결하기
           </h1>
         </div>
@@ -112,9 +116,9 @@ export default function AIWelcomePage() {
               </p>
             </div>
             <div className="flex gap-1 justify-center">
-              <div className="w-2 h-2 bg-purple-400 rounded-full animate-bounce" style={{ animationDelay: '0ms' }} />
-              <div className="w-2 h-2 bg-purple-400 rounded-full animate-bounce" style={{ animationDelay: '150ms' }} />
-              <div className="w-2 h-2 bg-purple-400 rounded-full animate-bounce" style={{ animationDelay: '300ms' }} />
+              <div className="w-2 h-2 bg-kk-red rounded-full animate-bounce" style={{ animationDelay: '0ms' }} />
+              <div className="w-2 h-2 bg-kk-red rounded-full animate-bounce" style={{ animationDelay: '150ms' }} />
+              <div className="w-2 h-2 bg-kk-red rounded-full animate-bounce" style={{ animationDelay: '300ms' }} />
             </div>
           </div>
         )}
@@ -127,9 +131,9 @@ export default function AIWelcomePage() {
             </h2>
 
             <div className="mb-8 space-y-4">
-              <div className="bg-purple-50 border-2 border-purple-200 rounded-xl p-6">
-                <h3 className="font-bold text-gray-900 mb-3 flex items-center gap-2">
-                  <Key className="w-5 h-5 text-purple-600" />
+              <div className="bg-kk-cream border-2 border-kk-warm rounded-xl p-6">
+                <h3 className="font-bold text-kk-brown mb-3 flex items-center gap-2">
+                  <Key className="w-5 h-5 text-kk-red" />
                   API 키가 뭔가요?
                 </h3>
                 <p className="text-gray-700 leading-relaxed">
@@ -138,7 +142,7 @@ export default function AIWelcomePage() {
                 </p>
               </div>
 
-              <div className="bg-blue-50 border-2 border-blue-200 rounded-xl p-6">
+              <div className="bg-kk-bg border-2 border-kk-warm rounded-xl p-6">
                 <h3 className="font-bold text-gray-900 mb-3">📚 왜 필요한가요?</h3>
                 <p className="text-gray-700 leading-relaxed mb-3">
                   마케팅 학교에서는 다양한 AI 도구들을 사용하게 될 거예요:
@@ -154,7 +158,7 @@ export default function AIWelcomePage() {
                 </p>
               </div>
 
-              <div className="bg-green-50 border-2 border-green-200 rounded-xl p-6">
+              <div className="bg-kk-cream border-2 border-kk-peach rounded-xl p-6">
                 <h3 className="font-bold text-gray-900 mb-3">🎁 무료로 받을 수 있어요!</h3>
                 <p className="text-gray-700 leading-relaxed">
                   Google AI Studio에서 무료로 API 키를 발급받을 수 있습니다.
@@ -168,7 +172,7 @@ export default function AIWelcomePage() {
                 href="https://aistudio.google.com/app/apikey"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-full py-4 bg-gradient-to-r from-blue-600 to-cyan-600 text-white font-semibold rounded-xl hover:shadow-lg transition-all flex items-center justify-center gap-2"
+                className="w-full py-4 bg-gradient-to-r from-kk-navy to-kk-navy-deep text-white font-semibold rounded-xl hover:shadow-lg transition-all flex items-center justify-center gap-2"
               >
                 <ExternalLink className="w-5 h-5" />
                 Google AI Studio에서 API 키 받기
@@ -176,7 +180,7 @@ export default function AIWelcomePage() {
 
               <button
                 onClick={handleStartConnection}
-                className="w-full py-4 bg-gradient-to-r from-purple-600 to-pink-600 text-white font-semibold rounded-xl hover:shadow-lg transition-all flex items-center justify-center gap-2"
+                className="w-full py-4 bg-gradient-to-r from-kk-red to-kk-red-deep text-white font-semibold rounded-xl hover:shadow-lg transition-all flex items-center justify-center gap-2"
               >
                 <Key className="w-5 h-5" />
                 API 키 입력하기
@@ -227,7 +231,7 @@ export default function AIWelcomePage() {
                     value={apiKey}
                     onChange={(e) => setApiKey(e.target.value)}
                     placeholder="AIza... 로 시작하는 키를 입력하세요"
-                    className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all font-mono text-sm"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-kk-red focus:border-transparent transition-all font-mono text-sm"
                     disabled={isLoading}
                   />
                   <p className="text-xs text-gray-500 mt-2">
@@ -239,7 +243,7 @@ export default function AIWelcomePage() {
                   <button
                     onClick={handleSaveApiKey}
                     disabled={isLoading || !apiKey.trim()}
-                    className="w-full py-4 bg-gradient-to-r from-purple-600 to-pink-600 text-white font-semibold rounded-xl hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed transition-all flex items-center justify-center gap-2"
+                    className="w-full py-4 bg-gradient-to-r from-kk-red to-kk-red-deep text-white font-semibold rounded-xl hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed transition-all flex items-center justify-center gap-2"
                   >
                     {isLoading ? (
                       <>

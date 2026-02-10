@@ -317,7 +317,7 @@ export default function ViralCardMakerTool() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-kk-bg">
       {/* Header */}
       <header className="bg-white border-b border-gray-200 sticky top-0 z-40">
         <div className="max-w-lg mx-auto px-4 py-3 flex items-center gap-3">
@@ -325,8 +325,8 @@ export default function ViralCardMakerTool() {
             <ArrowLeft className="w-5 h-5 text-gray-600" />
           </button>
           <div className="flex items-center gap-2">
-            <span className="text-xs font-bold text-purple-600 bg-purple-50 px-2 py-0.5 rounded">4{t('school.curriculum.period')}</span>
-            <h1 className="font-bold text-gray-800">{t('school.periods.viralCardMaker.name')}</h1>
+            <span className="text-xs font-bold text-kk-navy bg-kk-cream px-2 py-0.5 rounded">4{t('school.curriculum.period')}</span>
+            <h1 className="font-bold text-kk-brown">{t('school.periods.viralCardMaker.name')}</h1>
           </div>
         </div>
       </header>
@@ -337,10 +337,10 @@ export default function ViralCardMakerTool() {
           <>
             {/* Hero */}
             <div className="bg-white rounded-2xl border border-gray-200 p-5 text-center">
-              <div className="w-14 h-14 mx-auto mb-3 bg-purple-50 rounded-2xl flex items-center justify-center">
-                <Share2 className="w-7 h-7 text-purple-500" />
+              <div className="w-14 h-14 mx-auto mb-3 bg-kk-cream rounded-2xl flex items-center justify-center">
+                <Share2 className="w-7 h-7 text-kk-navy" />
               </div>
-              <h2 className="text-lg font-bold text-gray-800 mb-1">{t('school.viralCardMaker.title')}</h2>
+              <h2 className="text-lg font-bold text-kk-brown mb-1">{t('school.viralCardMaker.title')}</h2>
               <p className="text-sm text-gray-500">{t('school.viralCardMaker.subtitle')}</p>
             </div>
 
@@ -350,7 +350,7 @@ export default function ViralCardMakerTool() {
                 onClick={() => setShowFormula(!showFormula)}
                 className="w-full px-5 py-3 flex items-center justify-between text-left"
               >
-                <span className="text-sm font-semibold text-purple-700">{t('school.viralCardMaker.formulaTitle')}</span>
+                <span className="text-sm font-semibold text-kk-brown">{t('school.viralCardMaker.formulaTitle')}</span>
                 {showFormula ? <ChevronUp className="w-4 h-4 text-gray-400" /> : <ChevronDown className="w-4 h-4 text-gray-400" />}
               </button>
               {showFormula && (
@@ -370,7 +370,7 @@ export default function ViralCardMakerTool() {
 
             {/* Edge Maker Badge */}
             {edgeDataLoaded && (
-              <div className="bg-amber-50 border border-amber-200 rounded-xl px-4 py-2 text-xs text-amber-700 font-medium">
+              <div className="bg-kk-cream border border-kk-warm rounded-xl px-4 py-2 text-xs text-kk-brown font-medium">
                 {t('school.viralCardMaker.edgeDataLoaded')}
               </div>
             )}
@@ -384,7 +384,7 @@ export default function ViralCardMakerTool() {
                   value={productName}
                   onChange={(e) => setProductName(e.target.value.slice(0, 30))}
                   placeholder={t('school.viralCardMaker.input.productNamePlaceholder')}
-                  className="w-full px-3 py-2.5 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-purple-300"
+                  className="w-full px-3 py-2.5 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-kk-red"
                 />
               </div>
               <div>
@@ -394,7 +394,7 @@ export default function ViralCardMakerTool() {
                   value={targetPersona}
                   onChange={(e) => setTargetPersona(e.target.value.slice(0, 80))}
                   placeholder={t('school.viralCardMaker.input.targetPersonaPlaceholder')}
-                  className="w-full px-3 py-2.5 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-purple-300"
+                  className="w-full px-3 py-2.5 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-kk-red"
                 />
               </div>
               <div>
@@ -404,7 +404,7 @@ export default function ViralCardMakerTool() {
                   value={usp}
                   onChange={(e) => setUsp(e.target.value.slice(0, 100))}
                   placeholder={t('school.viralCardMaker.input.uspPlaceholder')}
-                  className="w-full px-3 py-2.5 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-purple-300"
+                  className="w-full px-3 py-2.5 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-kk-red"
                 />
               </div>
             </div>
@@ -419,7 +419,7 @@ export default function ViralCardMakerTool() {
                     onClick={() => setTone(opt.value)}
                     className={`p-3 rounded-xl border-2 text-center transition-all ${
                       tone === opt.value
-                        ? 'border-purple-500 bg-purple-50'
+                        ? 'border-kk-red bg-kk-cream'
                         : 'border-gray-200 hover:border-gray-300'
                     }`}
                   >
@@ -441,7 +441,7 @@ export default function ViralCardMakerTool() {
                     onClick={() => setImageStyle(opt.value)}
                     className={`rounded-xl border-2 overflow-hidden transition-all ${
                       imageStyle === opt.value
-                        ? 'border-purple-500 ring-2 ring-purple-200'
+                        ? 'border-kk-red ring-2 ring-kk-peach'
                         : 'border-gray-200 hover:border-gray-300'
                     }`}
                   >
@@ -471,7 +471,7 @@ export default function ViralCardMakerTool() {
                     type="file"
                     accept="image/*"
                     onChange={handleCustomImageUpload}
-                    className="w-full text-sm text-gray-500 file:mr-2 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-purple-50 file:text-purple-700 hover:file:bg-purple-100"
+                    className="w-full text-sm text-gray-500 file:mr-2 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-kk-cream file:text-kk-brown hover:file:bg-kk-warm"
                   />
                   {customImageBase64 && (
                     <img
@@ -488,7 +488,7 @@ export default function ViralCardMakerTool() {
             <button
               onClick={handleGenerate}
               disabled={!isInputValid}
-              className="w-full py-3.5 bg-gradient-to-r from-purple-600 to-violet-600 text-white font-bold rounded-xl hover:opacity-90 transition-opacity disabled:opacity-40 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+              className="w-full py-3.5 bg-kk-red hover:bg-kk-red-deep text-white font-bold rounded-xl transition-colors disabled:opacity-40 disabled:cursor-not-allowed flex items-center justify-center gap-2"
             >
               <Sparkles className="w-5 h-5" />
               {t('school.viralCardMaker.generateButton')}
@@ -499,8 +499,8 @@ export default function ViralCardMakerTool() {
         {/* ══════ LOADING PHASE ══════ */}
         {phase === 'loading' && (
           <div className="bg-white rounded-2xl border border-gray-200 p-8 text-center">
-            <div className="w-16 h-16 mx-auto mb-4 bg-purple-50 rounded-full flex items-center justify-center">
-              <Loader2 className="w-8 h-8 text-purple-500 animate-spin" />
+            <div className="w-16 h-16 mx-auto mb-4 bg-kk-cream rounded-full flex items-center justify-center">
+              <Loader2 className="w-8 h-8 text-kk-red animate-spin" />
             </div>
             <p className="text-sm font-medium text-gray-600">{loadingText}</p>
             <div className="flex justify-center gap-1.5 mt-4">
@@ -508,7 +508,7 @@ export default function ViralCardMakerTool() {
                 <div
                   key={i}
                   className={`w-2 h-2 rounded-full ${
-                    i <= loadingStep ? 'bg-purple-500' : 'bg-gray-200'
+                    i <= loadingStep ? 'bg-kk-red' : 'bg-gray-200'
                   }`}
                 />
               ))}
@@ -528,8 +528,8 @@ export default function ViralCardMakerTool() {
             </div>
 
             {/* Strategy Summary */}
-            <div className="bg-purple-50 border border-purple-200 rounded-xl p-4">
-              <p className="text-sm text-purple-800 font-medium">{result.overallStrategy}</p>
+            <div className="bg-kk-cream border border-kk-warm rounded-xl p-4">
+              <p className="text-sm text-kk-brown font-medium">{result.overallStrategy}</p>
             </div>
 
             {/* Card Preview - Mobile Swipe */}
@@ -624,7 +624,7 @@ export default function ViralCardMakerTool() {
                   <div
                     key={i}
                     className={`w-2 h-2 rounded-full transition-colors ${
-                      i === activeSlide ? 'bg-purple-500' : 'bg-gray-200'
+                      i === activeSlide ? 'bg-kk-red' : 'bg-gray-200'
                     }`}
                   />
                 ))}
@@ -635,21 +635,21 @@ export default function ViralCardMakerTool() {
             <div className="grid grid-cols-2 gap-2">
               <button
                 onClick={handleCopyAll}
-                className="flex items-center justify-center gap-2 py-3 bg-purple-100 text-purple-700 font-bold rounded-xl hover:bg-purple-200 transition-colors text-sm"
+                className="flex items-center justify-center gap-2 py-3 bg-kk-cream text-kk-brown font-bold rounded-xl hover:bg-kk-warm transition-colors text-sm"
               >
                 {copiedField === 'all' ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
                 {copiedField === 'all' ? t('school.viralCardMaker.copied') : t('school.viralCardMaker.copyAll')}
               </button>
               <button
                 onClick={handleSaveAllSlides}
-                className="flex items-center justify-center gap-2 py-3 bg-green-100 text-green-700 font-bold rounded-xl hover:bg-green-200 transition-colors text-sm"
+                className="flex items-center justify-center gap-2 py-3 bg-kk-cream text-kk-brown font-bold rounded-xl hover:bg-kk-warm transition-colors text-sm"
               >
                 <Download className="w-4 h-4" />
                 {t('school.viralCardMaker.saveAll')}
               </button>
               <button
                 onClick={handleSaveToIdeaBox}
-                className="flex items-center justify-center gap-2 py-3 bg-amber-100 text-amber-700 font-bold rounded-xl hover:bg-amber-200 transition-colors text-sm"
+                className="flex items-center justify-center gap-2 py-3 bg-kk-cream text-kk-brown font-bold rounded-xl hover:bg-kk-warm transition-colors text-sm"
               >
                 <Bookmark className="w-4 h-4" />
                 {savedToIdeaBox ? t('school.viralCardMaker.savedToIdeaBox') : t('school.viralCardMaker.saveToIdeaBox')}
@@ -657,7 +657,7 @@ export default function ViralCardMakerTool() {
               {myTeamId && (
                 <button
                   onClick={handleSaveToTeamBox}
-                  className="flex items-center justify-center gap-2 py-3 bg-gradient-to-r from-amber-100 to-yellow-100 text-amber-700 font-bold rounded-xl hover:from-amber-200 hover:to-yellow-200 transition-colors text-sm"
+                  className="flex items-center justify-center gap-2 py-3 bg-kk-cream text-kk-brown font-bold rounded-xl hover:bg-kk-warm transition-colors text-sm"
                 >
                   <Gem className="w-4 h-4" />
                   {savedToTeamBox ? '저장 완료!' : '💎 보석함'}

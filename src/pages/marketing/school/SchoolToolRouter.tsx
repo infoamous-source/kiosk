@@ -1,14 +1,16 @@
+import { lazy, Suspense } from 'react';
 import { useParams, Navigate, useNavigate } from 'react-router-dom';
 import { Loader2 } from 'lucide-react';
 import { useAuth } from '../../../contexts/AuthContext';
 import SchoolBottomNav from '../../../components/school/SchoolBottomNav';
 import KkakdugiMascot from '../../../components/brand/KkakdugiMascot';
-import AptitudeTestTool from './tools/AptitudeTestTool';
-import MarketScannerTool from './tools/MarketScannerTool';
-import EdgeMakerTool from './tools/EdgeMakerTool';
-import ViralCardMakerTool from './tools/ViralCardMakerTool';
-import PerfectPlannerTool from './tools/PerfectPlannerTool';
-import ROASSimulatorTool from './tools/ROASSimulatorTool';
+
+const AptitudeTestTool = lazy(() => import('./tools/AptitudeTestTool'));
+const MarketScannerTool = lazy(() => import('./tools/MarketScannerTool'));
+const EdgeMakerTool = lazy(() => import('./tools/EdgeMakerTool'));
+const ViralCardMakerTool = lazy(() => import('./tools/ViralCardMakerTool'));
+const PerfectPlannerTool = lazy(() => import('./tools/PerfectPlannerTool'));
+const ROASSimulatorTool = lazy(() => import('./tools/ROASSimulatorTool'));
 
 const toolComponents: Record<string, React.ComponentType> = {
   'aptitude-test': AptitudeTestTool,
@@ -55,7 +57,13 @@ export default function SchoolToolRouter() {
   const ToolComponent = toolComponents[toolId];
   return (
     <div className="pb-20">
-      <ToolComponent />
+      <Suspense fallback={
+        <div className="flex justify-center items-center p-12">
+          <div className="animate-spin h-8 w-8 border-4 border-kk-red border-t-transparent rounded-full" />
+        </div>
+      }>
+        <ToolComponent />
+      </Suspense>
       <SchoolBottomNav />
     </div>
   );

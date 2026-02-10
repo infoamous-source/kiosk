@@ -254,7 +254,7 @@ export default function ROASSimulatorTool() {
   ] : [];
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-kk-bg">
       {/* Header */}
       <header className="bg-white border-b border-gray-200 sticky top-0 z-40">
         <div className="max-w-lg mx-auto px-4 py-3 flex items-center gap-3">
@@ -262,8 +262,8 @@ export default function ROASSimulatorTool() {
             <ArrowLeft className="w-5 h-5 text-gray-600" />
           </button>
           <div className="flex items-center gap-2">
-            <span className="text-xs font-bold text-orange-600 bg-orange-50 px-2 py-0.5 rounded">6{t('school.curriculum.period')}</span>
-            <h1 className="font-bold text-gray-800">{t('school.periods.roasSimulator.name')}</h1>
+            <span className="text-xs font-bold text-kk-red bg-kk-cream px-2 py-0.5 rounded">6{t('school.curriculum.period')}</span>
+            <h1 className="font-bold text-kk-brown">{t('school.periods.roasSimulator.name')}</h1>
           </div>
         </div>
       </header>
@@ -274,10 +274,10 @@ export default function ROASSimulatorTool() {
           <>
             {/* Hero */}
             <div className="bg-white rounded-2xl border border-gray-200 p-5 text-center">
-              <div className="w-14 h-14 mx-auto mb-3 bg-orange-50 rounded-2xl flex items-center justify-center">
-                <TrendingUp className="w-7 h-7 text-orange-500" />
+              <div className="w-14 h-14 mx-auto mb-3 bg-kk-cream rounded-2xl flex items-center justify-center">
+                <TrendingUp className="w-7 h-7 text-kk-red" />
               </div>
-              <h2 className="text-lg font-bold text-gray-800 mb-1">{t('school.roasSimulator.title')}</h2>
+              <h2 className="text-lg font-bold text-kk-brown mb-1">{t('school.roasSimulator.title')}</h2>
               <p className="text-sm text-gray-500">{t('school.roasSimulator.subtitle')}</p>
             </div>
 
@@ -287,15 +287,15 @@ export default function ROASSimulatorTool() {
                 onClick={() => setShowEducation(!showEducation)}
                 className="w-full px-5 py-3 flex items-center justify-between text-left"
               >
-                <span className="text-sm font-semibold text-orange-700">{t('school.roasSimulator.educationTitle')}</span>
+                <span className="text-sm font-semibold text-kk-brown">{t('school.roasSimulator.educationTitle')}</span>
                 {showEducation ? <ChevronUp className="w-4 h-4 text-gray-400" /> : <ChevronDown className="w-4 h-4 text-gray-400" />}
               </button>
               {showEducation && (
                 <div className="px-5 pb-4 space-y-3">
                   <p className="text-sm text-gray-600">{t('school.roasSimulator.education.whatIsROAS')}</p>
-                  <div className="bg-orange-50 rounded-xl p-3 text-sm">
-                    <p className="font-bold text-orange-700 mb-1">{t('school.roasSimulator.education.example')}</p>
-                    <p className="text-orange-600">{t('school.roasSimulator.education.exampleText')}</p>
+                  <div className="bg-kk-cream rounded-xl p-3 text-sm">
+                    <p className="font-bold text-kk-brown mb-1">{t('school.roasSimulator.education.example')}</p>
+                    <p className="text-kk-brown">{t('school.roasSimulator.education.exampleText')}</p>
                   </div>
                   <div className="space-y-1.5">
                     <div className="flex items-center gap-2 text-sm">
@@ -321,7 +321,7 @@ export default function ROASSimulatorTool() {
 
             {/* Prev Data Badge */}
             {prevDataLoaded && (
-              <div className="bg-amber-50 border border-amber-200 rounded-xl px-4 py-2 text-xs text-amber-700 font-medium">
+              <div className="bg-kk-cream border border-kk-warm rounded-xl px-4 py-2 text-xs text-kk-brown font-medium">
                 {t('school.roasSimulator.prevDataLoaded')}
               </div>
             )}
@@ -335,7 +335,7 @@ export default function ROASSimulatorTool() {
                   value={productName}
                   onChange={(e) => setProductName(e.target.value.slice(0, 30))}
                   placeholder={t('school.roasSimulator.input.productNamePlaceholder')}
-                  className="w-full px-3 py-2.5 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-orange-300"
+                  className="w-full px-3 py-2.5 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-kk-red"
                 />
               </div>
               <div>
@@ -345,7 +345,7 @@ export default function ROASSimulatorTool() {
                   value={productPrice}
                   onChange={(e) => setProductPrice(e.target.value)}
                   placeholder="15000"
-                  className="w-full px-3 py-2.5 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-orange-300"
+                  className="w-full px-3 py-2.5 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-kk-red"
                 />
               </div>
             </div>
@@ -359,7 +359,7 @@ export default function ROASSimulatorTool() {
                 value={adBudget || ''}
                 onChange={(e) => setAdBudget(Number(e.target.value))}
                 placeholder="300000"
-                className="w-full px-3 py-2.5 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-orange-300 mb-2"
+                className="w-full px-3 py-2.5 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-kk-red mb-2"
               />
               <div className="flex gap-1.5 flex-wrap">
                 {BUDGET_PRESETS.map((preset) => (
@@ -368,8 +368,8 @@ export default function ROASSimulatorTool() {
                     onClick={() => setAdBudget(preset)}
                     className={`px-3 py-1 rounded-full text-xs font-medium transition-all ${
                       adBudget === preset
-                        ? 'bg-orange-500 text-white'
-                        : 'bg-gray-100 text-gray-500 hover:bg-gray-200'
+                        ? 'bg-kk-red text-white'
+                        : 'bg-kk-cream text-kk-brown hover:bg-kk-warm'
                     }`}
                   >
                     {formatWon(preset)}
@@ -388,8 +388,8 @@ export default function ROASSimulatorTool() {
                     onClick={() => setDuration(d)}
                     className={`py-2.5 rounded-xl text-sm font-bold transition-all ${
                       duration === d
-                        ? 'bg-orange-500 text-white'
-                        : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                        ? 'bg-kk-red text-white'
+                        : 'bg-kk-cream text-kk-brown hover:bg-kk-warm'
                     }`}
                   >
                     {d}{t('school.roasSimulator.days')}
@@ -408,7 +408,7 @@ export default function ROASSimulatorTool() {
                     onClick={() => setAdChannel(opt.value)}
                     className={`p-3 rounded-xl border-2 text-left transition-all ${
                       adChannel === opt.value
-                        ? 'border-orange-500 bg-orange-50'
+                        ? 'border-kk-red bg-kk-cream'
                         : 'border-gray-200 hover:border-gray-300'
                     }`}
                   >
@@ -424,7 +424,7 @@ export default function ROASSimulatorTool() {
             <button
               onClick={handleSimulate}
               disabled={!isInputValid}
-              className="w-full py-3.5 bg-gradient-to-r from-orange-500 to-red-500 text-white font-bold rounded-xl hover:opacity-90 transition-opacity disabled:opacity-40 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+              className="w-full py-3.5 bg-kk-red hover:bg-kk-red-deep text-white font-bold rounded-xl transition-colors disabled:opacity-40 disabled:cursor-not-allowed flex items-center justify-center gap-2"
             >
               <TrendingUp className="w-5 h-5" />
               {t('school.roasSimulator.simulateButton')}
@@ -435,13 +435,13 @@ export default function ROASSimulatorTool() {
         {/* ══════ LOADING PHASE ══════ */}
         {phase === 'loading' && (
           <div className="bg-white rounded-2xl border border-gray-200 p-8 text-center">
-            <div className="w-16 h-16 mx-auto mb-4 bg-orange-50 rounded-full flex items-center justify-center">
-              <Loader2 className="w-8 h-8 text-orange-500 animate-spin" />
+            <div className="w-16 h-16 mx-auto mb-4 bg-kk-cream rounded-full flex items-center justify-center">
+              <Loader2 className="w-8 h-8 text-kk-red animate-spin" />
             </div>
             <p className="text-sm font-medium text-gray-600">{loadingSteps[loadingStep]}</p>
             <div className="flex justify-center gap-1.5 mt-4">
               {[0, 1, 2].map((i) => (
-                <div key={i} className={`w-2 h-2 rounded-full ${i <= loadingStep ? 'bg-orange-500' : 'bg-gray-200'}`} />
+                <div key={i} className={`w-2 h-2 rounded-full ${i <= loadingStep ? 'bg-kk-red' : 'bg-gray-200'}`} />
               ))}
             </div>
           </div>
@@ -533,8 +533,8 @@ export default function ROASSimulatorTool() {
               <h3 className="text-sm font-bold text-gray-700 mb-3">{t('school.roasSimulator.advice')}</h3>
               <div className="space-y-2">
                 {result.advice.map((advice, i) => (
-                  <div key={i} className="flex items-start gap-2 text-sm bg-orange-50 p-3 rounded-xl">
-                    <span className="text-orange-500 font-bold">{i + 1}</span>
+                  <div key={i} className="flex items-start gap-2 text-sm bg-kk-cream p-3 rounded-xl">
+                    <span className="text-kk-red font-bold">{i + 1}</span>
                     <span className="text-gray-700">{advice}</span>
                   </div>
                 ))}
@@ -551,7 +551,7 @@ export default function ROASSimulatorTool() {
             <div className="flex gap-2">
               <button
                 onClick={handleCopyAll}
-                className="flex-1 flex items-center justify-center gap-2 py-3 bg-orange-100 text-orange-700 font-bold rounded-xl hover:bg-orange-200 transition-colors"
+                className="flex-1 flex items-center justify-center gap-2 py-3 bg-kk-cream text-kk-brown font-bold rounded-xl hover:bg-kk-warm transition-colors"
               >
                 {copiedField === 'all' ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
                 {copiedField === 'all' ? t('school.roasSimulator.copied') : t('school.roasSimulator.copyAll')}
@@ -571,7 +571,7 @@ export default function ROASSimulatorTool() {
             {myTeamId && (
               <button
                 onClick={handleSaveToTeamBox}
-                className="w-full py-3 bg-gradient-to-r from-amber-100 to-yellow-100 text-amber-700 font-bold rounded-xl hover:from-amber-200 hover:to-yellow-200 transition-colors flex items-center justify-center gap-2"
+                className="w-full py-3 bg-kk-cream hover:bg-kk-warm text-kk-brown font-bold rounded-xl transition-colors flex items-center justify-center gap-2"
               >
                 <Gem className="w-4 h-4" />
                 {savedToTeamBox ? '보석함에 저장 완료!' : '💎 보석함에 넣기'}
@@ -587,7 +587,7 @@ export default function ROASSimulatorTool() {
               )}
               <button
                 onClick={() => navigate('/marketing/school/graduation-project')}
-                className="w-full py-3 bg-gradient-to-r from-purple-600 to-pink-600 text-white font-bold rounded-xl hover:opacity-90 transition-opacity flex items-center justify-center gap-2"
+                className="w-full py-3 bg-kk-red hover:bg-kk-red-deep text-white font-bold rounded-xl transition-colors flex items-center justify-center gap-2"
               >
                 {t('school.roasSimulator.goToGraduation')}
               </button>

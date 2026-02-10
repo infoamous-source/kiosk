@@ -14,34 +14,34 @@ type Phase = 'intro' | 'test' | 'loading' | 'result';
 
 const PERSONA_COLORS: Record<PersonaId, { gradient: string; bg: string; text: string; bar: string }> = {
   CEO: {
-    gradient: 'from-amber-400 to-amber-600',
-    bg: 'bg-amber-50',
-    text: 'text-amber-700',
-    bar: 'bg-amber-500',
+    gradient: 'from-kk-gold to-kk-warm',
+    bg: 'bg-kk-cream',
+    text: 'text-kk-brown',
+    bar: 'bg-kk-gold',
   },
   PM: {
-    gradient: 'from-violet-400 to-violet-600',
-    bg: 'bg-violet-50',
-    text: 'text-violet-700',
-    bar: 'bg-violet-500',
+    gradient: 'from-kk-navy to-kk-navy-deep',
+    bg: 'bg-kk-cream',
+    text: 'text-kk-navy',
+    bar: 'bg-kk-navy',
   },
   CPO: {
-    gradient: 'from-blue-400 to-blue-600',
-    bg: 'bg-blue-50',
-    text: 'text-blue-700',
-    bar: 'bg-blue-500',
+    gradient: 'from-kk-navy to-kk-coral',
+    bg: 'bg-kk-cream',
+    text: 'text-kk-navy',
+    bar: 'bg-kk-navy',
   },
   CMO: {
-    gradient: 'from-pink-400 to-pink-600',
-    bg: 'bg-pink-50',
-    text: 'text-pink-700',
-    bar: 'bg-pink-500',
+    gradient: 'from-kk-red to-kk-peach',
+    bg: 'bg-kk-cream',
+    text: 'text-kk-red',
+    bar: 'bg-kk-red',
   },
   CSL: {
-    gradient: 'from-emerald-400 to-emerald-600',
-    bg: 'bg-emerald-50',
-    text: 'text-emerald-700',
-    bar: 'bg-emerald-500',
+    gradient: 'from-kk-gold to-kk-peach',
+    bg: 'bg-kk-cream',
+    text: 'text-kk-brown',
+    bar: 'bg-kk-gold',
   },
 };
 
@@ -220,7 +220,7 @@ export default function AptitudeTestTool() {
     : 1;
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-kk-bg">
       {/* Header */}
       <header className="bg-white border-b border-gray-200 sticky top-0 z-40">
         <div className="max-w-lg mx-auto px-4 py-3 flex items-center gap-3">
@@ -236,10 +236,10 @@ export default function AptitudeTestTool() {
             <ArrowLeft className="w-5 h-5 text-gray-600" />
           </button>
           <div className="flex items-center gap-2">
-            <span className="text-xs font-bold text-rose-600 bg-rose-50 px-2 py-0.5 rounded">
+            <span className="text-xs font-bold text-kk-red bg-kk-cream px-2 py-0.5 rounded">
               1{t('school.curriculum.period')}
             </span>
-            <h1 className="font-bold text-gray-800">{t('school.periods.aptitudeTest.name')}</h1>
+            <h1 className="font-bold text-kk-brown">{t('school.periods.aptitudeTest.name')}</h1>
           </div>
         </div>
       </header>
@@ -249,7 +249,7 @@ export default function AptitudeTestTool() {
         {phase === 'intro' && (
           <div className="space-y-6">
             {/* Hero Card */}
-            <div className="bg-gradient-to-br from-rose-500 to-pink-500 rounded-2xl p-8 text-center text-white">
+            <div className="bg-gradient-to-br from-kk-red to-kk-peach rounded-2xl p-8 text-center text-white">
               <div className="w-16 h-16 mx-auto mb-4 bg-white/20 rounded-2xl flex items-center justify-center backdrop-blur-sm">
                 <Sparkles className="w-8 h-8 text-white" />
               </div>
@@ -278,7 +278,7 @@ export default function AptitudeTestTool() {
             {/* Start Button */}
             <button
               onClick={handleStartTest}
-              className="w-full py-4 bg-gradient-to-r from-rose-500 to-pink-500 text-white font-bold rounded-2xl hover:opacity-90 transition-opacity text-lg"
+              className="w-full py-4 bg-kk-red hover:bg-kk-red-deep text-white font-bold rounded-2xl transition-colors text-lg"
             >
               {completed
                 ? t('school.aptitude.intro.retakeButton')
@@ -300,7 +300,7 @@ export default function AptitudeTestTool() {
               </div>
               <div className="w-full h-2 bg-gray-200 rounded-full overflow-hidden">
                 <div
-                  className="h-full bg-gradient-to-r from-rose-500 to-pink-500 rounded-full transition-all duration-500 ease-out"
+                  className="h-full bg-kk-red rounded-full transition-all duration-500 ease-out"
                   style={{ width: `${progressPercent}%` }}
                 />
               </div>
@@ -316,7 +316,7 @@ export default function AptitudeTestTool() {
             >
               {/* Situation */}
               <div className="bg-white rounded-2xl border border-gray-200 p-6 mb-4">
-                <p className="text-xs text-rose-500 font-bold mb-2">
+                <p className="text-xs text-kk-red font-bold mb-2">
                   Q{currentQuestion + 1}.
                 </p>
                 <p className="text-gray-800 font-medium leading-relaxed">
@@ -329,10 +329,10 @@ export default function AptitudeTestTool() {
                 <button
                   onClick={() => handleSelectOption('A')}
                   disabled={isTransitioning}
-                  className="w-full text-left bg-white rounded-2xl border border-gray-200 p-5 hover:border-rose-300 hover:bg-rose-50/50 transition-all duration-200 active:scale-[0.98]"
+                  className="w-full text-left bg-white rounded-2xl border border-gray-200 p-5 hover:border-kk-red hover:bg-kk-cream/50 transition-all duration-200 active:scale-[0.98]"
                 >
                   <div className="flex items-start gap-3">
-                    <span className="shrink-0 w-7 h-7 bg-rose-100 text-rose-600 font-bold text-sm rounded-lg flex items-center justify-center">
+                    <span className="shrink-0 w-7 h-7 bg-kk-cream text-kk-red font-bold text-sm rounded-lg flex items-center justify-center">
                       A
                     </span>
                     <p className="text-gray-700 text-sm leading-relaxed pt-0.5">
@@ -344,10 +344,10 @@ export default function AptitudeTestTool() {
                 <button
                   onClick={() => handleSelectOption('B')}
                   disabled={isTransitioning}
-                  className="w-full text-left bg-white rounded-2xl border border-gray-200 p-5 hover:border-pink-300 hover:bg-pink-50/50 transition-all duration-200 active:scale-[0.98]"
+                  className="w-full text-left bg-white rounded-2xl border border-gray-200 p-5 hover:border-kk-peach hover:bg-kk-cream/50 transition-all duration-200 active:scale-[0.98]"
                 >
                   <div className="flex items-start gap-3">
-                    <span className="shrink-0 w-7 h-7 bg-pink-100 text-pink-600 font-bold text-sm rounded-lg flex items-center justify-center">
+                    <span className="shrink-0 w-7 h-7 bg-kk-cream text-kk-red font-bold text-sm rounded-lg flex items-center justify-center">
                       B
                     </span>
                     <p className="text-gray-700 text-sm leading-relaxed pt-0.5">
@@ -364,7 +364,7 @@ export default function AptitudeTestTool() {
         {phase === 'loading' && (
           <div className="flex flex-col items-center justify-center py-20 space-y-8">
             <div className="animate-spin">
-              <LoaderCircle className="w-12 h-12 text-rose-500" />
+              <LoaderCircle className="w-12 h-12 text-kk-red" />
             </div>
             <div className="text-center space-y-2">
               {LOADING_MESSAGES.map((msgKey, idx) => (
@@ -418,7 +418,7 @@ export default function AptitudeTestTool() {
 
             {/* Score Chart */}
             <div className="bg-white rounded-2xl border border-gray-200 p-6">
-              <h3 className="font-bold text-gray-800 text-sm mb-4">
+              <h3 className="font-bold text-kk-brown text-sm mb-4">
                 {t('school.aptitude.result.scoreChart')}
               </h3>
               <div className="space-y-3">
@@ -453,7 +453,7 @@ export default function AptitudeTestTool() {
               {/* Save Badge */}
               <button
                 onClick={handleSaveBadge}
-                className="w-full py-4 bg-gradient-to-r from-rose-500 to-pink-500 text-white font-bold rounded-2xl hover:opacity-90 transition-opacity text-base"
+                className="w-full py-4 bg-kk-red hover:bg-kk-red-deep text-white font-bold rounded-2xl transition-colors text-base"
               >
                 {t('school.aptitude.result.saveBadge')}
               </button>
@@ -462,7 +462,7 @@ export default function AptitudeTestTool() {
               {myTeamId && (
                 <button
                   onClick={handleSaveToTeamBox}
-                  className="w-full py-3 bg-gradient-to-r from-amber-100 to-yellow-100 text-amber-700 font-bold rounded-2xl hover:from-amber-200 hover:to-yellow-200 transition-colors flex items-center justify-center gap-2"
+                  className="w-full py-3 bg-kk-cream hover:bg-kk-warm text-kk-brown font-bold rounded-2xl transition-colors flex items-center justify-center gap-2"
                 >
                   <Gem className="w-4 h-4" />
                   {savedToTeamBox ? '보석함에 저장 완료!' : '💎 보석함에 넣기'}
