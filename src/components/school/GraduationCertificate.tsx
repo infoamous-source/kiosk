@@ -11,51 +11,289 @@ interface GraduationCertificateProps {
   onClose: () => void;
 }
 
-const CURRICULUM = [
-  '1교시 나의 적성 찾기',
-  '2교시 시장 조사하기',
-  '3교시 나만의 무기 만들기',
-  '4교시 SNS 광고 만들기',
-  '5교시 설득의 기술',
-  '6교시 투자 시뮬레이션',
-];
+// ─── certificate.html의 CSS를 그대로 주입 ───
 
-/** Inject Google Fonts for certificate serif typography */
-function ensureCertFonts() {
-  if (document.getElementById('cert-fonts')) return;
+const CERT_CSS = `
+  .gc-root { font-family: 'Noto Serif KR', serif; }
+
+  .cert-wrapper {
+    position: relative;
+    width: 100%;
+    max-width: 95vw;
+  }
+  .cert-frame {
+    position: relative;
+    background: #fffef7;
+    aspect-ratio: 1.414 / 1;
+    width: 100%;
+    box-shadow:
+      0 4px 20px rgba(0,0,0,0.4),
+      0 0 0 1px rgba(201,169,110,0.3),
+      inset 0 0 80px rgba(201,169,110,0.06);
+    overflow: hidden;
+  }
+  .cert-frame::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 2px,
+        rgba(0,0,0,0.008) 2px,
+        rgba(0,0,0,0.008) 4px
+      );
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  .border-outer {
+    position: absolute;
+    inset: 18px;
+    border: 2px solid #b8942d;
+    pointer-events: none;
+    z-index: 2;
+  }
+  .border-inner {
+    position: absolute;
+    inset: 24px;
+    border: 1px solid #c9a96e;
+    pointer-events: none;
+    z-index: 2;
+  }
+  .border-decorative {
+    position: absolute;
+    inset: 30px;
+    border: 0.5px solid rgba(201,169,110,0.4);
+    pointer-events: none;
+    z-index: 2;
+  }
+
+  .corner {
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    z-index: 3;
+    pointer-events: none;
+  }
+  .corner svg { width: 100%; height: 100%; }
+  .corner-tl { top: 14px; left: 14px; }
+  .corner-tr { top: 14px; right: 14px; transform: scaleX(-1); }
+  .corner-bl { bottom: 14px; left: 14px; transform: scaleY(-1); }
+  .corner-br { bottom: 14px; right: 14px; transform: scale(-1,-1); }
+
+  .cert-content {
+    position: relative;
+    z-index: 4;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    padding: 60px 70px;
+    text-align: center;
+  }
+
+  .watermark {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 280px;
+    height: 280px;
+    opacity: 0.04;
+    z-index: 0;
+    pointer-events: none;
+  }
+
+  .cert-title {
+    font-family: 'Noto Serif KR', serif;
+    font-size: 48px;
+    font-weight: 900;
+    color: #2c2418;
+    letter-spacing: 18px;
+    margin-bottom: 6px;
+    text-shadow: 0 1px 0 rgba(201,169,110,0.2);
+  }
+  .cert-title-sub {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 14px;
+    color: #b8942d;
+    letter-spacing: 10px;
+    text-transform: uppercase;
+    margin-bottom: 30px;
+    font-weight: 600;
+  }
+  .cert-divider {
+    width: 220px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, #c9a96e, transparent);
+    margin-bottom: 24px;
+  }
+  .cert-name {
+    font-family: 'Noto Serif KR', serif;
+    font-size: 36px;
+    font-weight: 700;
+    color: #1a1408;
+    margin: 6px 0;
+    padding: 4px 30px 8px;
+    border-bottom: 2px solid #b8942d;
+    letter-spacing: 10px;
+    min-width: 280px;
+    display: inline-block;
+  }
+  .cert-desc {
+    font-size: 12px;
+    color: #7a6b52;
+    line-height: 1.8;
+    margin-bottom: 10px;
+    letter-spacing: 1px;
+  }
+  .cert-body {
+    font-size: 12.5px;
+    color: #5a4d3a;
+    line-height: 2;
+    margin: 18px 0 8px;
+    max-width: 480px;
+    letter-spacing: 0.5px;
+  }
+  .cert-course {
+    font-weight: 700;
+    color: #2c2418;
+  }
+  .cert-curriculum {
+    font-size: 10px;
+    color: #7a6b52;
+    line-height: 2;
+    letter-spacing: 0.5px;
+    margin-bottom: 4px;
+  }
+  .cert-team {
+    font-size: 10.5px;
+    color: #5a4d3a;
+    letter-spacing: 1.5px;
+    margin-bottom: 2px;
+  }
+  .cert-footer {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    width: 100%;
+    max-width: 520px;
+    margin-top: auto;
+    padding-top: 10px;
+  }
+  .cert-date {
+    font-size: 11px;
+    color: #7a6b52;
+    letter-spacing: 1px;
+    text-align: left;
+  }
+  .cert-seal-area {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 14px;
+  }
+  .cert-seal {
+    width: 76px;
+    height: 76px;
+    position: relative;
+  }
+  .cert-signatory {
+    font-size: 10px;
+    color: #7a6b52;
+    letter-spacing: 2px;
+    text-align: right;
+  }
+  .cert-number {
+    position: absolute;
+    top: 36px;
+    left: 50px;
+    font-size: 8px;
+    color: #bbb09a;
+    letter-spacing: 1px;
+    z-index: 5;
+  }
+
+  .cert-controls {
+    margin-top: 30px;
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 100%;
+  }
+  .cert-btn {
+    padding: 12px 32px;
+    border: none;
+    border-radius: 4px;
+    font-family: 'Noto Serif KR', serif;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.2s;
+    letter-spacing: 2px;
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+  }
+  .cert-btn-download {
+    background: #b8942d;
+    color: #fff;
+  }
+  .cert-btn-download:hover {
+    background: #a07e1f;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 16px rgba(184,148,45,0.3);
+  }
+  .cert-btn-outline {
+    background: transparent;
+    color: #c9a96e;
+    border: 1px solid #c9a96e;
+  }
+  .cert-btn-outline:hover {
+    background: rgba(201,169,110,0.1);
+  }
+`;
+
+const CORNER_SVG = `<svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M4 4 L4 20 Q4 4 20 4 Z" fill="#b8942d" opacity="0.6"/>
+  <path d="M8 8 L8 28 Q8 8 28 8" stroke="#c9a96e" stroke-width="0.5" fill="none"/>
+  <path d="M4 30 Q10 18 30 4" stroke="#c9a96e" stroke-width="0.3" fill="none" opacity="0.5"/>
+  <circle cx="10" cy="10" r="2" fill="#c9a96e" opacity="0.4"/>
+</svg>`;
+
+/** Inject Google Fonts + certificate CSS */
+function ensureCertStyles() {
+  if (document.getElementById('gc-styles')) return;
+  // Fonts
   const link = document.createElement('link');
-  link.id = 'cert-fonts';
+  link.id = 'gc-fonts';
   link.rel = 'stylesheet';
-  link.href = 'https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;600;700;900&family=Cormorant+Garamond:wght@400;600;700&display=swap';
+  link.href = 'https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;600;700;900&family=Playfair+Display:wght@400;600;700&family=Cormorant+Garamond:wght@400;500;600;700&display=swap';
   document.head.appendChild(link);
-}
-
-/* AMOUS EDU electronic seal */
-function AmousSeal({ size = 60 }: { size?: number }) {
-  return (
-    <svg width={size} height={size} viewBox="0 0 100 100" fill="none">
-      <circle cx="50" cy="50" r="44" stroke="#c0392b" strokeWidth="3" fill="none" opacity="0.75" />
-      <circle cx="50" cy="50" r="38" stroke="#c0392b" strokeWidth="0.8" fill="none" opacity="0.4" />
-      <text x="50" y="38" textAnchor="middle" fontSize="11" fontFamily="'Cormorant Garamond', serif" fill="#c0392b" opacity="0.8" fontWeight="700" letterSpacing="1.5">AMOUS</text>
-      <text x="50" y="53" textAnchor="middle" fontSize="13" fontFamily="'Cormorant Garamond', serif" fill="#c0392b" opacity="0.8" fontWeight="700" letterSpacing="2">EDU</text>
-      <line x1="22" y1="58" x2="78" y2="58" stroke="#c0392b" strokeWidth="0.5" opacity="0.35" />
-      <text x="50" y="70" textAnchor="middle" fontSize="7" fontFamily="'Noto Serif KR', serif" fill="#c0392b" opacity="0.65" letterSpacing="3">에이머스교육</text>
-      <text x="50" y="80" textAnchor="middle" fontSize="5.5" fontFamily="'Cormorant Garamond', serif" fill="#c0392b" opacity="0.5" letterSpacing="1.5">CONSULTING</text>
-    </svg>
-  );
+  // CSS
+  const style = document.createElement('style');
+  style.id = 'gc-styles';
+  style.textContent = CERT_CSS;
+  document.head.appendChild(style);
 }
 
 export default function GraduationCertificate({ userName, userOrg, teamName, onClose }: GraduationCertificateProps) {
   const { t } = useTranslation('common');
   const certRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => { ensureCertFonts(); }, []);
+  useEffect(() => { ensureCertStyles(); }, []);
 
   const now = new Date();
-  const todayFormatted = `${now.getFullYear()}년 ${String(now.getMonth() + 1).padStart(2, '0')}월 ${String(now.getDate()).padStart(2, '0')}일`;
-  const certNumber = `SGC-${now.getFullYear()}-MK-${String(Math.floor(Math.random() * 9000) + 1000)}`;
-
-  // Spaced name for formal look
+  const y = now.getFullYear();
+  const m = String(now.getMonth() + 1).padStart(2, '0');
+  const d = String(now.getDate()).padStart(2, '0');
+  const todayFormatted = `${y}년 ${m}월 ${d}일`;
+  const certNumber = `SGC-${y}-MK-${String(Math.floor(Math.random() * 9000) + 1000)}`;
   const spacedName = userName.split('').join(' ');
 
   const renderToCanvas = async (): Promise<HTMLCanvasElement | null> => {
@@ -86,7 +324,6 @@ export default function GraduationCertificate({ userName, userOrg, teamName, onC
       const canvas = await renderToCanvas();
       if (!canvas) return;
       const imgData = canvas.toDataURL('image/png');
-      // A4 landscape to match certificate aspect ratio
       const pdf = new jsPDF({ orientation: 'landscape', unit: 'mm', format: 'a4' });
       const pageWidth = pdf.internal.pageSize.getWidth();
       const pageHeight = pdf.internal.pageSize.getHeight();
@@ -110,73 +347,31 @@ export default function GraduationCertificate({ userName, userOrg, teamName, onC
   };
 
   return (
-    <div className="fixed inset-0 z-[100] flex items-center justify-center p-3 bg-black/70 backdrop-blur-sm">
-      <div className="w-full max-w-[520px] flex flex-col items-center">
-        {/* 닫기 */}
-        <div className="w-full flex justify-end mb-2">
-          <button onClick={onClose} className="p-2 hover:bg-white/10 rounded-full transition-colors">
-            <X className="w-5 h-5 text-white/70" />
-          </button>
-        </div>
+    <div className="fixed inset-0 z-[100] flex flex-col items-center justify-center p-4 bg-black/70 backdrop-blur-sm gc-root">
+      {/* 닫기 */}
+      <div style={{ width: '100%', maxWidth: 800, display: 'flex', justifyContent: 'flex-end', marginBottom: 8 }}>
+        <button onClick={onClose} className="p-2 hover:bg-white/10 rounded-full transition-colors">
+          <X className="w-5 h-5 text-white/70" />
+        </button>
+      </div>
 
-        {/* ─── Certificate Frame ─── */}
-        <div
-          ref={certRef}
-          style={{
-            position: 'relative',
-            width: '100%',
-            aspectRatio: '1.414 / 1',
-            background: '#fffef7',
-            fontFamily: "'Noto Serif KR', serif",
-            overflow: 'hidden',
-            boxShadow: '0 4px 20px rgba(0,0,0,0.4), 0 0 0 1px rgba(201,169,110,0.3)',
-          }}
-        >
-          {/* Triple borders */}
-          <div style={{ position: 'absolute', inset: 14, border: '2px solid #b8942d', pointerEvents: 'none', zIndex: 2 }} />
-          <div style={{ position: 'absolute', inset: 19, border: '1px solid #c9a96e', pointerEvents: 'none', zIndex: 2 }} />
-          <div style={{ position: 'absolute', inset: 24, border: '0.5px solid rgba(201,169,110,0.4)', pointerEvents: 'none', zIndex: 2 }} />
+      {/* ─── Certificate (certificate.html 구조 그대로) ─── */}
+      <div className="cert-wrapper" style={{ maxWidth: 800 }}>
+        <div className="cert-frame" ref={certRef}>
+
+          {/* Borders */}
+          <div className="border-outer" />
+          <div className="border-inner" />
+          <div className="border-decorative" />
 
           {/* Corner ornaments */}
-          <div style={{ position: 'absolute', top: 11, left: 11, width: 48, height: 48, zIndex: 3, pointerEvents: 'none' }}>
-            <svg viewBox="0 0 60 60" fill="none" width="100%" height="100%">
-              <path d="M4 4 L4 20 Q4 4 20 4 Z" fill="#b8942d" opacity="0.6" />
-              <path d="M8 8 L8 28 Q8 8 28 8" stroke="#c9a96e" strokeWidth="0.5" fill="none" />
-              <path d="M4 30 Q10 18 30 4" stroke="#c9a96e" strokeWidth="0.3" fill="none" opacity="0.5" />
-              <circle cx="10" cy="10" r="2" fill="#c9a96e" opacity="0.4" />
-            </svg>
-          </div>
-          <div style={{ position: 'absolute', top: 11, right: 11, width: 48, height: 48, zIndex: 3, pointerEvents: 'none', transform: 'scaleX(-1)' }}>
-            <svg viewBox="0 0 60 60" fill="none" width="100%" height="100%">
-              <path d="M4 4 L4 20 Q4 4 20 4 Z" fill="#b8942d" opacity="0.6" />
-              <path d="M8 8 L8 28 Q8 8 28 8" stroke="#c9a96e" strokeWidth="0.5" fill="none" />
-              <path d="M4 30 Q10 18 30 4" stroke="#c9a96e" strokeWidth="0.3" fill="none" opacity="0.5" />
-              <circle cx="10" cy="10" r="2" fill="#c9a96e" opacity="0.4" />
-            </svg>
-          </div>
-          <div style={{ position: 'absolute', bottom: 11, left: 11, width: 48, height: 48, zIndex: 3, pointerEvents: 'none', transform: 'scaleY(-1)' }}>
-            <svg viewBox="0 0 60 60" fill="none" width="100%" height="100%">
-              <path d="M4 4 L4 20 Q4 4 20 4 Z" fill="#b8942d" opacity="0.6" />
-              <path d="M8 8 L8 28 Q8 8 28 8" stroke="#c9a96e" strokeWidth="0.5" fill="none" />
-              <path d="M4 30 Q10 18 30 4" stroke="#c9a96e" strokeWidth="0.3" fill="none" opacity="0.5" />
-              <circle cx="10" cy="10" r="2" fill="#c9a96e" opacity="0.4" />
-            </svg>
-          </div>
-          <div style={{ position: 'absolute', bottom: 11, right: 11, width: 48, height: 48, zIndex: 3, pointerEvents: 'none', transform: 'scale(-1,-1)' }}>
-            <svg viewBox="0 0 60 60" fill="none" width="100%" height="100%">
-              <path d="M4 4 L4 20 Q4 4 20 4 Z" fill="#b8942d" opacity="0.6" />
-              <path d="M8 8 L8 28 Q8 8 28 8" stroke="#c9a96e" strokeWidth="0.5" fill="none" />
-              <path d="M4 30 Q10 18 30 4" stroke="#c9a96e" strokeWidth="0.3" fill="none" opacity="0.5" />
-              <circle cx="10" cy="10" r="2" fill="#c9a96e" opacity="0.4" />
-            </svg>
-          </div>
+          <div className="corner corner-tl" dangerouslySetInnerHTML={{ __html: CORNER_SVG }} />
+          <div className="corner corner-tr" dangerouslySetInnerHTML={{ __html: CORNER_SVG }} />
+          <div className="corner corner-bl" dangerouslySetInnerHTML={{ __html: CORNER_SVG }} />
+          <div className="corner corner-br" dangerouslySetInnerHTML={{ __html: CORNER_SVG }} />
 
-          {/* Watermark seal */}
-          <svg
-            viewBox="0 0 200 200"
-            fill="none"
-            style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', width: 220, height: 220, opacity: 0.04, zIndex: 0, pointerEvents: 'none' }}
-          >
+          {/* Watermark */}
+          <svg className="watermark" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
             <circle cx="100" cy="100" r="90" stroke="#b8942d" strokeWidth="2" fill="none" />
             <circle cx="100" cy="100" r="82" stroke="#b8942d" strokeWidth="0.5" fill="none" />
             <circle cx="100" cy="100" r="75" stroke="#b8942d" strokeWidth="1" fill="none" />
@@ -184,128 +379,81 @@ export default function GraduationCertificate({ userName, userOrg, teamName, onC
             <text x="100" y="115" textAnchor="middle" fontSize="14" fontFamily="serif" fill="#b8942d" letterSpacing="4">AMOUS EDU</text>
           </svg>
 
-          {/* Certificate number */}
-          <div style={{ position: 'absolute', top: 28, left: 40, fontSize: 7, color: '#bbb09a', letterSpacing: 1, zIndex: 5 }}>
-            No. {certNumber}
-          </div>
+          {/* Content */}
+          <div className="cert-content">
+            <div className="cert-title">수 료 증</div>
+            <div className="cert-title-sub">Certificate of Completion</div>
 
-          {/* ─── Content ─── */}
-          <div
-            style={{
-              position: 'relative',
-              zIndex: 4,
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-              justifyContent: 'center',
-              height: '100%',
-              padding: '40px 48px',
-              textAlign: 'center',
-            }}
-          >
-            {/* Title */}
-            <div style={{ fontSize: 36, fontWeight: 900, color: '#2c2418', letterSpacing: 14, marginBottom: 4, textShadow: '0 1px 0 rgba(201,169,110,0.2)' }}>
-              수 료 증
-            </div>
-            <div style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 11, color: '#b8942d', letterSpacing: 8, textTransform: 'uppercase' as const, fontWeight: 600, marginBottom: 20 }}>
-              Certificate of Completion
-            </div>
+            <div className="cert-divider" />
 
-            {/* Divider */}
-            <div style={{ width: 180, height: 1, background: 'linear-gradient(90deg, transparent, #c9a96e, transparent)', marginBottom: 16 }} />
+            <div className="cert-name">{spacedName}</div>
 
-            {/* Name */}
-            <div style={{ fontSize: 28, fontWeight: 700, color: '#1a1408', padding: '2px 24px 6px', borderBottom: '2px solid #b8942d', letterSpacing: 8, marginBottom: 4, minWidth: 200, display: 'inline-block' }}>
-              {spacedName}
-            </div>
-
-            {/* Body */}
-            <div style={{ fontSize: 10, color: '#7a6b52', lineHeight: 1.8, marginTop: 12, letterSpacing: 0.5 }}>
+            <div className="cert-desc" style={{ marginTop: 16 }}>
               하기의 사람은 {userOrg || '깍두기 학교'}가 주관하는 교육과정을
             </div>
-            <div style={{ fontSize: 10, color: '#7a6b52', lineHeight: 1.8, letterSpacing: 0.5, marginBottom: 8 }}>
+            <div className="cert-desc" style={{ marginBottom: 4 }}>
               성실히 이수하였기에 이 증서를 수여합니다.
             </div>
 
-            {/* Course */}
-            <div style={{ fontSize: 11, fontWeight: 700, color: '#2c2418', marginBottom: 6 }}>
-              예비 마케터 양성과정 (6차시)
+            <div className="cert-body">
+              <span className="cert-course">예비 마케터 양성과정 (6차시)</span>
             </div>
 
-            {/* Curriculum list */}
-            <div style={{ fontSize: 8, color: '#7a6b52', lineHeight: 1.8, letterSpacing: 0.3, marginBottom: 4 }}>
-              {Array.from({ length: Math.ceil(CURRICULUM.length / 2) }, (_, i) => (
-                <div key={i}>
-                  {CURRICULUM[i * 2]}{CURRICULUM[i * 2 + 1] ? ` · ${CURRICULUM[i * 2 + 1]}` : ''}
-                </div>
-              ))}
+            <div className="cert-curriculum">
+              1교시 나의 적성 찾기 · 2교시 시장 조사하기<br />
+              3교시 나만의 무기 만들기 · 4교시 SNS 광고 만들기<br />
+              5교시 설득의 기술 · 6교시 투자 시뮬레이션
             </div>
 
-            {/* Team */}
             {teamName && (
-              <div style={{ fontSize: 9, color: '#5a4d3a', letterSpacing: 1, marginBottom: 2 }}>
-                소속 팀: {teamName}
-              </div>
+              <div className="cert-team">소속 팀: {teamName}</div>
             )}
 
-            {/* Footer: date + seal + signatory */}
-            <div
-              style={{
-                display: 'flex',
-                alignItems: 'flex-end',
-                justifyContent: 'space-between',
-                width: '100%',
-                maxWidth: 400,
-                marginTop: 'auto',
-                paddingTop: 8,
-              }}
-            >
-              {/* Date */}
-              <div style={{ fontSize: 9, color: '#7a6b52', letterSpacing: 1, textAlign: 'left' }}>
-                발급일자 : {todayFormatted}
-              </div>
+            <div className="cert-footer">
+              <div className="cert-date">발급일자 : {todayFormatted}</div>
 
-              {/* Seal + signatory */}
-              <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-                <div style={{ textAlign: 'right' }}>
-                  <div style={{ fontSize: 8, color: '#7a6b52', letterSpacing: 1.5 }}>
-                    {userOrg || '깍두기 학교'} X 에이머스교육컨설팅
-                  </div>
+              <div className="cert-seal-area">
+                <div style={{ textAlign: 'center' }}>
+                  <div className="cert-signatory">{userOrg || '깍두기 학교'} X 에이머스교육컨설팅</div>
                 </div>
-                <AmousSeal size={52} />
+                {/* AMOUS EDU electronic seal */}
+                <svg className="cert-seal" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                  <circle cx="50" cy="50" r="44" stroke="#c0392b" strokeWidth="3" fill="none" opacity="0.75" />
+                  <circle cx="50" cy="50" r="38" stroke="#c0392b" strokeWidth="0.8" fill="none" opacity="0.4" />
+                  <text x="50" y="38" textAnchor="middle" fontSize="11" fontFamily="'Cormorant Garamond', serif" fill="#c0392b" opacity="0.8" fontWeight="700" letterSpacing="1.5">AMOUS</text>
+                  <text x="50" y="53" textAnchor="middle" fontSize="13" fontFamily="'Cormorant Garamond', serif" fill="#c0392b" opacity="0.8" fontWeight="700" letterSpacing="2">EDU</text>
+                  <line x1="22" y1="58" x2="78" y2="58" stroke="#c0392b" strokeWidth="0.5" opacity="0.35" />
+                  <text x="50" y="70" textAnchor="middle" fontSize="7" fontFamily="'Noto Serif KR', serif" fill="#c0392b" opacity="0.65" letterSpacing="3">에이머스교육</text>
+                  <text x="50" y="80" textAnchor="middle" fontSize="5.5" fontFamily="'Cormorant Garamond', serif" fill="#c0392b" opacity="0.5" letterSpacing="1.5">CONSULTING</text>
+                </svg>
               </div>
             </div>
           </div>
-        </div>
 
-        {/* ─── Download Buttons ─── */}
-        <div className="flex gap-3 mt-5 w-full">
-          <button
-            onClick={handleDownloadPng}
-            className="flex-1 py-3 rounded flex items-center justify-center gap-2 transition-all hover:-translate-y-0.5"
-            style={{ background: '#b8942d', color: '#fff', fontFamily: "'Noto Serif KR', serif", fontSize: 13, letterSpacing: 2, boxShadow: '0 4px 16px rgba(184,148,45,0.3)' }}
-          >
-            <Download className="w-4 h-4" />
-            PNG
-          </button>
-          <button
-            onClick={handleDownloadPdf}
-            className="flex-1 py-3 rounded flex items-center justify-center gap-2 transition-all"
-            style={{ background: 'transparent', color: '#c9a96e', border: '1px solid #c9a96e', fontFamily: "'Noto Serif KR', serif", fontSize: 13, letterSpacing: 2 }}
-          >
-            <FileText className="w-4 h-4" />
-            PDF
-          </button>
-        </div>
+          {/* Certificate number */}
+          <div className="cert-number">No. {certNumber}</div>
 
-        <button
-          onClick={onClose}
-          className="mt-3 py-2 text-sm transition-colors"
-          style={{ color: 'rgba(201,169,110,0.6)', letterSpacing: 2 }}
-        >
-          {t('common.close', '닫기')}
+        </div>
+      </div>
+
+      {/* Download Buttons */}
+      <div className="cert-controls" style={{ maxWidth: 800 }}>
+        <button className="cert-btn cert-btn-download" onClick={handleDownloadPng}>
+          <Download size={16} />
+          PNG 다운로드
+        </button>
+        <button className="cert-btn cert-btn-outline" onClick={handleDownloadPdf}>
+          <FileText size={16} />
+          PDF 다운로드
         </button>
       </div>
+
+      <button
+        onClick={onClose}
+        style={{ marginTop: 16, color: 'rgba(201,169,110,0.6)', fontSize: 13, letterSpacing: 2, background: 'none', border: 'none', cursor: 'pointer' }}
+      >
+        {t('common.close', '닫기')}
+      </button>
     </div>
   );
 }

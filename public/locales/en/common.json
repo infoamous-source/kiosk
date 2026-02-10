@@ -621,7 +621,7 @@
     },
     "attendance": {
       "graduationSection": "Graduation",
-      "alreadyGraduated": "You've already graduated!",
+      "alreadyGraduated": "Congratulations on graduating!",
       "congratulations": "Congratulations! Enjoy using Pro tools.",
       "readyToGraduate": "All requirements met! You're ready to graduate.",
       "graduateButton": "Graduate",
