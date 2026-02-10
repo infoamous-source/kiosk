@@ -214,11 +214,6 @@ export default function ROASSimulatorTool() {
     copyToClipboard(text, 'all');
   };
 
-  // Complete (stamp already earned on result save)
-  const handleComplete = () => {
-    // stamp already auto-applied on result generation
-  };
-
   const isInputValid = productName.trim().length > 0 && Number(productPrice) > 0;
 
   const loadingSteps = [
@@ -550,26 +545,19 @@ export default function ROASSimulatorTool() {
 
             {/* Completion + Graduation Project */}
             <div className="bg-white rounded-2xl border border-gray-200 p-5">
-              {completed ? (
-                <div className="py-3 bg-green-50 text-green-600 font-bold rounded-xl text-center">
+              {completed && (
+                <div className="py-3 bg-green-50 text-green-600 font-bold rounded-xl text-center mb-3">
                   {t('school.tools.alreadyCompleted')}
                 </div>
-              ) : (
-                <button
-                  onClick={handleComplete}
-                  className="w-full py-3 bg-gradient-to-r from-orange-500 to-red-500 text-white font-bold rounded-xl hover:opacity-90 transition-opacity"
-                >
-                  {t('school.tools.completeButton')}
-                </button>
               )}
               <button
                 onClick={() => navigate('/marketing/school/graduation-project')}
-                className="w-full mt-3 py-3 bg-gradient-to-r from-purple-600 to-pink-600 text-white font-bold rounded-xl hover:opacity-90 transition-opacity flex items-center justify-center gap-2"
+                className="w-full py-3 bg-gradient-to-r from-purple-600 to-pink-600 text-white font-bold rounded-xl hover:opacity-90 transition-opacity flex items-center justify-center gap-2"
               >
                 {t('school.roasSimulator.goToGraduation')}
               </button>
               <button
-                onClick={() => navigate('/marketing/school/attendance')}
+                onClick={() => navigate('/marketing/school/curriculum')}
                 className="w-full mt-2 py-2.5 text-sm text-gray-500 hover:text-gray-700 font-medium"
               >
                 {t('school.tools.goToAttendance')}

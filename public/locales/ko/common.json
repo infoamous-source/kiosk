@@ -667,7 +667,8 @@
       "delete": "삭제",
       "empty": "아직 저장된 아이디어가 없어요.\n마케팅 도구를 사용하고 결과를 저장해보세요!",
       "noResults": "검색 결과가 없습니다."
-    }
+    },
+    "goToClassroom": "교실로 이동하기"
   },
   "school": {
     "comingSoon": "준비 중입니다! 곧 만나요 🚀",
@@ -708,6 +709,7 @@
       "period": "교시"
     },
     "attendance": {
+      "viewStudentCard": "내 학생증 보기",
       "graduationSection": "졸업",
       "alreadyGraduated": "이미 졸업했어요!",
       "congratulations": "축하합니다! Pro 도구를 자유롭게 사용하세요.",
@@ -771,7 +773,7 @@
       "completeButton": "실습 완료 ✅",
       "alreadyCompleted": "이미 완료했어요!",
       "graduationNote": "이 도구는 졸업과제입니다. 시뮬레이션을 완료하면 졸업 조건이 충족됩니다.",
-      "goToAttendance": "출석부로 돌아가기"
+      "goToAttendance": "시간표로 돌아가기"
     },
     "periods": {
       "aptitudeTest": {
@@ -2094,5 +2096,16 @@
       "1to3years": "1~3년",
       "over3years": "3년 이상"
     }
+  },
+  "congrats": {
+    "title": "여러분의 입학을 축하합니다!",
+    "subtitle": "{{courseName}} 과정에 오신 것을 환영합니다",
+    "goToSchool": "교실로 이동하기",
+    "loginButton": "로그인하기",
+    "registerLink": "아직 계정이 없으신가요? 학생 등록하기",
+    "hint": "학생 등록을 완료하면 모든 학습 콘텐츠에 접근할 수 있습니다"
+  },
+  "common": {
+    "close": "닫기"
   }
 }

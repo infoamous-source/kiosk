@@ -24,33 +24,7 @@ const colorMap: Record<string, { bg: string; text: string; border: string; gradi
   orange: { bg: 'bg-orange-50', text: 'text-orange-600', border: 'border-orange-200', gradient: 'from-orange-500 to-red-500' },
 };
 
-/** 교시별 하위항목 (i18n 키) */
-const PERIOD_ITEMS: Record<number, string[]> = {
-  1: ['마케팅이란?', '2026 마케팅 트렌드', '마케팅의 종류'],
-  2: ['시장 조사의 기본', '타겟 고객 분석', '경쟁사 분석'],
-  3: ['브랜드 기본 개념', 'USP와 차별화', '브랜드 네이밍과 슬로건'],
-  4: ['SNS 마케팅 기초', '카드뉴스 제작', '바이럴 전략'],
-  5: ['상세페이지 구성', '설득 카피라이팅', '라이브커머스 기초'],
-  6: ['광고 예산 설계', 'ROAS와 성과 측정', '마케팅 목표 설정'],
-};
-
-const TOOL_LABELS: Record<number, string> = {
-  1: '적성 검사기',
-  2: '시장 탐색기',
-  3: '브랜드 메이커',
-  4: 'SNS광고 메이커',
-  5: '설득카피 메이커',
-  6: 'ROAS 분석기',
-};
-
-const PERIOD_TITLES: Record<number, string> = {
-  1: '마케팅의 기초',
-  2: '시장 분석하기',
-  3: '브랜드 만들기',
-  4: 'SNS 광고와 바이럴',
-  5: '상세페이지 제작과 라이브커머스',
-  6: '마케팅 비용과 목표',
-};
+/** i18n에서 교시별 데이터 가져오기 헬퍼 */
 
 export default function CurriculumTab() {
   const { t } = useTranslation('common');
@@ -88,9 +62,9 @@ export default function CurriculumTab() {
         const Icon = iconMap[period.icon] || ClipboardCheck;
         const isExpanded = expandedPeriod === period.period;
         const stamped = hasStamp(user.id, period.id as PeriodId);
-        const items = PERIOD_ITEMS[period.period] || [];
-        const toolLabel = TOOL_LABELS[period.period] || '';
-        const periodTitle = PERIOD_TITLES[period.period] || t(period.nameKey);
+        const items = t(`school.curriculum.periods.${period.period}.items`, { returnObjects: true }) as string[];
+        const toolLabel = t(`school.curriculum.periods.${period.period}.toolLabel`, '');
+        const periodTitle = t(`school.curriculum.periods.${period.period}.title`, t(period.nameKey));
 
         return (
           <div
@@ -130,7 +104,7 @@ export default function CurriculumTab() {
               <div className="border-t border-gray-100 px-4 pb-4">
                 {/* 하위 학습 항목 */}
                 <div className="mt-3 space-y-2">
-                  {items.map((item, idx) => (
+                  {(Array.isArray(items) ? items : []).map((item, idx) => (
                     <div key={idx} className="flex items-center gap-3 px-3 py-2.5 bg-gray-50 rounded-xl">
                       <span className="w-6 h-6 bg-gray-200 rounded-full flex items-center justify-center text-xs font-bold text-gray-500">
                         {idx + 1}

@@ -154,7 +154,7 @@ export default function AptitudeTestTool() {
 
     saveAptitudeResult(user.id, aptitudeResult);
     autoStampAndGraduate(user.id, 'aptitude-test');
-    navigate('/marketing/school/attendance');
+    navigate('/marketing/school/curriculum');
   }, [user, result, answers, navigate, activeSetId]);
 
   const handleShare = useCallback(async () => {

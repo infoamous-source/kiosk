@@ -175,11 +175,6 @@ export default function PerfectPlannerTool() {
     }
   };
 
-  // Complete (stamp already earned on result save)
-  const handleComplete = () => {
-    // stamp already auto-applied on result generation
-  };
-
   const isInputValid = productName.trim().length > 0 && coreTarget.trim().length > 0;
 
   const loadingSteps = [
@@ -594,20 +589,13 @@ export default function PerfectPlannerTool() {
 
             {/* Completion */}
             <div className="bg-white rounded-2xl border border-gray-200 p-5">
-              {completed ? (
+              {completed && (
                 <div className="py-3 bg-green-50 text-green-600 font-bold rounded-xl text-center">
                   {t('school.tools.alreadyCompleted')}
                 </div>
-              ) : (
-                <button
-                  onClick={handleComplete}
-                  className="w-full py-3 bg-gradient-to-r from-emerald-600 to-teal-600 text-white font-bold rounded-xl hover:opacity-90 transition-opacity"
-                >
-                  {t('school.tools.completeButton')}
-                </button>
               )}
               <button
-                onClick={() => navigate('/marketing/school/attendance')}
+                onClick={() => navigate('/marketing/school/curriculum')}
                 className="w-full mt-2 py-2.5 text-sm text-gray-500 hover:text-gray-700 font-medium"
               >
                 {t('school.tools.goToAttendance')}

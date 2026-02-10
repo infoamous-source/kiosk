@@ -444,10 +444,10 @@ export default function MarketScannerTool() {
                   {t('school.marketCompass.scanner.reanalyzeButton')}
                 </button>
                 <button
-                  onClick={() => navigate('/marketing/school/attendance')}
+                  onClick={() => navigate('/marketing/school/curriculum')}
                   className="w-full py-2.5 text-sm text-gray-400 hover:text-gray-600 transition-colors"
                 >
-                  {t('school.marketCompass.scanner.next.attendanceButton')}
+                  {t('school.tools.goToAttendance')}
                 </button>
               </div>
             </div>

@@ -29,7 +29,10 @@ export default function GraduationCertificate({ userName, onClose }: GraduationC
       canvas.width = cert.offsetWidth * scale;
       canvas.height = cert.offsetHeight * scale;
       const ctx = canvas.getContext('2d');
-      if (!ctx) return;
+      if (!ctx) {
+        alert('다운로드를 지원하지 않는 환경입니다.');
+        return;
+      }
 
       ctx.scale(scale, scale);
 
@@ -85,23 +88,22 @@ export default function GraduationCertificate({ userName, onClose }: GraduationC
       ctx.font = '13px sans-serif';
       const bodyText = t('school.graduation.certificate.body', '위 학생은 깍두기 학교 마케팅 학과 예비 마케터 교실의 전 과정을 성실히 이수하고 소정의 졸업 요건을 충족하였기에 이 증서를 수여합니다.');
 
-      // Word wrap
+      // Word wrap (공백 기준, 없으면 글자별)
       const maxWidth = cert.offsetWidth - 80;
-      const words = bodyText.split('');
+      const segments = bodyText.split(/(?<=\s)/);
       let line = '';
       let y = 210;
-      for (let i = 0; i < words.length; i++) {
-        const testLine = line + words[i];
-        const metrics = ctx.measureText(testLine);
-        if (metrics.width > maxWidth && i > 0) {
-          ctx.fillText(line, centerX, y);
-          line = words[i];
+      for (const seg of segments) {
+        const testLine = line + seg;
+        if (ctx.measureText(testLine).width > maxWidth && line.length > 0) {
+          ctx.fillText(line.trimEnd(), centerX, y);
+          line = seg;
           y += 22;
         } else {
           line = testLine;
         }
       }
-      ctx.fillText(line, centerX, y);
+      if (line) ctx.fillText(line.trimEnd(), centerX, y);
 
       // Date
       ctx.fillStyle = '#B45309';
@@ -187,7 +189,7 @@ export default function GraduationCertificate({ userName, onClose }: GraduationC
             onClick={onClose}
             className="w-full mt-2 py-2 text-gray-500 text-sm hover:text-gray-700"
           >
-            닫기
+            {t('common.close', '닫기')}
           </button>
         </div>
       </div>

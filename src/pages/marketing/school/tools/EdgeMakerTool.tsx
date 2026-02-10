@@ -99,10 +99,6 @@ export default function EdgeMakerTool() {
     clearTimeout(timer2);
   };
 
-  const handleComplete = () => {
-    navigate('/marketing/school/attendance');
-  };
-
   const handleCopy = async (text: string, field: string) => {
     try {
       await navigator.clipboard.writeText(text);
@@ -478,23 +474,16 @@ export default function EdgeMakerTool() {
                 {t('school.marketCompass.edgeMaker.complete.title')}
               </h3>
               <div className="space-y-2">
-                {completed ? (
+                {completed && (
                   <div className="py-3 bg-green-50 text-green-600 font-bold rounded-xl text-center">
-                    ✅ {t('school.tools.alreadyCompleted')}
+                    {t('school.tools.alreadyCompleted')}
                   </div>
-                ) : (
-                  <button
-                    onClick={handleComplete}
-                    className="w-full py-3 bg-gradient-to-r from-amber-500 to-yellow-500 text-white font-bold rounded-xl hover:opacity-90 transition-opacity"
-                  >
-                    ✅ {t('school.marketCompass.edgeMaker.complete.completeButton')}
-                  </button>
                 )}
                 <button
-                  onClick={() => navigate('/marketing/school/attendance')}
+                  onClick={() => navigate('/marketing/school/curriculum')}
                   className="w-full py-2.5 text-sm text-gray-400 hover:text-gray-600 transition-colors"
                 >
-                  {t('school.marketCompass.edgeMaker.complete.attendanceButton')}
+                  {t('school.tools.goToAttendance')}
                 </button>
               </div>
             </div>
