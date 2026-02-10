@@ -71,7 +71,8 @@ ${contextData?.brandMood ? `브랜드 무드: ${contextData.brandMood}` : ''}
   "costPerConversion": 숫자,
   "roasGrade": "excellent" 또는 "good" 또는 "average" 또는 "poor",
   "advice": ["조언1", "조언2", "조언3"],
-  "channelTip": "이 채널에서 효과적으로 광고하는 팁"
+  "channelTip": "이 채널에서 효과적으로 광고하는 팁",
+  "analysisReport": "**레포트 요약:**\\n1. (핵심 인사이트 1)\\n2. (핵심 인사이트 2)\\n3. (핵심 인사이트 3)\\n4. (핵심 인사이트 4)\\n5. (핵심 인사이트 5)\\n\\n(아래에 20줄 상세 광고 분석 레포트를 이어서 작성)"
 }
 
 규칙:
@@ -80,7 +81,15 @@ ${contextData?.brandMood ? `브랜드 무드: ${contextData.brandMood}` : ''}
 - 조언은 실전에서 바로 적용 가능한 구체적인 팁
 - 모든 텍스트는 TOPIK 3급 수준 쉬운 한국어 (~해요 체)
 - estimatedRevenue = estimatedConversions × 상품가격
-- estimatedROAS = estimatedRevenue / 광고예산`;
+- estimatedROAS = estimatedRevenue / 광고예산
+- analysisReport는 반드시 아래 형식을 따르세요:
+  * 맨 위에 "**레포트 요약:**" (굵은 글씨 마크다운)
+  * 바로 아래에 핵심 인사이트 5가지를 번호 매겨서 정리 (각 1줄)
+  * 빈 줄 1개
+  * 그 아래에 20줄 상세 광고 분석 레포트 (\\n으로 줄바꿈)
+  * 이 ROAS 예측 결과가 의미하는 것, 예산 최적화 방법, 채널별 전략, 개선 방향을 설명
+  * 하나의 레포트처럼 자연스럽게 이어지도록 작성
+  * TOPIK 3급 수준 외국인이 이해하기 쉬운 한국어 (~해요 체)`;
 
       const text = await generateText(prompt);
       if (text) {

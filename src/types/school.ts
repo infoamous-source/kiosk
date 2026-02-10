@@ -179,6 +179,7 @@ export interface ROASSimulationOutput {
   roasGrade: 'excellent' | 'good' | 'average' | 'poor';
   advice: string[];
   channelTip: string;
+  analysisReport?: string;
 }
 
 /** 시뮬레이션 (6교시 ROAS) 결과 */
