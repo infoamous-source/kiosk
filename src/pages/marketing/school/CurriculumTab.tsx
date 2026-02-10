@@ -80,8 +80,8 @@ function AnimatedAccordion({ isOpen, children }: { isOpen: boolean; children: Re
 
 // ─── 섹션 배지 라벨 ───
 
-function getSectionBadge(section: CurriculumSection, t: (k: string, d?: string) => string): string {
-  if (section.type === 'period') return `${section.period}${t('school.curriculum.period', '교시')}`;
+function getSectionBadge(section: CurriculumSection, periodLabel: string): string {
+  if (section.type === 'period') return `${section.period}${periodLabel}`;
   if (section.id === 'entrance') return 'Pre-School';
   if (section.id === 'final-project') return 'Final Step';
   if (section.id === 'graduation-ceremony') return 'After-School';
@@ -156,7 +156,7 @@ export default function CurriculumTab() {
                   <span className={`text-xs font-bold px-2 py-0.5 rounded ${
                     stamped ? 'bg-green-100 text-green-700' : `${styles.badge} ${styles.badgeText}`
                   }`}>
-                    {getSectionBadge(section, t)}
+                    {getSectionBadge(section, t('school.curriculum.period', '교시'))}
                   </span>
                   {stamped && <span className="text-green-500 text-sm">✓</span>}
                   {isLocked && <span className="text-xs text-gray-400">🔒</span>}
