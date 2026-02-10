@@ -97,8 +97,10 @@ export async function generateSalesPlan(
         }
       }
     } catch (err) {
-      console.warn('[PerfectPlanner] AI generation failed, using mock:', err);
+      console.error('[PerfectPlanner] AI generation FAILED, falling back to mock:', err);
     }
+  } else {
+    console.warn('[PerfectPlanner] Gemini not enabled.');
   }
 
   return { result: getMockSalesPlan(productName, usp, strongOffer), isMock: true };

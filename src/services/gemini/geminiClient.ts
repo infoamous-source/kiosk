@@ -52,13 +52,19 @@ export function getGeminiModel(modelName: string = 'gemini-2.0-flash') {
  */
 export async function generateText(prompt: string): Promise<string | null> {
   const model = getGeminiModel();
-  if (!model) return null;
+  if (!model) {
+    console.error('[Gemini] generateText: model is null. apiKey=', !!getStoredApiKey(), 'connected=', localStorage.getItem(CONNECTED_STORAGE));
+    return null;
+  }
 
   try {
+    console.log('[Gemini] Calling API with model:', 'gemini-2.0-flash', 'prompt length:', prompt.length);
     const result = await model.generateContent(prompt);
-    return result.response.text();
+    const text = result.response.text();
+    console.log('[Gemini] API response received, length:', text?.length);
+    return text;
   } catch (err) {
-    console.warn('[Gemini] Text generation failed:', err);
+    console.error('[Gemini] Text generation FAILED:', err);
     return null;
   }
 }

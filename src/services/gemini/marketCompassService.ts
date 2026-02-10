@@ -63,8 +63,10 @@ export async function generateMarketAnalysis(
         }
       }
     } catch (err) {
-      console.warn('[MarketCompass] AI market analysis failed, using mock:', err);
+      console.error('[MarketCompass] AI market analysis FAILED, falling back to mock:', err);
     }
+  } else {
+    console.warn('[MarketCompass] Gemini not enabled. connected=', localStorage.getItem('kiosk-gemini-connected'), 'apiKey=', !!localStorage.getItem('kiosk-gemini-api-key'));
   }
 
   return { result: getMockMarketAnalysis(keyword), isMock: true };
@@ -133,8 +135,10 @@ ${myStrengths.length > 0 ? myStrengths.map((s, i) => `${i + 1}. ${s}`).join('\n'
         }
       }
     } catch (err) {
-      console.warn('[MarketCompass] AI branding failed, using mock:', err);
+      console.error('[MarketCompass] AI branding FAILED, falling back to mock:', err);
     }
+  } else {
+    console.warn('[MarketCompass] Gemini not enabled for branding.');
   }
 
   return { result: getMockBrandingStrategy(painPoints), isMock: true };

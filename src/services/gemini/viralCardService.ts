@@ -105,8 +105,10 @@ export async function generateViralCards(
         }
       }
     } catch (err) {
-      console.warn('[ViralCard] AI copy generation failed, using mock:', err);
+      console.error('[ViralCard] AI copy generation FAILED, falling back to mock:', err);
     }
+  } else {
+    console.warn('[ViralCard] Gemini not enabled.');
   }
 
   return { result: getMockViralCards(productName, usp, tone), isMock: true };
@@ -145,7 +147,7 @@ export async function generateSlideImage(
     }
     return null;
   } catch (err) {
-    console.warn('[ViralCard] Image generation failed:', err);
+    console.error('[ViralCard] Image generation FAILED:', err);
     return null;
   }
 }

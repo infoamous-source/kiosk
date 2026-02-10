@@ -55,8 +55,10 @@ export async function generateCopy(input: CopywriterInput): Promise<CopywriterOu
         }
       }
     } catch (err) {
-      console.warn('[CopywriterService] AI generation failed, using mock:', err);
+      console.error('[CopywriterService] AI generation FAILED, falling back to mock:', err);
     }
+  } else {
+    console.warn('[CopywriterService] Gemini not enabled.');
   }
 
   // Mock 데이터 폴백

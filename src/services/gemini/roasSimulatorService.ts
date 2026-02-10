@@ -90,8 +90,10 @@ ${contextData?.brandMood ? `브랜드 무드: ${contextData.brandMood}` : ''}
         }
       }
     } catch (err) {
-      console.warn('[ROASSimulator] AI simulation failed, using mock:', err);
+      console.error('[ROASSimulator] AI simulation FAILED, falling back to mock:', err);
     }
+  } else {
+    console.warn('[ROASSimulator] Gemini not enabled.');
   }
 
   return { result: getMockROASSimulation(input), isMock: true };
