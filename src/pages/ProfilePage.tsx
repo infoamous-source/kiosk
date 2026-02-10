@@ -211,47 +211,65 @@ export default function ProfilePage() {
             </div>
           </div>
 
-          {/* 내 학교 (Enrollment) */}
+          {/* 내 교실 (Enrollment) */}
           <div className="bg-white rounded-xl border border-kk-warm p-5">
             <h2 className="text-lg font-semibold text-kk-brown mb-4 flex items-center gap-2">
               <School className="w-5 h-5 text-kk-red" />
-              내 학교
+              내 교실
             </h2>
             {enrollments.length === 0 ? (
-              <p className="text-sm text-kk-brown/30 text-center py-4">등록된 학교가 없습니다.</p>
+              <p className="text-sm text-kk-brown/30 text-center py-4">등록된 교실이 없습니다.</p>
             ) : (
               <div className="space-y-3">
                 {enrollments.map((enrollment) => {
-                  const schoolName = SCHOOL_NAMES[enrollment.school_id];
-                  const StatusIcon =
-                    enrollment.status === 'active' ? CheckCircle2 :
-                    enrollment.status === 'pending_info' ? AlertCircle : XCircle;
-                  const statusColor =
-                    enrollment.status === 'active' ? 'text-green-500' :
-                    enrollment.status === 'pending_info' ? 'text-orange-500' : 'text-kk-brown/30';
-                  const statusLabel =
-                    enrollment.status === 'active' ? '수강 중' :
-                    enrollment.status === 'pending_info' ? '추가 정보 필요' :
-                    enrollment.status === 'suspended' ? '일시정지' : '수료';
+                  const isMarketing = enrollment.school_id === 'marketing';
+                  const isActive = enrollment.status === 'active';
 
                   return (
-                    <div key={enrollment.id} className="flex items-center justify-between p-3 bg-kk-cream/50 rounded-lg">
-                      <div className="flex items-center gap-3">
-                        <StatusIcon className={`w-5 h-5 ${statusColor}`} />
-                        <div>
-                          <p className="text-sm font-medium text-kk-brown">{schoolName?.ko}</p>
-                          <p className="text-xs text-kk-brown/40">
-                            {new Date(enrollment.enrolled_at).toLocaleDateString('ko-KR')} 등록
-                          </p>
+                    <div key={enrollment.id}>
+                      {/* 예비 마케터 교실 */}
+                      <div className="flex items-center justify-between p-3 bg-kk-cream/50 rounded-lg">
+                        <div className="flex items-center gap-3">
+                          <School className={`w-5 h-5 ${isActive ? 'text-purple-500' : 'text-kk-brown/30'}`} />
+                          <div>
+                            <p className="text-sm font-medium text-kk-brown">
+                              깍두기학교 - 마케팅학과 - 예비마케터교실
+                            </p>
+                            <p className="text-xs text-kk-brown/40">
+                              {new Date(enrollment.enrolled_at).toLocaleDateString('ko-KR')} 등록
+                            </p>
+                          </div>
                         </div>
+                        <span className={`px-2 py-1 rounded-full text-xs font-bold ${
+                          isMarketing && graduated
+                            ? 'bg-kk-gold/20 text-kk-brown'
+                            : isActive
+                              ? 'bg-green-50 text-green-600'
+                              : 'bg-kk-cream text-kk-brown/50'
+                        }`}>
+                          {isMarketing && graduated ? '🎓 졸업' : isActive ? '📚 재학중' : '일시정지'}
+                        </span>
                       </div>
-                      <span className={`px-2 py-1 rounded-full text-xs font-medium ${
-                        enrollment.status === 'active' ? 'bg-green-50 text-green-600' :
-                        enrollment.status === 'pending_info' ? 'bg-orange-50 text-orange-600' :
-                        'bg-kk-cream text-kk-brown/50'
-                      }`}>
-                        {statusLabel}
-                      </span>
+
+                      {/* 졸업 후 → 프로 마케터 교실 표시 */}
+                      {isMarketing && graduated && (
+                        <div className="flex items-center justify-between p-3 bg-purple-50/50 rounded-lg mt-2 border border-purple-100">
+                          <div className="flex items-center gap-3">
+                            <GraduationCap className="w-5 h-5 text-purple-500" />
+                            <div>
+                              <p className="text-sm font-medium text-kk-brown">
+                                깍두기학교 - 마케팅학과 - 프로마케터교실
+                              </p>
+                              <p className="text-xs text-purple-400">
+                                Pro 도구 사용 가능
+                              </p>
+                            </div>
+                          </div>
+                          <span className="px-2 py-1 rounded-full text-xs font-bold bg-purple-100 text-purple-600">
+                            📚 재학중
+                          </span>
+                        </div>
+                      )}
                     </div>
                   );
                 })}
