@@ -694,7 +694,22 @@
       "proUnlocked": "Pro Marketing Tools are now unlocked!",
       "proUnlockedHint": "Use 8 professional tools freely for 180 days",
       "goToPro": "Go to Pro Tools",
-      "later": "Maybe later"
+      "later": "Maybe later",
+      "ceremonyTitle": "Congratulations! 🎉",
+      "proGiftButton": "🎁 Graduation Gift: Pro Marketer Classroom Open!",
+      "proGiftDesc": "Access professional marketing tools in the Pro classroom.",
+      "getCertificateButton": "🎓 Get Certificate",
+      "certificate": {
+        "title": "Certificate of Graduation",
+        "body": "This certifies that the above student has faithfully completed all courses of the Marketing School for aspiring marketers and met the graduation requirements.",
+        "principal": "Kkakdugi School Principal",
+        "download": "Download Certificate",
+        "getCertificate": "Get Certificate",
+        "curriculum": "Completed Courses",
+        "team": "Team: {{team}}",
+        "issuer": "{{org}} x AMOUS Edu",
+        "downloadPdf": "PDF Download"
+      }
     },
     "pro": {
       "title": "Pro Marketing Tools",

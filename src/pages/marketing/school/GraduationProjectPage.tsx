@@ -10,6 +10,7 @@ import {
   hasAllStamps,
 } from '../../../utils/schoolStorage';
 import GraduationModal from '../../../components/school/GraduationModal';
+import GraduationCertificate from '../../../components/school/GraduationCertificate';
 import { getMyTeam, getTeamIdeas, deleteTeamIdea } from '../../../services/teamService';
 import { supabase } from '../../../lib/supabase';
 import type { TeamGroup, TeamMember, TeamIdea } from '../../../types/team';
@@ -28,6 +29,7 @@ export default function GraduationProjectPage() {
   const navigate = useNavigate();
   const { user, isLoading } = useAuth();
   const [showGraduationModal, setShowGraduationModal] = useState(false);
+  const [showCertificate, setShowCertificate] = useState(false);
   const [myTeam, setMyTeam] = useState<TeamGroup | null>(null);
   const [teamMembers, setTeamMembers] = useState<TeamMember[]>([]);
   const [teamIdeas, setTeamIdeas] = useState<TeamIdea[]>([]);
@@ -215,7 +217,24 @@ export default function GraduationProjectPage() {
 
         {/* Graduation Button */}
         <div className="bg-white rounded-2xl border border-gray-200 p-5">
-          {canGrad ? (
+          {graduated ? (
+            <div className="text-center py-4 space-y-3">
+              <div className="text-4xl mb-2">🎓</div>
+              <p className="text-green-600 font-bold text-lg">{t('school.attendance.alreadyGraduated')}</p>
+              <button
+                onClick={() => navigate('/marketing/pro')}
+                className="w-full py-3 bg-gradient-to-r from-purple-600 to-pink-600 text-white font-bold rounded-xl hover:opacity-90 transition-opacity"
+              >
+                {t('school.graduation.proGiftButton')}
+              </button>
+              <button
+                onClick={() => setShowCertificate(true)}
+                className="w-full py-3 bg-gradient-to-r from-amber-100 to-yellow-100 text-amber-700 font-bold rounded-xl hover:opacity-90 transition-opacity border border-amber-200"
+              >
+                {t('school.graduation.getCertificateButton')}
+              </button>
+            </div>
+          ) : canGrad ? (
             <div className="text-center">
               <p className="text-sm text-gray-600 mb-3">{t('school.attendance.readyToGraduate')}</p>
               <button
@@ -240,11 +259,24 @@ export default function GraduationProjectPage() {
       {showGraduationModal && (
         <GraduationModal
           userId={user.id}
+          userName={user.name}
+          userOrg={user.organization}
+          teamName={myTeam?.name || ''}
           onClose={() => setShowGraduationModal(false)}
           onComplete={() => {
             setShowGraduationModal(false);
             navigate('/marketing/school/attendance');
           }}
+        />
+      )}
+
+      {/* Graduation Certificate */}
+      {showCertificate && (
+        <GraduationCertificate
+          userName={user.name}
+          userOrg={user.organization}
+          teamName={myTeam?.name || ''}
+          onClose={() => setShowCertificate(false)}
         />
       )}
 

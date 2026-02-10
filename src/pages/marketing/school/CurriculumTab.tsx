@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../../contexts/AuthContext';
@@ -6,6 +6,8 @@ import {
   hasAllStamps, hasStamp,
   isGraduated as checkGraduated, canGraduate,
 } from '../../../utils/schoolStorage';
+import { getMyTeam } from '../../../services/teamService';
+import type { TeamGroup } from '../../../types/team';
 import { CURRICULUM_SECTIONS } from '../../../types/school';
 import type { PeriodId, CurriculumSection, SectionType } from '../../../types/school';
 import {
@@ -92,6 +94,14 @@ export default function CurriculumTab() {
   const { user } = useAuth();
   const [showGraduationModal, setShowGraduationModal] = useState(false);
   const [refreshKey, setRefreshKey] = useState(0);
+  const [myTeam, setMyTeam] = useState<TeamGroup | null>(null);
+
+  useEffect(() => {
+    if (!user) return;
+    getMyTeam(user.id).then(info => {
+      if (info) setMyTeam(info.team);
+    });
+  }, [user]);
 
   if (!user) return null; // MarketingSchoolLayout이 이미 auth guard 역할
 
@@ -286,6 +296,9 @@ export default function CurriculumTab() {
       {showGraduationModal && (
         <GraduationModal
           userId={user.id}
+          userName={user.name}
+          userOrg={user.organization}
+          teamName={myTeam?.name || ''}
           onClose={() => setShowGraduationModal(false)}
           onComplete={() => {
             setShowGraduationModal(false);

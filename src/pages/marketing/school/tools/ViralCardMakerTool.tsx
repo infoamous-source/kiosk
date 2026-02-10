@@ -7,7 +7,7 @@ import {
 } from 'lucide-react';
 import { useAuth } from '../../../../contexts/AuthContext';
 import {
-  autoStampAndGraduate, hasStamp, getEdgeMakerResult,
+  autoStamp, hasStamp, getEdgeMakerResult,
   saveViralCardResult, getViralCardResult,
 } from '../../../../utils/schoolStorage';
 import { generateViralCards, generateAllSlideImages } from '../../../../services/gemini/viralCardService';
@@ -147,7 +147,7 @@ export default function ViralCardMakerTool() {
           input: { productName: productName.trim(), targetPersona: targetPersona.trim(), usp: usp.trim(), tone, imageStyle },
           output: copyResult,
         });
-        autoStampAndGraduate(user.id, 'viral-card-maker');
+        autoStamp(user.id, 'viral-card-maker');
       }
 
       // Step 2: Generate images in background (only if not mock)

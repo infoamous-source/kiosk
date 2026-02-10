@@ -89,32 +89,12 @@ export function hasStamp(userId: string, periodId: PeriodId): boolean {
 }
 
 /**
- * AI 도구 사용 시 자동 스탬프 + 자동 졸업 처리
+ * AI 도구 사용 시 자동 스탬프 적립
  * - 해당 교시 도장 자동 적립
- * - 모든 도장 완료 시 자동 졸업 + 프로 교실 오픈
  */
-export function autoStampAndGraduate(userId: string, periodId: PeriodId): { stamped: boolean; graduated: boolean } {
-  const progress = earnStamp(userId, periodId);
-  const allDone = progress.stamps.every((s) => s.completed);
-
-  if (allDone && !progress.graduation.isGraduated) {
-    // 자동 졸업 처리
-    const now = new Date();
-    const expiresAt = new Date(now);
-    expiresAt.setDate(expiresAt.getDate() + PRO_DURATION_DAYS);
-
-    progress.graduation = {
-      isGraduated: true,
-      graduatedAt: now.toISOString(),
-      review: '(자동 졸업)',
-      proExpiresAt: expiresAt.toISOString(),
-    };
-
-    saveSchoolProgress(userId, progress);
-    return { stamped: true, graduated: true };
-  }
-
-  return { stamped: true, graduated: false };
+export function autoStamp(userId: string, periodId: PeriodId): { stamped: boolean } {
+  earnStamp(userId, periodId);
+  return { stamped: true };
 }
 
 // ─── 졸업 관련 ───

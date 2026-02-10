@@ -8,7 +8,7 @@ import {
 import { BarChart, Bar, XAxis, YAxis, ResponsiveContainer, Cell, Tooltip } from 'recharts';
 import { useAuth } from '../../../../contexts/AuthContext';
 import {
-  autoStampAndGraduate, hasStamp, getMarketScannerResult, getEdgeMakerResult,
+  autoStamp, hasStamp, getMarketScannerResult, getEdgeMakerResult,
   saveSimulationResult, loadSchoolProgress,
 } from '../../../../utils/schoolStorage';
 import { simulateROAS } from '../../../../services/gemini/roasSimulatorService';
@@ -192,7 +192,7 @@ export default function ROASSimulatorTool() {
           budget: adBudget,
           revenue: simResult.estimatedRevenue,
         });
-        autoStampAndGraduate(user.id, 'roas-simulator');
+        autoStamp(user.id, 'roas-simulator');
       }
     } catch (err) {
       console.error('[ROASSimulator] Simulation failed:', err);

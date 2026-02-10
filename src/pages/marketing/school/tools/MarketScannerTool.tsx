@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { ArrowLeft, Radar, Search, Copy, Check, ChevronDown, ChevronUp, ArrowRight, Gem } from 'lucide-react';
 import { useAuth } from '../../../../contexts/AuthContext';
-import { autoStampAndGraduate, hasStamp, getMarketScannerResult, saveMarketScannerResult } from '../../../../utils/schoolStorage';
+import { autoStamp, hasStamp, getMarketScannerResult, saveMarketScannerResult } from '../../../../utils/schoolStorage';
 import { generateMarketAnalysis } from '../../../../services/gemini/marketCompassService';
 import type { MarketScannerResult } from '../../../../types/school';
 import { getMyTeam, addTeamIdea } from '../../../../services/teamService';
@@ -93,7 +93,7 @@ export default function MarketScannerTool() {
       // 저장 + 자동 스탬프
       if (user) {
         saveMarketScannerResult(user.id, scannerResult);
-        autoStampAndGraduate(user.id, 'market-scanner');
+        autoStamp(user.id, 'market-scanner');
       }
 
       setPhase('result');

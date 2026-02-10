@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { ArrowLeft, Zap, Plus, X, Copy, Check, AlertCircle, Gem } from 'lucide-react';
 import { useAuth } from '../../../../contexts/AuthContext';
-import { autoStampAndGraduate, hasStamp, getMarketScannerResult, saveEdgeMakerResult, getEdgeMakerResult } from '../../../../utils/schoolStorage';
+import { autoStamp, hasStamp, getMarketScannerResult, saveEdgeMakerResult, getEdgeMakerResult } from '../../../../utils/schoolStorage';
 import { generateBrandingStrategy } from '../../../../services/gemini/marketCompassService';
 import type { EdgeMakerResult, CompetitorInfo } from '../../../../types/school';
 import { getMyTeam, addTeamIdea } from '../../../../services/teamService';
@@ -98,7 +98,7 @@ export default function EdgeMakerTool() {
 
       if (user) {
         saveEdgeMakerResult(user.id, edgeResult);
-        autoStampAndGraduate(user.id, 'edge-maker');
+        autoStamp(user.id, 'edge-maker');
       }
 
       setPhase('result');

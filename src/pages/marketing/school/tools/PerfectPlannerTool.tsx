@@ -7,7 +7,7 @@ import {
 } from 'lucide-react';
 import { useAuth } from '../../../../contexts/AuthContext';
 import {
-  autoStampAndGraduate, hasStamp, getEdgeMakerResult,
+  autoStamp, hasStamp, getEdgeMakerResult,
   savePerfectPlannerResult, getPerfectPlannerResult,
 } from '../../../../utils/schoolStorage';
 import { generateSalesPlan } from '../../../../services/gemini/perfectPlannerService';
@@ -124,7 +124,7 @@ export default function PerfectPlannerTool() {
           input: { productName: productName.trim(), coreTarget: coreTarget.trim(), usp: usp.trim(), strongOffer: strongOffer.trim() },
           output: planResult,
         });
-        autoStampAndGraduate(user.id, 'perfect-planner');
+        autoStamp(user.id, 'perfect-planner');
       }
     } catch (err) {
       console.error('[PerfectPlanner] Generation failed:', err);

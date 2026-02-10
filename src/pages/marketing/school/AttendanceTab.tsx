@@ -1,9 +1,10 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../../contexts/AuthContext';
 import { loadSchoolProgress, canGraduate, getAptitudeResult } from '../../../utils/schoolStorage';
 import { isGraduated as checkGraduated } from '../../../utils/schoolStorage';
+import { getMyTeam } from '../../../services/teamService';
 import StudentCard from '../../../components/school/StudentCard';
 import StampBoard from '../../../components/school/StampBoard';
 import GraduationModal from '../../../components/school/GraduationModal';
@@ -17,6 +18,14 @@ export default function AttendanceTab() {
   const [showGraduationModal, setShowGraduationModal] = useState(false);
   const [showCertificate, setShowCertificate] = useState(false);
   const [refreshKey, setRefreshKey] = useState(0);
+  const [myTeam, setMyTeam] = useState<{ name: string } | null>(null);
+
+  useEffect(() => {
+    if (!user) return;
+    getMyTeam(user.id).then(info => {
+      if (info) setMyTeam(info.team);
+    });
+  }, [user]);
 
   if (!user) return null; // MarketingSchoolLayout이 이미 auth guard 역할
 
@@ -75,10 +84,21 @@ export default function AttendanceTab() {
         </button>
 
         {graduated ? (
-          <div className="text-center py-4">
+          <div className="text-center py-4 space-y-3">
             <div className="text-4xl mb-2">🎓</div>
             <p className="text-green-600 font-bold text-lg">{t('school.attendance.alreadyGraduated')}</p>
-            <p className="text-sm text-gray-500 mt-1">{t('school.attendance.congratulations')}</p>
+            <button
+              onClick={() => navigate('/marketing/pro')}
+              className="w-full py-3 bg-gradient-to-r from-purple-600 to-pink-600 text-white font-bold rounded-xl hover:opacity-90 transition-opacity"
+            >
+              {t('school.graduation.proGiftButton')}
+            </button>
+            <button
+              onClick={() => setShowCertificate(true)}
+              className="w-full py-3 bg-gradient-to-r from-amber-100 to-yellow-100 text-amber-700 font-bold rounded-xl hover:opacity-90 transition-opacity border border-amber-200"
+            >
+              {t('school.graduation.getCertificateButton')}
+            </button>
           </div>
         ) : canGrad ? (
           <div className="text-center">
@@ -102,6 +122,9 @@ export default function AttendanceTab() {
       {showGraduationModal && (
         <GraduationModal
           userId={user.id}
+          userName={user.name}
+          userOrg={user.organization}
+          teamName={myTeam?.name || ''}
           onClose={() => setShowGraduationModal(false)}
           onComplete={handleGraduationComplete}
         />
@@ -111,6 +134,8 @@ export default function AttendanceTab() {
       {showCertificate && (
         <GraduationCertificate
           userName={user.name}
+          userOrg={user.organization}
+          teamName={myTeam?.name || ''}
           onClose={() => setShowCertificate(false)}
         />
       )}

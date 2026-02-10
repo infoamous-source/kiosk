@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { ArrowLeft, Sparkles, LoaderCircle, Share2, RotateCcw, Gem } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import { useAuth } from '../../../../contexts/AuthContext';
-import { autoStampAndGraduate, saveAptitudeResult, hasStamp, getAptitudeResult } from '../../../../utils/schoolStorage';
+import { autoStamp, saveAptitudeResult, hasStamp, getAptitudeResult } from '../../../../utils/schoolStorage';
 import { PERSONAS, calculateResult, getQuestionSet } from '../../../../data/aptitudeQuestions';
 import type { AptitudeQuestion, QuestionSetId } from '../../../../data/aptitudeQuestions';
 import type { PersonaId, AptitudeResult } from '../../../../types/school';
@@ -164,7 +164,7 @@ export default function AptitudeTestTool() {
     };
 
     saveAptitudeResult(user.id, aptitudeResult);
-    autoStampAndGraduate(user.id, 'aptitude-test');
+    autoStamp(user.id, 'aptitude-test');
     navigate('/marketing/school/curriculum');
   }, [user, result, answers, navigate, activeSetId]);
 
