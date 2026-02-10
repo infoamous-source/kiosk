@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import {
   ArrowLeft, CalendarCheck, Loader2, Sparkles, Copy, Check,
-  RefreshCw, ChevronDown, ChevronUp, FileText, Mic,
+  RefreshCw, ChevronDown, ChevronUp, FileText, Mic, Gem,
 } from 'lucide-react';
 import { useAuth } from '../../../../contexts/AuthContext';
 import {
@@ -12,6 +12,7 @@ import {
 } from '../../../../utils/schoolStorage';
 import { generateSalesPlan } from '../../../../services/gemini/perfectPlannerService';
 import type { PerfectPlannerResult, PlannerMode } from '../../../../types/school';
+import { getMyTeam, addTeamIdea } from '../../../../services/teamService';
 
 type Phase = 'input' | 'loading' | 'result';
 
@@ -42,6 +43,16 @@ export default function PerfectPlannerTool() {
   const [copiedField, setCopiedField] = useState<string | null>(null);
   const [checkedItems, setCheckedItems] = useState<Record<string, boolean>>({});
   const [expandedTip, setExpandedTip] = useState<string | null>(null);
+  const [myTeamId, setMyTeamId] = useState<string | null>(null);
+  const [savedToTeamBox, setSavedToTeamBox] = useState(false);
+
+  // Load team info
+  useEffect(() => {
+    if (!user) return;
+    getMyTeam(user.id).then(info => {
+      if (info) setMyTeamId(info.team.id);
+    });
+  }, [user]);
 
   // Load previous result or Edge Maker data
   useEffect(() => {
@@ -173,6 +184,19 @@ export default function PerfectPlannerTool() {
       ].join('\n');
       copyToClipboard(text, 'all');
     }
+  };
+
+  const handleSaveToTeamBox = async () => {
+    if (!user || !result || !myTeamId) return;
+    const title = `📋 ${productName}`;
+    const content = [
+      `헤드라인: ${result.landingPage.headline}`,
+      `서브: ${result.landingPage.subheadline}`,
+      `CTA: ${result.landingPage.closingCTA.mainCopy}`,
+    ].join('\n');
+    await addTeamIdea(myTeamId, user.id, user.name, '📋', 'perfect-planner', title, content);
+    setSavedToTeamBox(true);
+    setTimeout(() => setSavedToTeamBox(false), 2000);
   };
 
   const isInputValid = productName.trim().length > 0 && coreTarget.trim().length > 0;
@@ -586,6 +610,17 @@ export default function PerfectPlannerTool() {
                 <RefreshCw className="w-4 h-4" />
               </button>
             </div>
+
+            {/* 보석함에 넣기 */}
+            {myTeamId && (
+              <button
+                onClick={handleSaveToTeamBox}
+                className="w-full py-3 bg-gradient-to-r from-amber-100 to-yellow-100 text-amber-700 font-bold rounded-xl hover:from-amber-200 hover:to-yellow-200 transition-colors flex items-center justify-center gap-2"
+              >
+                <Gem className="w-4 h-4" />
+                {savedToTeamBox ? '보석함에 저장 완료!' : '💎 보석함에 넣기'}
+              </button>
+            )}
 
             {/* Completion */}
             <div className="bg-white rounded-2xl border border-gray-200 p-5">

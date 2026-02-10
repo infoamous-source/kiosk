@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import {
   ArrowLeft, Share2, Loader2, Sparkles, Copy, Check,
-  RefreshCw, ChevronDown, ChevronUp, ImageIcon,
+  RefreshCw, ChevronDown, ChevronUp, ImageIcon, Download, Bookmark, Gem,
 } from 'lucide-react';
 import { useAuth } from '../../../../contexts/AuthContext';
 import {
@@ -11,6 +11,8 @@ import {
   saveViralCardResult, getViralCardResult,
 } from '../../../../utils/schoolStorage';
 import { generateViralCards, generateAllSlideImages } from '../../../../services/gemini/viralCardService';
+import { addIdeaItem } from '../../../../types/ideaBox';
+import { getMyTeam, addTeamIdea } from '../../../../services/teamService';
 import type { ViralTone, ImageStyle, ViralCardSlide, ViralCardResult } from '../../../../types/school';
 
 type Phase = 'input' | 'loading' | 'result';
@@ -33,6 +35,7 @@ const IMAGE_STYLE_OPTIONS: { value: ImageStyle; emoji: string; labelKey: string;
   { value: 'realistic', emoji: '\uD83D\uDCF7', labelKey: 'school.viralCardMaker.imageStyle.realistic', gradient: 'linear-gradient(135deg, #2C3E50 0%, #4CA1AF 100%)' },
   { value: 'minimal', emoji: '\u2B1C', labelKey: 'school.viralCardMaker.imageStyle.minimal', gradient: 'linear-gradient(135deg, #F5F7FA 0%, #C3CFE2 100%)' },
   { value: 'popart', emoji: '\uD83D\uDFE1', labelKey: 'school.viralCardMaker.imageStyle.popart', gradient: 'linear-gradient(135deg, #FF0099 0%, #FFD700 50%, #00FF88 100%)' },
+  { value: 'custom', emoji: '\uD83D\uDCE4', labelKey: 'school.viralCardMaker.imageStyle.custom', gradient: 'linear-gradient(135deg, #E0E0E0 0%, #F5F5F5 50%, #E8E8E8 100%)' },
 ];
 
 export default function ViralCardMakerTool() {
@@ -65,6 +68,18 @@ export default function ViralCardMakerTool() {
   const [copiedField, setCopiedField] = useState<string | null>(null);
   const [activeSlide, setActiveSlide] = useState(0);
   const [regeneratingImage, setRegeneratingImage] = useState<number | null>(null);
+  const [customImageBase64, setCustomImageBase64] = useState<string | null>(null);
+  const [savedToIdeaBox, setSavedToIdeaBox] = useState(false);
+  const [myTeamId, setMyTeamId] = useState<string | null>(null);
+  const [savedToTeamBox, setSavedToTeamBox] = useState(false);
+
+  // Load team info
+  useEffect(() => {
+    if (!user) return;
+    getMyTeam(user.id).then(info => {
+      if (info) setMyTeamId(info.team.id);
+    });
+  }, [user]);
 
   // Load previous result or Edge Maker data on mount
   useEffect(() => {
@@ -135,7 +150,10 @@ export default function ViralCardMakerTool() {
       }
 
       // Step 2: Generate images in background (only if not mock)
-      if (!mock) {
+      if (imageStyle === 'custom' && customImageBase64) {
+        // Use uploaded image for all 4 slides
+        setSlideImages([customImageBase64, customImageBase64, customImageBase64, customImageBase64]);
+      } else if (!mock) {
         setLoadingStep(1);
         generateAllSlideImages(copyResult.slides, imageStyle, (index, base64) => {
           setSlideImages((prev) => {
@@ -151,9 +169,26 @@ export default function ViralCardMakerTool() {
     }
   };
 
+  // Handle custom image upload
+  const handleCustomImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    if (file.size > 5 * 1024 * 1024) {
+      alert('5MB 이하의 이미지만 업로드할 수 있어요.');
+      return;
+    }
+    const reader = new FileReader();
+    reader.onload = (ev) => {
+      const dataUrl = ev.target?.result as string;
+      const base64 = dataUrl.split(',')[1];
+      setCustomImageBase64(base64);
+    };
+    reader.readAsDataURL(file);
+  };
+
   // Regenerate single image
   const handleRegenerateImage = async (index: number) => {
-    if (!result || regeneratingImage !== null) return;
+    if (!result || regeneratingImage !== null || imageStyle === 'custom') return;
     setRegeneratingImage(index);
 
     try {
@@ -175,6 +210,96 @@ export default function ViralCardMakerTool() {
       return `━━ [${i + 1}/4] ${STEP_ICONS[slide.step]} ${slide.stepLabel} ━━\n${slide.copyText}\n\uD83D\uDCA1 ${t('school.viralCardMaker.designTip')}: ${slide.designTip}`;
     }).join('\n\n');
     copyToClipboard(`${text}\n\n${t('school.viralCardMaker.strategy')}: ${result.overallStrategy}`, 'all');
+  };
+
+  // Save slide as image (canvas)
+  const handleSaveSlideAsImage = async (index: number) => {
+    if (!result) return;
+    const slide = result.slides[index];
+    const canvas = document.createElement('canvas');
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    canvas.width = 1080;
+    canvas.height = 1080;
+
+    // Draw background
+    if (slideImages[index]) {
+      const img = new Image();
+      img.src = `data:image/png;base64,${slideImages[index]}`;
+      await new Promise<void>((resolve) => { img.onload = () => resolve(); img.onerror = () => resolve(); });
+      ctx.drawImage(img, 0, 0, 1080, 1080);
+    } else {
+      // Gradient fallback
+      const gradient = ctx.createLinearGradient(0, 0, 1080, 1080);
+      gradient.addColorStop(0, slide.colorScheme.primary);
+      gradient.addColorStop(1, slide.colorScheme.secondary);
+      ctx.fillStyle = gradient;
+      ctx.fillRect(0, 0, 1080, 1080);
+    }
+
+    // Dark overlay
+    ctx.fillStyle = 'rgba(0,0,0,0.4)';
+    ctx.fillRect(0, 0, 1080, 1080);
+
+    // Step badge
+    ctx.fillStyle = 'rgba(255,255,255,0.9)';
+    ctx.font = 'bold 36px sans-serif';
+    ctx.fillText(`${STEP_ICONS[slide.step]} ${slide.stepLabel}`, 60, 80);
+
+    // Page number
+    ctx.fillStyle = 'rgba(255,255,255,0.8)';
+    ctx.font = 'bold 32px sans-serif';
+    ctx.textAlign = 'right';
+    ctx.fillText(`${index + 1}/4`, 1020, 80);
+    ctx.textAlign = 'left';
+
+    // Copy text
+    ctx.fillStyle = '#FFFFFF';
+    ctx.font = 'bold 48px sans-serif';
+    const lines = slide.copyText.split('\n');
+    const startY = 1080 - 60 - (lines.length - 1) * 60;
+    lines.forEach((line, i) => {
+      ctx.fillText(line, 60, startY + i * 60);
+    });
+
+    // Download
+    const link = document.createElement('a');
+    link.download = `card-${index + 1}-${slide.step}.png`;
+    link.href = canvas.toDataURL('image/png');
+    link.click();
+  };
+
+  const handleSaveAllSlides = async () => {
+    if (!result) return;
+    for (let i = 0; i < result.slides.length; i++) {
+      await handleSaveSlideAsImage(i);
+    }
+  };
+
+  // Save to idea box
+  const handleSaveToIdeaBox = () => {
+    if (!user || !result) return;
+    const allCopy = result.slides.map((s, i) => `[${i + 1}/4] ${s.stepLabel}: ${s.copyText}`).join('\n\n');
+    addIdeaItem(user.id, {
+      type: 'copy',
+      toolId: 'viral-card-maker',
+      title: productName,
+      content: allCopy,
+      preview: result.slides[0].copyText.slice(0, 50),
+      tags: [tone, imageStyle],
+    });
+    setSavedToIdeaBox(true);
+    setTimeout(() => setSavedToIdeaBox(false), 2000);
+  };
+
+  // Save to team gem box
+  const handleSaveToTeamBox = async () => {
+    if (!user || !result || !myTeamId) return;
+    const allCopy = result.slides.map((s, i) => `[${i + 1}/4] ${s.stepLabel}: ${s.copyText}`).join('\n\n');
+    await addTeamIdea(myTeamId, user.id, user.name, '🎨', 'viral-card-maker', `🎨 ${productName}`, allCopy);
+    setSavedToTeamBox(true);
+    setTimeout(() => setSavedToTeamBox(false), 2000);
   };
 
   // stamp already auto-applied on result generation
@@ -309,7 +434,7 @@ export default function ViralCardMakerTool() {
             {/* Image Style Selection */}
             <div className="bg-white rounded-2xl border border-gray-200 p-5">
               <label className="block text-sm font-semibold text-gray-700 mb-3">{t('school.viralCardMaker.imageStyleLabel')}</label>
-              <div className="grid grid-cols-4 gap-2">
+              <div className="grid grid-cols-5 gap-2">
                 {IMAGE_STYLE_OPTIONS.map((opt) => (
                   <button
                     key={opt.value}
@@ -320,13 +445,43 @@ export default function ViralCardMakerTool() {
                         : 'border-gray-200 hover:border-gray-300'
                     }`}
                   >
-                    <div className="h-12 w-full" style={{ background: opt.gradient }} />
+                    {opt.value === 'custom' ? (
+                      <div className="h-16 w-full border-b-2 border-dashed border-gray-300 flex items-center justify-center bg-gray-50">
+                        <span className="text-2xl">{opt.emoji}</span>
+                      </div>
+                    ) : (
+                      <div className="h-16 w-full relative overflow-hidden" style={{ background: opt.gradient }}>
+                        <div className="absolute inset-0 flex flex-col justify-end p-1.5">
+                          <div className="bg-white/80 rounded h-1 w-3/4 mb-0.5" />
+                          <div className="bg-white/60 rounded h-1 w-1/2" />
+                        </div>
+                      </div>
+                    )}
                     <div className="p-1.5 text-center">
-                      <div className="text-xs font-bold text-gray-700">{t(opt.labelKey)}</div>
+                      <div className="text-[10px] font-bold text-gray-700">{t(opt.labelKey)}</div>
                     </div>
                   </button>
                 ))}
               </div>
+
+              {/* Custom image upload */}
+              {imageStyle === 'custom' && (
+                <div className="mt-3 space-y-2">
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={handleCustomImageUpload}
+                    className="w-full text-sm text-gray-500 file:mr-2 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-purple-50 file:text-purple-700 hover:file:bg-purple-100"
+                  />
+                  {customImageBase64 && (
+                    <img
+                      src={`data:image/png;base64,${customImageBase64}`}
+                      alt="preview"
+                      className="w-20 h-20 object-cover rounded-lg border border-gray-200"
+                    />
+                  )}
+                </div>
+              )}
             </div>
 
             {/* Generate Button */}
@@ -441,7 +596,13 @@ export default function ViralCardMakerTool() {
                         {copiedField === `slide-${index}` ? <Check className="w-3 h-3 text-green-500" /> : <Copy className="w-3 h-3" />}
                         {copiedField === `slide-${index}` ? t('school.viralCardMaker.copied') : t('school.viralCardMaker.copy')}
                       </button>
-                      {!isMock && (
+                      <button
+                        onClick={() => handleSaveSlideAsImage(index)}
+                        className="flex items-center justify-center gap-1 px-3 py-2 bg-gray-100 rounded-lg text-xs font-medium text-gray-600 hover:bg-gray-200"
+                      >
+                        <Download className="w-3 h-3" />
+                      </button>
+                      {!isMock && imageStyle !== 'custom' && (
                         <button
                           onClick={() => handleRegenerateImage(index)}
                           disabled={regeneratingImage !== null}
@@ -471,23 +632,47 @@ export default function ViralCardMakerTool() {
             </div>
 
             {/* Action Bar */}
-            <div className="flex gap-2">
+            <div className="grid grid-cols-2 gap-2">
               <button
                 onClick={handleCopyAll}
-                className="flex-1 flex items-center justify-center gap-2 py-3 bg-purple-100 text-purple-700 font-bold rounded-xl hover:bg-purple-200 transition-colors"
+                className="flex items-center justify-center gap-2 py-3 bg-purple-100 text-purple-700 font-bold rounded-xl hover:bg-purple-200 transition-colors text-sm"
               >
                 {copiedField === 'all' ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
                 {copiedField === 'all' ? t('school.viralCardMaker.copied') : t('school.viralCardMaker.copyAll')}
               </button>
+              <button
+                onClick={handleSaveAllSlides}
+                className="flex items-center justify-center gap-2 py-3 bg-green-100 text-green-700 font-bold rounded-xl hover:bg-green-200 transition-colors text-sm"
+              >
+                <Download className="w-4 h-4" />
+                {t('school.viralCardMaker.saveAll')}
+              </button>
+              <button
+                onClick={handleSaveToIdeaBox}
+                className="flex items-center justify-center gap-2 py-3 bg-amber-100 text-amber-700 font-bold rounded-xl hover:bg-amber-200 transition-colors text-sm"
+              >
+                <Bookmark className="w-4 h-4" />
+                {savedToIdeaBox ? t('school.viralCardMaker.savedToIdeaBox') : t('school.viralCardMaker.saveToIdeaBox')}
+              </button>
+              {myTeamId && (
+                <button
+                  onClick={handleSaveToTeamBox}
+                  className="flex items-center justify-center gap-2 py-3 bg-gradient-to-r from-amber-100 to-yellow-100 text-amber-700 font-bold rounded-xl hover:from-amber-200 hover:to-yellow-200 transition-colors text-sm"
+                >
+                  <Gem className="w-4 h-4" />
+                  {savedToTeamBox ? '저장 완료!' : '💎 보석함'}
+                </button>
+              )}
               <button
                 onClick={() => {
                   setResult(null);
                   setSlideImages([null, null, null, null]);
                   setPhase('input');
                 }}
-                className="flex items-center justify-center gap-2 px-4 py-3 bg-gray-100 text-gray-600 font-bold rounded-xl hover:bg-gray-200 transition-colors"
+                className="flex items-center justify-center gap-2 py-3 bg-gray-100 text-gray-600 font-bold rounded-xl hover:bg-gray-200 transition-colors text-sm"
               >
                 <RefreshCw className="w-4 h-4" />
+                {t('school.viralCardMaker.generateButton')}
               </button>
             </div>
 

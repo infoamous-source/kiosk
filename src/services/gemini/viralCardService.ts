@@ -19,6 +19,7 @@ const IMAGE_STYLE_PREFIX: Record<ImageStyle, string> = {
   realistic: 'professional product photography, high quality, studio lighting, clean background',
   minimal: 'clean minimalist design, flat colors, simple shapes, white space, geometric',
   popart: 'bold pop art style, bright saturated colors, comic-like, retro halftone dots',
+  custom: '', // user-uploaded image, no AI generation
 };
 
 // ─── Step 1: 카피 생성 ───

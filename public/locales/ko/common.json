@@ -1375,7 +1375,8 @@
         "illustration": "일러스트",
         "realistic": "실사",
         "minimal": "미니멀",
-        "popart": "팝아트"
+        "popart": "팝아트",
+        "custom": "직접 추가"
       },
       "generateButton": "SNS 광고 만들기",
       "loading": {
@@ -1388,7 +1389,14 @@
       "strategy": "전략 요약",
       "copy": "복사",
       "copied": "복사됨!",
-      "copyAll": "전체 복사"
+      "copyAll": "전체 복사",
+      "saveAsImage": "이미지로 저장",
+      "saveAll": "전체 저장",
+      "saveToIdeaBox": "아이디어 상자에 저장",
+      "savedToIdeaBox": "저장 완료!",
+      "saveToTeamBox": "보석함에 넣기",
+      "savedToTeamBox": "보석함에 저장 완료!",
+      "noTeam": "팀 미배정"
     },
     "perfectPlanner": {
       "title": "세일즈 라이터 (Sales Writer AI)",

@@ -91,7 +91,7 @@ export interface EdgeMakerResult {
 // ─── Viral Card Maker (4교시) 타입 ───
 
 export type ViralTone = 'spicy' | 'emotional' | 'informative';
-export type ImageStyle = 'illustration' | 'realistic' | 'minimal' | 'popart';
+export type ImageStyle = 'illustration' | 'realistic' | 'minimal' | 'popart' | 'custom';
 
 export interface ViralCardSlide {
   step: 'hook' | 'empathy' | 'solution' | 'action';

@@ -1,13 +1,14 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
-import { ArrowLeft, Sparkles, LoaderCircle, Share2, RotateCcw } from 'lucide-react';
+import { ArrowLeft, Sparkles, LoaderCircle, Share2, RotateCcw, Gem } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import { useAuth } from '../../../../contexts/AuthContext';
 import { autoStampAndGraduate, saveAptitudeResult, hasStamp, getAptitudeResult } from '../../../../utils/schoolStorage';
 import { PERSONAS, calculateResult, getQuestionSet } from '../../../../data/aptitudeQuestions';
 import type { AptitudeQuestion, QuestionSetId } from '../../../../data/aptitudeQuestions';
 import type { PersonaId, AptitudeResult } from '../../../../types/school';
+import { getMyTeam, addTeamIdea } from '../../../../services/teamService';
 
 type Phase = 'intro' | 'test' | 'loading' | 'result';
 
@@ -64,6 +65,8 @@ export default function AptitudeTestTool() {
   const [previousResult, setPreviousResult] = useState<AptitudeResult | null>(null);
   const [activeQuestions, setActiveQuestions] = useState<AptitudeQuestion[]>([]);
   const [activeSetId, setActiveSetId] = useState<QuestionSetId>('set1');
+  const [myTeamId, setMyTeamId] = useState<string | null>(null);
+  const [savedToTeamBox, setSavedToTeamBox] = useState(false);
 
   const completed = user ? hasStamp(user.id, 'aptitude-test') : false;
 
@@ -76,6 +79,14 @@ export default function AptitudeTestTool() {
       }
     }
   }, [user, completed]);
+
+  // Load team info
+  useEffect(() => {
+    if (!user) return;
+    getMyTeam(user.id).then(info => {
+      if (info) setMyTeamId(info.team.id);
+    });
+  }, [user]);
 
   // Loading phase timer
   useEffect(() => {
@@ -180,6 +191,16 @@ export default function AptitudeTestTool() {
       }
     }
   }, [result, t]);
+
+  const handleSaveToTeamBox = useCallback(async () => {
+    if (!user || !result || !myTeamId) return;
+    const persona = PERSONAS[result.resultType];
+    const title = `${persona.emoji} ${t(persona.nameKey)}`;
+    const content = `${t(persona.titleKey)}\n\n${t(persona.descriptionKey)}`;
+    await addTeamIdea(myTeamId, user.id, user.name, persona.emoji, 'aptitude-test', title, content);
+    setSavedToTeamBox(true);
+    setTimeout(() => setSavedToTeamBox(false), 2000);
+  }, [user, result, myTeamId, t]);
 
   const handleRestart = useCallback(() => {
     setPhase('intro');
@@ -436,6 +457,17 @@ export default function AptitudeTestTool() {
               >
                 {t('school.aptitude.result.saveBadge')}
               </button>
+
+              {/* Team Gem Box */}
+              {myTeamId && (
+                <button
+                  onClick={handleSaveToTeamBox}
+                  className="w-full py-3 bg-gradient-to-r from-amber-100 to-yellow-100 text-amber-700 font-bold rounded-2xl hover:from-amber-200 hover:to-yellow-200 transition-colors flex items-center justify-center gap-2"
+                >
+                  <Gem className="w-4 h-4" />
+                  {savedToTeamBox ? '보석함에 저장 완료!' : '💎 보석함에 넣기'}
+                </button>
+              )}
 
               {/* Restart + Share Row */}
               <div className="flex gap-3">

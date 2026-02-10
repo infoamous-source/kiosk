@@ -1,11 +1,12 @@
 import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
-import { ArrowLeft, Zap, Plus, X, Copy, Check, AlertCircle } from 'lucide-react';
+import { ArrowLeft, Zap, Plus, X, Copy, Check, AlertCircle, Gem } from 'lucide-react';
 import { useAuth } from '../../../../contexts/AuthContext';
 import { autoStampAndGraduate, hasStamp, getMarketScannerResult, saveEdgeMakerResult, getEdgeMakerResult } from '../../../../utils/schoolStorage';
 import { generateBrandingStrategy } from '../../../../services/gemini/marketCompassService';
 import type { EdgeMakerResult, CompetitorInfo } from '../../../../types/school';
+import { getMyTeam, addTeamIdea } from '../../../../services/teamService';
 
 type Phase = 'input' | 'loading' | 'result';
 
@@ -26,6 +27,16 @@ export default function EdgeMakerTool() {
   const [copiedField, setCopiedField] = useState<string | null>(null);
   const [noScannerData, setNoScannerData] = useState(false);
   const [activeNameTab, setActiveNameTab] = useState(0);
+  const [myTeamId, setMyTeamId] = useState<string | null>(null);
+  const [savedToTeamBox, setSavedToTeamBox] = useState(false);
+
+  // Load team info
+  useEffect(() => {
+    if (!user) return;
+    getMyTeam(user.id).then(info => {
+      if (info) setMyTeamId(info.team.id);
+    });
+  }, [user]);
 
   // 마운트 시 MarketScanner 결과 로드
   useEffect(() => {
@@ -107,6 +118,20 @@ export default function EdgeMakerTool() {
     } catch {
       // 복사 실패 무시
     }
+  };
+
+  const handleSaveToTeamBox = async () => {
+    if (!user || !result || !myTeamId) return;
+    const brandName = result.output.brandNames?.[0]?.name || 'Brand';
+    const title = `⚡ ${brandName}`;
+    const content = [
+      `USP: ${result.output.usp}`,
+      `슬로건: "${result.output.slogan}"`,
+      `브랜드: ${result.output.brandNames.map(b => `${b.name} (${b.type})`).join(', ')}`,
+    ].join('\n');
+    await addTeamIdea(myTeamId, user.id, user.name, '⚡', 'edge-maker', title, content);
+    setSavedToTeamBox(true);
+    setTimeout(() => setSavedToTeamBox(false), 2000);
   };
 
   const CopyButton = ({ text, field }: { text: string; field: string }) => (
@@ -466,6 +491,17 @@ export default function EdgeMakerTool() {
                   {result.output.brandingReport}
                 </p>
               </div>
+            )}
+
+            {/* 보석함에 넣기 */}
+            {myTeamId && (
+              <button
+                onClick={handleSaveToTeamBox}
+                className="w-full py-3 bg-gradient-to-r from-amber-100 to-yellow-100 text-amber-700 font-bold rounded-xl hover:from-amber-200 hover:to-yellow-200 transition-colors flex items-center justify-center gap-2"
+              >
+                <Gem className="w-4 h-4" />
+                {savedToTeamBox ? '보석함에 저장 완료!' : '💎 보석함에 넣기'}
+              </button>
             )}
 
             {/* 완료 섹션 */}

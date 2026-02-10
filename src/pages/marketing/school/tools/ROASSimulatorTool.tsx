@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import {
   ArrowLeft, TrendingUp, Loader2, Sparkles, Copy, Check,
-  RefreshCw, ChevronDown, ChevronUp,
+  RefreshCw, ChevronDown, ChevronUp, Gem,
 } from 'lucide-react';
 import { BarChart, Bar, XAxis, YAxis, ResponsiveContainer, Cell, Tooltip } from 'recharts';
 import { useAuth } from '../../../../contexts/AuthContext';
@@ -13,6 +13,7 @@ import {
 } from '../../../../utils/schoolStorage';
 import { simulateROAS } from '../../../../services/gemini/roasSimulatorService';
 import type { ROASSimulationInput, ROASSimulationOutput } from '../../../../types/school';
+import { getMyTeam, addTeamIdea } from '../../../../services/teamService';
 
 type Phase = 'input' | 'loading' | 'result';
 
@@ -71,6 +72,16 @@ export default function ROASSimulatorTool() {
   const [isMock, setIsMock] = useState(false);
   const [copiedField, setCopiedField] = useState<string | null>(null);
   const [animatedROAS, setAnimatedROAS] = useState(0);
+  const [myTeamId, setMyTeamId] = useState<string | null>(null);
+  const [savedToTeamBox, setSavedToTeamBox] = useState(false);
+
+  // Load team info
+  useEffect(() => {
+    if (!user) return;
+    getMyTeam(user.id).then(info => {
+      if (info) setMyTeamId(info.team.id);
+    });
+  }, [user]);
 
   // Load previous data
   useEffect(() => {
@@ -212,6 +223,19 @@ export default function ROASSimulatorTool() {
       result.channelTip,
     ].join('\n');
     copyToClipboard(text, 'all');
+  };
+
+  const handleSaveToTeamBox = async () => {
+    if (!user || !result || !myTeamId) return;
+    const title = `📊 ${productName} ROAS ${result.estimatedROAS}x`;
+    const content = [
+      `ROAS: ${result.estimatedROAS}x (${t(`school.roasSimulator.grade.${result.roasGrade}`)})`,
+      `예산: ${formatWon(adBudget)} → 매출: ${formatWon(result.estimatedRevenue)}`,
+      `조언: ${result.advice[0] || ''}`,
+    ].join('\n');
+    await addTeamIdea(myTeamId, user.id, user.name, '📊', 'roas-simulator', title, content);
+    setSavedToTeamBox(true);
+    setTimeout(() => setSavedToTeamBox(false), 2000);
   };
 
   const isInputValid = productName.trim().length > 0 && Number(productPrice) > 0;
@@ -542,6 +566,17 @@ export default function ROASSimulatorTool() {
                 <RefreshCw className="w-4 h-4" />
               </button>
             </div>
+
+            {/* 보석함에 넣기 */}
+            {myTeamId && (
+              <button
+                onClick={handleSaveToTeamBox}
+                className="w-full py-3 bg-gradient-to-r from-amber-100 to-yellow-100 text-amber-700 font-bold rounded-xl hover:from-amber-200 hover:to-yellow-200 transition-colors flex items-center justify-center gap-2"
+              >
+                <Gem className="w-4 h-4" />
+                {savedToTeamBox ? '보석함에 저장 완료!' : '💎 보석함에 넣기'}
+              </button>
+            )}
 
             {/* Completion + Graduation Project */}
             <div className="bg-white rounded-2xl border border-gray-200 p-5">

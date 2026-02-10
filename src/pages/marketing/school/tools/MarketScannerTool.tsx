@@ -1,11 +1,12 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
-import { ArrowLeft, Radar, Search, Copy, Check, ChevronDown, ChevronUp, ArrowRight } from 'lucide-react';
+import { ArrowLeft, Radar, Search, Copy, Check, ChevronDown, ChevronUp, ArrowRight, Gem } from 'lucide-react';
 import { useAuth } from '../../../../contexts/AuthContext';
 import { autoStampAndGraduate, hasStamp, getMarketScannerResult, saveMarketScannerResult } from '../../../../utils/schoolStorage';
 import { generateMarketAnalysis } from '../../../../services/gemini/marketCompassService';
 import type { MarketScannerResult } from '../../../../types/school';
+import { getMyTeam, addTeamIdea } from '../../../../services/teamService';
 
 type Phase = 'input' | 'loading' | 'result';
 
@@ -30,6 +31,8 @@ export default function MarketScannerTool() {
   const [copiedField, setCopiedField] = useState<string | null>(null);
   const [expandedCompetitor, setExpandedCompetitor] = useState<number | null>(0);
   const [hasPreviousResult, setHasPreviousResult] = useState(false);
+  const [myTeamId, setMyTeamId] = useState<string | null>(null);
+  const [savedToTeamBox, setSavedToTeamBox] = useState(false);
 
   // 이전 결과 확인
   useEffect(() => {
@@ -39,6 +42,14 @@ export default function MarketScannerTool() {
         setHasPreviousResult(true);
       }
     }
+  }, [user]);
+
+  // Load team info
+  useEffect(() => {
+    if (!user) return;
+    getMyTeam(user.id).then(info => {
+      if (info) setMyTeamId(info.team.id);
+    });
   }, [user]);
 
   const loadPreviousResult = useCallback(() => {
@@ -112,6 +123,19 @@ export default function MarketScannerTool() {
     setResult(null);
     setPhase('input');
     setHasPreviousResult(false);
+  };
+
+  const handleSaveToTeamBox = async () => {
+    if (!user || !result || !myTeamId) return;
+    const title = `🔍 ${result.input.itemKeyword}`;
+    const content = [
+      `키워드: ${result.output.relatedKeywords.map(k => `#${k}`).join(' ')}`,
+      `고객의 소리: ${result.output.painPoints.join(' / ')}`,
+      result.output.analysisReport ? `\n분석:\n${result.output.analysisReport}` : '',
+    ].filter(Boolean).join('\n');
+    await addTeamIdea(myTeamId, user.id, user.name, '🔍', 'market-scanner', title, content);
+    setSavedToTeamBox(true);
+    setTimeout(() => setSavedToTeamBox(false), 2000);
   };
 
   const CopyButton = ({ text, field }: { text: string; field: string }) => (
@@ -422,6 +446,17 @@ export default function MarketScannerTool() {
                   {result.output.analysisReport}
                 </p>
               </div>
+            )}
+
+            {/* 보석함에 넣기 */}
+            {myTeamId && (
+              <button
+                onClick={handleSaveToTeamBox}
+                className="w-full py-3 bg-gradient-to-r from-amber-100 to-yellow-100 text-amber-700 font-bold rounded-xl hover:from-amber-200 hover:to-yellow-200 transition-colors flex items-center justify-center gap-2"
+              >
+                <Gem className="w-4 h-4" />
+                {savedToTeamBox ? '보석함에 저장 완료!' : '💎 보석함에 넣기'}
+              </button>
             )}
 
             {/* 다음 단계 */}

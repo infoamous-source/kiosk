@@ -65,6 +65,22 @@ export async function searchStudents(query: string): Promise<ProfileRow[]> {
   return data as ProfileRow[];
 }
 
+/** 관리자: 특정 강사 코드로 등록한 학생 프로필 조회 */
+export async function getStudentsByInstructorCode(instructorCode: string): Promise<ProfileRow[]> {
+  const { data, error } = await supabase
+    .from('profiles')
+    .select('*')
+    .eq('role', 'student')
+    .eq('instructor_code', instructorCode)
+    .order('created_at', { ascending: false });
+
+  if (error) {
+    console.error('Get students by instructor code error:', error.message);
+    return [];
+  }
+  return data as ProfileRow[];
+}
+
 /** Gemini API 키 저장 */
 export async function saveGeminiApiKey(userId: string, apiKey: string): Promise<boolean> {
   const { error } = await supabase
