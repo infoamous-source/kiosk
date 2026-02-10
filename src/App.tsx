@@ -3,6 +3,7 @@ import { AuthProvider } from './contexts/AuthContext';
 import { EnrollmentProvider } from './contexts/EnrollmentContext';
 import { VisibilityProvider } from './contexts/VisibilityContext';
 import MainLayout from './components/common/MainLayout';
+import GlobalLogoutButton from './components/common/GlobalLogoutButton';
 import GatewayPage from './pages/GatewayPage';
 import TrackPage from './pages/TrackPage';
 import LoginPage from './pages/LoginPage';
@@ -37,6 +38,7 @@ export default function App() {
       <EnrollmentProvider>
       <VisibilityProvider>
       <BrowserRouter>
+        <GlobalLogoutButton />
         <Routes>
           {/* Gateway (첫 페이지 - 트리오 카드) */}
           <Route path="/" element={<GatewayPage />} />
