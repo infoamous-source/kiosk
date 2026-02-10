@@ -4,7 +4,6 @@ import { useTranslation } from 'react-i18next';
 import { Bot, Sparkles, ArrowRight, Key, ExternalLink, Check, Loader2 } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
 import { saveGeminiApiKey } from '../services/profileService';
-import { supabase } from '../lib/supabase';
 import { type SchoolId } from '../types/enrollment';
 import KkakdugiCharacter from '@/components/brand/KkakdugiCharacter';
 
@@ -46,44 +45,32 @@ export default function AIWelcomePage() {
     setStep('input');
   };
 
-  const handleSaveApiKey = async () => {
+  const handleSaveApiKey = () => {
     if (!apiKey.trim()) {
       setError('API 키를 입력해주세요');
       return;
     }
 
-    setIsLoading(true);
     setError('');
 
+    // localStorage에 즉시 저장 (AI 도구가 이 값을 사용)
     try {
-      // localStorage에 항상 저장 (오프라인에서도 동작)
-      try {
-        localStorage.setItem('kiosk-gemini-api-key', apiKey.trim());
-        localStorage.setItem('kiosk-gemini-connected', 'true');
-      } catch {
-        // storage full 등 무시
-      }
+      localStorage.setItem('kiosk-gemini-api-key', apiKey.trim());
+      localStorage.setItem('kiosk-gemini-connected', 'true');
+    } catch {
+      // storage full 등 무시
+    }
 
-      // Supabase DB에도 저장 시도 (user가 있으면)
-      let userId = user?.id;
-      if (!userId) {
-        const { data: { session } } = await supabase.auth.getSession();
-        userId = session?.user?.id;
-      }
+    // 즉시 성공 처리 + 이동
+    setSuccess(true);
+    setTimeout(() => {
+      navigate(redirectPath);
+    }, 1500);
 
-      if (userId) {
-        await saveGeminiApiKey(userId, apiKey.trim());
-      }
-
-      setSuccess(true);
-      setTimeout(() => {
-        navigate(redirectPath);
-      }, 1500);
-    } catch (err) {
-      console.error('API 키 저장 실패:', err);
-      setError('저장 중 오류가 발생했습니다. 다시 시도해주세요.');
-    } finally {
-      setIsLoading(false);
+    // Supabase DB 저장은 백그라운드 (실패해도 무방)
+    const userId = user?.id;
+    if (userId) {
+      saveGeminiApiKey(userId, apiKey.trim()).catch(() => {});
     }
   };
 
