@@ -215,12 +215,7 @@ export default function GraduationProjectPage() {
 
         {/* Graduation Button */}
         <div className="bg-white rounded-2xl border border-gray-200 p-5">
-          {graduated ? (
-            <div className="text-center py-4">
-              <div className="text-4xl mb-2">&#127891;</div>
-              <p className="text-green-600 font-bold text-lg">{t('school.attendance.alreadyGraduated')}</p>
-            </div>
-          ) : canGrad ? (
+          {canGrad ? (
             <div className="text-center">
               <p className="text-sm text-gray-600 mb-3">{t('school.attendance.readyToGraduate')}</p>
               <button
