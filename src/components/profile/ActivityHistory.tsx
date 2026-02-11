@@ -2,6 +2,15 @@ import { useTranslation } from 'react-i18next';
 import { Clock, TrendingUp, BookOpen, Wrench, Activity } from 'lucide-react';
 import { useActivityLog } from '../../hooks/useActivityLog';
 
+interface DisplayLog {
+  userId: string;
+  trackId: string;
+  moduleId?: string;
+  action: string;
+  timestamp: string;
+  metadata?: Record<string, string>;
+}
+
 interface ActivityHistoryProps {
   userId: string;
 }
@@ -54,7 +63,7 @@ export default function ActivityHistory({ userId: _userId }: ActivityHistoryProp
   };
 
   // 날짜별 그룹핑
-  const groupedLogs = logs.reduce<Record<string, ActivityLog[]>>((acc, log) => {
+  const groupedLogs = logs.reduce<Record<string, DisplayLog[]>>((acc, log) => {
     const date = new Date(log.timestamp).toLocaleDateString('ko-KR', {
       year: 'numeric',
       month: 'long',

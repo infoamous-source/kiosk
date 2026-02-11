@@ -9,6 +9,7 @@ import {
   Package,
 } from 'lucide-react';
 import {
+  type IdeaItem,
   type IdeaItemType,
   ideaTypeIcons,
 } from '../../types/ideaBox';
