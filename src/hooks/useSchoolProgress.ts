@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback, useMemo } from 'react';
 import { useAuth } from '../contexts/AuthContext';
+import { useEnrollments } from '../contexts/EnrollmentContext';
 import {
   fetchSchoolProgress,
   upsertSchoolProgress,
@@ -37,7 +38,10 @@ function createDefaultProgress(): SchoolProgress {
 
 export function useSchoolProgress() {
   const { user } = useAuth();
+  const { getEnrollment } = useEnrollments();
   const userId = user?.id;
+  const marketingEnrollment = getEnrollment('marketing');
+  const enrollmentId = marketingEnrollment?.id;
   const [progress, setProgress] = useState<SchoolProgress | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -66,12 +70,12 @@ export function useSchoolProgress() {
   // Helper to update progress (optimistic + persist)
   const updateProgress = useCallback(
     async (updater: (prev: SchoolProgress) => SchoolProgress) => {
-      if (!userId || !progress) return;
+      if (!userId || !progress || !enrollmentId) return;
       const updated = updater(progress);
       setProgress(updated); // optimistic
-      await upsertSchoolProgress(userId, updated);
+      await upsertSchoolProgress(userId, updated, enrollmentId, 'marketing');
     },
-    [userId, progress],
+    [userId, progress, enrollmentId],
   );
 
   // ─── Stamp functions ───
@@ -315,7 +319,7 @@ export function useSchoolProgress() {
 // ─── Admin Hook ───
 
 export function useAdminSchoolProgress() {
-  const [allData, setAllData] = useState<Array<{ userId: string; progress: SchoolProgress }>>([]);
+  const [allData, setAllData] = useState<Array<{ userId: string; enrollmentId: string; schoolId: string; progress: SchoolProgress }>>([]);
   const [isLoading, setIsLoading] = useState(true);
 
   const loadAll = useCallback(async () => {
@@ -357,7 +361,7 @@ export function useAdminSchoolProgress() {
         },
       };
 
-      await upsertSchoolProgress(userId, updated);
+      await upsertSchoolProgress(userId, updated, entry.enrollmentId, entry.schoolId);
       setAllData((prev) =>
         prev.map((d) => (d.userId === userId ? { ...d, progress: updated } : d)),
       );

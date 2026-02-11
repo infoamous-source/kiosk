@@ -57,8 +57,13 @@ export async function fetchSchoolProgress(userId: string): Promise<SchoolProgres
   return rowToProgress(data as SchoolProgressRow);
 }
 
-/** school_progress upsert (student_id 기준) */
-export async function upsertSchoolProgress(userId: string, progress: SchoolProgress): Promise<boolean> {
+/** school_progress upsert (enrollment_id 기준) */
+export async function upsertSchoolProgress(
+  userId: string,
+  progress: SchoolProgress,
+  enrollmentId: string,
+  schoolId: string,
+): Promise<boolean> {
   const columns = progressToRow(progress);
 
   const { error } = await supabase
@@ -66,10 +71,12 @@ export async function upsertSchoolProgress(userId: string, progress: SchoolProgr
     .upsert(
       {
         student_id: userId,
+        enrollment_id: enrollmentId,
+        school_id: schoolId,
         ...columns,
         updated_at: new Date().toISOString(),
       },
-      { onConflict: 'student_id' },
+      { onConflict: 'enrollment_id' },
     );
 
   if (error) {
@@ -80,7 +87,7 @@ export async function upsertSchoolProgress(userId: string, progress: SchoolProgr
 }
 
 /** 관리자: 모든 school_progress 조회 */
-export async function fetchAllSchoolProgress(): Promise<Array<{ userId: string; progress: SchoolProgress }>> {
+export async function fetchAllSchoolProgress(): Promise<Array<{ userId: string; enrollmentId: string; schoolId: string; progress: SchoolProgress }>> {
   const { data, error } = await supabase
     .from('school_progress')
     .select('*')
@@ -93,6 +100,8 @@ export async function fetchAllSchoolProgress(): Promise<Array<{ userId: string; 
 
   return (data as SchoolProgressRow[]).map((row) => ({
     userId: row.student_id,
+    enrollmentId: row.enrollment_id,
+    schoolId: row.school_id,
     progress: rowToProgress(row),
   }));
 }

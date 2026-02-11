@@ -10,6 +10,15 @@
 ALTER TABLE school_progress ADD COLUMN IF NOT EXISTS market_compass_data JSONB;
 ALTER TABLE school_progress ADD COLUMN IF NOT EXISTS enrolled_at TIMESTAMPTZ DEFAULT now();
 
+-- enrollment_id UNIQUE constraint (required for upsert ON CONFLICT)
+DO $$ BEGIN
+  IF NOT EXISTS (
+    SELECT 1 FROM pg_constraint WHERE conname = 'school_progress_enrollment_id_key'
+  ) THEN
+    ALTER TABLE school_progress ADD CONSTRAINT school_progress_enrollment_id_key UNIQUE (enrollment_id);
+  END IF;
+END $$;
+
 -- Instructor update policy for school_progress (existing RLS stays)
 DO $$ BEGIN
   IF NOT EXISTS (
