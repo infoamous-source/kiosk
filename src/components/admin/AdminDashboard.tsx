@@ -262,10 +262,10 @@ export default function AdminDashboard() {
       {/* 탭 네비게이션 */}
       <div className="flex gap-1 bg-gray-100 p-1 rounded-xl mb-8 overflow-x-auto">
         {([
-          { id: 'students' as DashboardTab, icon: Users, label: t('admin.tabs.students') },
+          { id: 'students' as DashboardTab, icon: Users, label: '학생 계정' },
           { id: 'teams' as DashboardTab, icon: UsersRound, label: '팀 관리' },
           { id: 'content' as DashboardTab, icon: Settings2, label: t('admin.tabs.content') },
-          { id: 'school' as DashboardTab, icon: GraduationCap, label: t('admin.tabs.school') },
+          { id: 'school' as DashboardTab, icon: GraduationCap, label: '학습 진행' },
           { id: 'enrollment' as DashboardTab, icon: UserPlus, label: '등록 관리' },
         ]).map(tab => {
           const Icon = tab.icon;

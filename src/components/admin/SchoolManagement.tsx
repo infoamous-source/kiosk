@@ -127,7 +127,7 @@ export default function SchoolManagement() {
           }`}
         >
           <Users className="w-4 h-4" />
-          {t('school.admin.studentsSection')}
+          진행 현황
         </button>
         <button
           onClick={() => setActiveSection('reviews')}
