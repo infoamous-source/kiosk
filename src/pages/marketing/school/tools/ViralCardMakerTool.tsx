@@ -15,6 +15,7 @@ import { isGeminiEnabled } from '../../../../services/gemini/geminiClient';
 import { addIdeaItem } from '../../../../types/ideaBox';
 import { getMyTeam, addTeamIdea } from '../../../../services/teamService';
 import type { ViralTone, ImageStyle, ViralCardSlide, ViralCardResult } from '../../../../types/school';
+import { SimpleMarkdown } from '@/components/common/SimpleMarkdown';
 
 type Phase = 'input' | 'loading' | 'result';
 
@@ -579,7 +580,7 @@ export default function ViralCardMakerTool() {
 
             {/* Strategy Summary */}
             <div className="bg-kk-cream border border-kk-warm rounded-xl p-4">
-              <p className="text-sm text-kk-brown font-medium">{result.overallStrategy}</p>
+              <SimpleMarkdown content={result.overallStrategy} className="text-sm text-kk-brown font-medium" />
             </div>
 
             {/* Card Preview - Mobile Swipe */}

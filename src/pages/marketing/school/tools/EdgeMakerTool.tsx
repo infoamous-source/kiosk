@@ -8,6 +8,7 @@ import { generateBrandingStrategy } from '../../../../services/gemini/marketComp
 import { isGeminiEnabled } from '../../../../services/gemini/geminiClient';
 import type { EdgeMakerResult, CompetitorInfo } from '../../../../types/school';
 import { getMyTeam, addTeamIdea } from '../../../../services/teamService';
+import { SimpleMarkdown } from '@/components/common/SimpleMarkdown';
 
 type Phase = 'input' | 'loading' | 'result';
 
@@ -551,9 +552,7 @@ export default function EdgeMakerTool() {
                     field="brandingReport"
                   />
                 </div>
-                <p className="text-sm text-gray-700 leading-relaxed whitespace-pre-line bg-gray-50 rounded-xl p-4">
-                  {result.output.brandingReport}
-                </p>
+                <SimpleMarkdown content={result.output.brandingReport} className="text-sm text-gray-700 leading-relaxed bg-gray-50 rounded-xl p-4" />
               </div>
             )}
 

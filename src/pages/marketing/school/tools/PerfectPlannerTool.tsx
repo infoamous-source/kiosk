@@ -14,6 +14,7 @@ import { generateSalesPlan } from '../../../../services/gemini/perfectPlannerSer
 import { isGeminiEnabled } from '../../../../services/gemini/geminiClient';
 import type { PerfectPlannerResult, PlannerMode } from '../../../../types/school';
 import { getMyTeam, addTeamIdea } from '../../../../services/teamService';
+import { SimpleMarkdown } from '@/components/common/SimpleMarkdown';
 
 type Phase = 'input' | 'loading' | 'result';
 
@@ -410,7 +411,7 @@ export default function PerfectPlannerTool() {
 
             {/* Sales Logic */}
             <div className="bg-kk-cream border border-kk-warm rounded-xl p-4">
-              <p className="text-sm text-kk-brown font-medium">{result.salesLogic}</p>
+              <SimpleMarkdown content={result.salesLogic} className="text-sm text-kk-brown font-medium" />
             </div>
 
             {/* Mode Tabs */}

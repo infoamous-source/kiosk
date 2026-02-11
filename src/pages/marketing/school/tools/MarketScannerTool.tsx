@@ -8,6 +8,7 @@ import { generateMarketAnalysis } from '../../../../services/gemini/marketCompas
 import { isGeminiEnabled } from '../../../../services/gemini/geminiClient';
 import type { MarketScannerResult } from '../../../../types/school';
 import { getMyTeam, addTeamIdea } from '../../../../services/teamService';
+import { SimpleMarkdown } from '@/components/common/SimpleMarkdown';
 
 type Phase = 'input' | 'loading' | 'result';
 
@@ -487,9 +488,7 @@ export default function MarketScannerTool() {
                     field="analysisReport"
                   />
                 </div>
-                <p className="text-sm text-gray-700 leading-relaxed whitespace-pre-line bg-kk-bg rounded-xl p-4">
-                  {result.output.analysisReport}
-                </p>
+                <SimpleMarkdown content={result.output.analysisReport} className="text-sm text-gray-700 leading-relaxed bg-kk-bg rounded-xl p-4" />
               </div>
             )}
 

@@ -265,6 +265,12 @@ export function getGraduationReview(userId: string): string | undefined {
   return progress.graduation.review;
 }
 
+/** 관리자: 학생 진행상황 초기화 (스탬프 + 졸업 + 적성검사 + 시뮬레이션 등 전체 리셋) */
+export function clearSchoolProgress(userId: string): void {
+  const defaultProgress = createDefaultProgress();
+  saveSchoolProgress(userId, defaultProgress);
+}
+
 /** 관리자: Pro 기간 연장 */
 export function extendProAccess(userId: string, additionalDays: number): void {
   const progress = loadSchoolProgress(userId);

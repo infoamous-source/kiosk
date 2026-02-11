@@ -15,6 +15,7 @@ import { simulateROAS } from '../../../../services/gemini/roasSimulatorService';
 import { isGeminiEnabled } from '../../../../services/gemini/geminiClient';
 import type { ROASSimulationInput, ROASSimulationOutput } from '../../../../types/school';
 import { getMyTeam, addTeamIdea } from '../../../../services/teamService';
+import { SimpleMarkdown } from '@/components/common/SimpleMarkdown';
 
 type Phase = 'input' | 'loading' | 'result';
 
@@ -589,7 +590,7 @@ export default function ROASSimulatorTool() {
             {/* Channel Tip */}
             <div className="bg-white rounded-2xl border border-gray-200 p-5">
               <h3 className="text-sm font-bold text-gray-700 mb-2">{t('school.roasSimulator.channelTip')}</h3>
-              <p className="text-sm text-gray-600">{result.channelTip}</p>
+              <SimpleMarkdown content={result.channelTip} className="text-sm text-gray-600" />
             </div>
 
             {/* Action Bar */}
