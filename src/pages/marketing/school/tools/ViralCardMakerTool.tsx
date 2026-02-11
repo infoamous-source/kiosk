@@ -6,13 +6,10 @@ import {
   RefreshCw, ChevronDown, ChevronUp, ImageIcon, Download, Bookmark, Gem, Key,
 } from 'lucide-react';
 import { useAuth } from '../../../../contexts/AuthContext';
-import {
-  autoStamp, hasStamp, getEdgeMakerResult,
-  saveViralCardResult, getViralCardResult,
-} from '../../../../utils/schoolStorage';
+import { useSchoolProgress } from '../../../../hooks/useSchoolProgress';
 import { generateViralCards, generateAllSlideImages } from '../../../../services/gemini/viralCardService';
 import { isGeminiEnabled } from '../../../../services/gemini/geminiClient';
-import { addIdeaItem } from '../../../../types/ideaBox';
+import { useIdeaBox } from '../../../../hooks/useIdeaBox';
 import { getMyTeam, addTeamIdea } from '../../../../services/teamService';
 import type { ViralTone, ImageStyle, ViralCardSlide, ViralCardResult } from '../../../../types/school';
 import { SimpleMarkdown } from '@/components/common/SimpleMarkdown';
@@ -44,7 +41,14 @@ export default function ViralCardMakerTool() {
   const { t } = useTranslation('common');
   const navigate = useNavigate();
   const { user } = useAuth();
-  const completed = user ? hasStamp(user.id, 'viral-card-maker') : false;
+  const { addItem: addIdeaBoxItem } = useIdeaBox();
+  const {
+    hasStamp, autoStamp,
+    edgeMakerResult: savedEdgeResult,
+    viralCardResult: savedViralResult,
+    saveViralCardResult,
+  } = useSchoolProgress();
+  const completed = hasStamp('viral-card-maker');
   const scrollRef = useRef<HTMLDivElement>(null);
 
   // Phase
@@ -90,27 +94,25 @@ export default function ViralCardMakerTool() {
   useEffect(() => {
     if (!user) return;
 
-    const prevResult = getViralCardResult(user.id);
-    if (prevResult) {
-      setResult(prevResult.output);
-      setProductName(prevResult.input.productName);
-      setTargetPersona(prevResult.input.targetPersona);
-      setUsp(prevResult.input.usp);
-      setTone(prevResult.input.tone);
-      setImageStyle(prevResult.input.imageStyle);
+    if (savedViralResult) {
+      setResult(savedViralResult.output);
+      setProductName(savedViralResult.input.productName);
+      setTargetPersona(savedViralResult.input.targetPersona);
+      setUsp(savedViralResult.input.usp);
+      setTone(savedViralResult.input.tone);
+      setImageStyle(savedViralResult.input.imageStyle);
       setSlideImages([null, null, null, null]); // Images not saved
       setPhase('result');
       return;
     }
 
-    const edgeResult = getEdgeMakerResult(user.id);
-    if (edgeResult) {
-      const brandName = edgeResult.output.brandNames?.[0]?.name || '';
+    if (savedEdgeResult) {
+      const brandName = savedEdgeResult.output.brandNames?.[0]?.name || '';
       if (brandName) setProductName(brandName);
-      if (edgeResult.output.usp) setUsp(edgeResult.output.usp);
+      if (savedEdgeResult.output.usp) setUsp(savedEdgeResult.output.usp);
       setEdgeDataLoaded(true);
     }
-  }, [user]);
+  }, [user, savedViralResult, savedEdgeResult]);
 
   // Copy helper
   const copyToClipboard = async (text: string, field: string) => {
@@ -151,12 +153,12 @@ export default function ViralCardMakerTool() {
 
       // Save result (without images) + 자동 스탬프
       if (user) {
-        saveViralCardResult(user.id, {
+        saveViralCardResult({
           completedAt: new Date().toISOString(),
           input: { productName: productName.trim(), targetPersona: targetPersona.trim(), usp: usp.trim(), tone, imageStyle },
           output: copyResult,
         });
-        autoStamp(user.id, 'viral-card-maker');
+        autoStamp('viral-card-maker');
       }
 
       // Step 2: Generate images in background (only if not mock)
@@ -296,7 +298,7 @@ export default function ViralCardMakerTool() {
   const handleSaveToIdeaBox = () => {
     if (!user || !result) return;
     const allCopy = result.slides.map((s, i) => `[${i + 1}/4] ${s.stepLabel}: ${s.copyText}`).join('\n\n');
-    addIdeaItem(user.id, {
+    addIdeaBoxItem({
       type: 'copy',
       toolId: 'viral-card-maker',
       title: productName,

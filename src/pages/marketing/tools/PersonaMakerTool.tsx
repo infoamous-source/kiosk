@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ArrowLeft, UserCircle, Copy, CheckCircle, RotateCcw } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-import { logPortfolioActivity } from '../../../utils/portfolioLogger';
+import { usePortfolio } from '../../../hooks/usePortfolio';
 
 interface PersonaForm {
   name: string;
@@ -33,6 +33,7 @@ const initialForm: PersonaForm = {
 export default function PersonaMakerTool() {
   const { t } = useTranslation('common');
   const navigate = useNavigate();
+  const { logActivity } = usePortfolio();
   const [form, setForm] = useState<PersonaForm>(initialForm);
   const [showResult, setShowResult] = useState(false);
   const [copied, setCopied] = useState(false);
@@ -55,7 +56,7 @@ export default function PersonaMakerTool() {
   const handleGenerate = () => {
     if (!canGenerate) return;
     setShowResult(true);
-    logPortfolioActivity(
+    logActivity(
       'persona-maker', 'mk-02', 'Persona Maker',
       { ...form },
       { generated: true },
@@ -82,7 +83,7 @@ export default function PersonaMakerTool() {
       await navigator.clipboard.writeText(text);
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
-      logPortfolioActivity('persona-maker', 'mk-02', 'Persona Maker', { action: 'copy' }, { copied: true }, true);
+      logActivity('persona-maker', 'mk-02', 'Persona Maker', { action: 'copy' }, { copied: true }, true);
     } catch {
       // ignore
     }

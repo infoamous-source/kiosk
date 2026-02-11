@@ -3,15 +3,21 @@ import { useAuth } from './AuthContext';
 import type { TrackId } from '../types/track';
 import {
   type InstructorSettings,
-  getSettingsKey,
   createDefaultSettings,
 } from '../types/instructorSettings';
+import {
+  fetchInstructorSettings,
+  upsertInstructorSettings,
+} from '../services/instructorSettingsService';
 
 // ─── Context 타입 ───
 
 interface VisibilityContextType {
   /** 현재 설정 객체 */
   settings: InstructorSettings | null;
+
+  /** 로딩 중 여부 */
+  isLoading: boolean;
 
   /** 트랙이 보이는지 (기본값: true) */
   isTrackVisible: (trackId: TrackId) => boolean;
@@ -39,37 +45,51 @@ const VisibilityContext = createContext<VisibilityContextType | null>(null);
 export function VisibilityProvider({ children }: { children: ReactNode }) {
   const { user } = useAuth();
   const [settings, setSettings] = useState<InstructorSettings | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
 
-  // 사용자 변경 시 설정 로드
+  // 사용자 변경 시 설정 로드 (Supabase - instructor_id = user.id)
   useEffect(() => {
-    if (!user?.instructorCode) {
+    if (!user?.id || user?.role !== 'instructor') {
       setSettings(null);
       return;
     }
 
-    const key = getSettingsKey(user.instructorCode);
-    try {
-      const stored = localStorage.getItem(key);
-      if (stored) {
-        setSettings(JSON.parse(stored));
-      } else {
-        // 설정이 없으면 기본값(전부 ON)
-        setSettings(null);
-      }
-    } catch {
-      setSettings(null);
-    }
-  }, [user?.instructorCode]);
+    setIsLoading(true);
+    fetchInstructorSettings(user.id)
+      .then((row) => {
+        if (row) {
+          // DB settings JSONB → InstructorSettings
+          const tracks = (row.settings as Record<string, unknown>).tracks as InstructorSettings['tracks'] | undefined;
+          if (tracks) {
+            setSettings({
+              instructorCode: user.instructorCode || '',
+              updatedAt: row.updated_at,
+              tracks,
+            });
+          } else {
+            setSettings(null);
+          }
+        } else {
+          setSettings(null);
+        }
+      })
+      .finally(() => setIsLoading(false));
+  }, [user?.id, user?.role, user?.instructorCode]);
 
-  // 설정 저장 헬퍼
+  // 설정 저장 헬퍼 (Supabase - instructor_id = user.id)
   const saveSettings = useCallback(
     (newSettings: InstructorSettings) => {
       newSettings.updatedAt = new Date().toISOString();
-      const key = getSettingsKey(newSettings.instructorCode);
-      localStorage.setItem(key, JSON.stringify(newSettings));
       setSettings({ ...newSettings });
+
+      // Persist to Supabase (fire-and-forget)
+      if (user?.id) {
+        upsertInstructorSettings(user.id, {
+          tracks: newSettings.tracks,
+        });
+      }
     },
-    [],
+    [user?.id],
   );
 
   // 현재 유효한 설정 가져오기 (없으면 기본값 생성)
@@ -163,6 +183,7 @@ export function VisibilityProvider({ children }: { children: ReactNode }) {
     <VisibilityContext.Provider
       value={{
         settings,
+        isLoading,
         isTrackVisible,
         isModuleVisible,
         isToolVisible,

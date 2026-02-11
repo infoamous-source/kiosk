@@ -22,60 +22,7 @@ export interface IdeaBoxData {
   updatedAt: string;
 }
 
-// ─── 헬퍼 함수 ───
-
-/** localStorage 키 */
-export function getIdeaBoxKey(userId: string): string {
-  return `kiosk-ideabox-${userId}`;
-}
-
-/** 아이디어 상자 로드 */
-export function loadIdeaBox(userId: string): IdeaItem[] {
-  try {
-    const key = getIdeaBoxKey(userId);
-    const stored = localStorage.getItem(key);
-    if (stored) {
-      const data: IdeaBoxData = JSON.parse(stored);
-      return data.items;
-    }
-  } catch {
-    // ignore
-  }
-  return [];
-}
-
-/** 아이디어 상자 저장 */
-export function saveIdeaBox(userId: string, items: IdeaItem[]): void {
-  const key = getIdeaBoxKey(userId);
-  const data: IdeaBoxData = {
-    userId,
-    items,
-    updatedAt: new Date().toISOString(),
-  };
-  localStorage.setItem(key, JSON.stringify(data));
-}
-
-/** 아이디어 추가 */
-export function addIdeaItem(userId: string, item: Omit<IdeaItem, 'id' | 'createdAt'>): IdeaItem {
-  const items = loadIdeaBox(userId);
-  const newItem: IdeaItem = {
-    ...item,
-    id: `idea-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`,
-    createdAt: new Date().toISOString(),
-  };
-  items.unshift(newItem);
-  // 최대 100개 유지
-  if (items.length > 100) items.splice(100);
-  saveIdeaBox(userId, items);
-  return newItem;
-}
-
-/** 아이디어 삭제 */
-export function removeIdeaItem(userId: string, itemId: string): void {
-  const items = loadIdeaBox(userId);
-  const filtered = items.filter(i => i.id !== itemId);
-  saveIdeaBox(userId, filtered);
-}
+// localStorage helpers migrated to hooks/useIdeaBox.ts + services/ideaBoxService.ts
 
 /** 타입별 라벨 (번역 키 매핑) */
 export const ideaTypeLabels: Record<IdeaItemType, string> = {

@@ -2,10 +2,7 @@ import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../../contexts/AuthContext';
-import {
-  hasAllStamps, hasStamp,
-  isGraduated as checkGraduated, canGraduate,
-} from '../../../utils/schoolStorage';
+import { useSchoolProgress } from '../../../hooks/useSchoolProgress';
 import { getMyTeam } from '../../../services/teamService';
 import type { TeamGroup } from '../../../types/team';
 import { CURRICULUM_SECTIONS } from '../../../types/school';
@@ -103,11 +100,9 @@ export default function CurriculumTab() {
     });
   }, [user]);
 
-  if (!user) return null; // MarketingSchoolLayout이 이미 auth guard 역할
+  const { hasAllStamps: allDone, isGraduated: graduated, canGraduate: canGrad, hasStamp } = useSchoolProgress();
 
-  const allDone = hasAllStamps(user.id);
-  const graduated = checkGraduated(user.id);
-  const canGrad = canGraduate(user.id);
+  if (!user) return null; // MarketingSchoolLayout이 이미 auth guard 역할
 
   const handleSectionClick = (section: CurriculumSection) => {
     // 졸업식은 모달로 처리
@@ -148,7 +143,7 @@ export default function CurriculumTab() {
         // 실습 step의 스탬프 완료 여부
         const practiceStep = section.steps.find(s => s.isPractice);
         const stamped = practiceStep?.periodId
-          ? hasStamp(user.id, practiceStep.periodId as PeriodId)
+          ? hasStamp(practiceStep.periodId as PeriodId)
           : false;
 
         // final-project/graduation-ceremony 잠금 상태

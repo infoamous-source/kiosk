@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { ArrowLeft, Palette, Copy, CheckCircle } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { colorEmotions } from '../../../data/marketing/colorEmotions';
-import { logPortfolioActivity } from '../../../utils/portfolioLogger';
+import { usePortfolio } from '../../../hooks/usePortfolio';
 
 function getContrastRatio(hex1: string, hex2: string): number {
   const luminance = (hex: string) => {
@@ -29,6 +29,7 @@ const similarEmotions: Record<string, string[]> = {
 export default function ColorPickerTool() {
   const { t } = useTranslation('common');
   const navigate = useNavigate();
+  const { logActivity } = usePortfolio();
   const [selectedEmotion, setSelectedEmotion] = useState<string | null>(null);
   const [copiedHex, setCopiedHex] = useState<string | null>(null);
   const [copiedPalette, setCopiedPalette] = useState(false);
@@ -63,7 +64,7 @@ export default function ColorPickerTool() {
     setSelectedEmotion(emotionId);
     const emotion = colorEmotions.find((e) => e.id === emotionId);
     if (emotion) {
-      logPortfolioActivity(
+      logActivity(
         'color-picker', 'mk-04', 'Color Picker',
         { emotion: emotionId },
         { mainColor: emotion.mainColor.hex, subColors: emotion.subColors.map((s) => s.hex) },

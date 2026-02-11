@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { ArrowLeft, Zap, Plus, X, Copy, Check, AlertCircle, Gem, Key, RefreshCw } from 'lucide-react';
 import { useAuth } from '../../../../contexts/AuthContext';
-import { autoStamp, hasStamp, getMarketScannerResult, saveEdgeMakerResult, getEdgeMakerResult } from '../../../../utils/schoolStorage';
+import { useSchoolProgress } from '../../../../hooks/useSchoolProgress';
 import { generateBrandingStrategy } from '../../../../services/gemini/marketCompassService';
 import { isGeminiEnabled } from '../../../../services/gemini/geminiClient';
 import type { EdgeMakerResult, CompetitorInfo } from '../../../../types/school';
@@ -16,7 +16,13 @@ export default function EdgeMakerTool() {
   const { t } = useTranslation('common');
   const navigate = useNavigate();
   const { user } = useAuth();
-  const completed = user ? hasStamp(user.id, 'edge-maker') : false;
+  const {
+    hasStamp, autoStamp,
+    marketScannerResult: savedScannerResult,
+    edgeMakerResult: savedEdgeResult,
+    saveEdgeMakerResult,
+  } = useSchoolProgress();
+  const completed = hasStamp('edge-maker');
 
   const [phase, setPhase] = useState<Phase>('input');
   const [painPoints, setPainPoints] = useState<string[]>([]);
@@ -47,25 +53,23 @@ export default function EdgeMakerTool() {
     if (!user) return;
 
     // 이전 EdgeMaker 결과가 있으면 바로 표시
-    const prevEdge = getEdgeMakerResult(user.id);
-    if (prevEdge) {
-      setResult(prevEdge);
-      setPainPoints(prevEdge.input.painPoints);
-      setStrengths(prevEdge.input.myStrengths);
-      setCompetitors(prevEdge.input.competitors || []);
+    if (savedEdgeResult) {
+      setResult(savedEdgeResult);
+      setPainPoints(savedEdgeResult.input.painPoints);
+      setStrengths(savedEdgeResult.input.myStrengths);
+      setCompetitors(savedEdgeResult.input.competitors || []);
       setPhase('result');
       return;
     }
 
     // MarketScanner 결과에서 painPoints + competitors 로드
-    const scannerResult = getMarketScannerResult(user.id);
-    if (scannerResult) {
-      setPainPoints(scannerResult.output.painPoints);
-      setCompetitors(scannerResult.output.competitors || []);
+    if (savedScannerResult) {
+      setPainPoints(savedScannerResult.output.painPoints);
+      setCompetitors(savedScannerResult.output.competitors || []);
     } else {
       setNoScannerData(true);
     }
-  }, [user]);
+  }, [user, savedEdgeResult, savedScannerResult]);
 
   const addStrength = () => {
     const trimmed = strengthInput.trim();
@@ -106,8 +110,8 @@ export default function EdgeMakerTool() {
       }
 
       if (user) {
-        saveEdgeMakerResult(user.id, edgeResult);
-        autoStamp(user.id, 'edge-maker');
+        saveEdgeMakerResult(edgeResult);
+        autoStamp('edge-maker');
       }
 
       setPhase('result');

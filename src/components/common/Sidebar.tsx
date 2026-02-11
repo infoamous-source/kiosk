@@ -12,7 +12,7 @@ import type { TrackId } from '../../types/track';
 import type { SchoolId } from '../../types/enrollment';
 import { useAuth } from '../../contexts/AuthContext';
 import { useEnrollments } from '../../contexts/EnrollmentContext';
-import { isGraduated, isProAccessValid } from '../../utils/schoolStorage';
+import { useSchoolProgress } from '../../hooks/useSchoolProgress';
 import KkakdugiMascot from '../brand/KkakdugiMascot';
 import {
   DigitalDeptIcon,
@@ -68,6 +68,7 @@ export default function Sidebar({ currentTrack }: SidebarProps) {
   const { enrollments } = useEnrollments();
   const [collapsed, setCollapsed] = useState(false);
   const [expandedMenu, setExpandedMenu] = useState<string | null>(null);
+  const { isGraduated, isProAccessValid } = useSchoolProgress();
 
   // 강사인지 확인
   const isInstructor = user?.role === 'instructor';
@@ -131,12 +132,11 @@ export default function Sidebar({ currentTrack }: SidebarProps) {
 
   const handleMarketingProClick = () => {
     if (!user) return;
-    const graduated = isGraduated(user.id);
-    if (!graduated) {
+    if (!isGraduated) {
       alert(t('school.hub.proLocked'));
       return;
     }
-    if (!isProAccessValid(user.id)) {
+    if (!isProAccessValid) {
       alert(t('school.hub.proExpired'));
       return;
     }

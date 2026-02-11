@@ -30,11 +30,6 @@ export interface InstructorSettings {
   orgOverrides?: OrgOverride[];
 }
 
-/** localStorage 키 생성 */
-export function getSettingsKey(instructorCode: string): string {
-  return `kiosk-instructor-settings-${instructorCode}`;
-}
-
 /** 기본 설정 생성 (전부 ON) */
 export function createDefaultSettings(instructorCode: string): InstructorSettings {
   return {

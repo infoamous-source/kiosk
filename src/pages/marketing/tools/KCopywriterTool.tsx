@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { ArrowLeft, PenTool, Copy, CheckCircle, Loader2, Sparkles, RotateCcw } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { generateCopy } from '../../../services/gemini/copywriterService';
-import { logPortfolioActivity } from '../../../utils/portfolioLogger';
+import { usePortfolio } from '../../../hooks/usePortfolio';
 import { isGeminiEnabled } from '../../../services/gemini/geminiClient';
 import type { CopywriterOutput } from '../../../types/marketing';
 
@@ -13,6 +13,7 @@ type CopyLength = 'short' | 'medium' | 'long';
 export default function KCopywriterTool() {
   const { t } = useTranslation('common');
   const navigate = useNavigate();
+  const { logActivity } = usePortfolio();
 
   const toneOptions: { value: Tone; label: string; emoji: string; desc: string }[] = [
     { value: 'emotional', label: t('marketing.tools.kCopywriter.toneEmotional'), emoji: '💖', desc: t('marketing.tools.kCopywriter.toneEmotionalDesc') },
@@ -41,7 +42,7 @@ export default function KCopywriterTool() {
       const output = await generateCopy({ productName, target, tone, length: copyLength });
       setResult(output);
 
-      logPortfolioActivity(
+      logActivity(
         'k-copywriter', 'mk-07', 'K-Copywriter',
         { productName, target, tone, length: copyLength },
         { copies: output.copies, isMockData: output.isMockData },

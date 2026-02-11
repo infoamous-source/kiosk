@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { ArrowLeft, Sparkles, LoaderCircle, Share2, RotateCcw, Gem } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import { useAuth } from '../../../../contexts/AuthContext';
-import { autoStamp, saveAptitudeResult, hasStamp, getAptitudeResult } from '../../../../utils/schoolStorage';
+import { useSchoolProgress } from '../../../../hooks/useSchoolProgress';
 import { PERSONAS, calculateResult, getQuestionSet } from '../../../../data/aptitudeQuestions';
 import type { AptitudeQuestion, QuestionSetId } from '../../../../data/aptitudeQuestions';
 import type { PersonaId, AptitudeResult } from '../../../../types/school';
@@ -55,6 +55,12 @@ export default function AptitudeTestTool() {
   const { t } = useTranslation('common');
   const navigate = useNavigate();
   const { user } = useAuth();
+  const {
+    hasStamp,
+    aptitudeResult: savedAptitudeResult,
+    saveAptitudeResult,
+    autoStamp,
+  } = useSchoolProgress();
 
   const [phase, setPhase] = useState<Phase>('intro');
   const [currentQuestion, setCurrentQuestion] = useState(0);
@@ -68,17 +74,14 @@ export default function AptitudeTestTool() {
   const [myTeamId, setMyTeamId] = useState<string | null>(null);
   const [savedToTeamBox, setSavedToTeamBox] = useState(false);
 
-  const completed = user ? hasStamp(user.id, 'aptitude-test') : false;
+  const completed = hasStamp('aptitude-test');
 
   // Check for previous result on mount
   useEffect(() => {
-    if (user && completed) {
-      const prev = getAptitudeResult(user.id);
-      if (prev) {
-        setPreviousResult(prev);
-      }
+    if (completed && savedAptitudeResult) {
+      setPreviousResult(savedAptitudeResult);
     }
-  }, [user, completed]);
+  }, [completed, savedAptitudeResult]);
 
   // Load team info
   useEffect(() => {
@@ -152,10 +155,10 @@ export default function AptitudeTestTool() {
     [currentQuestion, answers, isTransitioning, activeQuestions],
   );
 
-  const handleSaveBadge = useCallback(() => {
+  const handleSaveBadge = useCallback(async () => {
     if (!user || !result) return;
 
-    const aptitudeResult: AptitudeResult = {
+    const aptResult: AptitudeResult = {
       completedAt: new Date().toISOString(),
       answers,
       resultType: result.resultType,
@@ -163,10 +166,10 @@ export default function AptitudeTestTool() {
       questionSetId: activeSetId,
     };
 
-    saveAptitudeResult(user.id, aptitudeResult);
-    autoStamp(user.id, 'aptitude-test');
+    await saveAptitudeResult(aptResult);
+    await autoStamp('aptitude-test');
     navigate('/marketing/school/curriculum');
-  }, [user, result, answers, navigate, activeSetId]);
+  }, [user, result, answers, navigate, activeSetId, saveAptitudeResult, autoStamp]);
 
   const handleShare = useCallback(async () => {
     if (!result) return;

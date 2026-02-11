@@ -1,0 +1,112 @@
+import { supabase } from '../lib/supabase';
+import type { SchoolProgressRow } from '../types/database';
+import type {
+  SchoolProgress,
+  StampProgress,
+  GraduationStatus,
+  AptitudeResult,
+  MarketCompassData,
+  SimulationResult,
+} from '../types/school';
+import { SCHOOL_CURRICULUM } from '../types/school';
+
+// ─── DB Row → App Type 변환 ───
+
+function rowToProgress(row: SchoolProgressRow): SchoolProgress {
+  return {
+    stamps: (row.stamps as StampProgress[]) ?? SCHOOL_CURRICULUM.map((p) => ({
+      periodId: p.id,
+      completed: false,
+    })),
+    graduation: (row.graduation as GraduationStatus) ?? { isGraduated: false },
+    aptitudeResult: row.aptitude_result as AptitudeResult | undefined,
+    marketCompassData: row.market_compass_data as MarketCompassData | undefined,
+    simulationResult: row.simulation_result as SimulationResult | undefined,
+    enrolledAt: row.enrolled_at ?? new Date().toISOString(),
+  };
+}
+
+// ─── App Type → DB columns 변환 ───
+
+function progressToRow(progress: SchoolProgress): Record<string, unknown> {
+  return {
+    stamps: progress.stamps,
+    graduation: progress.graduation,
+    aptitude_result: progress.aptitudeResult ?? null,
+    simulation_result: progress.simulationResult ?? null,
+    market_compass_data: progress.marketCompassData ?? null,
+    enrolled_at: progress.enrolledAt,
+  };
+}
+
+// ─── CRUD ───
+
+/** 학생의 school_progress 조회 */
+export async function fetchSchoolProgress(userId: string): Promise<SchoolProgress | null> {
+  const { data, error } = await supabase
+    .from('school_progress')
+    .select('*')
+    .eq('student_id', userId)
+    .maybeSingle();
+
+  if (error) {
+    console.error('Fetch school progress error:', error.message);
+    return null;
+  }
+  if (!data) return null;
+  return rowToProgress(data as SchoolProgressRow);
+}
+
+/** school_progress upsert (student_id 기준) */
+export async function upsertSchoolProgress(userId: string, progress: SchoolProgress): Promise<boolean> {
+  const columns = progressToRow(progress);
+
+  const { error } = await supabase
+    .from('school_progress')
+    .upsert(
+      {
+        student_id: userId,
+        ...columns,
+        updated_at: new Date().toISOString(),
+      },
+      { onConflict: 'student_id' },
+    );
+
+  if (error) {
+    console.error('Upsert school progress error:', error.message);
+    return false;
+  }
+  return true;
+}
+
+/** 관리자: 모든 school_progress 조회 */
+export async function fetchAllSchoolProgress(): Promise<Array<{ userId: string; progress: SchoolProgress }>> {
+  const { data, error } = await supabase
+    .from('school_progress')
+    .select('*')
+    .order('updated_at', { ascending: false });
+
+  if (error) {
+    console.error('Fetch all school progress error:', error.message);
+    return [];
+  }
+
+  return (data as SchoolProgressRow[]).map((row) => ({
+    userId: row.student_id,
+    progress: rowToProgress(row),
+  }));
+}
+
+/** 관리자: 학생 진행상황 삭제(리셋) */
+export async function deleteSchoolProgress(userId: string): Promise<boolean> {
+  const { error } = await supabase
+    .from('school_progress')
+    .delete()
+    .eq('student_id', userId);
+
+  if (error) {
+    console.error('Delete school progress error:', error.message);
+    return false;
+  }
+  return true;
+}

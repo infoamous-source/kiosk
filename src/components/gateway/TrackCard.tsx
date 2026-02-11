@@ -2,7 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { ChevronRight } from 'lucide-react';
 import type { Track } from '../../types/track';
-import { handleActivityLog } from '../../utils/activityLogger';
+import { useActivityLog } from '../../hooks/useActivityLog';
 import { useAuth } from '../../contexts/AuthContext';
 import { useEnrollments } from '../../contexts/EnrollmentContext';
 import type { SchoolId } from '../../types/enrollment';
@@ -24,10 +24,11 @@ export default function TrackCard({ track, delay = 0 }: TrackCardProps) {
   const navigate = useNavigate();
   const { isAuthenticated } = useAuth();
   const { enrollments } = useEnrollments();
+  const { logActivity } = useActivityLog();
   const DeptIcon = deptIconMap[track.id] || DigitalDeptIcon;
 
   const handleClick = () => {
-    handleActivityLog('click', track.id, undefined, { source: 'gateway' });
+    logActivity('click', track.id, undefined, { source: 'gateway' });
 
     // 마케팅 → 허브로 이동 (신규/기존 사용자 구분)
     if (track.id === 'marketing') {

@@ -1,25 +1,24 @@
-import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Clock, TrendingUp, BookOpen, Wrench, Activity } from 'lucide-react';
-import { getActivityLogs } from '../../utils/activityLogger';
-import type { ActivityLog } from '../../types/track';
+import { useActivityLog } from '../../hooks/useActivityLog';
 
 interface ActivityHistoryProps {
   userId: string;
 }
 
-export default function ActivityHistory({ userId }: ActivityHistoryProps) {
+export default function ActivityHistory({ userId: _userId }: ActivityHistoryProps) {
   const { t } = useTranslation('common');
-  const [logs, setLogs] = useState<ActivityLog[]>([]);
+  const { logs: rawLogs, isLoading } = useActivityLog();
 
-  useEffect(() => {
-    const allLogs = getActivityLogs();
-    // 현재 사용자의 로그만 필터링
-    const userLogs = allLogs.filter(log => log.userId === userId);
-    // 최신순 정렬
-    userLogs.sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime());
-    setLogs(userLogs);
-  }, [userId]);
+  // Map Supabase rows to display format (already filtered by current user via hook)
+  const logs = rawLogs.map((r) => ({
+    userId: r.user_id,
+    trackId: r.track_id || '',
+    moduleId: r.module_id ?? undefined,
+    action: r.action,
+    timestamp: r.created_at,
+    metadata: r.metadata as Record<string, string> | undefined,
+  }));
 
   const getActionIcon = (action: string) => {
     switch (action) {

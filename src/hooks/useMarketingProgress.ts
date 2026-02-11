@@ -1,21 +1,61 @@
-import { useState, useCallback, useEffect } from 'react';
+import { useState, useCallback, useEffect, useRef } from 'react';
+import { useAuth } from '../contexts/AuthContext';
+import { fetchMarketingProgress, upsertMarketingProgress } from '../services/marketingProgressService';
 import type { ModuleProgress } from '../types/marketing';
 
-const STORAGE_KEY = 'kiosk-marketing-progress';
+function getDefault(moduleId: string, existing?: ModuleProgress): ModuleProgress {
+  return existing || { moduleId, toolOutputCount: 0 };
+}
 
-/**
- * 마케팅 모듈 진행 상태 관리 훅
- */
 export function useMarketingProgress() {
-  const [progress, setProgress] = useState<Record<string, ModuleProgress>>(() => loadProgress());
+  const { user } = useAuth();
+  const [progress, setProgress] = useState<Record<string, ModuleProgress>>({});
+  const [isLoading, setIsLoading] = useState(false);
+  const skipPersist = useRef(true);
 
+  // Load from Supabase on mount / user change
   useEffect(() => {
-    try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(progress));
-    } catch {
-      // ignore
+    if (!user?.id) {
+      setProgress({});
+      return;
     }
-  }, [progress]);
+
+    setIsLoading(true);
+    fetchMarketingProgress(user.id)
+      .then((rows) => {
+        const map: Record<string, ModuleProgress> = {};
+        rows.forEach((r) => {
+          map[r.module_id] = {
+            moduleId: r.module_id,
+            viewedAt: r.viewed_at ?? undefined,
+            toolUsedAt: r.tool_used_at ?? undefined,
+            toolOutputCount: r.tool_output_count,
+            completedAt: r.completed_at ?? undefined,
+          };
+        });
+        skipPersist.current = true;
+        setProgress(map);
+      })
+      .finally(() => setIsLoading(false));
+  }, [user?.id]);
+
+  // Persist changes to Supabase
+  useEffect(() => {
+    if (skipPersist.current) {
+      skipPersist.current = false;
+      return;
+    }
+    if (!user?.id) return;
+
+    Object.entries(progress).forEach(([moduleId, mod]) => {
+      upsertMarketingProgress(user.id, moduleId, {
+        viewedAt: mod.viewedAt,
+        toolUsedAt: mod.toolUsedAt,
+        toolOutputCount: mod.toolOutputCount,
+        completedAt: mod.completedAt,
+      });
+    });
+  }, [progress, user?.id]);
 
   const markViewed = useCallback((moduleId: string) => {
     setProgress((prev) => ({
@@ -60,23 +100,11 @@ export function useMarketingProgress() {
 
   return {
     progress,
+    isLoading,
     markViewed,
     markToolUsed,
     markCompleted,
     getModuleProgress,
     getCompletionRate,
   };
-}
-
-function loadProgress(): Record<string, ModuleProgress> {
-  try {
-    const data = localStorage.getItem(STORAGE_KEY);
-    return data ? JSON.parse(data) : {};
-  } catch {
-    return {};
-  }
-}
-
-function getDefault(moduleId: string, existing?: ModuleProgress): ModuleProgress {
-  return existing || { moduleId, toolOutputCount: 0 };
 }

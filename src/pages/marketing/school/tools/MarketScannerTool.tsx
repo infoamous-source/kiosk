@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { ArrowLeft, Radar, Search, Copy, Check, ChevronDown, ChevronUp, ArrowRight, Gem, Key, RefreshCw } from 'lucide-react';
 import { useAuth } from '../../../../contexts/AuthContext';
-import { autoStamp, hasStamp, getMarketScannerResult, saveMarketScannerResult } from '../../../../utils/schoolStorage';
+import { useSchoolProgress } from '../../../../hooks/useSchoolProgress';
 import { generateMarketAnalysis } from '../../../../services/gemini/marketCompassService';
 import { isGeminiEnabled } from '../../../../services/gemini/geminiClient';
 import type { MarketScannerResult } from '../../../../types/school';
@@ -20,7 +20,12 @@ export default function MarketScannerTool() {
   const { t } = useTranslation('common');
   const navigate = useNavigate();
   const { user } = useAuth();
-  const completed = user ? hasStamp(user.id, 'market-scanner') : false;
+  const {
+    hasStamp, autoStamp,
+    marketScannerResult: savedScannerResult,
+    saveMarketScannerResult,
+  } = useSchoolProgress();
+  const completed = hasStamp('market-scanner');
 
   const [phase, setPhase] = useState<Phase>('input');
   const [keyword, setKeyword] = useState('');
@@ -40,13 +45,10 @@ export default function MarketScannerTool() {
 
   // 이전 결과 확인
   useEffect(() => {
-    if (user) {
-      const prev = getMarketScannerResult(user.id);
-      if (prev) {
-        setHasPreviousResult(true);
-      }
+    if (savedScannerResult) {
+      setHasPreviousResult(true);
     }
-  }, [user]);
+  }, [savedScannerResult]);
 
   // Load team info
   useEffect(() => {
@@ -57,17 +59,14 @@ export default function MarketScannerTool() {
   }, [user]);
 
   const loadPreviousResult = useCallback(() => {
-    if (!user) return;
-    const prev = getMarketScannerResult(user.id);
-    if (prev) {
-      setResult(prev);
-      setKeyword(prev.input.itemKeyword);
-      setTargetAge(prev.input.targetAge);
-      setTargetGender(prev.input.targetGender);
-      setItemType(prev.input.itemType || 'other');
-      setPhase('result');
-    }
-  }, [user]);
+    if (!savedScannerResult) return;
+    setResult(savedScannerResult);
+    setKeyword(savedScannerResult.input.itemKeyword);
+    setTargetAge(savedScannerResult.input.targetAge);
+    setTargetGender(savedScannerResult.input.targetGender);
+    setItemType(savedScannerResult.input.itemType || 'other');
+    setPhase('result');
+  }, [savedScannerResult]);
 
   const handleAnalyze = async () => {
     if (!keyword.trim()) return;
@@ -101,8 +100,8 @@ export default function MarketScannerTool() {
 
       // 저장 + 자동 스탬프
       if (user) {
-        saveMarketScannerResult(user.id, scannerResult);
-        autoStamp(user.id, 'market-scanner');
+        saveMarketScannerResult(scannerResult);
+        autoStamp('market-scanner');
       }
 
       setPhase('result');

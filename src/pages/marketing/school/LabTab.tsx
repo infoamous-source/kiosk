@@ -1,7 +1,7 @@
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../../contexts/AuthContext';
-import { loadSchoolProgress } from '../../../utils/schoolStorage';
+import { useSchoolProgress } from '../../../hooks/useSchoolProgress';
 import { SCHOOL_CURRICULUM } from '../../../types/school';
 import ToolCard from '../../../components/school/ToolCard';
 import { FlaskConical, GraduationCap } from 'lucide-react';
@@ -11,9 +11,10 @@ export default function LabTab() {
   const navigate = useNavigate();
   const { user } = useAuth();
 
-  if (!user) return null; // MarketingSchoolLayout이 이미 auth guard 역할
+  const { progress, isLoading: schoolLoading } = useSchoolProgress();
 
-  const progress = loadSchoolProgress(user.id);
+  if (!user) return null; // MarketingSchoolLayout이 이미 auth guard 역할
+  if (schoolLoading || !progress) return null;
 
   // 6개 AI 도구 모두 표시 (1~6교시, ROAS 예측기 포함)
   const allTools = SCHOOL_CURRICULUM;

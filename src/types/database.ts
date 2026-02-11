@@ -55,6 +55,70 @@ export interface SchoolProgressRow {
   graduation: unknown;
   aptitude_result: unknown;
   simulation_result: unknown;
+  market_compass_data: unknown;
+  enrolled_at: string;
   created_at: string;
+  updated_at: string;
+}
+
+export interface PortfolioEntryRow {
+  id: string;
+  user_id: string;
+  tool_id: string;
+  module_id: string;
+  tool_name: string;
+  input: Record<string, unknown>;
+  output: Record<string, unknown>;
+  is_mock_data: boolean;
+  created_at: string;
+}
+
+export interface ActivityLogRow {
+  id: string;
+  user_id: string;
+  track_id: string | null;
+  module_id: string | null;
+  action: string;
+  metadata: Record<string, unknown>;
+  created_at: string;
+}
+
+export interface IdeaBoxItemRow {
+  id: string;
+  user_id: string;
+  type: string;
+  title: string;
+  content: string;
+  preview: string | null;
+  tool_id: string | null;
+  tags: string[];
+  created_at: string;
+}
+
+export interface DigitalProgressRow {
+  id: string;
+  user_id: string;
+  module_id: string;
+  completed_steps: string[];
+  completed_practices: string[];
+  completed_at: string | null;
+  updated_at: string;
+}
+
+export interface MarketingProgressRow {
+  id: string;
+  user_id: string;
+  module_id: string;
+  viewed_at: string | null;
+  tool_used_at: string | null;
+  tool_output_count: number;
+  completed_at: string | null;
+  updated_at: string;
+}
+
+export interface InstructorSettingsRow {
+  id: string;
+  instructor_id: string;
+  settings: Record<string, unknown>;
   updated_at: string;
 }

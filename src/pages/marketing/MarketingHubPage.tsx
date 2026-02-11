@@ -7,7 +7,7 @@ import {
   Sparkles,
 } from 'lucide-react';
 import { useAuth } from '../../contexts/AuthContext';
-import { isGraduated, isProAccessValid, getProRemainingDays } from '../../utils/schoolStorage';
+import { useSchoolProgress } from '../../hooks/useSchoolProgress';
 import { isGeminiConnected } from '../../components/marketing/AIAssistantConnect';
 import CountdownBadge from '../../components/school/CountdownBadge';
 import KkakdugiCharacter from '../../components/brand/KkakdugiCharacter';
@@ -19,9 +19,7 @@ export default function MarketingHubPage() {
   const navigate = useNavigate();
   const { user } = useAuth();
 
-  const graduated = user ? isGraduated(user.id) : false;
-  const proValid = user ? isProAccessValid(user.id) : false;
-  const remainingDays = user ? getProRemainingDays(user.id) : 0;
+  const { isGraduated: graduated, isProAccessValid: proValid, proRemainingDays: remainingDays } = useSchoolProgress();
 
   const handleSchoolClick = () => {
     // AI 연결 여부와 무관하게 바로 학교로 이동 (AI는 선택 사항)

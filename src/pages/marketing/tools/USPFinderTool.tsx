@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ArrowLeft, Target, ArrowRight, Copy, CheckCircle, RotateCcw, Check } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-import { logPortfolioActivity } from '../../../utils/portfolioLogger';
+import { usePortfolio } from '../../../hooks/usePortfolio';
 
 interface USPData {
   productName: string;
@@ -21,6 +21,7 @@ const initialData: USPData = {
 export default function USPFinderTool() {
   const { t } = useTranslation('common');
   const navigate = useNavigate();
+  const { logActivity } = usePortfolio();
 
   const steps = [
     t('marketing.tools.uspFinder.step1'),
@@ -49,7 +50,7 @@ export default function USPFinderTool() {
     if (currentStep < 3) {
       setCurrentStep((prev) => prev + 1);
       if (currentStep === 2) {
-        logPortfolioActivity(
+        logActivity(
           'usp-finder', 'mk-03', 'USP Finder',
           { ...data },
           { generated: true },

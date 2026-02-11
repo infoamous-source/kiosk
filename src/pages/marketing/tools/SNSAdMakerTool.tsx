@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ArrowLeft, Image, ArrowRight, RotateCcw, Play } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-import { logPortfolioActivity } from '../../../utils/portfolioLogger';
+import { usePortfolio } from '../../../hooks/usePortfolio';
 import type { AdImageStyle } from '../../../types/marketing';
 
 const styleGradients: Record<AdImageStyle, string> = {
@@ -18,6 +18,7 @@ type TextPosition = 'top' | 'center' | 'bottom';
 export default function SNSAdMakerTool() {
   const { t } = useTranslation('common');
   const navigate = useNavigate();
+  const { logActivity } = usePortfolio();
 
   const styleOptions: { value: AdImageStyle; label: string; emoji: string }[] = [
     { value: 'realistic', label: t('marketing.tools.snsAdMaker.styleRealistic'), emoji: '📷' },
@@ -49,7 +50,7 @@ export default function SNSAdMakerTool() {
     if (!canGenerate) return;
     setShowPreview(true);
 
-    logPortfolioActivity(
+    logActivity(
       'sns-ad-maker', 'mk-07', 'SNS Ad Maker',
       { subject, style, copyText, platform, textPosition, ctaText },
       { generated: true, isMockData: true },

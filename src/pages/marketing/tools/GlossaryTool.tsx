@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { ArrowLeft, Search, BookOpen, Star, ChevronDown, ChevronUp } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { glossaryTerms, glossaryCategories } from '../../../data/marketing/glossary';
-import { logPortfolioActivity } from '../../../utils/portfolioLogger';
+import { usePortfolio } from '../../../hooks/usePortfolio';
 
 const FAVORITES_KEY = 'kiosk-glossary-favorites';
 const VIEWED_KEY = 'kiosk-glossary-viewed';
@@ -11,6 +11,7 @@ const VIEWED_KEY = 'kiosk-glossary-viewed';
 export default function GlossaryTool() {
   const { t } = useTranslation('common');
   const navigate = useNavigate();
+  const { logActivity } = usePortfolio();
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [expandedId, setExpandedId] = useState<string | null>(null);
@@ -56,7 +57,7 @@ export default function GlossaryTool() {
   const handleTermClick = (termId: string) => {
     setExpandedId(prev => prev === termId ? null : termId);
     if (!viewed.includes(termId)) setViewed(prev => [...prev, termId]);
-    logPortfolioActivity('glossary', 'mk-01', 'Marketing Glossary', { termId }, { viewed: true }, true);
+    logActivity('glossary', 'mk-01', 'Marketing Glossary', { termId }, { viewed: true }, true);
   };
 
   const progressPercent = Math.round((viewed.length / glossaryTerms.length) * 100);

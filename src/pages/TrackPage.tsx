@@ -20,7 +20,7 @@ import {
 import { tracks } from '../data/tracks';
 import { getModuleContent } from '../data/digital/modules';
 import RollingBanner from '../components/common/RollingBanner';
-import { handleActivityLog } from '../utils/activityLogger';
+import { useActivityLog } from '../hooks/useActivityLog';
 import { useVisibility } from '../contexts/VisibilityContext';
 import { useDigitalProgress } from '../hooks/useDigitalProgress';
 import type { TrackId, TrackModule } from '../types/track';
@@ -50,6 +50,7 @@ interface ModuleCardProps {
 function ModuleCard({ module, trackId, trackColor, completionRate = 0 }: ModuleCardProps) {
   const { t } = useTranslation('common');
   const navigate = useNavigate();
+  const { logActivity } = useActivityLog();
   const Icon = iconMap[module.icon] || BookOpen;
 
   const colorClasses: Record<string, { bg: string; text: string; hover: string }> = {
@@ -61,7 +62,7 @@ function ModuleCard({ module, trackId, trackColor, completionRate = 0 }: ModuleC
   const colors = colorClasses[trackColor] || colorClasses.blue;
 
   const handleClick = () => {
-    handleActivityLog('click', trackId, module.id, { action: 'module_click' });
+    logActivity('click', trackId, module.id, { action: 'module_click' });
 
     // 한국 필수 앱 모듈은 별도 페이지로 이동
     if (module.id === 'db-04') {
@@ -144,6 +145,7 @@ export default function TrackPage() {
   const { t } = useTranslation('common');
   const { isModuleVisible } = useVisibility();
   const { getModuleCompletionRate } = useDigitalProgress();
+  const { logActivity: logPageActivity } = useActivityLog();
 
   const track = tracks.find((tr) => tr.id === trackId);
 
@@ -162,7 +164,7 @@ export default function TrackPage() {
   }
 
   // 페이지 뷰 로깅
-  handleActivityLog('view', track.id, undefined, { page: 'track_detail' });
+  logPageActivity('view', track.id, undefined, { page: 'track_detail' });
 
   return (
     <div className="max-w-4xl mx-auto">

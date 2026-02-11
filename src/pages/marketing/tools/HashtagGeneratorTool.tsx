@@ -4,11 +4,12 @@ import { ArrowLeft, Hash, Copy, CheckCircle, Search } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { searchHashtags } from '../../../data/marketing/hashtagMocks';
 import type { HashtagGroup } from '../../../types/marketing';
-import { logPortfolioActivity } from '../../../utils/portfolioLogger';
+import { usePortfolio } from '../../../hooks/usePortfolio';
 
 export default function HashtagGeneratorTool() {
   const { t } = useTranslation('common');
   const navigate = useNavigate();
+  const { logActivity } = usePortfolio();
   const [keyword, setKeyword] = useState('');
   const [results, setResults] = useState<HashtagGroup[]>([]);
   const [hasSearched, setHasSearched] = useState(false);
@@ -24,7 +25,7 @@ export default function HashtagGeneratorTool() {
     setHasSearched(true);
     setSelectedTags([]);
 
-    logPortfolioActivity(
+    logActivity(
       'hashtag-generator', 'mk-05', 'Hashtag Generator',
       { keyword: keyword.trim() },
       { groups: found.length, totalHashtags: found.reduce((a, g) => a + g.hashtags.length, 0) },
@@ -158,7 +159,7 @@ export default function HashtagGeneratorTool() {
                   setResults(found);
                   setHasSearched(true);
                   setSelectedTags([]);
-                  logPortfolioActivity(
+                  logActivity(
                     'hashtag-generator', 'mk-05', 'Hashtag Generator',
                     { keyword: kw },
                     { groups: found.length },

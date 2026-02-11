@@ -2,7 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { ArrowLeft, Lock, ExternalLink } from 'lucide-react';
 import { useAuth } from '../../contexts/AuthContext';
-import { isGraduated, isProAccessValid, getProRemainingDays } from '../../utils/schoolStorage';
+import { useSchoolProgress } from '../../hooks/useSchoolProgress';
 import { marketingTools } from '../../data/marketing/modules';
 import CountdownBadge from '../../components/school/CountdownBadge';
 
@@ -11,9 +11,7 @@ export default function ProToolsDashboard() {
   const navigate = useNavigate();
   const { user } = useAuth();
 
-  const graduated = user ? isGraduated(user.id) : false;
-  const proValid = user ? isProAccessValid(user.id) : false;
-  const remainingDays = user ? getProRemainingDays(user.id) : 0;
+  const { isGraduated: graduated, isProAccessValid: proValid, proRemainingDays: remainingDays } = useSchoolProgress();
 
   // 미졸업 → 허브로 리다이렉트
   if (!graduated) {

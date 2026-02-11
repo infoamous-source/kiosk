@@ -2,11 +2,12 @@ import { useState, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ArrowLeft, Calculator, TrendingUp, TrendingDown, Minus } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-import { logPortfolioActivity } from '../../../utils/portfolioLogger';
+import { usePortfolio } from '../../../hooks/usePortfolio';
 
 export default function ROICalculatorTool() {
   const { t } = useTranslation('common');
   const navigate = useNavigate();
+  const { logActivity } = usePortfolio();
   const [adSpend, setAdSpend] = useState('');
   const [revenue, setRevenue] = useState('');
   const [simulationSpend, setSimulationSpend] = useState(0);
@@ -34,7 +35,7 @@ export default function ROICalculatorTool() {
 
   const handleCalculate = () => {
     if (result) {
-      logPortfolioActivity(
+      logActivity(
         'roi-calculator', 'mk-06', 'ROI Calculator',
         { adSpend: result.spend, revenue: result.revenue },
         { roas: result.roas, profit: result.profit, roi: result.roi },

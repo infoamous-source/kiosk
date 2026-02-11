@@ -23,7 +23,7 @@ import {
 import { categories, apps } from '../data/apps';
 import type { AppItem, Category } from '../types/app';
 import RollingBanner from '../components/common/RollingBanner';
-import { handleActivityLog } from '../utils/activityLogger';
+import { useActivityLog } from '../hooks/useActivityLog';
 import { useInstalledApps } from '../hooks/useInstalledApps';
 
 // 카테고리 아이콘 매핑
@@ -67,10 +67,11 @@ function AppCard({
   onToggleInstall: () => void;
 }) {
   const { t } = useTranslation('common');
+  const { logActivity } = useActivityLog();
   const [showStoreOptions, setShowStoreOptions] = useState(false);
 
   const handleDownload = (store: 'ios' | 'android' | 'web') => {
-    handleActivityLog('click', 'digital-basics', 'db-04', {
+    logActivity('click', 'digital-basics', 'db-04', {
       action: 'app_download',
       appId: app.id,
       store,
@@ -273,12 +274,13 @@ function CategorySection({
 export default function KoreaAppsPage() {
   const { t } = useTranslation('common');
   const navigate = useNavigate();
+  const { logActivity: logPageActivity } = useActivityLog();
   const [searchQuery, setSearchQuery] = useState('');
   const [activeCategory, setActiveCategory] = useState<string | null>(null);
   const { isInstalled, toggleInstalled, installedApps } = useInstalledApps();
 
   // 페이지 뷰 로깅
-  handleActivityLog('view', 'digital-basics', 'db-04', { page: 'korea_apps' });
+  logPageActivity('view', 'digital-basics', 'db-04', { page: 'korea_apps' });
 
   // 검색 필터링
   const filteredApps = searchQuery

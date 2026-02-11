@@ -6,10 +6,7 @@ import {
   RefreshCw, ChevronDown, ChevronUp, FileText, Mic, Gem, Key,
 } from 'lucide-react';
 import { useAuth } from '../../../../contexts/AuthContext';
-import {
-  autoStamp, hasStamp, getEdgeMakerResult,
-  savePerfectPlannerResult, getPerfectPlannerResult,
-} from '../../../../utils/schoolStorage';
+import { useSchoolProgress } from '../../../../hooks/useSchoolProgress';
 import { generateSalesPlan } from '../../../../services/gemini/perfectPlannerService';
 import { isGeminiEnabled } from '../../../../services/gemini/geminiClient';
 import type { PerfectPlannerResult, PlannerMode } from '../../../../types/school';
@@ -22,7 +19,13 @@ export default function PerfectPlannerTool() {
   const { t } = useTranslation('common');
   const navigate = useNavigate();
   const { user } = useAuth();
-  const completed = user ? hasStamp(user.id, 'perfect-planner') : false;
+  const {
+    hasStamp, autoStamp,
+    edgeMakerResult: savedEdgeResult,
+    perfectPlannerResult: savedPlannerResult,
+    savePerfectPlannerResult,
+  } = useSchoolProgress();
+  const completed = hasStamp('perfect-planner');
 
   // Phase
   const [phase, setPhase] = useState<Phase>('input');
@@ -62,25 +65,23 @@ export default function PerfectPlannerTool() {
   useEffect(() => {
     if (!user) return;
 
-    const prevResult = getPerfectPlannerResult(user.id);
-    if (prevResult) {
-      setResult(prevResult.output);
-      setProductName(prevResult.input.productName);
-      setCoreTarget(prevResult.input.coreTarget);
-      setUsp(prevResult.input.usp);
-      setStrongOffer(prevResult.input.strongOffer);
+    if (savedPlannerResult) {
+      setResult(savedPlannerResult.output);
+      setProductName(savedPlannerResult.input.productName);
+      setCoreTarget(savedPlannerResult.input.coreTarget);
+      setUsp(savedPlannerResult.input.usp);
+      setStrongOffer(savedPlannerResult.input.strongOffer);
       setPhase('result');
       return;
     }
 
-    const edgeResult = getEdgeMakerResult(user.id);
-    if (edgeResult) {
-      const brandName = edgeResult.output.brandNames?.[0]?.name || '';
+    if (savedEdgeResult) {
+      const brandName = savedEdgeResult.output.brandNames?.[0]?.name || '';
       if (brandName) setProductName(brandName);
-      if (edgeResult.output.usp) setUsp(edgeResult.output.usp);
+      if (savedEdgeResult.output.usp) setUsp(savedEdgeResult.output.usp);
       setEdgeDataLoaded(true);
     }
-  }, [user]);
+  }, [user, savedPlannerResult, savedEdgeResult]);
 
   // Copy helper
   const copyToClipboard = async (text: string, field: string) => {
@@ -128,12 +129,12 @@ export default function PerfectPlannerTool() {
       }
 
       if (user) {
-        savePerfectPlannerResult(user.id, {
+        savePerfectPlannerResult({
           completedAt: new Date().toISOString(),
           input: { productName: productName.trim(), coreTarget: coreTarget.trim(), usp: usp.trim(), strongOffer: strongOffer.trim() },
           output: planResult,
         });
-        autoStamp(user.id, 'perfect-planner');
+        autoStamp('perfect-planner');
       }
     } catch (err) {
       console.error('[PerfectPlanner] Generation failed:', err);

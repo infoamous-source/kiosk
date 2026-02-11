@@ -5,10 +5,7 @@ import { ArrowLeft, GraduationCap, Loader2, Gem, Trash2, UsersRound } from 'luci
 import { useAuth } from '../../../contexts/AuthContext';
 import SchoolBottomNav from '../../../components/school/SchoolBottomNav';
 import KkakdugiMascot from '../../../components/brand/KkakdugiMascot';
-import {
-  canGraduate, isGraduated as checkGraduated,
-  hasAllStamps,
-} from '../../../utils/schoolStorage';
+import { useSchoolProgress } from '../../../hooks/useSchoolProgress';
 import GraduationModal from '../../../components/school/GraduationModal';
 import GraduationCertificate from '../../../components/school/GraduationCertificate';
 import { getMyTeam, getTeamIdeas, deleteTeamIdea } from '../../../services/teamService';
@@ -28,6 +25,7 @@ export default function GraduationProjectPage() {
   const { t } = useTranslation('common');
   const navigate = useNavigate();
   const { user, isLoading } = useAuth();
+  const { isGraduated: graduated, canGraduate: canGrad, hasAllStamps: allStamps } = useSchoolProgress();
   const [showGraduationModal, setShowGraduationModal] = useState(false);
   const [showCertificate, setShowCertificate] = useState(false);
   const [myTeam, setMyTeam] = useState<TeamGroup | null>(null);
@@ -108,10 +106,6 @@ export default function GraduationProjectPage() {
     await deleteTeamIdea(ideaId);
     setTeamIdeas(prev => prev.filter(i => i.id !== ideaId));
   };
-
-  const graduated = checkGraduated(user.id);
-  const canGrad = canGraduate(user.id);
-  const allStamps = hasAllStamps(user.id);
 
   return (
     <div className="min-h-screen bg-gray-50 pb-20">

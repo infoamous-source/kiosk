@@ -7,10 +7,7 @@ import {
 } from 'lucide-react';
 import { BarChart, Bar, XAxis, YAxis, ResponsiveContainer, Cell, Tooltip } from 'recharts';
 import { useAuth } from '../../../../contexts/AuthContext';
-import {
-  autoStamp, hasStamp, getMarketScannerResult, getEdgeMakerResult,
-  saveSimulationResult, loadSchoolProgress,
-} from '../../../../utils/schoolStorage';
+import { useSchoolProgress } from '../../../../hooks/useSchoolProgress';
 import { simulateROAS } from '../../../../services/gemini/roasSimulatorService';
 import { isGeminiEnabled } from '../../../../services/gemini/geminiClient';
 import type { ROASSimulationInput, ROASSimulationOutput } from '../../../../types/school';
@@ -51,7 +48,13 @@ export default function ROASSimulatorTool() {
   const { t } = useTranslation('common');
   const navigate = useNavigate();
   const { user } = useAuth();
-  const completed = user ? hasStamp(user.id, 'roas-simulator') : false;
+  const {
+    hasStamp, autoStamp, progress,
+    marketScannerResult: savedScannerResult,
+    edgeMakerResult: savedEdgeResult,
+    saveSimulationResult,
+  } = useSchoolProgress();
+  const completed = hasStamp('roas-simulator');
 
   // Phase
   const [phase, setPhase] = useState<Phase>('input');
@@ -92,8 +95,7 @@ export default function ROASSimulatorTool() {
     if (!user) return;
 
     // Check for previous simulation result
-    const progress = loadSchoolProgress(user.id);
-    if (progress.simulationResult?.output) {
+    if (progress?.simulationResult?.output) {
       setResult(progress.simulationResult.output);
       if (progress.simulationResult.input) {
         setProductName(progress.simulationResult.input.productName);
@@ -108,18 +110,16 @@ export default function ROASSimulatorTool() {
     }
 
     // Load data from previous periods
-    const edgeResult = getEdgeMakerResult(user.id);
-    if (edgeResult) {
-      const brandName = edgeResult.output.brandNames?.[0]?.name || '';
+    if (savedEdgeResult) {
+      const brandName = savedEdgeResult.output.brandNames?.[0]?.name || '';
       if (brandName) setProductName(brandName);
       setPrevDataLoaded(true);
     }
 
-    const scanResult = getMarketScannerResult(user.id);
-    if (scanResult?.input?.targetAge) {
-      setTargetAge(scanResult.input.targetAge);
+    if (savedScannerResult?.input?.targetAge) {
+      setTargetAge(savedScannerResult.input.targetAge);
     }
-  }, [user]);
+  }, [user, progress, savedEdgeResult, savedScannerResult]);
 
   // ROAS animation
   useEffect(() => {
@@ -175,11 +175,9 @@ export default function ROASSimulatorTool() {
       };
 
       // Get context from previous periods
-      const edgeResult = user ? getEdgeMakerResult(user.id) : undefined;
-
       const { result: simResult, isMock: mock } = await simulateROAS(input, {
-        usp: edgeResult?.output.usp,
-        brandMood: edgeResult?.output.brandMood?.tone,
+        usp: savedEdgeResult?.output.usp,
+        brandMood: savedEdgeResult?.output.brandMood?.tone,
       });
 
       await new Promise((r) => setTimeout(r, 3500));
@@ -193,7 +191,7 @@ export default function ROASSimulatorTool() {
       }
 
       if (user) {
-        saveSimulationResult(user.id, {
+        saveSimulationResult({
           completedAt: new Date().toISOString(),
           input,
           output: simResult,
@@ -201,7 +199,7 @@ export default function ROASSimulatorTool() {
           budget: adBudget,
           revenue: simResult.estimatedRevenue,
         });
-        autoStamp(user.id, 'roas-simulator');
+        autoStamp('roas-simulator');
       }
     } catch (err) {
       console.error('[ROASSimulator] Simulation failed:', err);

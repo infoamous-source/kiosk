@@ -2,8 +2,7 @@ import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../../contexts/AuthContext';
-import { loadSchoolProgress, canGraduate, getAptitudeResult } from '../../../utils/schoolStorage';
-import { isGraduated as checkGraduated } from '../../../utils/schoolStorage';
+import { useSchoolProgress } from '../../../hooks/useSchoolProgress';
 import { getMyTeam } from '../../../services/teamService';
 import StudentCard from '../../../components/school/StudentCard';
 import StampBoard from '../../../components/school/StampBoard';
@@ -29,13 +28,11 @@ export default function AttendanceTab() {
     });
   }, [user]);
 
-  if (!user) return null; // MarketingSchoolLayout이 이미 auth guard 역할
-
-  const progress = loadSchoolProgress(user.id);
-  const graduated = checkGraduated(user.id);
-  const canGrad = canGraduate(user.id);
-  const aptitudeResult = getAptitudeResult(user.id);
+  const { progress, isLoading: schoolLoading, isGraduated: graduated, canGraduate: canGrad, aptitudeResult } = useSchoolProgress();
   const personaId = aptitudeResult?.resultType ?? null;
+
+  if (!user) return null; // MarketingSchoolLayout이 이미 auth guard 역할
+  if (schoolLoading || !progress) return null;
 
   const handleGraduationComplete = () => {
     setShowGraduationModal(false);

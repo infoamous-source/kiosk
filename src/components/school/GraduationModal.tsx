@@ -2,7 +2,7 @@ import { useState, useEffect, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { X, Gift, GraduationCap } from 'lucide-react';
-import { graduate } from '../../utils/schoolStorage';
+import { useSchoolProgress } from '../../hooks/useSchoolProgress';
 import confetti from 'canvas-confetti';
 import GraduationCertificate from './GraduationCertificate';
 
@@ -195,6 +195,7 @@ export default function GraduationModal({
 }: GraduationModalProps) {
   const { t } = useTranslation('common');
   const navigate = useNavigate();
+  const { graduate: doGraduate } = useSchoolProgress();
   const [step, setStep] = useState<Step>('ceremony');
   const [capFlying, setCapFlying] = useState(false);
   const [review, setReview] = useState('');
@@ -222,11 +223,11 @@ export default function GraduationModal({
     };
   }, [step]);
 
-  const handleGraduate = useCallback(() => {
+  const handleGraduate = useCallback(async () => {
     if (graduated) return;
-    graduate(userId, review.trim());
+    await doGraduate(review.trim());
     setGraduated(true);
-  }, [userId, review, graduated]);
+  }, [review, graduated, doGraduate]);
 
   const handleGoToPro = () => {
     handleGraduate();

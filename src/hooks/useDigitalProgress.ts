@@ -1,32 +1,62 @@
-import { useState, useCallback, useEffect } from 'react';
+import { useState, useCallback, useEffect, useRef } from 'react';
+import { useAuth } from '../contexts/AuthContext';
+import { fetchDigitalProgress, upsertDigitalProgress } from '../services/digitalProgressService';
 import type { DigitalProgress } from '../types/digital';
 
-const STORAGE_KEY = 'kiosk-digital-progress';
 const MODULE_IDS = ['db-01', 'db-02', 'db-03', 'db-04'];
-
-function loadProgress(): Record<string, DigitalProgress> {
-  try {
-    const data = localStorage.getItem(STORAGE_KEY);
-    return data ? JSON.parse(data) : {};
-  } catch {
-    return {};
-  }
-}
 
 function getDefault(moduleId: string, existing?: DigitalProgress): DigitalProgress {
   return existing || { moduleId, completedSteps: [], completedPractices: [] };
 }
 
 export function useDigitalProgress() {
-  const [progress, setProgress] = useState<Record<string, DigitalProgress>>(() => loadProgress());
+  const { user } = useAuth();
+  const [progress, setProgress] = useState<Record<string, DigitalProgress>>({});
+  const [isLoading, setIsLoading] = useState(false);
+  const skipPersist = useRef(true);
 
+  // Load from Supabase on mount / user change
   useEffect(() => {
-    try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(progress));
-    } catch {
-      // ignore
+    if (!user?.id) {
+      setProgress({});
+      return;
     }
-  }, [progress]);
+
+    setIsLoading(true);
+    fetchDigitalProgress(user.id)
+      .then((rows) => {
+        const map: Record<string, DigitalProgress> = {};
+        rows.forEach((r) => {
+          map[r.module_id] = {
+            moduleId: r.module_id,
+            completedSteps: r.completed_steps,
+            completedPractices: r.completed_practices,
+            completedAt: r.completed_at ?? undefined,
+          };
+        });
+        skipPersist.current = true;
+        setProgress(map);
+      })
+      .finally(() => setIsLoading(false));
+  }, [user?.id]);
+
+  // Persist changes to Supabase
+  useEffect(() => {
+    if (skipPersist.current) {
+      skipPersist.current = false;
+      return;
+    }
+    if (!user?.id) return;
+
+    // Persist all modules that have data
+    Object.entries(progress).forEach(([moduleId, mod]) => {
+      upsertDigitalProgress(user.id, moduleId, {
+        completedSteps: mod.completedSteps,
+        completedPractices: mod.completedPractices,
+        completedAt: mod.completedAt,
+      });
+    });
+  }, [progress, user?.id]);
 
   const markStepCompleted = useCallback((moduleId: string, stepId: string) => {
     setProgress((prev) => {
@@ -138,6 +168,7 @@ export function useDigitalProgress() {
 
   return {
     progress,
+    isLoading,
     markStepCompleted,
     toggleStep,
     markPracticeCompleted,

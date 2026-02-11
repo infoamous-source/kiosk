@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
   Lightbulb,
@@ -9,12 +9,10 @@ import {
   Package,
 } from 'lucide-react';
 import {
-  type IdeaItem,
   type IdeaItemType,
-  loadIdeaBox,
-  removeIdeaItem,
   ideaTypeIcons,
 } from '../../types/ideaBox';
+import { useIdeaBox } from '../../hooks/useIdeaBox';
 import { SCHOOL_CURRICULUM } from '../../types/school';
 
 interface IdeaBoxProps {
@@ -36,21 +34,28 @@ const TOOL_TABS = [
   })),
 ];
 
-export default function IdeaBox({ userId }: IdeaBoxProps) {
+export default function IdeaBox({ userId: _userId }: IdeaBoxProps) {
   const { t } = useTranslation('common');
-  const [items, setItems] = useState<IdeaItem[]>([]);
+  const { items: rawItems, removeItem } = useIdeaBox();
   const [activeToolTab, setActiveToolTab] = useState('all');
   const [searchQuery, setSearchQuery] = useState('');
   const [copiedId, setCopiedId] = useState<string | null>(null);
   const [expandedId, setExpandedId] = useState<string | null>(null);
 
-  useEffect(() => {
-    setItems(loadIdeaBox(userId));
-  }, [userId]);
+  // Map Supabase rows to display format
+  const items = rawItems.map((r) => ({
+    id: r.id,
+    type: r.type as IdeaItemType,
+    title: r.title,
+    content: r.content,
+    preview: r.preview ?? undefined,
+    toolId: r.tool_id ?? undefined,
+    createdAt: r.created_at,
+    tags: r.tags ?? undefined,
+  }));
 
   const handleDelete = (itemId: string) => {
-    removeIdeaItem(userId, itemId);
-    setItems(prev => prev.filter(i => i.id !== itemId));
+    removeItem(itemId);
   };
 
   const handleCopy = async (item: IdeaItem) => {

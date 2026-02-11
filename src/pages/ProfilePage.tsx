@@ -22,7 +22,7 @@ import { SCHOOL_NAMES } from '../types/enrollment';
 import IdeaBox from '../components/profile/IdeaBox';
 import ActivityHistory from '../components/profile/ActivityHistory';
 import KkakdugiMascot from '../components/brand/KkakdugiMascot';
-import { isGraduated as checkGraduated } from '../utils/schoolStorage';
+import { useSchoolProgress } from '../hooks/useSchoolProgress';
 
 type ProfileTab = 'info' | 'activity' | 'ideabox';
 
@@ -53,7 +53,7 @@ export default function ProfilePage() {
   ];
 
   const { enrollments } = useEnrollments();
-  const graduated = checkGraduated(user.id);
+  const { isGraduated: graduated } = useSchoolProgress();
   const isMarketingEnrolled = enrollments.some(e => e.school_id === 'marketing' && e.status === 'active');
 
   // 성별 라벨

@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
   GraduationCap,
@@ -9,25 +9,8 @@ import {
   Plus,
   RotateCcw,
 } from 'lucide-react';
-import {
-  getAllSchoolProgressKeys,
-  loadSchoolProgress,
-  extendProAccess,
-  clearSchoolProgress,
-} from '../../utils/schoolStorage';
+import { useAdminSchoolProgress } from '../../hooks/useSchoolProgress';
 import { TOTAL_PERIODS } from '../../types/school';
-
-interface StudentSchoolData {
-  userId: string;
-  stamps: number;
-  totalPeriods: number;
-  isGraduated: boolean;
-  graduatedAt?: string;
-  review?: string;
-  proExpiresAt?: string;
-  hasAptitude: boolean;
-  hasSimulation: boolean;
-}
 
 export default function SchoolManagement() {
   const { t } = useTranslation('common');
@@ -35,28 +18,23 @@ export default function SchoolManagement() {
   const [activeSection, setActiveSection] = useState<'reviews' | 'students'>('students');
   const [extensionDays, setExtensionDays] = useState(30);
   const [resetTarget, setResetTarget] = useState<string | null>(null);
-  const [refreshKey, setRefreshKey] = useState(0);
 
-  // 전체 학교 데이터 로드
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  const allData: StudentSchoolData[] = useMemo(() => {
-    const keys = getAllSchoolProgressKeys();
-    return keys.map((userId) => {
-      const progress = loadSchoolProgress(userId);
-      const stamps = progress.stamps.filter((s) => s.completed).length;
-      return {
-        userId,
-        stamps,
-        totalPeriods: TOTAL_PERIODS,
-        isGraduated: progress.graduation.isGraduated,
-        graduatedAt: progress.graduation.graduatedAt,
-        review: progress.graduation.review,
-        proExpiresAt: progress.graduation.proExpiresAt,
-        hasAptitude: !!progress.aptitudeResult,
-        hasSimulation: !!progress.simulationResult,
-      };
-    });
-  }, [refreshKey]);
+  const { allData: rawData, isLoading, clearStudentProgress, extendProAccess, loadAll } = useAdminSchoolProgress();
+
+  const allData = rawData.map((d) => {
+    const stamps = d.progress.stamps.filter((s) => s.completed).length;
+    return {
+      userId: d.userId,
+      stamps,
+      totalPeriods: TOTAL_PERIODS,
+      isGraduated: d.progress.graduation.isGraduated,
+      graduatedAt: d.progress.graduation.graduatedAt,
+      review: d.progress.graduation.review,
+      proExpiresAt: d.progress.graduation.proExpiresAt,
+      hasAptitude: !!d.progress.aptitudeResult,
+      hasSimulation: !!d.progress.simulationResult,
+    };
+  });
 
   const filteredData = allData.filter((d) =>
     d.userId.toLowerCase().includes(searchQuery.toLowerCase())
@@ -65,17 +43,24 @@ export default function SchoolManagement() {
   const graduatedStudents = filteredData.filter((d) => d.isGraduated);
   const reviewStudents = allData.filter((d) => d.review);
 
-  const handleExtendPro = (userId: string) => {
-    extendProAccess(userId, extensionDays);
+  const handleExtendPro = async (userId: string) => {
+    await extendProAccess(userId, extensionDays);
     alert(t('school.admin.extended', { days: extensionDays }));
   };
 
-  const handleResetProgress = () => {
+  const handleResetProgress = async () => {
     if (!resetTarget) return;
-    clearSchoolProgress(resetTarget);
+    await clearStudentProgress(resetTarget);
     setResetTarget(null);
-    setRefreshKey((k) => k + 1);
   };
+
+  if (isLoading) {
+    return (
+      <div className="flex items-center justify-center py-12 text-gray-400">
+        로딩 중...
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-6">
