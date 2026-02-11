@@ -167,7 +167,7 @@ export default function EdgeMakerTool() {
       {/* Header */}
       <header className="bg-white border-b border-gray-200 sticky top-0 z-40">
         <div className="max-w-lg mx-auto px-4 py-3 flex items-center gap-3">
-          <button onClick={() => navigate(-1)} className="p-1.5 hover:bg-gray-100 rounded-lg">
+          <button onClick={() => navigate(-1)} aria-label="뒤로 가기" className="p-1.5 hover:bg-gray-100 rounded-lg">
             <ArrowLeft className="w-5 h-5 text-gray-600" />
           </button>
           <div className="flex items-center gap-2">
@@ -255,7 +255,7 @@ export default function EdgeMakerTool() {
                 </p>
                 <div className="space-y-2">
                   {competitors.map((comp, i) => (
-                    <div key={i} className="flex items-start gap-3 bg-kk-cream rounded-xl px-4 py-3">
+                    <div key={comp.name} className="flex items-start gap-3 bg-kk-cream rounded-xl px-4 py-3">
                       <span className="text-kk-navy text-sm mt-0.5">🏢</span>
                       <div>
                         <span className="font-medium text-gray-800 text-sm">{comp.name}</span>
@@ -277,7 +277,7 @@ export default function EdgeMakerTool() {
               </p>
               <div className="space-y-2">
                 {painPoints.map((pain, i) => (
-                  <div key={i} className="flex items-start gap-2 bg-kk-cream rounded-xl px-4 py-2.5">
+                  <div key={pain} className="flex items-start gap-2 bg-kk-cream rounded-xl px-4 py-2.5">
                     <span className="text-kk-red text-sm">💬</span>
                     <p className="text-sm text-gray-700">"{pain}"</p>
                   </div>
@@ -320,7 +320,7 @@ export default function EdgeMakerTool() {
                 <div className="flex flex-wrap gap-2">
                   {strengths.map((s, i) => (
                     <div
-                      key={i}
+                      key={s}
                       className="flex items-center gap-1.5 px-3 py-1.5 bg-kk-cream text-kk-brown rounded-full text-sm"
                     >
                       <span>🏷 {s}</span>
@@ -528,7 +528,7 @@ export default function EdgeMakerTool() {
                 <div className="flex flex-wrap gap-1.5">
                   {result.output.brandMood.keywords.map((kw, i) => (
                     <span
-                      key={i}
+                      key={kw}
                       className="px-2.5 py-1 bg-gray-100 text-gray-600 rounded-full text-xs font-medium"
                     >
                       #{kw}

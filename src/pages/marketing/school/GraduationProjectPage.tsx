@@ -38,12 +38,16 @@ export default function GraduationProjectPage() {
   useEffect(() => {
     if (!user) return;
     const loadTeam = async () => {
-      const info = await getMyTeam(user.id);
-      if (info) {
-        setMyTeam(info.team);
-        setTeamMembers(info.members);
-        const ideas = await getTeamIdeas(info.team.id);
-        setTeamIdeas(ideas);
+      try {
+        const info = await getMyTeam(user.id);
+        if (info) {
+          setMyTeam(info.team);
+          setTeamMembers(info.members);
+          const ideas = await getTeamIdeas(info.team.id);
+          setTeamIdeas(ideas);
+        }
+      } catch {
+        // 팀 조회 실패 — 무시 (팀 없는 유저)
       }
     };
     loadTeam();
@@ -114,7 +118,7 @@ export default function GraduationProjectPage() {
       {/* Header */}
       <header className="bg-white border-b border-gray-200 sticky top-0 z-40">
         <div className="max-w-lg mx-auto px-4 py-3 flex items-center gap-3">
-          <button onClick={() => navigate(-1)} className="p-1.5 hover:bg-gray-100 rounded-lg">
+          <button onClick={() => navigate(-1)} aria-label="뒤로 가기" className="p-1.5 hover:bg-gray-100 rounded-lg">
             <ArrowLeft className="w-5 h-5 text-gray-600" />
           </button>
           <div className="flex items-center gap-2">

@@ -130,13 +130,6 @@ export default function LoginForm() {
             </button>
           </div>
 
-          {/* 테스트 계정 안내 */}
-          <div className="mt-6 p-4 bg-gray-50 rounded-xl">
-            <p className="text-xs text-gray-500 font-medium mb-2">{t('auth.testAccounts')}</p>
-            <p className="text-xs text-gray-600">• student@test.com (학생)</p>
-            <p className="text-xs text-gray-600">• instructor@test.com (강사)</p>
-          </div>
-
           {/* 회원가입 링크 */}
           <p className="mt-6 text-center text-sm text-gray-500">
             {t('auth.noAccount')}{' '}

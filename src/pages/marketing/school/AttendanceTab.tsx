@@ -24,6 +24,8 @@ export default function AttendanceTab() {
     if (!user) return;
     getMyTeam(user.id).then(info => {
       if (info) setMyTeam(info.team);
+    }).catch(() => {
+      // 팀 조회 실패 — 무시 (팀 없는 유저)
     });
   }, [user]);
 

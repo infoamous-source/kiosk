@@ -335,7 +335,7 @@ export default function ViralCardMakerTool() {
       {/* Header */}
       <header className="bg-white border-b border-gray-200 sticky top-0 z-40">
         <div className="max-w-lg mx-auto px-4 py-3 flex items-center gap-3">
-          <button onClick={() => navigate(-1)} className="p-1.5 hover:bg-gray-100 rounded-lg">
+          <button onClick={() => navigate(-1)} aria-label="뒤로 가기" className="p-1.5 hover:bg-gray-100 rounded-lg">
             <ArrowLeft className="w-5 h-5 text-gray-600" />
           </button>
           <div className="flex items-center gap-2">
@@ -655,6 +655,7 @@ export default function ViralCardMakerTool() {
                       </button>
                       <button
                         onClick={() => handleSaveSlideAsImage(index)}
+                        aria-label="슬라이드 저장"
                         className="flex items-center justify-center gap-1 px-3 py-2 bg-gray-100 rounded-lg text-xs font-medium text-gray-600 hover:bg-gray-200"
                       >
                         <Download className="w-3 h-3" />
@@ -663,6 +664,7 @@ export default function ViralCardMakerTool() {
                         <button
                           onClick={() => handleRegenerateImage(index)}
                           disabled={regeneratingImage !== null}
+                          aria-label="이미지 재생성"
                           className="flex items-center justify-center gap-1 px-3 py-2 bg-gray-100 rounded-lg text-xs font-medium text-gray-600 hover:bg-gray-200 disabled:opacity-40"
                         >
                           {regeneratingImage === index

@@ -47,27 +47,26 @@ function ensureKeyframes() {
 }
 
 /* ── Confetti multi-burst ── */
-function fireConfettiBursts() {
+function fireConfettiBursts(): ReturnType<typeof setTimeout>[] {
   const defaults = {
     spread: 80,
     colors: ['#FFD700', '#FFA500', '#FF6347', '#9370DB', '#00CED1', '#FF69B4'],
   };
 
-  // Burst 1 — center
-  setTimeout(() => {
+  const t1 = setTimeout(() => {
     confetti({ ...defaults, particleCount: 120, origin: { x: 0.5, y: 0.5 } });
   }, 500);
 
-  // Burst 2 — left + right
-  setTimeout(() => {
+  const t2 = setTimeout(() => {
     confetti({ ...defaults, particleCount: 80, origin: { x: 0.3, y: 0.6 }, angle: 60 });
     confetti({ ...defaults, particleCount: 80, origin: { x: 0.7, y: 0.6 }, angle: 120 });
   }, 1500);
 
-  // Burst 3 — big finale
-  setTimeout(() => {
+  const t3 = setTimeout(() => {
     confetti({ ...defaults, particleCount: 200, spread: 120, origin: { x: 0.5, y: 0.4 } });
   }, 3000);
+
+  return [t1, t2, t3];
 }
 
 /* ── Inline Kkakdugi SVG (simplified) ── */
@@ -211,18 +210,15 @@ export default function GraduationModal({
   useEffect(() => {
     if (step !== 'ceremony') return;
 
-    // Fire confetti bursts
-    fireConfettiBursts();
-
-    // Cap flies up after 0.8s
+    const confettiTimers = fireConfettiBursts();
     const capTimer = setTimeout(() => setCapFlying(true), 800);
-
-    // Transition to result after 5s
     const transTimer = setTimeout(() => setStep('result'), 5000);
 
     return () => {
+      confettiTimers.forEach(clearTimeout);
       clearTimeout(capTimer);
       clearTimeout(transTimer);
+      confetti.reset();
     };
   }, [step]);
 
@@ -294,7 +290,7 @@ export default function GraduationModal({
       <div className="bg-white rounded-3xl w-full max-w-md shadow-2xl overflow-hidden">
         {/* Close button */}
         <div className="flex justify-end p-4 pb-0">
-          <button onClick={onClose} className="p-1.5 hover:bg-gray-100 rounded-full transition-colors">
+          <button onClick={onClose} aria-label="닫기" className="p-1.5 hover:bg-gray-100 rounded-full transition-colors">
             <X className="w-5 h-5 text-gray-400" />
           </button>
         </div>

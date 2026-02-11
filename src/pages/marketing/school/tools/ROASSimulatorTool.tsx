@@ -267,7 +267,7 @@ export default function ROASSimulatorTool() {
       {/* Header */}
       <header className="bg-white border-b border-gray-200 sticky top-0 z-40">
         <div className="max-w-lg mx-auto px-4 py-3 flex items-center gap-3">
-          <button onClick={() => navigate(-1)} className="p-1.5 hover:bg-gray-100 rounded-lg">
+          <button onClick={() => navigate(-1)} aria-label="뒤로 가기" className="p-1.5 hover:bg-gray-100 rounded-lg">
             <ArrowLeft className="w-5 h-5 text-gray-600" />
           </button>
           <div className="flex items-center gap-2">
@@ -558,7 +558,7 @@ export default function ROASSimulatorTool() {
                   />
                   <Bar dataKey="value" radius={[0, 6, 6, 0]}>
                     {funnelData.map((entry, index) => (
-                      <Cell key={index} fill={entry.fill} />
+                      <Cell key={entry.name} fill={entry.fill} />
                     ))}
                   </Bar>
                 </BarChart>
@@ -606,6 +606,7 @@ export default function ROASSimulatorTool() {
                   setResult(null);
                   setPhase('input');
                 }}
+                aria-label="다시 시뮬레이션"
                 className="flex items-center justify-center gap-2 px-4 py-3 bg-gray-100 text-gray-600 font-bold rounded-xl hover:bg-gray-200 transition-colors"
               >
                 <RefreshCw className="w-4 h-4" />

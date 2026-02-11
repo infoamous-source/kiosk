@@ -221,7 +221,7 @@ export default function PerfectPlannerTool() {
       {/* Header */}
       <header className="bg-white border-b border-gray-200 sticky top-0 z-40">
         <div className="max-w-lg mx-auto px-4 py-3 flex items-center gap-3">
-          <button onClick={() => navigate(-1)} className="p-1.5 hover:bg-gray-100 rounded-lg">
+          <button onClick={() => navigate(-1)} aria-label="뒤로 가기" className="p-1.5 hover:bg-gray-100 rounded-lg">
             <ArrowLeft className="w-5 h-5 text-gray-600" />
           </button>
           <div className="flex items-center gap-2">
@@ -465,7 +465,7 @@ export default function PerfectPlannerTool() {
                   <p className="text-sm font-medium text-kk-red mb-2">{result.landingPage.problemSection.title}</p>
                   <div className="space-y-1.5">
                     {result.landingPage.problemSection.painPoints.map((pain, i) => (
-                      <div key={i} className="flex items-start gap-2 text-sm text-kk-red bg-kk-cream p-2 rounded-lg">
+                      <div key={pain} className="flex items-start gap-2 text-sm text-kk-red bg-kk-cream p-2 rounded-lg">
                         <span className="text-kk-coral mt-0.5">!</span>
                         <span>{pain}</span>
                       </div>
@@ -480,7 +480,7 @@ export default function PerfectPlannerTool() {
                   </div>
                   <div className="space-y-3">
                     {result.landingPage.features.map((feat, i) => (
-                      <div key={i} className="bg-gray-50 rounded-xl p-3">
+                      <div key={feat.title} className="bg-gray-50 rounded-xl p-3">
                         <p className="text-sm font-bold text-gray-800">{feat.title}</p>
                         <p className="text-xs text-gray-500 mt-1">{feat.description}</p>
                         <p className="text-xs text-kk-red font-medium mt-1">&rarr; {feat.benefit}</p>
@@ -494,7 +494,7 @@ export default function PerfectPlannerTool() {
                   <span className="text-sm font-bold text-gray-700 block mb-3">{t('school.perfectPlanner.landing.trust')}</span>
                   <div className="space-y-2">
                     {result.landingPage.trustSignals.map((ts, i) => (
-                      <div key={i} className="flex items-start gap-2 text-sm bg-kk-cream p-2.5 rounded-lg">
+                      <div key={ts.content} className="flex items-start gap-2 text-sm bg-kk-cream p-2.5 rounded-lg">
                         <span className="text-kk-navy">
                           {ts.type === 'review' ? '\u2B50' : ts.type === 'stats' ? '\uD83D\uDCCA' : '\uD83C\uDFC6'}
                         </span>
@@ -526,7 +526,7 @@ export default function PerfectPlannerTool() {
                   <span className="text-sm font-bold text-gray-700 block mb-3">{t('school.perfectPlanner.landing.checklist')}</span>
                   <div className="space-y-2">
                     {result.landingPage.checklist.map((item, i) => (
-                      <label key={i} className="flex items-start gap-2 text-sm cursor-pointer">
+                      <label key={item} className="flex items-start gap-2 text-sm cursor-pointer">
                         <input
                           type="checkbox"
                           checked={checkedItems[`l-${i}`] || false}
@@ -565,7 +565,7 @@ export default function PerfectPlannerTool() {
                   <div className="relative pl-6 space-y-4">
                     <div className="absolute left-2 top-1 bottom-1 w-0.5 bg-kk-peach" />
                     {result.liveCommerce.demoPoints.map((demo, i) => (
-                      <div key={i} className="relative">
+                      <div key={demo.timestamp} className="relative">
                         <div className="absolute -left-[18px] top-1 w-3 h-3 rounded-full bg-kk-red border-2 border-white" />
                         <div className="bg-gray-50 rounded-xl p-3">
                           <span className="text-[10px] font-bold text-kk-red bg-kk-cream px-2 py-0.5 rounded">{demo.timestamp}</span>
@@ -582,7 +582,7 @@ export default function PerfectPlannerTool() {
                   <span className="text-sm font-bold text-gray-700 block mb-3">{t('school.perfectPlanner.live.qna')}</span>
                   <div className="space-y-2">
                     {result.liveCommerce.qnaHandling.map((qa, i) => (
-                      <div key={i} className="bg-gray-50 rounded-xl overflow-hidden">
+                      <div key={qa.commonQuestion} className="bg-gray-50 rounded-xl overflow-hidden">
                         <button
                           onClick={() => setExpandedTip(expandedTip === `qa-${i}` ? null : `qa-${i}`)}
                           className="w-full flex items-center justify-between p-3 text-left"
@@ -620,7 +620,7 @@ export default function PerfectPlannerTool() {
                   <span className="text-sm font-bold text-gray-700 block mb-3">{t('school.perfectPlanner.live.checklist')}</span>
                   <div className="space-y-2">
                     {result.liveCommerce.checklist.map((item, i) => (
-                      <label key={i} className="flex items-start gap-2 text-sm cursor-pointer">
+                      <label key={item} className="flex items-start gap-2 text-sm cursor-pointer">
                         <input
                           type="checkbox"
                           checked={checkedItems[`c-${i}`] || false}
@@ -650,6 +650,7 @@ export default function PerfectPlannerTool() {
                   setPhase('input');
                   setCheckedItems({});
                 }}
+                aria-label="다시 생성"
                 className="flex items-center justify-center gap-2 px-4 py-3 bg-gray-100 text-gray-600 font-bold rounded-xl hover:bg-gray-200 transition-colors"
               >
                 <RefreshCw className="w-4 h-4" />

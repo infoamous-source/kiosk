@@ -171,7 +171,7 @@ export default function MarketScannerTool() {
       {/* Header */}
       <header className="bg-white border-b border-gray-200 sticky top-0 z-40">
         <div className="max-w-lg mx-auto px-4 py-3 flex items-center gap-3">
-          <button onClick={() => navigate(-1)} className="p-1.5 hover:bg-gray-100 rounded-lg">
+          <button onClick={() => navigate(-1)} aria-label="뒤로 가기" className="p-1.5 hover:bg-gray-100 rounded-lg">
             <ArrowLeft className="w-5 h-5 text-gray-600" />
           </button>
           <div className="flex items-center gap-2">
@@ -388,7 +388,7 @@ export default function MarketScannerTool() {
               <div className="flex flex-wrap gap-2">
                 {result.output.relatedKeywords.map((kw, i) => (
                   <span
-                    key={i}
+                    key={kw}
                     className="px-3 py-1.5 bg-kk-cream text-kk-navy rounded-full text-sm font-medium"
                   >
                     #{kw}
@@ -405,7 +405,7 @@ export default function MarketScannerTool() {
               </h3>
               <div className="space-y-2">
                 {result.output.competitors.map((comp, i) => (
-                  <div key={i} className="border border-gray-100 rounded-xl overflow-hidden">
+                  <div key={comp.name} className="border border-gray-100 rounded-xl overflow-hidden">
                     <button
                       onClick={() => setExpandedCompetitor(expandedCompetitor === i ? null : i)}
                       className="w-full flex items-center justify-between px-4 py-3 hover:bg-gray-50 transition-colors"
@@ -464,7 +464,7 @@ export default function MarketScannerTool() {
               <div className="space-y-2">
                 {result.output.painPoints.map((pain, i) => (
                   <div
-                    key={i}
+                    key={pain}
                     className="flex items-start gap-3 bg-kk-cream rounded-xl px-4 py-3"
                   >
                     <span className="text-kk-red text-sm mt-0.5">★</span>

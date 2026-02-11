@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { Bot, Sparkles, ArrowRight, Key, ExternalLink, Check, Loader2 } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
 import { saveGeminiApiKey } from '../services/profileService';
+import { setStoredApiKey, setGeminiConnected } from '../services/gemini/geminiClient';
 import { type SchoolId } from '../types/enrollment';
 import KkakdugiCharacter from '@/components/brand/KkakdugiCharacter';
 
@@ -54,12 +55,8 @@ export default function AIWelcomePage() {
     setError('');
 
     // localStorage에 즉시 저장 (AI 도구가 이 값을 사용)
-    try {
-      localStorage.setItem('kiosk-gemini-api-key', apiKey.trim());
-      localStorage.setItem('kiosk-gemini-connected', 'true');
-    } catch {
-      // storage full 등 무시
-    }
+    setStoredApiKey(apiKey.trim());
+    setGeminiConnected(true);
 
     // 즉시 성공 처리 + 이동
     setSuccess(true);
@@ -74,7 +71,7 @@ export default function AIWelcomePage() {
     }
   };
 
-  const name = userName || (user as Record<string, any>)?.user_metadata?.name || '학생';
+  const name = userName || (user as { user_metadata?: { name?: string } } | null)?.user_metadata?.name || '학생';
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-kk-cream via-kk-warm to-kk-bg flex items-center justify-center p-4">

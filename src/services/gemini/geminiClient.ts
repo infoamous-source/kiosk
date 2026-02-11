@@ -8,11 +8,31 @@ const CONNECTED_STORAGE = 'kiosk-gemini-connected';
  * localStorage에 저장된 사용자 키를 사용
  */
 
+// NOTE: btoa/atob은 암호화가 아닌 난독화(obfuscation)입니다.
+// XSS 공격 시 평문 노출을 방지하는 최소한의 조치입니다.
 export function getStoredApiKey(): string | null {
   try {
-    return localStorage.getItem(API_KEY_STORAGE);
+    const stored = localStorage.getItem(API_KEY_STORAGE);
+    if (!stored) return null;
+    return atob(stored);
   } catch {
     return null;
+  }
+}
+
+export function setStoredApiKey(key: string): void {
+  try {
+    localStorage.setItem(API_KEY_STORAGE, btoa(key));
+  } catch {
+    // storage full 등 무시
+  }
+}
+
+export function setGeminiConnected(value: boolean): void {
+  try {
+    localStorage.setItem(CONNECTED_STORAGE, String(value));
+  } catch {
+    // storage full 등 무시
   }
 }
 

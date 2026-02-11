@@ -14,7 +14,9 @@ if (!isSupabaseConfigured) {
   );
 }
 
+// NOTE: placeholder URL은 실제 요청을 보내지 않도록 localhost 사용
+// 사용처에서 isSupabaseConfigured 체크 필수
 export const supabase = createClient(
-  supabaseUrl || 'https://placeholder.supabase.co',
+  supabaseUrl || 'http://localhost:0',
   supabaseAnonKey || 'placeholder-anon-key',
 );
