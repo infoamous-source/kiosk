@@ -12,9 +12,9 @@ export default defineConfig({
       registerType: 'autoUpdate',
       includeAssets: ['favicon.svg'],
       manifest: {
-        name: 'Kiosk Seven - 이주민 교육 플랫폼',
-        short_name: 'KioskSeven',
-        description: '이주민과 유학생을 위한 디지털 교육, 마케팅 실무, 취업 역량 강화 플랫폼',
+        name: '깍두기학교',
+        short_name: '깍두기학교',
+        description: '한국 생활에 필요한 모든 것을 배우는 곳',
         theme_color: '#3B82F6',
         background_color: '#ffffff',
         display: 'standalone',
