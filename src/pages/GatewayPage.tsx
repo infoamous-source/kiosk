@@ -147,13 +147,13 @@ export default function GatewayPage() {
             <span>{t('gateway.badge', '이주민/유학생을 위한 교육')}</span>
           </div>
 
-          <h2 className="text-3xl md:text-4xl font-extrabold text-kk-brown mb-4 leading-tight">
-            {t('gateway.title', '당신의 성장을 함께합니다')}
-          </h2>
-
           <p className="text-base sm:text-lg text-kk-brown/60 max-w-2xl mx-auto mb-2">
-            {t('gateway.description', '디지털 기초부터 취업 역량까지, 한국 생활에 필요한 모든 교육을 한 곳에서')}
+            {t('gateway.description', '한국 생활에 필요한 모든 것을 배우는 곳')}
           </p>
+
+          <h2 className="text-3xl md:text-4xl font-extrabold text-kk-brown mb-4 leading-tight">
+            {t('gateway.title', '깍두기 학교')}
+          </h2>
         </div>
       </section>
 
