@@ -242,7 +242,7 @@ export default function CurriculumTab() {
                             onClick={(e) => { e.stopPropagation(); navigate('/profile'); }}
                             className="ml-9 flex items-center gap-2 px-3 py-2 bg-kk-cream text-kk-brown rounded-lg text-xs font-bold hover:bg-kk-warm transition-colors"
                           >
-                            학생증 보기 →
+                            {user?.role === 'instructor' ? '교원증 보기' : '학생증 보기'} →
                           </button>
                         )}
 
