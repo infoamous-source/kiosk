@@ -2,8 +2,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Settings } from 'lucide-react';
 import { useAuth } from '../../contexts/AuthContext';
-import { useEnrollments } from '../../contexts/EnrollmentContext';
-import type { SchoolId } from '../../types/enrollment';
+import { isStudentAssignedToTrack } from '../../services/teamService';
 import {
   SchoolBellIcon,
   DigitalDeptIcon,
@@ -31,8 +30,20 @@ export default function MobileTabBar() {
   const { t } = useTranslation('common');
   const navigate = useNavigate();
   const location = useLocation();
-  const { isAuthenticated } = useAuth();
-  const { enrollments } = useEnrollments();
+  const { user, isAuthenticated } = useAuth();
+  const isInstructor = user?.role === 'instructor';
+
+  const showToast = (message: string) => {
+    const toast = document.createElement('div');
+    toast.className = 'fixed top-6 left-1/2 -translate-x-1/2 bg-kk-brown text-kk-cream px-6 py-3 rounded-xl shadow-lg z-[9999] text-sm font-medium';
+    toast.textContent = message;
+    document.body.appendChild(toast);
+    setTimeout(() => {
+      toast.style.opacity = '0';
+      toast.style.transition = 'opacity 0.3s';
+      setTimeout(() => toast.remove(), 300);
+    }, 2500);
+  };
 
   const isActive = (tab: TabDef) => {
     if (tab.path === '/') return location.pathname === '/';
@@ -40,20 +51,34 @@ export default function MobileTabBar() {
     return location.pathname.startsWith(tab.path);
   };
 
-  const handleTabClick = (tab: TabDef) => {
-    // 마케팅 탭 → 인증/등록 분기
-    if (tab.id === 'marketing') {
-      const schoolId: SchoolId = 'marketing';
-      if (!isAuthenticated) {
-        navigate('/congrats', { state: { schoolId } });
+  // 학과 탭 ID 목록
+  const trackTabIds: Record<string, string> = {
+    digital: 'digital-basics',
+    marketing: 'marketing',
+    career: 'career',
+  };
+
+  const handleTabClick = async (tab: TabDef) => {
+    const trackId = trackTabIds[tab.id];
+    if (trackId) {
+      if (!isAuthenticated || !user) {
+        navigate('/login', { state: { redirectTo: '/' } });
         return;
       }
-      const isEnrolled = enrollments.some(e => e.school_id === schoolId);
-      if (!isEnrolled) {
-        navigate('/congrats', { state: { schoolId } });
+      if (isInstructor) {
+        navigate(tab.path);
         return;
       }
-      navigate('/marketing/hub');
+      try {
+        const assigned = await isStudentAssignedToTrack(user.id, trackId);
+        if (assigned) {
+          navigate(tab.path);
+        } else {
+          showToast('학과 배정 대기중이에요! 선생님에게 문의하세요');
+        }
+      } catch {
+        navigate(tab.path);
+      }
       return;
     }
     navigate(tab.path);

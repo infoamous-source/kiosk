@@ -3,6 +3,7 @@ import { Award } from 'lucide-react';
 import type { User } from '../../types/auth';
 import type { PersonaId } from '../../types/school';
 import { PERSONAS } from '../../data/aptitudeQuestions';
+import { SCHOOL_NAMES, type SchoolId } from '../../types/enrollment';
 import KkakdugiMascot from '../brand/KkakdugiMascot';
 
 interface StudentCardProps {
@@ -10,9 +11,10 @@ interface StudentCardProps {
   isGraduated: boolean;
   personaId?: PersonaId | null;
   instructorName?: string | null;
+  assignments?: { track: string; classroomName: string }[];
 }
 
-export default function StudentCard({ user, isGraduated, personaId, instructorName }: StudentCardProps) {
+export default function StudentCard({ user, isGraduated, personaId, instructorName, assignments }: StudentCardProps) {
   const { t } = useTranslation('common');
 
   return (
@@ -46,24 +48,25 @@ export default function StudentCard({ user, isGraduated, personaId, instructorNa
           <div>
             <h3 className="text-xl font-bold text-kk-brown">{user.name}</h3>
             <p className="text-kk-brown/50 text-sm">{user.email}</p>
+            {personaId && PERSONAS[personaId] && (
+              <span className="inline-block mt-1 bg-white/50 backdrop-blur-sm px-2.5 py-0.5 rounded-full text-xs font-bold text-kk-brown border border-kk-warm">
+                {PERSONAS[personaId].emoji} {t(PERSONAS[personaId].nameKey)}
+              </span>
+            )}
             {user.organization && (
               <p className="text-kk-brown/60 text-xs mt-1 font-medium">소속: {user.organization}</p>
             )}
             {instructorName && (
               <p className="text-kk-brown/60 text-xs mt-0.5 font-medium">담임: {instructorName} 선생님</p>
             )}
+            {assignments && assignments.length > 0 && (
+              <p className="text-kk-brown/60 text-xs mt-0.5 font-medium">
+                학과: {assignments.map(a => `${SCHOOL_NAMES[a.track as SchoolId]?.ko || a.track}·${a.classroomName}`).join(' / ')}
+              </p>
+            )}
           </div>
         </div>
       </div>
-
-      {/* 페르소나 배지 */}
-      {personaId && PERSONAS[personaId] && (
-        <div className="relative mt-3 flex items-center gap-2">
-          <span className="bg-white/50 backdrop-blur-sm px-3 py-1 rounded-full text-sm font-bold text-kk-brown border border-kk-warm">
-            {PERSONAS[personaId].emoji} {t(PERSONAS[personaId].nameKey)}
-          </span>
-        </div>
-      )}
 
       {/* 하단 */}
       <div className="relative mt-4 pt-3 border-t border-kk-brown/10 flex items-center justify-between">

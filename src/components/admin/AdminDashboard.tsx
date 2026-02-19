@@ -22,12 +22,18 @@ import {
   UsersRound,
   Cpu,
   Bell,
+  RotateCcw,
+  Plus,
+  X,
 } from 'lucide-react';
 import { useAuth } from '../../contexts/AuthContext';
 import { supabase } from '../../lib/supabase';
-import { getStudentsByInstructorCode } from '../../services/profileService';
-import { getEnrollments } from '../../services/enrollmentService';
+import { getStudentsByInstructorCode, resetStudentApiKey } from '../../services/profileService';
+import { getStudentAssignments } from '../../services/teamService';
+import { getClassroomGroups, addClassroomMember } from '../../services/teamService';
+import { SCHOOL_NAMES, type SchoolId } from '../../types/enrollment';
 import type { ProfileRow } from '../../types/database';
+import type { ClassroomGroup } from '../../types/team';
 import ContentManager from './ContentManager';
 import SchoolManagement from './SchoolManagement';
 import StudentEnrollmentManager from './StudentEnrollmentManager';
@@ -44,6 +50,12 @@ type SortOrder = 'asc' | 'desc';
 // 실시간 학생 데이터 타입
 type ApiFilter = 'all' | 'connected' | 'disconnected';
 
+interface StudentAssignment {
+  track: string;
+  classroomName: string;
+  groupId: string;
+}
+
 interface RealStudent {
   id: string;
   name: string;
@@ -51,7 +63,7 @@ interface RealStudent {
   organization: string;
   orgCode: string;
   instructorCode: string;
-  enrollmentStatus: string; // 'active' | 'pending_info' | 'none'
+  assignments: StudentAssignment[];
   country: string | null;
   createdAt: string;
   hasApiKey: boolean;
@@ -72,6 +84,13 @@ export default function AdminDashboard() {
   const [apiFilter, setApiFilter] = useState<ApiFilter>('all');
   const [selectedStudent, setSelectedStudent] = useState<RealStudent | null>(null);
 
+  // 추가배정 모달
+  const [assignModal, setAssignModal] = useState<RealStudent | null>(null);
+  const [classrooms, setClassrooms] = useState<ClassroomGroup[]>([]);
+  const [selectedTrack, setSelectedTrack] = useState<string>('');
+  const [selectedClassroomId, setSelectedClassroomId] = useState<string>('');
+  const [isAssigning, setIsAssigning] = useState(false);
+
   // 실제 Supabase 데이터 로드
   useEffect(() => {
     if (!user?.instructorCode) return;
@@ -82,8 +101,7 @@ export default function AdminDashboard() {
         const profiles = await getStudentsByInstructorCode(user.instructorCode);
         const enriched = await Promise.all(
           profiles.map(async (p: ProfileRow) => {
-            const enrollments = await getEnrollments(p.id);
-            const marketingEnrollment = enrollments.find(e => e.school_id === 'marketing');
+            const assignments = await getStudentAssignments(p.id);
             return {
               id: p.id,
               name: p.name,
@@ -91,7 +109,7 @@ export default function AdminDashboard() {
               organization: p.organization || '',
               orgCode: p.org_code || '',
               instructorCode: p.instructor_code || '',
-              enrollmentStatus: marketingEnrollment?.status ?? 'none',
+              assignments,
               country: p.country,
               createdAt: p.created_at,
               hasApiKey: !!p.gemini_api_key,
@@ -108,6 +126,12 @@ export default function AdminDashboard() {
 
     loadStudents();
   }, [user]);
+
+  // 강사의 교실 목록 로드 (추가배정 모달용)
+  useEffect(() => {
+    if (!user?.id) return;
+    getClassroomGroups(user.id).then(setClassrooms);
+  }, [user?.id]);
 
   // Supabase Realtime 구독 — 새 학생 가입 시 자동 추가
   useEffect(() => {
@@ -147,8 +171,7 @@ export default function AdminDashboard() {
         async (payload) => {
           const newProfile = payload.new as ProfileRow;
           if (newProfile.role !== 'student') return;
-          const enrollments = await getEnrollments(newProfile.id);
-          const marketingEnrollment = enrollments.find(e => e.school_id === 'marketing');
+          const assignments = await getStudentAssignments(newProfile.id);
           const newStudent: RealStudent = {
             id: newProfile.id,
             name: newProfile.name,
@@ -156,7 +179,7 @@ export default function AdminDashboard() {
             organization: newProfile.organization || '',
             orgCode: newProfile.org_code || '',
             instructorCode: newProfile.instructor_code || '',
-            enrollmentStatus: marketingEnrollment?.status ?? 'none',
+            assignments,
             country: newProfile.country,
             createdAt: newProfile.created_at,
             hasApiKey: !!newProfile.gemini_api_key,
@@ -222,16 +245,16 @@ export default function AdminDashboard() {
           name: student.organization || '미지정',
           orgCode: key,
           students: [],
-          activeCount: 0,
+          assignedCount: 0,
           apiCount: 0,
         };
       }
       acc[key].students.push(student);
-      if (student.enrollmentStatus === 'active') acc[key].activeCount++;
+      if (student.assignments.length > 0) acc[key].assignedCount++;
       if (student.hasApiKey) acc[key].apiCount++;
       return acc;
     },
-    {} as Record<string, { name: string; orgCode: string; students: RealStudent[]; activeCount: number; apiCount: number }>,
+    {} as Record<string, { name: string; orgCode: string; students: RealStudent[]; assignedCount: number; apiCount: number }>,
   );
 
   const handleExportExcel = () => {
@@ -253,8 +276,7 @@ export default function AdminDashboard() {
     const profiles = await getStudentsByInstructorCode(user.instructorCode);
     const enriched = await Promise.all(
       profiles.map(async (p: ProfileRow) => {
-        const enrollments = await getEnrollments(p.id);
-        const marketingEnrollment = enrollments.find(e => e.school_id === 'marketing');
+        const assignments = await getStudentAssignments(p.id);
         return {
           id: p.id,
           name: p.name,
@@ -262,7 +284,7 @@ export default function AdminDashboard() {
           organization: p.organization || '',
           orgCode: p.org_code || '',
           instructorCode: p.instructor_code || '',
-          enrollmentStatus: marketingEnrollment?.status ?? 'none',
+          assignments,
           country: p.country,
           createdAt: p.created_at,
           hasApiKey: !!p.gemini_api_key,
@@ -274,19 +296,50 @@ export default function AdminDashboard() {
     setIsLoading(false);
   };
 
-  // 통계
-  const totalStudents = realtimeStudents.length;
-  const activeEnrollments = realtimeStudents.filter(s => s.enrollmentStatus === 'active').length;
-  const orgCount = Object.keys(organizationGroups).length;
-  const apiConnectedCount = realtimeStudents.filter(s => s.hasApiKey).length;
-
-  const enrollmentStatusLabel = (status: string) => {
-    switch (status) {
-      case 'active': return { text: '활성', className: 'bg-green-100 text-green-700' };
-      case 'pending_info': return { text: '대기', className: 'bg-amber-100 text-amber-700' };
-      default: return { text: '미등록', className: 'bg-gray-100 text-gray-500' };
+  // API 키 초기화
+  const handleResetApiKey = async (student: RealStudent) => {
+    if (!confirm(`${student.name}님의 AI 비서 API 키를 초기화하시겠습니까?\n학생이 다시 설정해야 합니다.`)) return;
+    const ok = await resetStudentApiKey(student.id);
+    if (ok) {
+      setRealtimeStudents(prev =>
+        prev.map(s => (s.id === student.id ? { ...s, hasApiKey: false } : s)),
+      );
     }
   };
+
+  // 추가배정 처리
+  const handleAssign = async () => {
+    if (!assignModal || !selectedClassroomId) return;
+    setIsAssigning(true);
+    const result = await addClassroomMember(selectedClassroomId, assignModal.id, assignModal.name);
+    if (result) {
+      // 해당 학생의 assignments 새로고침
+      const newAssignments = await getStudentAssignments(assignModal.id);
+      setRealtimeStudents(prev =>
+        prev.map(s => (s.id === assignModal.id ? { ...s, assignments: newAssignments } : s)),
+      );
+      setAssignModal(null);
+      setSelectedTrack('');
+      setSelectedClassroomId('');
+    }
+    setIsAssigning(false);
+  };
+
+  // 학과명 가져오기
+  const getTrackName = (track: string) => {
+    return SCHOOL_NAMES[track as SchoolId]?.ko || track;
+  };
+
+  // 통계
+  const totalStudents = realtimeStudents.length;
+  const assignedStudents = realtimeStudents.filter(s => s.assignments.length > 0).length;
+  const unassignedCount = totalStudents - assignedStudents;
+  const orgCount = Object.keys(organizationGroups).length;
+  const apiConnectedCount = realtimeStudents.filter(s => s.hasApiKey).length;
+  const apiDisconnectedCount = totalStudents - apiConnectedCount;
+
+  // 추가배정 모달에서 선택된 학과의 교실 목록
+  const filteredClassrooms = classrooms.filter(c => c.track === selectedTrack);
 
   return (
     <div className="max-w-6xl mx-auto">
@@ -357,8 +410,8 @@ export default function AdminDashboard() {
                   <TrendingUp className="w-5 h-5 text-green-600" />
                 </div>
                 <div>
-                  <p className="text-2xl font-bold text-gray-800">{activeEnrollments}</p>
-                  <p className="text-xs text-gray-500">활성 등록</p>
+                  <p className="text-2xl font-bold text-gray-800">{assignedStudents}</p>
+                  <p className="text-xs text-gray-500">학과 배정</p>
                 </div>
               </div>
             </div>
@@ -390,24 +443,23 @@ export default function AdminDashboard() {
             </div>
           </div>
 
-          {/* AI 미연결 학생 경고 배너 */}
-          {totalStudents > 0 && apiConnectedCount < totalStudents && (
-            <div className="bg-amber-50 border border-amber-200 rounded-xl p-4 mb-8 flex items-center justify-between">
+          {/* 통합 경고 배너: AI 미연결 + 학과 미배정 */}
+          {totalStudents > 0 && (apiDisconnectedCount > 0 || unassignedCount > 0) && (
+            <div className="bg-amber-50 border border-amber-200 rounded-xl p-4 mb-8">
               <div className="flex items-center gap-3">
-                <Cpu className="w-5 h-5 text-amber-600" />
+                <Cpu className="w-5 h-5 text-amber-600 flex-shrink-0" />
                 <div>
                   <p className="text-sm font-medium text-amber-800">
-                    AI 비서 미연결 학생 {totalStudents - apiConnectedCount}명
+                    {apiDisconnectedCount > 0 && `AI 미연결 ${apiDisconnectedCount}명`}
+                    {apiDisconnectedCount > 0 && unassignedCount > 0 && ' · '}
+                    {unassignedCount > 0 && `학과 미배정 ${unassignedCount}명`}
                   </p>
-                  <p className="text-xs text-amber-600">해당 학생에게 AI 비서 연결 안내가 필요합니다</p>
+                  <p className="text-xs text-amber-600">
+                    {apiDisconnectedCount > 0 && 'AI 비서 연결 안내가 필요합니다. '}
+                    {unassignedCount > 0 && '팀 관리 탭에서 학과·교실을 배정해주세요.'}
+                  </p>
                 </div>
               </div>
-              <button
-                onClick={() => setApiFilter('disconnected')}
-                className="text-xs font-medium text-amber-700 bg-amber-100 px-3 py-1.5 rounded-lg hover:bg-amber-200 transition-colors"
-              >
-                미연결 학생 보기
-              </button>
             </div>
           )}
 
@@ -432,7 +484,7 @@ export default function AdminDashboard() {
                     </div>
                     <div className="flex items-center justify-between">
                       <span className="text-sm text-gray-500">
-                        {org.students.length}명 (활성 {org.activeCount}명, AI {org.apiCount}명)
+                        {org.students.length}명 (배정 {org.assignedCount}명, AI {org.apiCount}명)
                       </span>
                     </div>
                   </div>
@@ -595,7 +647,7 @@ export default function AdminDashboard() {
                         </div>
                       </th>
                       <th className="px-5 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">
-                        등록 상태
+                        배정 상태
                       </th>
                       <th className="px-5 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">
                         AI 연결
@@ -615,35 +667,45 @@ export default function AdminDashboard() {
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-gray-100">
-                    {sortedStudents.map(student => {
-                      const status = enrollmentStatusLabel(student.enrollmentStatus);
-                      return (
-                        <tr key={student.id} className="hover:bg-gray-50 transition-colors">
-                          <td className="px-5 py-4">
-                            <div className="flex items-center gap-3">
-                              <div className="w-9 h-9 bg-gradient-to-br from-blue-500 to-purple-500 rounded-full flex items-center justify-center">
-                                <span className="text-white text-sm font-bold">{student.name[0]}</span>
-                              </div>
-                              <div>
-                                <p className="font-medium text-gray-800">{student.name}</p>
-                                <p className="text-xs text-gray-400">{student.email}</p>
-                              </div>
+                    {sortedStudents.map(student => (
+                      <tr key={student.id} className="hover:bg-gray-50 transition-colors">
+                        <td className="px-5 py-4">
+                          <div className="flex items-center gap-3">
+                            <div className="w-9 h-9 bg-gradient-to-br from-blue-500 to-purple-500 rounded-full flex items-center justify-center">
+                              <span className="text-white text-sm font-bold">{student.name[0]}</span>
                             </div>
-                          </td>
-                          <td className="px-5 py-4">
-                            <p className="text-sm text-gray-700 font-medium">{student.organization || '-'}</p>
-                            {student.orgCode && (
-                              <p className="text-xs text-gray-400 font-mono">{student.orgCode}</p>
-                            )}
-                          </td>
-                          <td className="px-5 py-4">
-                            <span
-                              className={`inline-flex px-2.5 py-1 rounded-full text-xs font-medium ${status.className}`}
-                            >
-                              {status.text}
+                            <div>
+                              <p className="font-medium text-gray-800">{student.name}</p>
+                              <p className="text-xs text-gray-400">{student.email}</p>
+                            </div>
+                          </div>
+                        </td>
+                        <td className="px-5 py-4">
+                          <p className="text-sm text-gray-700 font-medium">{student.organization || '-'}</p>
+                          {student.orgCode && (
+                            <p className="text-xs text-gray-400 font-mono">{student.orgCode}</p>
+                          )}
+                        </td>
+                        <td className="px-5 py-4">
+                          {student.assignments.length > 0 ? (
+                            <div className="flex flex-wrap gap-1">
+                              {student.assignments.map((a, i) => (
+                                <span
+                                  key={i}
+                                  className="inline-flex px-2 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-700"
+                                >
+                                  {getTrackName(a.track)}·{a.classroomName}
+                                </span>
+                              ))}
+                            </div>
+                          ) : (
+                            <span className="inline-flex px-2.5 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-500">
+                              미배정
                             </span>
-                          </td>
-                          <td className="px-5 py-4">
+                          )}
+                        </td>
+                        <td className="px-5 py-4">
+                          <div className="flex items-center gap-2">
                             <span
                               className={`inline-flex px-2.5 py-1 rounded-full text-xs font-medium ${
                                 student.hasApiKey
@@ -653,23 +715,40 @@ export default function AdminDashboard() {
                             >
                               {student.hasApiKey ? '연결됨' : '미연결'}
                             </span>
-                          </td>
-                          <td className="px-5 py-4">
-                            <span className="text-sm text-gray-500">
-                              {new Date(student.createdAt).toLocaleDateString('ko-KR')}
-                            </span>
-                          </td>
-                          <td className="px-5 py-4 text-right">
+                            {student.hasApiKey && (
+                              <button
+                                onClick={() => handleResetApiKey(student)}
+                                className="text-xs text-gray-400 hover:text-red-500 transition-colors"
+                                title="API 키 초기화"
+                              >
+                                <RotateCcw className="w-3.5 h-3.5" />
+                              </button>
+                            )}
+                          </div>
+                        </td>
+                        <td className="px-5 py-4">
+                          <span className="text-sm text-gray-500">
+                            {new Date(student.createdAt).toLocaleDateString('ko-KR')}
+                          </span>
+                        </td>
+                        <td className="px-5 py-4 text-right">
+                          <div className="flex items-center justify-end gap-2">
+                            <button
+                              onClick={() => setAssignModal(student)}
+                              className="text-xs text-purple-600 hover:text-purple-800 font-medium hover:bg-purple-50 px-2 py-1 rounded transition-colors"
+                            >
+                              추가배정
+                            </button>
                             <button
                               onClick={() => setSelectedStudent(student)}
                               className="text-xs text-blue-600 hover:text-blue-800 font-medium hover:bg-blue-50 px-2 py-1 rounded transition-colors"
                             >
                               AI 기록
                             </button>
-                          </td>
-                        </tr>
-                      );
-                    })}
+                          </div>
+                        </td>
+                      </tr>
+                    ))}
                   </tbody>
                 </table>
 
@@ -697,6 +776,87 @@ export default function AdminDashboard() {
           studentName={selectedStudent.name}
           onClose={() => setSelectedStudent(null)}
         />
+      )}
+
+      {/* 추가배정 모달 */}
+      {assignModal && (
+        <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4" onClick={() => setAssignModal(null)}>
+          <div
+            className="bg-white rounded-2xl w-full max-w-md overflow-hidden"
+            onClick={e => e.stopPropagation()}
+          >
+            <div className="flex items-center justify-between p-5 border-b border-gray-100">
+              <div>
+                <h3 className="font-semibold text-gray-800">학과·교실 추가 배정</h3>
+                <p className="text-xs text-gray-400 mt-0.5">{assignModal.name}님</p>
+              </div>
+              <button onClick={() => setAssignModal(null)} className="p-2 hover:bg-gray-100 rounded-lg">
+                <X className="w-5 h-5 text-gray-400" />
+              </button>
+            </div>
+
+            <div className="p-5 space-y-4">
+              {/* 현재 배정 */}
+              {assignModal.assignments.length > 0 && (
+                <div>
+                  <p className="text-xs text-gray-500 mb-2">현재 배정</p>
+                  <div className="flex flex-wrap gap-1.5">
+                    {assignModal.assignments.map((a, i) => (
+                      <span key={i} className="px-2.5 py-1 rounded-full text-xs font-medium bg-green-100 text-green-700">
+                        {getTrackName(a.track)} · {a.classroomName}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* 학과 선택 */}
+              <div>
+                <label className="text-sm font-medium text-gray-700 block mb-1.5">학과 선택</label>
+                <select
+                  value={selectedTrack}
+                  onChange={e => { setSelectedTrack(e.target.value); setSelectedClassroomId(''); }}
+                  className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm"
+                >
+                  <option value="">학과를 선택하세요</option>
+                  {Object.entries(SCHOOL_NAMES).map(([id, info]) => (
+                    <option key={id} value={id}>{info.ko}</option>
+                  ))}
+                </select>
+              </div>
+
+              {/* 교실 선택 */}
+              {selectedTrack && (
+                <div>
+                  <label className="text-sm font-medium text-gray-700 block mb-1.5">교실 선택</label>
+                  {filteredClassrooms.length === 0 ? (
+                    <p className="text-xs text-gray-400">해당 학과에 생성된 교실이 없습니다. 팀 관리에서 교실을 먼저 만들어주세요.</p>
+                  ) : (
+                    <select
+                      value={selectedClassroomId}
+                      onChange={e => setSelectedClassroomId(e.target.value)}
+                      className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm"
+                    >
+                      <option value="">교실을 선택하세요</option>
+                      {filteredClassrooms.map(c => (
+                        <option key={c.id} value={c.id}>{c.classroom_name}</option>
+                      ))}
+                    </select>
+                  )}
+                </div>
+              )}
+
+              {/* 배정 버튼 */}
+              <button
+                onClick={handleAssign}
+                disabled={!selectedClassroomId || isAssigning}
+                className="w-full py-2.5 bg-purple-600 hover:bg-purple-700 disabled:bg-gray-300 text-white text-sm font-medium rounded-lg transition-colors"
+              >
+                {isAssigning ? '배정 중...' : '배정하기'}
+              </button>
+            </div>
+          </div>
+        </div>
       )}
     </div>
   );

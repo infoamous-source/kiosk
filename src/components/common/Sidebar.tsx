@@ -9,10 +9,10 @@ import {
   UserCircle,
 } from 'lucide-react';
 import type { TrackId } from '../../types/track';
-import type { SchoolId } from '../../types/enrollment';
 import { useAuth } from '../../contexts/AuthContext';
 import { useEnrollments } from '../../contexts/EnrollmentContext';
 import { useSchoolProgress } from '../../hooks/useSchoolProgress';
+import { isStudentAssignedToTrack } from '../../services/teamService';
 import KkakdugiMascot from '../brand/KkakdugiMascot';
 import {
   DigitalDeptIcon,
@@ -102,32 +102,75 @@ export default function Sidebar({ currentTrack }: SidebarProps) {
     return location.pathname === item.path;
   };
 
-  const handleNavClick = (item: NavItem) => {
+  const showToast = (message: string) => {
+    const toast = document.createElement('div');
+    toast.className = 'fixed top-6 left-1/2 -translate-x-1/2 bg-kk-brown text-kk-cream px-6 py-3 rounded-xl shadow-lg z-[9999] text-sm font-medium';
+    toast.textContent = message;
+    document.body.appendChild(toast);
+    setTimeout(() => {
+      toast.style.opacity = '0';
+      toast.style.transition = 'opacity 0.3s';
+      setTimeout(() => toast.remove(), 300);
+    }, 2500);
+  };
+
+  const handleNavClick = async (item: NavItem) => {
     if (item.children && !collapsed) {
       setExpandedMenu(expandedMenu === item.id ? null : item.id);
       return;
     }
 
-    if (item.id === 'marketing') {
-      handleMarketingSchoolClick();
+    // 학과 메뉴 → 접근 권한 체크
+    if (item.trackId) {
+      await handleTrackNavClick(item);
       return;
     }
 
     navigate(item.path);
   };
 
-  const handleMarketingSchoolClick = () => {
-    const schoolId: SchoolId = 'marketing';
-    if (!isAuthenticated) {
-      navigate('/congrats', { state: { schoolId } });
+  const handleTrackNavClick = async (item: NavItem) => {
+    if (!isAuthenticated || !user) {
+      navigate('/login', { state: { redirectTo: '/' } });
       return;
     }
-    const isEnrolled = enrollments.some(e => e.school_id === schoolId);
-    if (!isEnrolled) {
-      navigate('/congrats', { state: { schoolId } });
+    // 강사는 모든 학과 자유 입장
+    if (isInstructor) {
+      navigate(item.path);
       return;
     }
-    navigate('/marketing/hub');
+    // 학생: 배정 확인
+    try {
+      const assigned = await isStudentAssignedToTrack(user.id, item.trackId!);
+      if (assigned) {
+        navigate(item.path);
+      } else {
+        showToast('학과 배정 대기중이에요! 선생님에게 문의하세요');
+      }
+    } catch {
+      navigate(item.path);
+    }
+  };
+
+  const handleMarketingSchoolClick = async () => {
+    if (!isAuthenticated || !user) {
+      navigate('/login', { state: { redirectTo: '/' } });
+      return;
+    }
+    if (isInstructor) {
+      navigate('/marketing/hub');
+      return;
+    }
+    try {
+      const assigned = await isStudentAssignedToTrack(user.id, 'marketing');
+      if (assigned) {
+        navigate('/marketing/hub');
+      } else {
+        showToast('학과 배정 대기중이에요! 선생님에게 문의하세요');
+      }
+    } catch {
+      navigate('/marketing/hub');
+    }
   };
 
   const handleMarketingProClick = () => {
@@ -143,9 +186,9 @@ export default function Sidebar({ currentTrack }: SidebarProps) {
     navigate('/marketing/pro');
   };
 
-  const handleChildClick = (child: NavItem) => {
+  const handleChildClick = async (child: NavItem) => {
     if (child.id === 'marketing-school') {
-      handleMarketingSchoolClick();
+      await handleMarketingSchoolClick();
     } else if (child.id === 'marketing-pro') {
       handleMarketingProClick();
     } else {

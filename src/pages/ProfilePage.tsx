@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useAuth } from '../contexts/AuthContext';
-import { getInstructorNameByCode } from '../services/profileService';
+import { getInstructorNameByCode, getStudentsByInstructorCode, resetStudentApiKey } from '../services/profileService';
+import { getStudentAssignments } from '../services/teamService';
 import { useEnrollments } from '../contexts/EnrollmentContext';
 import { useNavigate } from 'react-router-dom';
 import {
@@ -9,23 +10,24 @@ import {
   Building2,
   GraduationCap,
   School,
-  Clock,
   Lightbulb,
   Shield,
   Globe,
   CalendarDays,
-  CheckCircle2,
-  AlertCircle,
-  XCircle,
   ArrowRight,
+  ChevronDown,
+  ChevronUp,
+  Bot,
+  RefreshCw,
+  Link,
 } from 'lucide-react';
-import { SCHOOL_NAMES } from '../types/enrollment';
+import { SCHOOL_NAMES, type SchoolId } from '../types/enrollment';
 import IdeaBox from '../components/profile/IdeaBox';
-import ActivityHistory from '../components/profile/ActivityHistory';
 import KkakdugiMascot from '../components/brand/KkakdugiMascot';
 import { useSchoolProgress } from '../hooks/useSchoolProgress';
+import { isGeminiConnected, clearGeminiConnection } from '../services/gemini/geminiClient';
 
-type ProfileTab = 'info' | 'activity' | 'ideabox';
+type ProfileTab = 'info' | 'ideabox';
 
 export default function ProfilePage() {
   const { t } = useTranslation('common');
@@ -33,14 +35,36 @@ export default function ProfilePage() {
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState<ProfileTab>('info');
   const [instructorName, setInstructorName] = useState<string | null>(null);
+  const [assignments, setAssignments] = useState<{ track: string; classroomName: string }[]>([]);
+
+  // 선생님 전용: 관리 기관
+  const [managedOrgs, setManagedOrgs] = useState<{ name: string; code: string; count: number }[]>([]);
+  const [orgsExpanded, setOrgsExpanded] = useState(false);
 
   useEffect(() => {
-    if (user?.instructorCode) {
-      getInstructorNameByCode(user.instructorCode).then(name => {
-        if (name) setInstructorName(name);
+    if (!user) return;
+
+    if (user.role === 'student') {
+      if (user.instructorCode) {
+        getInstructorNameByCode(user.instructorCode).then(name => {
+          if (name) setInstructorName(name);
+        }).catch(() => {});
+      }
+      getStudentAssignments(user.id).then(setAssignments).catch(() => {});
+    } else if (user.role === 'instructor') {
+      getStudentsByInstructorCode(user.instructorCode).then(profiles => {
+        const orgMap: Record<string, { name: string; code: string; count: number }> = {};
+        profiles.forEach(p => {
+          const code = p.org_code || 'unknown';
+          if (!orgMap[code]) {
+            orgMap[code] = { name: p.organization || '미지정', code, count: 0 };
+          }
+          orgMap[code].count++;
+        });
+        setManagedOrgs(Object.values(orgMap));
       }).catch(() => {});
     }
-  }, [user?.instructorCode]);
+  }, [user]);
 
   if (!user) {
     return (
@@ -56,9 +80,10 @@ export default function ProfilePage() {
     );
   }
 
+  const isInstructor = user.role === 'instructor';
+
   const tabs: { id: ProfileTab; labelKey: string; icon: typeof User }[] = [
     { id: 'info', labelKey: 'profile.tabs.info', icon: User },
-    { id: 'activity', labelKey: 'profile.tabs.activity', icon: Clock },
     { id: 'ideabox', labelKey: 'profile.tabs.ideaBox', icon: Lightbulb },
   ];
 
@@ -66,7 +91,6 @@ export default function ProfilePage() {
   const { isGraduated: graduated } = useSchoolProgress();
   const isMarketingEnrolled = enrollments.some(e => e.school_id === 'marketing' && e.status === 'active');
 
-  // 성별 라벨
   const getGenderLabel = () => {
     if (!user.gender) return t('profile.notSet', '미설정');
     const genderMap: Record<string, string> = {
@@ -86,17 +110,24 @@ export default function ProfilePage() {
             <KkakdugiMascot size={36} />
           </div>
           <div className="flex-1">
-            <h1 className="text-2xl font-bold text-kk-brown">{user.name}</h1>
+            <div className="flex items-center gap-3">
+              <h1 className="text-2xl font-bold text-kk-brown">{user.name}</h1>
+              {isInstructor && user.instructorCode && (
+                <span className="px-2 py-0.5 rounded bg-kk-red/10 text-kk-red-deep text-xs font-mono font-semibold">
+                  {user.instructorCode}
+                </span>
+              )}
+            </div>
             <p className="text-kk-brown/50">{user.email}</p>
             <div className="flex items-center gap-3 mt-2 flex-wrap">
               <span className={`px-3 py-0.5 rounded-full text-xs font-medium ${
-                user.role === 'instructor'
+                isInstructor
                   ? 'bg-kk-red/10 text-kk-red-deep'
                   : 'bg-white/50 text-kk-brown'
               }`}>
-                {user.role === 'instructor' ? t('header.instructor') : t('header.student')}
+                {isInstructor ? t('header.instructor') : t('header.student')}
               </span>
-              {isMarketingEnrolled && (
+              {!isInstructor && isMarketingEnrolled && (
                 <span className={`px-3 py-0.5 rounded-full text-xs font-medium ${
                   graduated
                     ? 'bg-kk-gold/20 text-kk-brown font-bold'
@@ -105,23 +136,28 @@ export default function ProfilePage() {
                   {graduated ? '🎓 졸업' : '📚 재학 중'}
                 </span>
               )}
-              <span className="px-3 py-0.5 rounded-full text-xs font-medium bg-white/50 text-kk-brown">
-                {enrollments.filter(e => e.status === 'active').length > 0
-                  ? `${enrollments.filter(e => e.status === 'active').length}개 학교 등록`
-                  : '미등록'}
-              </span>
             </div>
           </div>
         </div>
 
-        {/* 교실 바로가기 */}
-        {isMarketingEnrolled && (
+        {!isInstructor && isMarketingEnrolled && (
           <button
             onClick={() => navigate('/marketing/hub')}
             className="mt-3 flex items-center gap-2 px-4 py-2 bg-white/40 hover:bg-white/60 rounded-xl transition-colors text-sm font-medium text-kk-brown"
           >
             <School className="w-4 h-4" />
             <span>{t('profile.goToClassroom', '교실로 이동하기')}</span>
+            <ArrowRight className="w-4 h-4" />
+          </button>
+        )}
+
+        {isInstructor && (
+          <button
+            onClick={() => navigate('/admin')}
+            className="mt-3 flex items-center gap-2 px-4 py-2 bg-white/40 hover:bg-white/60 rounded-xl transition-colors text-sm font-medium text-kk-brown"
+          >
+            <GraduationCap className="w-4 h-4" />
+            <span>대시보드로 이동하기</span>
             <ArrowRight className="w-4 h-4" />
           </button>
         )}
@@ -151,158 +187,233 @@ export default function ProfilePage() {
       {/* 탭 콘텐츠 */}
       {activeTab === 'info' && (
         <div className="space-y-4">
-          {/* 개인 정보 */}
-          <div className="bg-white rounded-xl border border-kk-warm p-5">
-            <h2 className="text-lg font-semibold text-kk-brown mb-4 flex items-center gap-2">
-              <User className="w-5 h-5 text-kk-red" />
-              {t('profile.personalInfo', '개인 정보')}
-            </h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <InfoRow
-                label={t('auth.name')}
-                value={user.name}
-              />
-              <InfoRow
-                label={t('auth.email')}
-                value={user.email}
-              />
-              <InfoRow
-                label={t('profile.age', '나이')}
-                value={user.age ? `${user.age}${t('profile.ageSuffix', '세')}` : t('profile.notSet', '미설정')}
-              />
-              <InfoRow
-                label={t('profile.gender.label', '성별')}
-                value={getGenderLabel()}
-              />
-              <InfoRow
-                label={t('profile.country', '국적')}
-                value={user.country || t('profile.notSet', '미설정')}
-                icon={<Globe className="w-4 h-4 text-kk-brown/30" />}
-              />
-              <InfoRow
-                label={t('profile.joinDate', '가입일')}
-                value={new Date(user.createdAt).toLocaleDateString('ko-KR')}
-                icon={<CalendarDays className="w-4 h-4 text-kk-brown/30" />}
-              />
-            </div>
-          </div>
-
-          {/* 소속 & 강사 정보 */}
-          <div className="bg-white rounded-xl border border-kk-warm p-5">
-            <h2 className="text-lg font-semibold text-kk-brown mb-4 flex items-center gap-2">
-              <Building2 className="w-5 h-5 text-kk-red" />
-              {t('profile.affiliationInfo', '소속 정보')}
-            </h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <InfoRow
-                label={t('auth.organization')}
-                value={user.organization || t('profile.notSet', '미설정')}
-                icon={<Building2 className="w-4 h-4 text-kk-brown/30" />}
-              />
-              <InfoRow
-                label={t('profile.instructorCode', '선생님코드')}
-                value={user.instructorCode || t('profile.notSet', '미설정')}
-                icon={<GraduationCap className="w-4 h-4 text-kk-brown/30" />}
-                mono
-              />
-              {instructorName && (
+          {isInstructor ? (
+            <div className="bg-white rounded-xl border border-kk-warm p-5">
+              <h2 className="text-lg font-semibold text-kk-brown mb-4 flex items-center gap-2">
+                <GraduationCap className="w-5 h-5 text-kk-red" />
+                교원 정보
+              </h2>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <InfoRow label="이름" value={user.name} />
+                <InfoRow label="이메일" value={user.email} />
                 <InfoRow
-                  label="담임 선생님"
-                  value={`${instructorName} 선생님`}
-                  icon={<GraduationCap className="w-4 h-4 text-kk-brown/30" />}
+                  label="교원 가입일"
+                  value={new Date(user.createdAt).toLocaleDateString('ko-KR')}
+                  icon={<CalendarDays className="w-4 h-4 text-kk-brown/30" />}
                 />
-              )}
-              <InfoRow
-                label={t('profile.orgCode', '기관코드')}
-                value={user.orgCode || t('profile.noOrg', '개인')}
-                icon={<Shield className="w-4 h-4 text-kk-brown/30" />}
-                mono
-              />
-              <InfoRow
-                label={t('auth.learningPurpose')}
-                value={user.learningPurpose
-                  ? t(`auth.purpose.${user.learningPurpose}`, user.learningPurpose)
-                  : t('profile.notSet', '미설정')
-                }
-              />
-            </div>
-          </div>
+                <InfoRow
+                  label="선생님코드"
+                  value={user.instructorCode || '-'}
+                  icon={<Shield className="w-4 h-4 text-kk-brown/30" />}
+                  mono
+                />
+              </div>
 
-          {/* 내 교실 (Enrollment) */}
-          <div className="bg-white rounded-xl border border-kk-warm p-5">
-            <h2 className="text-lg font-semibold text-kk-brown mb-4 flex items-center gap-2">
-              <School className="w-5 h-5 text-kk-red" />
-              내 교실
-            </h2>
-            {enrollments.length === 0 ? (
-              <p className="text-sm text-kk-brown/30 text-center py-4">등록된 교실이 없습니다.</p>
-            ) : (
-              <div className="space-y-3">
-                {enrollments.map((enrollment) => {
-                  const isMarketing = enrollment.school_id === 'marketing';
-                  const isActive = enrollment.status === 'active';
-
-                  return (
-                    <div key={enrollment.id}>
-                      {/* 예비 마케터 교실 */}
-                      <div className="flex items-center justify-between p-3 bg-kk-cream/50 rounded-lg">
-                        <div className="flex items-center gap-3">
-                          <School className={`w-5 h-5 ${isActive ? 'text-purple-500' : 'text-kk-brown/30'}`} />
-                          <div>
-                            <p className="text-sm font-medium text-kk-brown">
-                              깍두기학교 - 마케팅학과 - 예비마케터교실
-                            </p>
-                            <p className="text-xs text-kk-brown/40">
-                              {new Date(enrollment.enrolled_at).toLocaleDateString('ko-KR')} 등록
-                            </p>
-                          </div>
+              {/* 관리 기관 (토글) */}
+              <div className="mt-4">
+                <button
+                  onClick={() => setOrgsExpanded(!orgsExpanded)}
+                  className="w-full flex items-center justify-between p-3 bg-kk-cream/50 rounded-lg hover:bg-kk-cream transition-colors"
+                >
+                  <div className="flex items-center gap-2 text-sm text-kk-brown/50">
+                    <Building2 className="w-4 h-4 text-kk-brown/30" />
+                    관리 기관
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <span className="text-sm font-medium text-kk-brown">총 {managedOrgs.length}곳</span>
+                    {orgsExpanded ? (
+                      <ChevronUp className="w-4 h-4 text-kk-brown/40" />
+                    ) : (
+                      <ChevronDown className="w-4 h-4 text-kk-brown/40" />
+                    )}
+                  </div>
+                </button>
+                {orgsExpanded && managedOrgs.length > 0 && (
+                  <div className="mt-2 space-y-1.5 pl-2">
+                    {managedOrgs.map(org => (
+                      <div key={org.code} className="flex items-center justify-between p-2 bg-white rounded-lg border border-kk-warm/50">
+                        <div>
+                          <p className="text-sm font-medium text-kk-brown">{org.name}</p>
+                          <p className="text-xs text-kk-brown/40 font-mono">{org.code}</p>
                         </div>
-                        <span className={`px-2 py-1 rounded-full text-xs font-bold ${
-                          isMarketing && graduated
-                            ? 'bg-kk-gold/20 text-kk-brown'
-                            : isActive
-                              ? 'bg-green-50 text-green-600'
-                              : 'bg-kk-cream text-kk-brown/50'
-                        }`}>
-                          {isMarketing && graduated ? '🎓 졸업' : isActive ? '📚 재학중' : '일시정지'}
+                        <span className="text-xs text-kk-brown/50">{org.count}명</span>
+                      </div>
+                    ))}
+                  </div>
+                )}
+                {orgsExpanded && managedOrgs.length === 0 && (
+                  <p className="text-xs text-kk-brown/30 mt-2 pl-2">등록된 학생이 없습니다.</p>
+                )}
+              </div>
+            </div>
+          ) : (
+            <>
+              <div className="bg-white rounded-xl border border-kk-warm p-5">
+                <h2 className="text-lg font-semibold text-kk-brown mb-4 flex items-center gap-2">
+                  <User className="w-5 h-5 text-kk-red" />
+                  {t('profile.personalInfo', '개인 정보')}
+                </h2>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <InfoRow label={t('auth.name')} value={user.name} />
+                  <InfoRow label={t('auth.email')} value={user.email} />
+                  <InfoRow
+                    label={t('profile.age', '나이')}
+                    value={user.age ? `${user.age}${t('profile.ageSuffix', '세')}` : t('profile.notSet', '미설정')}
+                  />
+                  <InfoRow
+                    label={t('profile.gender.label', '성별')}
+                    value={getGenderLabel()}
+                  />
+                  <InfoRow
+                    label={t('profile.country', '국적')}
+                    value={user.country || t('profile.notSet', '미설정')}
+                    icon={<Globe className="w-4 h-4 text-kk-brown/30" />}
+                  />
+                  <InfoRow
+                    label={t('profile.joinDate', '가입일')}
+                    value={new Date(user.createdAt).toLocaleDateString('ko-KR')}
+                    icon={<CalendarDays className="w-4 h-4 text-kk-brown/30" />}
+                  />
+                </div>
+              </div>
+
+              <div className="bg-white rounded-xl border border-kk-warm p-5">
+                <h2 className="text-lg font-semibold text-kk-brown mb-4 flex items-center gap-2">
+                  <Building2 className="w-5 h-5 text-kk-red" />
+                  {t('profile.affiliationInfo', '소속 정보')}
+                </h2>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <InfoRow
+                    label={t('auth.organization')}
+                    value={user.organization || t('profile.notSet', '미설정')}
+                    icon={<Building2 className="w-4 h-4 text-kk-brown/30" />}
+                  />
+                  <InfoRow
+                    label={t('profile.instructorCode', '선생님코드')}
+                    value={user.instructorCode || t('profile.notSet', '미설정')}
+                    icon={<GraduationCap className="w-4 h-4 text-kk-brown/30" />}
+                    mono
+                  />
+                  {instructorName && (
+                    <InfoRow
+                      label="담임 선생님"
+                      value={`${instructorName} 선생님`}
+                      icon={<GraduationCap className="w-4 h-4 text-kk-brown/30" />}
+                    />
+                  )}
+                  <InfoRow
+                    label={t('profile.orgCode', '기관코드')}
+                    value={user.orgCode || t('profile.noOrg', '개인')}
+                    icon={<Shield className="w-4 h-4 text-kk-brown/30" />}
+                    mono
+                  />
+                  <InfoRow
+                    label={t('auth.learningPurpose')}
+                    value={user.learningPurpose
+                      ? t(`auth.purpose.${user.learningPurpose}`, user.learningPurpose)
+                      : t('profile.notSet', '미설정')
+                    }
+                  />
+                </div>
+              </div>
+
+              {/* 내 교실 (배정 기반) */}
+              <div className="bg-white rounded-xl border border-kk-warm p-5">
+                <h2 className="text-lg font-semibold text-kk-brown mb-4 flex items-center gap-2">
+                  <School className="w-5 h-5 text-kk-red" />
+                  내 교실
+                </h2>
+                {assignments.length === 0 ? (
+                  <p className="text-sm text-kk-brown/30 text-center py-4">배정된 교실이 없습니다. 선생님에게 문의해주세요.</p>
+                ) : (
+                  <div className="space-y-2">
+                    {assignments.map((a, i) => (
+                      <div key={i} className="flex items-center justify-between p-3 bg-kk-cream/50 rounded-lg">
+                        <div className="flex items-center gap-3">
+                          <School className="w-5 h-5 text-purple-500" />
+                          <p className="text-sm font-medium text-kk-brown">
+                            깍두기학교 &gt; {SCHOOL_NAMES[a.track as SchoolId]?.ko || a.track} &gt; {a.classroomName}
+                          </p>
+                        </div>
+                        <span className="px-2 py-1 rounded-full text-xs font-bold bg-green-50 text-green-600">
+                          배정됨
                         </span>
                       </div>
-
-                      {/* 졸업 후 → 프로 마케터 교실 표시 */}
-                      {isMarketing && graduated && (
-                        <div className="flex items-center justify-between p-3 bg-purple-50/50 rounded-lg mt-2 border border-purple-100">
-                          <div className="flex items-center gap-3">
-                            <GraduationCap className="w-5 h-5 text-purple-500" />
-                            <div>
-                              <p className="text-sm font-medium text-kk-brown">
-                                깍두기학교 - 마케팅학과 - 프로마케터교실
-                              </p>
-                              <p className="text-xs text-purple-400">
-                                Pro 도구 사용 가능
-                              </p>
-                            </div>
-                          </div>
-                          <span className="px-2 py-1 rounded-full text-xs font-bold bg-purple-100 text-purple-600">
-                            📚 재학중
-                          </span>
-                        </div>
-                      )}
-                    </div>
-                  );
-                })}
+                    ))}
+                  </div>
+                )}
               </div>
-            )}
-          </div>
+
+              {/* AI 비서 연결 상태 */}
+              <AIConnectionSection userId={user.id} navigate={navigate} />
+            </>
+          )}
         </div>
       )}
 
-      {activeTab === 'activity' && <ActivityHistory userId={user.id} />}
       {activeTab === 'ideabox' && <IdeaBox userId={user.id} />}
     </div>
   );
 }
 
 // ─── 보조 컴포넌트 ───
+
+function AIConnectionSection({ userId, navigate }: { userId: string; navigate: (path: string) => void }) {
+  const connected = isGeminiConnected();
+
+  const handleReconnect = async () => {
+    clearGeminiConnection();
+    await resetStudentApiKey(userId);
+    navigate('/marketing/school/ai-setup');
+  };
+
+  return (
+    <div className="bg-white rounded-xl border border-kk-warm p-5">
+      <h2 className="text-lg font-semibold text-kk-brown mb-4 flex items-center gap-2">
+        <Bot className="w-5 h-5 text-kk-red" />
+        AI 비서
+      </h2>
+      <div className="flex items-center justify-between p-3 bg-kk-cream/50 rounded-lg">
+        <div className="flex items-center gap-3">
+          <Bot className="w-5 h-5 text-purple-500" />
+          <div>
+            <p className="text-sm font-medium text-kk-brown">Gemini AI 비서</p>
+            <p className="text-xs text-kk-brown/40">API 연결 상태</p>
+          </div>
+        </div>
+        <div className="flex items-center gap-2">
+          {connected ? (
+            <>
+              <span className="px-2 py-1 rounded-full text-xs font-bold bg-green-50 text-green-600">
+                연결
+              </span>
+              <button
+                onClick={handleReconnect}
+                className="flex items-center gap-1 px-2.5 py-1 text-xs font-medium text-orange-600 bg-orange-50 rounded-lg hover:bg-orange-100 transition-colors"
+              >
+                <RefreshCw className="w-3 h-3" />
+                재연결
+              </button>
+            </>
+          ) : (
+            <>
+              <span className="px-2 py-1 rounded-full text-xs font-bold bg-gray-100 text-gray-500">
+                미연결
+              </span>
+              <button
+                onClick={() => navigate('/marketing/school/ai-setup')}
+                className="flex items-center gap-1 px-2.5 py-1 text-xs font-medium text-purple-600 bg-purple-50 rounded-lg hover:bg-purple-100 transition-colors"
+              >
+                <Link className="w-3 h-3" />
+                연결하기
+              </button>
+            </>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
 
 function InfoRow({
   label,

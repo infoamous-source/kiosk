@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { LogOut, Home, Settings } from 'lucide-react';
+import { LogOut, Home, Settings, Backpack } from 'lucide-react';
 import { useAuth } from '../../contexts/AuthContext';
 
 /**
@@ -82,9 +82,7 @@ export default function GlobalLogoutButton() {
         className="w-10 h-10 bg-gradient-to-br from-kk-cream to-kk-peach rounded-full flex items-center justify-center border-2 border-kk-warm shadow-md hover:shadow-lg transition-shadow"
         aria-label="User menu"
       >
-        <span className="text-kk-brown text-sm font-bold">
-          {user.name ? user.name[0].toUpperCase() : '?'}
-        </span>
+        <Backpack className="w-5 h-5 text-kk-brown" />
       </button>
 
       {/* 드롭다운 메뉴 */}

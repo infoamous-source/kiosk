@@ -7,6 +7,8 @@ import {
   Check,
   Search,
   Package,
+  ClipboardCopy,
+  Download,
 } from 'lucide-react';
 import {
   type IdeaItem,
@@ -42,6 +44,7 @@ export default function IdeaBox({ userId: _userId }: IdeaBoxProps) {
   const [searchQuery, setSearchQuery] = useState('');
   const [copiedId, setCopiedId] = useState<string | null>(null);
   const [expandedId, setExpandedId] = useState<string | null>(null);
+  const [bulkCopied, setBulkCopied] = useState(false);
 
   // Map Supabase rows to display format
   const items = rawItems.map((r) => ({
@@ -67,6 +70,35 @@ export default function IdeaBox({ userId: _userId }: IdeaBoxProps) {
     } catch {
       // fallback
     }
+  };
+
+  const buildAllText = (itemList: typeof items) => {
+    return itemList.map(item =>
+      `[${getTypeLabel(item.type)}] ${item.title}\n${item.content}`
+    ).join('\n\n---\n\n');
+  };
+
+  const handleBulkCopy = async () => {
+    try {
+      await navigator.clipboard.writeText(buildAllText(filteredItems));
+      setBulkCopied(true);
+      setTimeout(() => setBulkCopied(false), 2000);
+    } catch {
+      // fallback
+    }
+  };
+
+  const handleExportTxt = () => {
+    const text = buildAllText(filteredItems);
+    const blob = new Blob([text], { type: 'text/plain;charset=utf-8' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `아이디어상자_${new Date().toLocaleDateString('ko-KR')}.txt`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
   };
 
   const filteredItems = items.filter(item => {
@@ -115,9 +147,29 @@ export default function IdeaBox({ userId: _userId }: IdeaBoxProps) {
           <h2 className="text-lg font-semibold text-gray-800">
             {t('profile.ideaBox.title', '아이디어 상자')}
           </h2>
-          <span className="text-sm text-gray-400 ml-auto">
+          <span className="text-sm text-gray-400 ml-auto mr-2">
             {items.length}{t('profile.ideaBox.countUnit', '개')}
           </span>
+          {items.length > 0 && (
+            <div className="flex gap-1">
+              <button
+                onClick={handleBulkCopy}
+                className="flex items-center gap-1 px-2 py-1 text-xs font-medium text-purple-600 bg-purple-50 rounded-lg hover:bg-purple-100 transition-colors"
+                title="전체 복사"
+              >
+                {bulkCopied ? <Check className="w-3 h-3 text-green-500" /> : <ClipboardCopy className="w-3 h-3" />}
+                {bulkCopied ? '복사됨' : '전체 복사'}
+              </button>
+              <button
+                onClick={handleExportTxt}
+                className="flex items-center gap-1 px-2 py-1 text-xs font-medium text-gray-600 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors"
+                title="내보내기"
+              >
+                <Download className="w-3 h-3" />
+                내보내기
+              </button>
+            </div>
+          )}
         </div>
         <p className="text-sm text-gray-500">
           {t('profile.ideaBox.description', '마케팅 도구에서 만든 결과물을 모아두는 곳이에요. 나중에 다시 보고 활용할 수 있어요!')}

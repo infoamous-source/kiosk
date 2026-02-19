@@ -127,6 +127,20 @@ export async function saveGeminiApiKey(userId: string, apiKey: string): Promise<
   return true;
 }
 
+/** 강사: 학생 API 키 초기화 (키 값은 노출하지 않음) */
+export async function resetStudentApiKey(studentId: string): Promise<boolean> {
+  const { error } = await supabase
+    .from('profiles')
+    .update({ gemini_api_key: null, updated_at: new Date().toISOString() })
+    .eq('id', studentId);
+
+  if (error) {
+    console.error('Reset student API key error:', error.message);
+    return false;
+  }
+  return true;
+}
+
 /** Gemini API 키 조회 */
 export async function getGeminiApiKey(userId: string): Promise<string | null> {
   const { data, error } = await supabase

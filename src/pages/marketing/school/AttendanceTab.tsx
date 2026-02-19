@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../../contexts/AuthContext';
 import { useSchoolProgress } from '../../../hooks/useSchoolProgress';
-import { getMyTeam } from '../../../services/teamService';
+import { getMyTeam, getStudentAssignments } from '../../../services/teamService';
 import { getInstructorNameByCode } from '../../../services/profileService';
 import StudentCard from '../../../components/school/StudentCard';
 import StampBoard from '../../../components/school/StampBoard';
@@ -20,6 +20,7 @@ export default function AttendanceTab() {
   const [refreshKey, setRefreshKey] = useState(0);
   const [myTeam, setMyTeam] = useState<{ name: string } | null>(null);
   const [instructorName, setInstructorName] = useState<string | null>(null);
+  const [assignments, setAssignments] = useState<{ track: string; classroomName: string }[]>([]);
 
   useEffect(() => {
     if (!user) return;
@@ -34,6 +35,8 @@ export default function AttendanceTab() {
         if (name) setInstructorName(name);
       }).catch(() => {});
     }
+    // 배정 정보 조회
+    getStudentAssignments(user.id).then(setAssignments).catch(() => {});
   }, [user]);
 
   const { progress, isLoading: schoolLoading, isGraduated: graduated, canGraduate: canGrad, aptitudeResult } = useSchoolProgress();
@@ -50,7 +53,7 @@ export default function AttendanceTab() {
   return (
     <div className="space-y-5" key={refreshKey}>
       {/* 학생증 */}
-      <StudentCard user={user} isGraduated={graduated} personaId={personaId} instructorName={instructorName} />
+      <StudentCard user={user} isGraduated={graduated} personaId={personaId} instructorName={instructorName} assignments={assignments} />
 
       {/* 내 학생증 보기 + 졸업증 받기 */}
       <div className="flex gap-2">
@@ -59,7 +62,7 @@ export default function AttendanceTab() {
           className="flex-1 flex items-center justify-center gap-2 py-2.5 bg-kk-cream text-kk-brown text-sm font-medium rounded-xl hover:bg-kk-warm transition-colors"
         >
           <UserCircle className="w-4 h-4" />
-          {t('school.attendance.viewStudentCard', '내 학생증 보기')}
+          {user.role === 'instructor' ? '내 교원증 보기' : t('school.attendance.viewStudentCard', '내 학생증 보기')}
         </button>
         {graduated && (
           <button

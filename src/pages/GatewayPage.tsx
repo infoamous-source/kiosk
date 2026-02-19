@@ -76,7 +76,7 @@ export default function GatewayPage() {
               className="flex items-center gap-1.5 px-3 py-2 rounded-lg hover:bg-kk-cream/60 transition-colors text-sm font-medium text-kk-brown"
             >
               <UserCircle className="w-4 h-4" />
-              <span className="hidden sm:inline">{t('sidebar.profile', '내 학생증')}</span>
+              <span className="hidden sm:inline">{user?.role === 'instructor' ? '내 교원증' : t('sidebar.profile', '내 학생증')}</span>
             </button>
           ) : (
             <button
@@ -136,7 +136,7 @@ export default function GatewayPage() {
             {isAuthenticated && user && (
               <div className="absolute -right-4 top-0 translate-x-full bg-white border-2 border-kk-warm rounded-2xl rounded-bl-none px-4 py-2 shadow-md max-w-[200px]">
                 <p className="text-sm font-semibold text-kk-brown whitespace-nowrap">
-                  {user.name}님 환영해요!
+                  {user.role === 'instructor' ? `${user.name}선생님 환영해요!` : `${user.name}님 환영해요!`}
                 </p>
               </div>
             )}
@@ -168,7 +168,6 @@ export default function GatewayPage() {
               <span className="text-xl">📋</span>
               <div className="text-left">
                 <span className="text-lg font-bold">깍두기 학교란?</span>
-                <p className="text-sm opacity-70 hidden sm:block">우리 학교의 이야기와 학과를 소개합니다</p>
               </div>
             </div>
             <ChevronRight className="w-6 h-6 opacity-60 group-hover:translate-x-1 transition-transform" />

@@ -371,3 +371,28 @@ export async function isStudentAssignedToTrack(
   }
   return (data?.length ?? 0) > 0;
 }
+
+/** 학생의 전체 배정 정보 조회 (학과별 교실) */
+export async function getStudentAssignments(userId: string): Promise<
+  { track: string; classroomName: string; groupId: string }[]
+> {
+  const { data, error } = await supabase
+    .from('classroom_members')
+    .select('group_id, classroom_groups!inner(id, track, classroom_name)')
+    .eq('user_id', userId)
+    .eq('status', 'active');
+
+  if (error) {
+    console.error('Get student assignments error:', error.message);
+    return [];
+  }
+
+  return (data ?? []).map((row: Record<string, unknown>) => {
+    const cg = row.classroom_groups as Record<string, string>;
+    return {
+      track: cg.track,
+      classroomName: cg.classroom_name,
+      groupId: cg.id,
+    };
+  });
+}

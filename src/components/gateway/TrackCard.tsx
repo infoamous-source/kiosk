@@ -55,27 +55,24 @@ export default function TrackCard({ track, delay = 0 }: TrackCardProps) {
       return;
     }
 
-    // 디지털, 취업은 아직 "준비 중"
-    if (track.id === 'digital-basics' || track.id === 'career') {
-      showToast(t('school.comingSoon'));
+    // 강사: 모든 학과 자유 입장
+    if (user.role === 'instructor') {
+      navigate(trackHubPath[track.id] || `/track/${track.id}`);
       return;
     }
 
-    // 로그인된 학생: 교실 배정 확인
+    // 학생: 교실 배정 확인 (모든 학과 동일)
     if (checking) return;
     setChecking(true);
 
     try {
       const assigned = await isStudentAssignedToTrack(user.id, track.id);
       if (assigned) {
-        // 배정됨 → 해당 학과 허브 이동
         navigate(trackHubPath[track.id] || `/track/${track.id}`);
       } else {
-        // 미배정 → 안내 팝업
-        showToast('학과 입장 대기중이에요. 선생님에게 문의하세요!');
+        showToast('학과 배정 대기중이에요! 선생님에게 문의하세요');
       }
     } catch {
-      // fallback: 에러 시 허브로 이동 시도
       navigate(trackHubPath[track.id] || `/track/${track.id}`);
     } finally {
       setChecking(false);
