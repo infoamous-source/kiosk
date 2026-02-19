@@ -134,8 +134,8 @@ export default function GatewayPage() {
           <div className="mb-4 relative inline-block">
             <KkakdugiCharacter size="half" animated />
             {isAuthenticated && user && (
-              <div className="absolute -right-4 top-0 translate-x-full bg-white border-2 border-kk-warm rounded-2xl rounded-bl-none px-4 py-2 shadow-md max-w-[200px]">
-                <p className="text-sm font-semibold text-kk-brown whitespace-nowrap">
+              <div className="absolute -right-4 top-0 translate-x-full bg-white border-2 border-kk-warm rounded-2xl rounded-bl-none px-3 py-2 shadow-md max-w-[200px] sm:max-w-[260px]">
+                <p className="text-xs sm:text-sm font-semibold text-kk-brown break-words leading-snug">
                   {user.role === 'instructor' ? `${user.name}선생님 환영해요!` : `${user.name}님 환영해요!`}
                 </p>
               </div>

@@ -133,15 +133,18 @@ const CERT_CSS = `
   }
   .cert-name {
     font-family: 'Noto Serif KR', serif;
-    font-size: 36px;
+    font-size: clamp(18px, 5vw, 36px);
     font-weight: 700;
     color: #1a1408;
     margin: 6px 0;
-    padding: 4px 30px 8px;
+    padding: 4px 20px 8px;
     border-bottom: 2px solid #b8942d;
-    letter-spacing: 10px;
-    min-width: 280px;
+    letter-spacing: clamp(2px, 1.5vw, 10px);
+    min-width: 0;
+    max-width: 90%;
     display: inline-block;
+    word-break: keep-all;
+    overflow-wrap: break-word;
   }
   .cert-desc {
     font-size: 12px;

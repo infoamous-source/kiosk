@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useAuth } from '../contexts/AuthContext';
-import { getInstructorNameByCode, getStudentsByInstructorCode, resetStudentApiKey } from '../services/profileService';
+import { getInstructorNameByCode, getStudentsByInstructorCode, resetStudentApiKey, updateProfile } from '../services/profileService';
 import { getStudentAssignments } from '../services/teamService';
 import { useEnrollments } from '../contexts/EnrollmentContext';
 import { useNavigate } from 'react-router-dom';
@@ -20,6 +20,9 @@ import {
   Bot,
   RefreshCw,
   Link,
+  Pencil,
+  Check,
+  X,
 } from 'lucide-react';
 const CLASSROOM_DISPLAY: Record<string, string> = {
   'marketing': '예비 마케터 교실',
@@ -35,11 +38,16 @@ type ProfileTab = 'info' | 'ideabox';
 
 export default function ProfilePage() {
   const { t } = useTranslation('common');
-  const { user } = useAuth();
+  const { user, refreshUser } = useAuth();
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState<ProfileTab>('info');
   const [instructorName, setInstructorName] = useState<string | null>(null);
   const [assignments, setAssignments] = useState<{ track: string; classroomName: string }[]>([]);
+
+  // 이름 수정
+  const [isEditingName, setIsEditingName] = useState(false);
+  const [editName, setEditName] = useState('');
+  const [isSavingName, setIsSavingName] = useState(false);
 
   // 선생님 전용: 관리 기관
   const [managedOrgs, setManagedOrgs] = useState<{ name: string; code: string; count: number }[]>([]);
@@ -95,6 +103,26 @@ export default function ProfilePage() {
   const { isGraduated: graduated } = useSchoolProgress();
   const isMarketingEnrolled = enrollments.some(e => e.school_id === 'marketing' && e.status === 'active');
 
+  const handleStartEditName = () => {
+    setEditName(user.name);
+    setIsEditingName(true);
+  };
+
+  const handleSaveName = async () => {
+    const trimmed = editName.trim();
+    if (!trimmed || trimmed === user.name) {
+      setIsEditingName(false);
+      return;
+    }
+    setIsSavingName(true);
+    const ok = await updateProfile(user.id, { name: trimmed });
+    if (ok) {
+      await refreshUser();
+    }
+    setIsSavingName(false);
+    setIsEditingName(false);
+  };
+
   const getGenderLabel = () => {
     if (!user.gender) return t('profile.notSet', '미설정');
     const genderMap: Record<string, string> = {
@@ -109,20 +137,59 @@ export default function ProfilePage() {
     <div className="max-w-4xl mx-auto px-4 py-6">
       {/* 프로필 헤더 카드 */}
       <div className="bg-gradient-to-r from-kk-cream via-kk-warm to-kk-peach rounded-2xl p-6 mb-6 shadow-lg border border-kk-warm">
+        {/* 제목: 내 학생증 / 내 교원증 */}
+        <p className="text-xs font-semibold text-kk-brown/40 mb-3">
+          {isInstructor ? '내 교원증' : '내 학생증'}
+        </p>
         <div className="flex items-center gap-4">
-          <div className="w-16 h-16 bg-white/60 rounded-full flex items-center justify-center backdrop-blur-sm border border-kk-warm">
+          <div className="w-16 h-16 bg-white/60 rounded-full flex items-center justify-center backdrop-blur-sm border border-kk-warm flex-shrink-0">
             <KkakdugiMascot size={36} />
           </div>
-          <div className="flex-1">
-            <div className="flex items-center gap-3">
-              <h1 className="text-2xl font-bold text-kk-brown">{user.name}</h1>
-              {isInstructor && user.instructorCode && (
-                <span className="px-2 py-0.5 rounded bg-kk-red/10 text-kk-red-deep text-xs font-mono font-semibold">
-                  {user.instructorCode}
-                </span>
+          <div className="flex-1 min-w-0">
+            <div className="flex items-center gap-2">
+              {isEditingName ? (
+                <div className="flex items-center gap-2 flex-1 min-w-0">
+                  <input
+                    type="text"
+                    value={editName}
+                    onChange={e => setEditName(e.target.value)}
+                    className="flex-1 min-w-0 text-xl font-bold text-kk-brown bg-white/60 border border-kk-warm rounded-lg px-3 py-1 focus:ring-2 focus:ring-kk-red focus:border-transparent"
+                    autoFocus
+                    onKeyDown={e => { if (e.key === 'Enter') handleSaveName(); if (e.key === 'Escape') setIsEditingName(false); }}
+                  />
+                  <button
+                    onClick={handleSaveName}
+                    disabled={isSavingName}
+                    className="p-1.5 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors flex-shrink-0"
+                  >
+                    <Check className="w-4 h-4" />
+                  </button>
+                  <button
+                    onClick={() => setIsEditingName(false)}
+                    className="p-1.5 bg-gray-400 text-white rounded-lg hover:bg-gray-500 transition-colors flex-shrink-0"
+                  >
+                    <X className="w-4 h-4" />
+                  </button>
+                </div>
+              ) : (
+                <>
+                  <h1 className="text-2xl font-bold text-kk-brown truncate">{user.name}</h1>
+                  <button
+                    onClick={handleStartEditName}
+                    className="p-1 text-kk-brown/30 hover:text-kk-brown/60 transition-colors flex-shrink-0"
+                    title="이름 수정"
+                  >
+                    <Pencil className="w-4 h-4" />
+                  </button>
+                  {isInstructor && user.instructorCode && (
+                    <span className="px-2 py-0.5 rounded bg-kk-red/10 text-kk-red-deep text-xs font-mono font-semibold flex-shrink-0">
+                      {user.instructorCode}
+                    </span>
+                  )}
+                </>
               )}
             </div>
-            <p className="text-kk-brown/50">{user.email}</p>
+            <p className="text-kk-brown/50 truncate">{user.email}</p>
             <div className="flex items-center gap-3 mt-2 flex-wrap">
               <span className={`px-3 py-0.5 rounded-full text-xs font-medium ${
                 isInstructor

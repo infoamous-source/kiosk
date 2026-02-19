@@ -10,6 +10,7 @@ interface AuthContextType extends AuthState {
   login: (email: string, password: string, rememberMe?: boolean) => Promise<boolean>;
   logout: () => void;
   register: (data: RegisterData, rememberMe?: boolean) => Promise<boolean>;
+  refreshUser: () => Promise<void>;
 }
 
 export interface RegisterData {
@@ -138,6 +139,16 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     setState({ user: null, isAuthenticated: false, isLoading: false });
   }, []);
 
+  const refreshUser = useCallback(async () => {
+    const { data: { session } } = await supabase.auth.getSession();
+    if (session?.user) {
+      const profile = await fetchProfile(session.user.id);
+      if (profile) {
+        setState(prev => ({ ...prev, user: profileToUser(profile) }));
+      }
+    }
+  }, []);
+
   const register = useCallback(async (data: RegisterData, _rememberMe = false): Promise<boolean> => {
     if (!isSupabaseConfigured) {
       throw new Error('supabase_not_configured');
@@ -207,7 +218,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ ...state, login, logout, register }}>
+    <AuthContext.Provider value={{ ...state, login, logout, register, refreshUser }}>
       {children}
     </AuthContext.Provider>
   );
