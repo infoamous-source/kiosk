@@ -31,7 +31,7 @@ export default function StampBoard({ stamps }: StampBoardProps) {
         </span>
       </div>
 
-      <div className="grid grid-cols-3 gap-3">
+      <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
         {SCHOOL_CURRICULUM.map((period, index) => {
           const stamp = stamps.find((s) => s.periodId === period.id);
           const isCompleted = stamp?.completed ?? false;

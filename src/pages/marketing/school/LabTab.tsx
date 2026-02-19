@@ -35,7 +35,7 @@ export default function LabTab() {
       </div>
 
       {/* 도구 그리드: 6개 AI 도구 */}
-      <div className="grid grid-cols-2 gap-3">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
         {allTools.map((period) => {
           const stamp = progress.stamps.find((s) => s.periodId === period.id);
           return (

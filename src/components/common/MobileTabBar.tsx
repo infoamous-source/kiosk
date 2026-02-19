@@ -104,7 +104,7 @@ export default function MobileTabBar() {
               ) : LucideIcon ? (
                 <LucideIcon className="w-5 h-5" />
               ) : null}
-              <span className="text-[10px] mt-0.5 font-medium leading-tight">
+              <span className="text-[11px] mt-0.5 font-medium leading-tight">
                 {t(tab.labelKey)}
               </span>
             </button>

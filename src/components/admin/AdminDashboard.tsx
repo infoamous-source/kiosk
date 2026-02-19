@@ -40,8 +40,9 @@ import StudentEnrollmentManager from './StudentEnrollmentManager';
 import TeamManagement from './TeamManagement';
 import NotificationSender from './NotificationSender';
 import StudentAIUsageView from './StudentAIUsageView';
+import OrganizationManagement from './OrganizationManagement';
 
-type DashboardTab = 'students' | 'content' | 'school' | 'enrollment' | 'teams' | 'notifications';
+type DashboardTab = 'organizations' | 'students' | 'content' | 'school' | 'enrollment' | 'teams' | 'notifications';
 
 // 정렬 타입
 type SortType = 'name' | 'email' | 'organization' | 'lastActive';
@@ -73,7 +74,7 @@ export default function AdminDashboard() {
   const { t } = useTranslation('common');
   const navigate = useNavigate();
   const { user } = useAuth();
-  const [activeTab, setActiveTab] = useState<DashboardTab>('students');
+  const [activeTab, setActiveTab] = useState<DashboardTab>('organizations');
   const [searchQuery, setSearchQuery] = useState('');
   const [sortType, setSortType] = useState<SortType>('name');
   const [sortOrder, setSortOrder] = useState<SortOrder>('asc');
@@ -353,8 +354,9 @@ export default function AdminDashboard() {
       </div>
 
       {/* 탭 네비게이션 */}
-      <div className="flex gap-1 bg-gray-100 p-1 rounded-xl mb-8 overflow-x-auto">
+      <div className="flex gap-1 bg-gray-100 p-1 rounded-xl mb-8 overflow-x-auto scrollbar-hide">
         {([
+          { id: 'organizations' as DashboardTab, icon: Building2, label: '기관 관리' },
           { id: 'students' as DashboardTab, icon: Users, label: '학생 계정' },
           { id: 'teams' as DashboardTab, icon: UsersRound, label: '팀 관리' },
           { id: 'content' as DashboardTab, icon: Settings2, label: t('admin.tabs.content') },
@@ -379,6 +381,9 @@ export default function AdminDashboard() {
           );
         })}
       </div>
+
+      {/* 기관 관리 탭 */}
+      {activeTab === 'organizations' && <OrganizationManagement />}
 
       {/* 콘텐츠 관리 탭 */}
       {activeTab === 'content' && <ContentManager />}
@@ -622,135 +627,214 @@ export default function AdminDashboard() {
               </div>
             )}
 
-            {/* 테이블 */}
+            {/* 학생 목록 */}
             {!isLoading || realtimeStudents.length > 0 ? (
-              <div className="overflow-x-auto">
-                <table className="w-full">
-                  <thead className="bg-gray-50">
-                    <tr>
-                      <th
-                        className="px-5 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100"
-                        onClick={() => handleSortToggle('name')}
-                      >
-                        <div className="flex items-center gap-1">
-                          {t('admin.table.name')}
-                          {sortType === 'name' && <ArrowUpDown className="w-3 h-3" />}
-                        </div>
-                      </th>
-                      <th
-                        className="px-5 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100"
-                        onClick={() => handleSortToggle('organization')}
-                      >
-                        <div className="flex items-center gap-1">
-                          {t('admin.table.organization')}
-                          {sortType === 'organization' && <ArrowUpDown className="w-3 h-3" />}
-                        </div>
-                      </th>
-                      <th className="px-5 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">
-                        배정 상태
-                      </th>
-                      <th className="px-5 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">
-                        AI 연결
-                      </th>
-                      <th
-                        className="px-5 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100"
-                        onClick={() => handleSortToggle('lastActive')}
-                      >
-                        <div className="flex items-center gap-1">
-                          가입일
-                          {sortType === 'lastActive' && <ArrowUpDown className="w-3 h-3" />}
-                        </div>
-                      </th>
-                      <th className="px-5 py-3 text-right text-xs font-semibold text-gray-500 uppercase tracking-wider">
-                        {t('admin.table.actions')}
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody className="divide-y divide-gray-100">
-                    {sortedStudents.map(student => (
-                      <tr key={student.id} className="hover:bg-gray-50 transition-colors">
-                        <td className="px-5 py-4">
-                          <div className="flex items-center gap-3">
-                            <div className="w-9 h-9 bg-gradient-to-br from-blue-500 to-purple-500 rounded-full flex items-center justify-center">
-                              <span className="text-white text-sm font-bold">{student.name[0]}</span>
-                            </div>
-                            <div>
-                              <p className="font-medium text-gray-800">{student.name}</p>
-                              <p className="text-xs text-gray-400">{student.email}</p>
-                            </div>
+              <>
+                {/* 모바일 카드 뷰 */}
+                <div className="md:hidden divide-y divide-gray-100">
+                  {sortedStudents.map(student => (
+                    <div key={student.id} className="p-4 space-y-3">
+                      {/* 이름 + AI 상태 */}
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-3">
+                          <div className="w-9 h-9 bg-gradient-to-br from-blue-500 to-purple-500 rounded-full flex items-center justify-center">
+                            <span className="text-white text-sm font-bold">{student.name[0]}</span>
                           </div>
-                        </td>
-                        <td className="px-5 py-4">
-                          <p className="text-sm text-gray-700 font-medium">{student.organization || '-'}</p>
-                          {student.orgCode && (
-                            <p className="text-xs text-gray-400 font-mono">{student.orgCode}</p>
-                          )}
-                        </td>
-                        <td className="px-5 py-4">
-                          {student.assignments.length > 0 ? (
-                            <div className="flex flex-wrap gap-1">
-                              {student.assignments.map((a, i) => (
-                                <span
-                                  key={i}
-                                  className="inline-flex px-2 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-700"
-                                >
-                                  {getTrackName(a.track)}·{a.classroomName}
-                                </span>
-                              ))}
-                            </div>
-                          ) : (
-                            <span className="inline-flex px-2.5 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-500">
-                              미배정
-                            </span>
-                          )}
-                        </td>
-                        <td className="px-5 py-4">
-                          <div className="flex items-center gap-2">
-                            <span
-                              className={`inline-flex px-2.5 py-1 rounded-full text-xs font-medium ${
-                                student.hasApiKey
-                                  ? 'bg-green-100 text-green-700'
-                                  : 'bg-gray-100 text-gray-500'
-                              }`}
-                            >
-                              {student.hasApiKey ? '연결됨' : '미연결'}
-                            </span>
-                            {student.hasApiKey && (
-                              <button
-                                onClick={() => handleResetApiKey(student)}
-                                className="text-xs text-gray-400 hover:text-red-500 transition-colors"
-                                title="API 키 초기화"
-                              >
-                                <RotateCcw className="w-3.5 h-3.5" />
-                              </button>
-                            )}
+                          <div>
+                            <p className="font-medium text-gray-800">{student.name}</p>
+                            <p className="text-xs text-gray-400">{student.email}</p>
                           </div>
-                        </td>
-                        <td className="px-5 py-4">
-                          <span className="text-sm text-gray-500">
-                            {new Date(student.createdAt).toLocaleDateString('ko-KR')}
+                        </div>
+                        <span
+                          className={`inline-flex px-2 py-0.5 rounded-full text-xs font-medium ${
+                            student.hasApiKey
+                              ? 'bg-green-100 text-green-700'
+                              : 'bg-gray-100 text-gray-500'
+                          }`}
+                        >
+                          {student.hasApiKey ? 'AI 연결' : 'AI 미연결'}
+                        </span>
+                      </div>
+                      {/* 기관 + 배정 */}
+                      <div className="flex flex-wrap items-center gap-2 text-xs">
+                        {student.organization && (
+                          <span className="text-gray-500">
+                            {student.organization}
+                            {student.orgCode && <span className="font-mono text-gray-400 ml-1">{student.orgCode}</span>}
                           </span>
-                        </td>
-                        <td className="px-5 py-4 text-right">
-                          <div className="flex items-center justify-end gap-2">
+                        )}
+                        {student.assignments.length > 0 ? (
+                          student.assignments.map((a, i) => (
+                            <span key={i} className="px-2 py-0.5 rounded-full bg-green-100 text-green-700 font-medium">
+                              {getTrackName(a.track)}·{a.classroomName}
+                            </span>
+                          ))
+                        ) : (
+                          <span className="px-2 py-0.5 rounded-full bg-gray-100 text-gray-500 font-medium">미배정</span>
+                        )}
+                      </div>
+                      {/* 가입일 + 액션 */}
+                      <div className="flex items-center justify-between">
+                        <span className="text-xs text-gray-400">
+                          {new Date(student.createdAt).toLocaleDateString('ko-KR')} 가입
+                        </span>
+                        <div className="flex items-center gap-2">
+                          {student.hasApiKey && (
                             <button
-                              onClick={() => setAssignModal(student)}
-                              className="text-xs text-purple-600 hover:text-purple-800 font-medium hover:bg-purple-50 px-2 py-1 rounded transition-colors"
+                              onClick={() => handleResetApiKey(student)}
+                              className="text-xs text-gray-400 hover:text-red-500 transition-colors p-1"
+                              title="API 키 초기화"
                             >
-                              추가배정
+                              <RotateCcw className="w-3.5 h-3.5" />
                             </button>
-                            <button
-                              onClick={() => setSelectedStudent(student)}
-                              className="text-xs text-blue-600 hover:text-blue-800 font-medium hover:bg-blue-50 px-2 py-1 rounded transition-colors"
-                            >
-                              AI 기록
-                            </button>
+                          )}
+                          <button
+                            onClick={() => setAssignModal(student)}
+                            className="text-xs text-purple-600 hover:text-purple-800 font-medium hover:bg-purple-50 px-2 py-1 rounded transition-colors"
+                          >
+                            추가배정
+                          </button>
+                          <button
+                            onClick={() => setSelectedStudent(student)}
+                            className="text-xs text-blue-600 hover:text-blue-800 font-medium hover:bg-blue-50 px-2 py-1 rounded transition-colors"
+                          >
+                            AI 기록
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+
+                {/* 데스크톱 테이블 뷰 */}
+                <div className="hidden md:block overflow-x-auto">
+                  <table className="w-full">
+                    <thead className="bg-gray-50">
+                      <tr>
+                        <th
+                          className="px-5 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100"
+                          onClick={() => handleSortToggle('name')}
+                        >
+                          <div className="flex items-center gap-1">
+                            {t('admin.table.name')}
+                            {sortType === 'name' && <ArrowUpDown className="w-3 h-3" />}
                           </div>
-                        </td>
+                        </th>
+                        <th
+                          className="px-5 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100"
+                          onClick={() => handleSortToggle('organization')}
+                        >
+                          <div className="flex items-center gap-1">
+                            {t('admin.table.organization')}
+                            {sortType === 'organization' && <ArrowUpDown className="w-3 h-3" />}
+                          </div>
+                        </th>
+                        <th className="px-5 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">
+                          배정 상태
+                        </th>
+                        <th className="px-5 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">
+                          AI 연결
+                        </th>
+                        <th
+                          className="px-5 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100"
+                          onClick={() => handleSortToggle('lastActive')}
+                        >
+                          <div className="flex items-center gap-1">
+                            가입일
+                            {sortType === 'lastActive' && <ArrowUpDown className="w-3 h-3" />}
+                          </div>
+                        </th>
+                        <th className="px-5 py-3 text-right text-xs font-semibold text-gray-500 uppercase tracking-wider">
+                          {t('admin.table.actions')}
+                        </th>
                       </tr>
-                    ))}
-                  </tbody>
-                </table>
+                    </thead>
+                    <tbody className="divide-y divide-gray-100">
+                      {sortedStudents.map(student => (
+                        <tr key={student.id} className="hover:bg-gray-50 transition-colors">
+                          <td className="px-5 py-4">
+                            <div className="flex items-center gap-3">
+                              <div className="w-9 h-9 bg-gradient-to-br from-blue-500 to-purple-500 rounded-full flex items-center justify-center">
+                                <span className="text-white text-sm font-bold">{student.name[0]}</span>
+                              </div>
+                              <div>
+                                <p className="font-medium text-gray-800">{student.name}</p>
+                                <p className="text-xs text-gray-400">{student.email}</p>
+                              </div>
+                            </div>
+                          </td>
+                          <td className="px-5 py-4">
+                            <p className="text-sm text-gray-700 font-medium">{student.organization || '-'}</p>
+                            {student.orgCode && (
+                              <p className="text-xs text-gray-400 font-mono">{student.orgCode}</p>
+                            )}
+                          </td>
+                          <td className="px-5 py-4">
+                            {student.assignments.length > 0 ? (
+                              <div className="flex flex-wrap gap-1">
+                                {student.assignments.map((a, i) => (
+                                  <span
+                                    key={i}
+                                    className="inline-flex px-2 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-700"
+                                  >
+                                    {getTrackName(a.track)}·{a.classroomName}
+                                  </span>
+                                ))}
+                              </div>
+                            ) : (
+                              <span className="inline-flex px-2.5 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-500">
+                                미배정
+                              </span>
+                            )}
+                          </td>
+                          <td className="px-5 py-4">
+                            <div className="flex items-center gap-2">
+                              <span
+                                className={`inline-flex px-2.5 py-1 rounded-full text-xs font-medium ${
+                                  student.hasApiKey
+                                    ? 'bg-green-100 text-green-700'
+                                    : 'bg-gray-100 text-gray-500'
+                                }`}
+                              >
+                                {student.hasApiKey ? '연결됨' : '미연결'}
+                              </span>
+                              {student.hasApiKey && (
+                                <button
+                                  onClick={() => handleResetApiKey(student)}
+                                  className="text-xs text-gray-400 hover:text-red-500 transition-colors"
+                                  title="API 키 초기화"
+                                >
+                                  <RotateCcw className="w-3.5 h-3.5" />
+                                </button>
+                              )}
+                            </div>
+                          </td>
+                          <td className="px-5 py-4">
+                            <span className="text-sm text-gray-500">
+                              {new Date(student.createdAt).toLocaleDateString('ko-KR')}
+                            </span>
+                          </td>
+                          <td className="px-5 py-4 text-right">
+                            <div className="flex items-center justify-end gap-2">
+                              <button
+                                onClick={() => setAssignModal(student)}
+                                className="text-xs text-purple-600 hover:text-purple-800 font-medium hover:bg-purple-50 px-2 py-1 rounded transition-colors"
+                              >
+                                추가배정
+                              </button>
+                              <button
+                                onClick={() => setSelectedStudent(student)}
+                                className="text-xs text-blue-600 hover:text-blue-800 font-medium hover:bg-blue-50 px-2 py-1 rounded transition-colors"
+                              >
+                                AI 기록
+                              </button>
+                            </div>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
 
                 {/* 결과 없음 */}
                 {sortedStudents.length === 0 && !isLoading && (
@@ -763,7 +847,7 @@ export default function AdminDashboard() {
                     </p>
                   </div>
                 )}
-              </div>
+              </>
             ) : null}
           </div>
         </>
