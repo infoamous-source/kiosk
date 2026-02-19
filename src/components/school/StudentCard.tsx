@@ -3,8 +3,13 @@ import { Award } from 'lucide-react';
 import type { User } from '../../types/auth';
 import type { PersonaId } from '../../types/school';
 import { PERSONAS } from '../../data/aptitudeQuestions';
-import { SCHOOL_NAMES, type SchoolId } from '../../types/enrollment';
 import KkakdugiMascot from '../brand/KkakdugiMascot';
+
+const CLASSROOM_DISPLAY: Record<string, string> = {
+  'marketing': '예비 마케터 교실',
+  'digital-basics': '디지털 기초 교실',
+  'career': '취업 준비 교실',
+};
 
 interface StudentCardProps {
   user: User;
@@ -61,7 +66,7 @@ export default function StudentCard({ user, isGraduated, personaId, instructorNa
             )}
             {assignments && assignments.length > 0 && (
               <p className="text-kk-brown/60 text-xs mt-0.5 font-medium">
-                학과: {assignments.map(a => `${SCHOOL_NAMES[a.track as SchoolId]?.ko || a.track}·${a.classroomName}`).join(' / ')}
+                교실: {assignments.map(a => CLASSROOM_DISPLAY[a.track] || `${a.track} 교실`).join(' / ')}
               </p>
             )}
           </div>
