@@ -81,6 +81,38 @@ export async function getStudentsByInstructorCode(instructorCode: string): Promi
   return data as ProfileRow[];
 }
 
+/** 선생님코드 유효성 검증 */
+export async function validateInstructorCode(code: string): Promise<boolean> {
+  const { data, error } = await supabase
+    .from('profiles')
+    .select('id')
+    .eq('role', 'instructor')
+    .eq('instructor_code', code)
+    .limit(1);
+
+  if (error) {
+    console.error('Validate instructor code error:', error.message);
+    return false;
+  }
+  return (data?.length ?? 0) > 0;
+}
+
+/** 선생님코드로 선생님 이름 조회 */
+export async function getInstructorNameByCode(code: string): Promise<string | null> {
+  const { data, error } = await supabase
+    .from('profiles')
+    .select('name')
+    .eq('role', 'instructor')
+    .eq('instructor_code', code)
+    .single();
+
+  if (error) {
+    console.error('Get instructor name error:', error.message);
+    return null;
+  }
+  return data?.name || null;
+}
+
 /** Gemini API 키 저장 */
 export async function saveGeminiApiKey(userId: string, apiKey: string): Promise<boolean> {
   const { error } = await supabase

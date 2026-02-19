@@ -14,7 +14,23 @@ export function getStoredApiKey(): string | null {
   try {
     const stored = localStorage.getItem(API_KEY_STORAGE);
     if (!stored) return null;
-    return atob(stored);
+
+    // 1) base64 디코딩 시도
+    try {
+      const decoded = atob(stored);
+      if (decoded.startsWith('AIza')) return decoded;
+    } catch {
+      // base64가 아닌 raw 키 — 아래 fallback으로
+    }
+
+    // 2) raw 키 fallback (AIAssistantConnect에서 base64 없이 저장한 경우)
+    if (stored.startsWith('AIza')) {
+      // 자동 마이그레이션: raw → base64로 재저장
+      try { localStorage.setItem(API_KEY_STORAGE, btoa(stored)); } catch { /* ignore */ }
+      return stored;
+    }
+
+    return null;
   } catch {
     return null;
   }
@@ -36,9 +52,28 @@ export function setGeminiConnected(value: boolean): void {
   }
 }
 
+export function isGeminiConnected(): boolean {
+  try {
+    return localStorage.getItem(CONNECTED_STORAGE) === 'true';
+  } catch {
+    return false;
+  }
+}
+
+export function clearGeminiConnection(): void {
+  try {
+    localStorage.removeItem(API_KEY_STORAGE);
+    localStorage.removeItem(CONNECTED_STORAGE);
+  } catch {
+    // ignore
+  }
+}
+
 export function isGeminiEnabled(): boolean {
   try {
-    return localStorage.getItem(CONNECTED_STORAGE) === 'true' && !!getStoredApiKey();
+    const enabled = localStorage.getItem(CONNECTED_STORAGE) === 'true' && !!getStoredApiKey();
+    console.debug('[Gemini] isGeminiEnabled =', enabled);
+    return enabled;
   } catch {
     return false;
   }

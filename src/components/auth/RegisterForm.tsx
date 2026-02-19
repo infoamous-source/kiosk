@@ -16,6 +16,7 @@ import {
 } from 'lucide-react';
 import { useAuth } from '../../contexts/AuthContext';
 import { parseAuthError, type AuthError } from '../../utils/authErrors';
+import { validateInstructorCode } from '../../services/profileService';
 import { COUNTRIES } from '../../data/countries';
 
 /** 비밀번호 강도 검사 */
@@ -102,6 +103,18 @@ export default function RegisterForm() {
 
     setIsLoading(true);
     try {
+      // 선생님코드 유효성 검증
+      const isValidCode = await validateInstructorCode(formData.instructorCode);
+      if (!isValidCode) {
+        setError({
+          title: '선생님코드 오류 (Teacher Code Error)',
+          reason: '유효하지 않은 선생님코드입니다 (Invalid teacher code)',
+          solution: '선생님에게 올바른 코드를 확인해주세요 (Please check the correct code with your teacher)',
+        });
+        setIsLoading(false);
+        return;
+      }
+
       await register({
         name: formData.name,
         email: formData.email,
@@ -345,7 +358,7 @@ export default function RegisterForm() {
             {/* 8. 강사코드 */}
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1.5">
-                {t('register.instructorCodeLabel', '강사코드 (Instructor Code)')} <span className="text-red-500">*</span>
+                {t('register.instructorCodeLabel', '선생님코드 (Teacher Code)')} <span className="text-red-500">*</span>
               </label>
               <div className="relative">
                 <GraduationCap className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
@@ -359,7 +372,7 @@ export default function RegisterForm() {
                       instructorCode: e.target.value.toUpperCase(),
                     }));
                   }}
-                  placeholder={t('register.instructorCodePlaceholder', '강사에게 받은 코드를 입력하세요 (Enter the code from your instructor)')}
+                  placeholder={t('register.instructorCodePlaceholder', '선생님에게 받은 코드를 입력하세요 (Enter the code from your teacher)')}
                   className="w-full pl-11 pr-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-kk-red focus:border-transparent transition-all"
                   required
                 />

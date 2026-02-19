@@ -1,12 +1,11 @@
 import { useState, useRef, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
-import { Globe, ChevronDown, ChevronRight, UserCircle } from 'lucide-react';
+import { Globe, ChevronDown, ChevronRight, UserCircle, LogIn } from 'lucide-react';
 import TrackCard from '../components/gateway/TrackCard';
 import { tracks } from '../data/tracks';
 import { useVisibility } from '../contexts/VisibilityContext';
 import { useAuth } from '../contexts/AuthContext';
-import { useEnrollments } from '../contexts/EnrollmentContext';
 import PendingEnrollmentBanner from '../components/enrollment/PendingEnrollmentBanner';
 import KkakdugiCharacter from '../components/brand/KkakdugiCharacter';
 import KkakdugiMascot from '../components/brand/KkakdugiMascot';
@@ -32,20 +31,13 @@ const languages = [
 export default function GatewayPage() {
   const { t, i18n } = useTranslation('common');
   const navigate = useNavigate();
-  const { isAuthenticated, isLoading: authLoading } = useAuth();
-  const { enrollments, isLoading: enrollLoading } = useEnrollments();
+  const { user, isAuthenticated } = useAuth();
   const { isTrackVisible } = useVisibility();
   const [langOpen, setLangOpen] = useState(false);
   const langRef = useRef<HTMLDivElement>(null);
   const currentLang = languages.find((l) => l.code === i18n.language) || languages[0];
 
-  // 이미 로그인 + 마케팅 등록된 사용자 → 자동으로 허브로 이동
-  useEffect(() => {
-    if (authLoading || enrollLoading) return;
-    if (isAuthenticated && enrollments.some(e => e.school_id === 'marketing')) {
-      navigate('/marketing/hub', { replace: true });
-    }
-  }, [isAuthenticated, enrollments, authLoading, enrollLoading, navigate]);
+  // 자동 리다이렉트 제거됨 — 로그인 여부와 무관하게 항상 메인화면 표시
 
   useEffect(() => {
     const handler = (e: MouseEvent) => {
@@ -76,15 +68,23 @@ export default function GatewayPage() {
             </div>
           </div>
 
-          {/* 내 학생증 + 언어 선택기 */}
+          {/* 내 학생증 / 로그인 버튼 + 언어 선택기 */}
           <div className="flex items-center gap-2">
-          {isAuthenticated && (
+          {isAuthenticated ? (
             <button
               onClick={() => navigate('/profile')}
               className="flex items-center gap-1.5 px-3 py-2 rounded-lg hover:bg-kk-cream/60 transition-colors text-sm font-medium text-kk-brown"
             >
               <UserCircle className="w-4 h-4" />
               <span className="hidden sm:inline">{t('sidebar.profile', '내 학생증')}</span>
+            </button>
+          ) : (
+            <button
+              onClick={() => navigate('/login')}
+              className="flex items-center gap-1.5 px-4 py-2 rounded-xl bg-kk-red hover:bg-kk-red-deep text-white text-sm font-semibold transition-colors shadow-sm"
+            >
+              <LogIn className="w-4 h-4" />
+              <span>{t('header.login', '로그인')}</span>
             </button>
           )}
           <div ref={langRef} className="relative">
@@ -130,9 +130,16 @@ export default function GatewayPage() {
             <StarIcon size={28} className="opacity-40" />
           </div>
 
-          {/* 캐릭터 */}
-          <div className="mb-4">
+          {/* 캐릭터 + 환영 말풍선 */}
+          <div className="mb-4 relative inline-block">
             <KkakdugiCharacter size="half" animated />
+            {isAuthenticated && user && (
+              <div className="absolute -right-4 top-0 translate-x-full bg-white border-2 border-kk-warm rounded-2xl rounded-bl-none px-4 py-2 shadow-md max-w-[200px]">
+                <p className="text-sm font-semibold text-kk-brown whitespace-nowrap">
+                  {user.name}님 환영해요!
+                </p>
+              </div>
+            )}
           </div>
 
           <div className="inline-flex items-center gap-2 px-4 py-2 bg-kk-cream text-kk-red-deep rounded-full text-sm font-semibold mb-4 border border-kk-warm">
@@ -192,9 +199,18 @@ export default function GatewayPage() {
             <KkakdugiMascot size={20} />
             <span className="text-sm text-kk-brown/40 font-medium">깍두기 학교</span>
           </div>
-          <p className="text-xs text-kk-brown/30">
+          <p className="text-xs text-kk-brown/30 mb-2">
             {t('gateway.footer', '© 2024 깍두기 학교. 이주민/유학생을 위한 교육 플랫폼')}
           </p>
+          {/* 선생님 로그인 링크 */}
+          {!isAuthenticated && (
+            <button
+              onClick={() => navigate('/login?role=instructor')}
+              className="text-xs text-kk-brown/30 hover:text-kk-red transition-colors underline underline-offset-2"
+            >
+              선생님 로그인
+            </button>
+          )}
         </div>
       </footer>
     </div>

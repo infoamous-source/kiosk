@@ -3,7 +3,7 @@ import type { User as SupabaseUser } from '@supabase/supabase-js';
 import type { User, AuthState } from '../types/auth';
 import type { ProfileRow } from '../types/database';
 import { supabase, isSupabaseConfigured } from '../lib/supabase';
-import { updateProfile } from '../services/profileService';
+import { updateProfile, validateInstructorCode } from '../services/profileService';
 import { createEnrollment } from '../services/enrollmentService';
 
 interface AuthContextType extends AuthState {
@@ -141,6 +141,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const register = useCallback(async (data: RegisterData, _rememberMe = false): Promise<boolean> => {
     if (!isSupabaseConfigured) {
       throw new Error('supabase_not_configured');
+    }
+
+    // 0) 선생님코드 유효성 검증 (이중 안전장치)
+    if (data.instructorCode) {
+      const isValid = await validateInstructorCode(data.instructorCode);
+      if (!isValid) {
+        throw new Error('invalid_instructor_code');
+      }
     }
 
     // 1) Supabase Auth 계정 생성 (트리거가 profiles 자동 생성)

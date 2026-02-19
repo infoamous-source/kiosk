@@ -17,6 +17,15 @@ export function parseAuthError(error: unknown): AuthError {
       };
     }
 
+    // 선생님코드 검증 실패
+    if (message.includes('invalid_instructor_code')) {
+      return {
+        title: '선생님코드 오류 (Teacher Code Error)',
+        reason: '유효하지 않은 선생님코드입니다 (Invalid teacher code)',
+        solution: '선생님에게 올바른 코드를 확인해주세요 (Please check the correct code with your teacher)',
+      };
+    }
+
     // 이미 등록된 이메일
     if (message.includes('already registered') || message.includes('23505') || message.includes('already been registered')) {
       return {

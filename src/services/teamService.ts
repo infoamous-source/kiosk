@@ -352,3 +352,22 @@ export async function deleteTeamIdea(ideaId: string): Promise<boolean> {
   }
   return true;
 }
+
+/** 학생이 특정 학과(track)의 교실에 배정되어 있는지 확인 */
+export async function isStudentAssignedToTrack(
+  userId: string,
+  track: string,
+): Promise<boolean> {
+  const { data, error } = await supabase
+    .from('classroom_members')
+    .select('id, classroom_groups!inner(track)')
+    .eq('user_id', userId)
+    .eq('classroom_groups.track', track)
+    .limit(1);
+
+  if (error) {
+    console.error('Check student assignment error:', error.message);
+    return false;
+  }
+  return (data?.length ?? 0) > 0;
+}

@@ -1,6 +1,7 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useAuth } from '../contexts/AuthContext';
+import { getInstructorNameByCode } from '../services/profileService';
 import { useEnrollments } from '../contexts/EnrollmentContext';
 import { useNavigate } from 'react-router-dom';
 import {
@@ -31,6 +32,15 @@ export default function ProfilePage() {
   const { user } = useAuth();
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState<ProfileTab>('info');
+  const [instructorName, setInstructorName] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (user?.instructorCode) {
+      getInstructorNameByCode(user.instructorCode).then(name => {
+        if (name) setInstructorName(name);
+      }).catch(() => {});
+    }
+  }, [user?.instructorCode]);
 
   if (!user) {
     return (
@@ -190,11 +200,18 @@ export default function ProfilePage() {
                 icon={<Building2 className="w-4 h-4 text-kk-brown/30" />}
               />
               <InfoRow
-                label={t('profile.instructorCode', '강사코드')}
+                label={t('profile.instructorCode', '선생님코드')}
                 value={user.instructorCode || t('profile.notSet', '미설정')}
                 icon={<GraduationCap className="w-4 h-4 text-kk-brown/30" />}
                 mono
               />
+              {instructorName && (
+                <InfoRow
+                  label="담임 선생님"
+                  value={`${instructorName} 선생님`}
+                  icon={<GraduationCap className="w-4 h-4 text-kk-brown/30" />}
+                />
+              )}
               <InfoRow
                 label={t('profile.orgCode', '기관코드')}
                 value={user.orgCode || t('profile.noOrg', '개인')}

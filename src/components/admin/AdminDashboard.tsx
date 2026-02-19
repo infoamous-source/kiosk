@@ -20,6 +20,8 @@ import {
   GraduationCap,
   UserPlus,
   UsersRound,
+  Cpu,
+  Bell,
 } from 'lucide-react';
 import { useAuth } from '../../contexts/AuthContext';
 import { supabase } from '../../lib/supabase';
@@ -30,14 +32,18 @@ import ContentManager from './ContentManager';
 import SchoolManagement from './SchoolManagement';
 import StudentEnrollmentManager from './StudentEnrollmentManager';
 import TeamManagement from './TeamManagement';
+import NotificationSender from './NotificationSender';
+import StudentAIUsageView from './StudentAIUsageView';
 
-type DashboardTab = 'students' | 'content' | 'school' | 'enrollment' | 'teams';
+type DashboardTab = 'students' | 'content' | 'school' | 'enrollment' | 'teams' | 'notifications';
 
 // 정렬 타입
 type SortType = 'name' | 'email' | 'organization' | 'lastActive';
 type SortOrder = 'asc' | 'desc';
 
 // 실시간 학생 데이터 타입
+type ApiFilter = 'all' | 'connected' | 'disconnected';
+
 interface RealStudent {
   id: string;
   name: string;
@@ -48,6 +54,7 @@ interface RealStudent {
   enrollmentStatus: string; // 'active' | 'pending_info' | 'none'
   country: string | null;
   createdAt: string;
+  hasApiKey: boolean;
 }
 
 export default function AdminDashboard() {
@@ -62,6 +69,8 @@ export default function AdminDashboard() {
   const [lastUpdate, setLastUpdate] = useState<Date>(new Date());
   const [realtimeStudents, setRealtimeStudents] = useState<RealStudent[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [apiFilter, setApiFilter] = useState<ApiFilter>('all');
+  const [selectedStudent, setSelectedStudent] = useState<RealStudent | null>(null);
 
   // 실제 Supabase 데이터 로드
   useEffect(() => {
@@ -85,6 +94,7 @@ export default function AdminDashboard() {
               enrollmentStatus: marketingEnrollment?.status ?? 'none',
               country: p.country,
               createdAt: p.created_at,
+              hasApiKey: !!p.gemini_api_key,
             };
           }),
         );
@@ -108,6 +118,27 @@ export default function AdminDashboard() {
       .on(
         'postgres_changes',
         {
+          event: 'UPDATE',
+          schema: 'public',
+          table: 'profiles',
+          filter: `instructor_code=eq.${user.instructorCode}`,
+        },
+        (payload) => {
+          const updated = payload.new as ProfileRow;
+          if (updated.role !== 'student') return;
+          setRealtimeStudents(prev =>
+            prev.map(s =>
+              s.id === updated.id
+                ? { ...s, name: updated.name, email: updated.email, organization: updated.organization || '', hasApiKey: !!updated.gemini_api_key }
+                : s,
+            ),
+          );
+          setLastUpdate(new Date());
+        },
+      )
+      .on(
+        'postgres_changes',
+        {
           event: 'INSERT',
           schema: 'public',
           table: 'profiles',
@@ -128,6 +159,7 @@ export default function AdminDashboard() {
             enrollmentStatus: marketingEnrollment?.status ?? 'none',
             country: newProfile.country,
             createdAt: newProfile.created_at,
+            hasApiKey: !!newProfile.gemini_api_key,
           };
           setRealtimeStudents(prev => [newStudent, ...prev]);
           setLastUpdate(new Date());
@@ -147,6 +179,10 @@ export default function AdminDashboard() {
 
   // 필터링
   const filteredStudents = realtimeStudents.filter((student) => {
+    // API 필터
+    if (apiFilter === 'connected' && !student.hasApiKey) return false;
+    if (apiFilter === 'disconnected' && student.hasApiKey) return false;
+    // 검색어 필터
     const query = searchQuery.toLowerCase();
     return (
       !query ||
@@ -187,13 +223,15 @@ export default function AdminDashboard() {
           orgCode: key,
           students: [],
           activeCount: 0,
+          apiCount: 0,
         };
       }
       acc[key].students.push(student);
       if (student.enrollmentStatus === 'active') acc[key].activeCount++;
+      if (student.hasApiKey) acc[key].apiCount++;
       return acc;
     },
-    {} as Record<string, { name: string; orgCode: string; students: RealStudent[]; activeCount: number }>,
+    {} as Record<string, { name: string; orgCode: string; students: RealStudent[]; activeCount: number; apiCount: number }>,
   );
 
   const handleExportExcel = () => {
@@ -227,6 +265,7 @@ export default function AdminDashboard() {
           enrollmentStatus: marketingEnrollment?.status ?? 'none',
           country: p.country,
           createdAt: p.created_at,
+          hasApiKey: !!p.gemini_api_key,
         };
       }),
     );
@@ -239,6 +278,7 @@ export default function AdminDashboard() {
   const totalStudents = realtimeStudents.length;
   const activeEnrollments = realtimeStudents.filter(s => s.enrollmentStatus === 'active').length;
   const orgCount = Object.keys(organizationGroups).length;
+  const apiConnectedCount = realtimeStudents.filter(s => s.hasApiKey).length;
 
   const enrollmentStatusLabel = (status: string) => {
     switch (status) {
@@ -267,6 +307,7 @@ export default function AdminDashboard() {
           { id: 'content' as DashboardTab, icon: Settings2, label: t('admin.tabs.content') },
           { id: 'school' as DashboardTab, icon: GraduationCap, label: '학습 진행' },
           { id: 'enrollment' as DashboardTab, icon: UserPlus, label: '등록 관리' },
+          { id: 'notifications' as DashboardTab, icon: Bell, label: '공지' },
         ]).map(tab => {
           const Icon = tab.icon;
           return (
@@ -291,12 +332,13 @@ export default function AdminDashboard() {
       {activeTab === 'school' && <SchoolManagement />}
       {activeTab === 'enrollment' && <StudentEnrollmentManager />}
       {activeTab === 'teams' && <TeamManagement />}
+      {activeTab === 'notifications' && <NotificationSender students={realtimeStudents} />}
 
       {/* 학생 현황 탭 */}
       {activeTab === 'students' && (
         <>
           {/* 통계 카드 */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
             <div className="bg-white rounded-xl border border-gray-100 p-5">
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 bg-blue-50 rounded-lg flex items-center justify-center">
@@ -332,7 +374,42 @@ export default function AdminDashboard() {
                 </div>
               </div>
             </div>
+
+            <div className="bg-white rounded-xl border border-gray-100 p-5">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 bg-amber-50 rounded-lg flex items-center justify-center">
+                  <Cpu className="w-5 h-5 text-amber-600" />
+                </div>
+                <div>
+                  <p className="text-2xl font-bold text-gray-800">
+                    {apiConnectedCount}<span className="text-sm font-normal text-gray-400">/{totalStudents}</span>
+                  </p>
+                  <p className="text-xs text-gray-500">AI 연결</p>
+                </div>
+              </div>
+            </div>
           </div>
+
+          {/* AI 미연결 학생 경고 배너 */}
+          {totalStudents > 0 && apiConnectedCount < totalStudents && (
+            <div className="bg-amber-50 border border-amber-200 rounded-xl p-4 mb-8 flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <Cpu className="w-5 h-5 text-amber-600" />
+                <div>
+                  <p className="text-sm font-medium text-amber-800">
+                    AI 비서 미연결 학생 {totalStudents - apiConnectedCount}명
+                  </p>
+                  <p className="text-xs text-amber-600">해당 학생에게 AI 비서 연결 안내가 필요합니다</p>
+                </div>
+              </div>
+              <button
+                onClick={() => setApiFilter('disconnected')}
+                className="text-xs font-medium text-amber-700 bg-amber-100 px-3 py-1.5 rounded-lg hover:bg-amber-200 transition-colors"
+              >
+                미연결 학생 보기
+              </button>
+            </div>
+          )}
 
           {/* 기관별 현황 */}
           {orgCount > 0 && (
@@ -355,7 +432,7 @@ export default function AdminDashboard() {
                     </div>
                     <div className="flex items-center justify-between">
                       <span className="text-sm text-gray-500">
-                        {org.students.length}명 (활성 {org.activeCount}명)
+                        {org.students.length}명 (활성 {org.activeCount}명, AI {org.apiCount}명)
                       </span>
                     </div>
                   </div>
@@ -422,6 +499,27 @@ export default function AdminDashboard() {
                 </div>
 
                 <div className="flex items-center gap-3 w-full sm:w-auto flex-wrap">
+                  {/* API 필터 */}
+                  <div className="flex bg-gray-100 rounded-lg p-1">
+                    {([
+                      { value: 'all' as ApiFilter, label: '전체' },
+                      { value: 'connected' as ApiFilter, label: 'AI 연결' },
+                      { value: 'disconnected' as ApiFilter, label: '미연결' },
+                    ]).map(f => (
+                      <button
+                        key={f.value}
+                        onClick={() => setApiFilter(f.value)}
+                        className={`px-3 py-1.5 rounded-md text-xs font-medium transition-all ${
+                          apiFilter === f.value
+                            ? 'bg-white text-amber-600 shadow-sm'
+                            : 'text-gray-500 hover:text-gray-700'
+                        }`}
+                      >
+                        {f.label}
+                      </button>
+                    ))}
+                  </div>
+
                   {/* 정렬 버튼 */}
                   <div className="flex bg-gray-100 rounded-lg p-1 flex-wrap">
                     {(
@@ -499,6 +597,9 @@ export default function AdminDashboard() {
                       <th className="px-5 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">
                         등록 상태
                       </th>
+                      <th className="px-5 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">
+                        AI 연결
+                      </th>
                       <th
                         className="px-5 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100"
                         onClick={() => handleSortToggle('lastActive')}
@@ -543,13 +644,27 @@ export default function AdminDashboard() {
                             </span>
                           </td>
                           <td className="px-5 py-4">
+                            <span
+                              className={`inline-flex px-2.5 py-1 rounded-full text-xs font-medium ${
+                                student.hasApiKey
+                                  ? 'bg-green-100 text-green-700'
+                                  : 'bg-gray-100 text-gray-500'
+                              }`}
+                            >
+                              {student.hasApiKey ? '연결됨' : '미연결'}
+                            </span>
+                          </td>
+                          <td className="px-5 py-4">
                             <span className="text-sm text-gray-500">
                               {new Date(student.createdAt).toLocaleDateString('ko-KR')}
                             </span>
                           </td>
                           <td className="px-5 py-4 text-right">
-                            <button className="p-2 hover:bg-gray-100 rounded-lg transition-colors">
-                              <MoreHorizontal className="w-4 h-4 text-gray-400" />
+                            <button
+                              onClick={() => setSelectedStudent(student)}
+                              className="text-xs text-blue-600 hover:text-blue-800 font-medium hover:bg-blue-50 px-2 py-1 rounded transition-colors"
+                            >
+                              AI 기록
                             </button>
                           </td>
                         </tr>
@@ -564,7 +679,7 @@ export default function AdminDashboard() {
                     <Search className="w-12 h-12 text-gray-300 mx-auto mb-3" />
                     <p className="text-gray-500">{t('admin.noResults')}</p>
                     <p className="text-gray-400 text-xs mt-1">
-                      강사 코드 <span className="font-mono font-semibold">{user?.instructorCode}</span>로 등록한
+                      선생님 코드 <span className="font-mono font-semibold">{user?.instructorCode}</span>로 등록한
                       학생이 없습니다.
                     </p>
                   </div>
@@ -573,6 +688,15 @@ export default function AdminDashboard() {
             ) : null}
           </div>
         </>
+      )}
+
+      {/* AI 사용 기록 모달 */}
+      {selectedStudent && (
+        <StudentAIUsageView
+          studentId={selectedStudent.id}
+          studentName={selectedStudent.name}
+          onClose={() => setSelectedStudent(null)}
+        />
       )}
     </div>
   );

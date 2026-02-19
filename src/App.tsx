@@ -27,7 +27,6 @@ import GraduationProjectPage from './pages/marketing/school/GraduationProjectPag
 import ProfilePage from './pages/ProfilePage';
 import DigitalModulePage from './pages/DigitalModulePage';
 import KioskPracticePage from './pages/KioskPracticePage';
-import CongratsPage from './pages/CongratsPage';
 import AIWelcomePage from './pages/AIWelcomePage';
 import RegisterCompletePage from './pages/RegisterCompletePage';
 import AboutPage from './pages/AboutPage';
@@ -49,7 +48,7 @@ export default function App() {
           {/* 인증 페이지 */}
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
-          <Route path="/congrats" element={<CongratsPage />} />
+          <Route path="/congrats" element={<Navigate to="/login" replace />} />
           <Route path="/register-complete" element={<RegisterCompletePage />} />
           <Route path="/ai-welcome" element={<AIWelcomePage />} />
 

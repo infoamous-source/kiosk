@@ -9,9 +9,10 @@ interface StudentCardProps {
   user: User;
   isGraduated: boolean;
   personaId?: PersonaId | null;
+  instructorName?: string | null;
 }
 
-export default function StudentCard({ user, isGraduated, personaId }: StudentCardProps) {
+export default function StudentCard({ user, isGraduated, personaId, instructorName }: StudentCardProps) {
   const { t } = useTranslation('common');
 
   return (
@@ -46,7 +47,10 @@ export default function StudentCard({ user, isGraduated, personaId }: StudentCar
             <h3 className="text-xl font-bold text-kk-brown">{user.name}</h3>
             <p className="text-kk-brown/50 text-sm">{user.email}</p>
             {user.organization && (
-              <p className="text-kk-brown/40 text-xs mt-0.5">{user.organization}</p>
+              <p className="text-kk-brown/60 text-xs mt-1 font-medium">소속: {user.organization}</p>
+            )}
+            {instructorName && (
+              <p className="text-kk-brown/60 text-xs mt-0.5 font-medium">담임: {instructorName} 선생님</p>
             )}
           </div>
         </div>

@@ -1,7 +1,8 @@
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
-import AIAssistantConnect, { isGeminiConnected } from '../../../components/marketing/AIAssistantConnect';
+import AIAssistantConnect from '../../../components/marketing/AIAssistantConnect';
+import { isGeminiConnected } from '../../../services/gemini/geminiClient';
 import { useEffect, useState } from 'react';
 
 /**

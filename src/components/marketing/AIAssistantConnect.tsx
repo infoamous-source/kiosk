@@ -6,22 +6,22 @@ import {
 } from 'lucide-react';
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import confetti from 'canvas-confetti';
-
-const API_KEY_STORAGE = 'kiosk-gemini-api-key';
-const CONNECTED_STORAGE = 'kiosk-gemini-connected';
+import {
+  getStoredApiKey, setStoredApiKey, setGeminiConnected,
+  isGeminiConnected as checkGeminiConnected, clearGeminiConnection,
+} from '../../services/gemini/geminiClient';
+import { useAuth } from '../../contexts/AuthContext';
+import { saveGeminiApiKey } from '../../services/profileService';
 
 type ConnectionState = 'idle' | 'loading' | 'success' | 'error';
 
 export default function AIAssistantConnect() {
   const { t } = useTranslation('common');
+  const { user } = useAuth();
 
-  // 저장된 키/상태 로드
-  const [apiKey, setApiKey] = useState(() => {
-    try { return localStorage.getItem(API_KEY_STORAGE) || ''; } catch { return ''; }
-  });
-  const [isConnected, setIsConnected] = useState(() => {
-    try { return localStorage.getItem(CONNECTED_STORAGE) === 'true'; } catch { return false; }
-  });
+  // 저장된 키/상태 로드 (geminiClient 중앙화 함수 사용)
+  const [apiKey, setApiKey] = useState(() => getStoredApiKey() || '');
+  const [isConnected, setIsConnected] = useState(() => checkGeminiConnected());
 
   const [connectionState, setConnectionState] = useState<ConnectionState>(
     isConnected ? 'success' : 'idle'
@@ -59,26 +59,13 @@ export default function AIAssistantConnect() {
       setConnectionState('success');
       setIsConnected(true);
 
-      // localStorage에 저장
-      try {
-        localStorage.setItem(API_KEY_STORAGE, apiKey.trim());
-        localStorage.setItem(CONNECTED_STORAGE, 'true');
-      } catch {
-        // storage full 등 무시
-      }
+      // localStorage에 저장 (geminiClient 중앙화 함수 — base64 인코딩 포함)
+      setStoredApiKey(apiKey.trim());
+      setGeminiConnected(true);
 
-      // 유저 프로필에도 저장 (향후 DB 연동 대비)
-      try {
-        const authData = localStorage.getItem('kiosk-auth');
-        if (authData) {
-          const parsed = JSON.parse(authData);
-          if (parsed.user) {
-            parsed.user.api_key = apiKey.trim();
-            localStorage.setItem('kiosk-auth', JSON.stringify(parsed));
-          }
-        }
-      } catch {
-        // ignore
+      // Supabase DB에도 동기화 (선생님 대시보드에서 API 연결 상태 조회용)
+      if (user?.id) {
+        saveGeminiApiKey(user.id, apiKey.trim()).catch(() => { /* ignore */ });
       }
 
       // 폭죽 애니메이션!
@@ -127,12 +114,7 @@ export default function AIAssistantConnect() {
     setConnectionState('idle');
     setAiMessage('');
     setApiKey('');
-    try {
-      localStorage.removeItem(API_KEY_STORAGE);
-      localStorage.removeItem(CONNECTED_STORAGE);
-    } catch {
-      // ignore
-    }
+    clearGeminiConnection();
   }, []);
 
   // 재시도 카운트다운
@@ -377,19 +359,5 @@ export default function AIAssistantConnect() {
   );
 }
 
-// 다른 컴포넌트에서 연결 상태 확인용 유틸
-export function isGeminiConnected(): boolean {
-  try {
-    return localStorage.getItem(CONNECTED_STORAGE) === 'true';
-  } catch {
-    return false;
-  }
-}
-
-export function getGeminiApiKey(): string | null {
-  try {
-    return localStorage.getItem(API_KEY_STORAGE);
-  } catch {
-    return null;
-  }
-}
+// Re-export from geminiClient for backward compatibility
+export { isGeminiConnected } from '../../services/gemini/geminiClient';

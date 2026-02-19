@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../../contexts/AuthContext';
 import { useSchoolProgress } from '../../../hooks/useSchoolProgress';
 import { getMyTeam } from '../../../services/teamService';
+import { getInstructorNameByCode } from '../../../services/profileService';
 import StudentCard from '../../../components/school/StudentCard';
 import StampBoard from '../../../components/school/StampBoard';
 import GraduationModal from '../../../components/school/GraduationModal';
@@ -18,6 +19,7 @@ export default function AttendanceTab() {
   const [showCertificate, setShowCertificate] = useState(false);
   const [refreshKey, setRefreshKey] = useState(0);
   const [myTeam, setMyTeam] = useState<{ name: string } | null>(null);
+  const [instructorName, setInstructorName] = useState<string | null>(null);
 
   useEffect(() => {
     if (!user) return;
@@ -26,6 +28,12 @@ export default function AttendanceTab() {
     }).catch(() => {
       // 팀 조회 실패 — 무시 (팀 없는 유저)
     });
+    // 담임 선생님 이름 조회
+    if (user.instructorCode) {
+      getInstructorNameByCode(user.instructorCode).then(name => {
+        if (name) setInstructorName(name);
+      }).catch(() => {});
+    }
   }, [user]);
 
   const { progress, isLoading: schoolLoading, isGraduated: graduated, canGraduate: canGrad, aptitudeResult } = useSchoolProgress();
@@ -42,7 +50,7 @@ export default function AttendanceTab() {
   return (
     <div className="space-y-5" key={refreshKey}>
       {/* 학생증 */}
-      <StudentCard user={user} isGraduated={graduated} personaId={personaId} />
+      <StudentCard user={user} isGraduated={graduated} personaId={personaId} instructorName={instructorName} />
 
       {/* 내 학생증 보기 + 졸업증 받기 */}
       <div className="flex gap-2">

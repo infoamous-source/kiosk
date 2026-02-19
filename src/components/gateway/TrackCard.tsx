@@ -1,17 +1,24 @@
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { ChevronRight } from 'lucide-react';
 import type { Track } from '../../types/track';
 import { useActivityLog } from '../../hooks/useActivityLog';
 import { useAuth } from '../../contexts/AuthContext';
-import { useEnrollments } from '../../contexts/EnrollmentContext';
-import type { SchoolId } from '../../types/enrollment';
+import { isStudentAssignedToTrack } from '../../services/teamService';
 import { DigitalDeptIcon, MarketingDeptIcon, CareerDeptIcon } from '../brand/SchoolIllustrations';
 
 const deptIconMap: Record<string, React.FC<{ size?: number; className?: string }>> = {
   'digital-basics': DigitalDeptIcon,
   marketing: MarketingDeptIcon,
   career: CareerDeptIcon,
+};
+
+// 학과별 허브 경로
+const trackHubPath: Record<string, string> = {
+  marketing: '/marketing/hub',
+  'digital-basics': '/digital/hub',
+  career: '/career/hub',
 };
 
 interface TrackCardProps {
@@ -22,52 +29,56 @@ interface TrackCardProps {
 export default function TrackCard({ track, delay = 0 }: TrackCardProps) {
   const { t } = useTranslation('common');
   const navigate = useNavigate();
-  const { isAuthenticated } = useAuth();
-  const { enrollments } = useEnrollments();
+  const { user, isAuthenticated } = useAuth();
   const { logActivity } = useActivityLog();
   const DeptIcon = deptIconMap[track.id] || DigitalDeptIcon;
+  const [checking, setChecking] = useState(false);
 
-  const handleClick = () => {
+  const showToast = (message: string) => {
+    const toast = document.createElement('div');
+    toast.className = 'fixed top-6 left-1/2 -translate-x-1/2 bg-kk-brown text-kk-cream px-6 py-3 rounded-xl shadow-lg z-[9999] text-sm font-medium';
+    toast.textContent = message;
+    document.body.appendChild(toast);
+    setTimeout(() => {
+      toast.style.opacity = '0';
+      toast.style.transition = 'opacity 0.3s';
+      setTimeout(() => toast.remove(), 300);
+    }, 2500);
+  };
+
+  const handleClick = async () => {
     logActivity('click', track.id, undefined, { source: 'gateway' });
 
-    // 마케팅 → 허브로 이동 (신규/기존 사용자 구분)
-    if (track.id === 'marketing') {
-      const schoolId: SchoolId = 'marketing';
-
-      if (!isAuthenticated) {
-        navigate('/congrats', { state: { schoolId } });
-        return;
-      }
-
-      const isEnrolled = enrollments.some(e => e.school_id === schoolId);
-      if (!isEnrolled) {
-        navigate('/congrats', { state: { schoolId } });
-        return;
-      }
-
-      navigate('/marketing/hub');
+    // 미로그인 → 학생 로그인 페이지로 이동
+    if (!isAuthenticated || !user) {
+      navigate('/login', { state: { redirectTo: '/' } });
       return;
     }
 
-    // 디지털, 취업은 "준비 중" 토스트
+    // 디지털, 취업은 아직 "준비 중"
     if (track.id === 'digital-basics' || track.id === 'career') {
-      const toast = document.createElement('div');
-      toast.className = 'fixed top-6 left-1/2 -translate-x-1/2 bg-kk-brown text-kk-cream px-6 py-3 rounded-xl shadow-lg z-[9999] text-sm font-medium';
-      toast.textContent = t('school.comingSoon');
-      document.body.appendChild(toast);
-      setTimeout(() => {
-        toast.style.opacity = '0';
-        toast.style.transition = 'opacity 0.3s';
-        setTimeout(() => toast.remove(), 300);
-      }, 2000);
+      showToast(t('school.comingSoon'));
       return;
     }
 
-    const targetPath = `/track/${track.id}`;
-    if (!isAuthenticated) {
-      navigate('/login', { state: { redirectTo: targetPath } });
-    } else {
-      navigate(targetPath);
+    // 로그인된 학생: 교실 배정 확인
+    if (checking) return;
+    setChecking(true);
+
+    try {
+      const assigned = await isStudentAssignedToTrack(user.id, track.id);
+      if (assigned) {
+        // 배정됨 → 해당 학과 허브 이동
+        navigate(trackHubPath[track.id] || `/track/${track.id}`);
+      } else {
+        // 미배정 → 안내 팝업
+        showToast('학과 입장 대기중이에요. 선생님에게 문의하세요!');
+      }
+    } catch {
+      // fallback: 에러 시 허브로 이동 시도
+      navigate(trackHubPath[track.id] || `/track/${track.id}`);
+    } finally {
+      setChecking(false);
     }
   };
 
@@ -102,10 +113,12 @@ export default function TrackCard({ track, delay = 0 }: TrackCardProps) {
   return (
     <button
       onClick={handleClick}
+      disabled={checking}
       className={`
         group relative w-full rounded-2xl border-2 bg-white overflow-hidden
         transition-all duration-300 ease-out cursor-pointer text-left
         hover:-translate-y-2 hover:shadow-xl
+        ${checking ? 'opacity-70' : ''}
         ${theme.border}
       `}
       style={{ animationDelay: `${delay}ms` }}

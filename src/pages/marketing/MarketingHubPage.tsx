@@ -8,7 +8,7 @@ import {
 } from 'lucide-react';
 import { useAuth } from '../../contexts/AuthContext';
 import { useSchoolProgress } from '../../hooks/useSchoolProgress';
-import { isGeminiConnected } from '../../components/marketing/AIAssistantConnect';
+import { isGeminiConnected } from '../../services/gemini/geminiClient';
 import CountdownBadge from '../../components/school/CountdownBadge';
 import KkakdugiCharacter from '../../components/brand/KkakdugiCharacter';
 import KkakdugiMascot from '../../components/brand/KkakdugiMascot';

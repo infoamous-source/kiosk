@@ -26,8 +26,8 @@ export default function AIWelcomePage() {
   const [error, setError] = useState('');
   const [success, setSuccess] = useState(false);
 
-  // 완료 후 커리큘럼으로 이동 (schoolId 유무 관계없이)
-  const redirectPath = '/marketing/school/curriculum';
+  // 완료 후 메인화면으로 이동
+  const redirectPath = '/';
 
   useEffect(() => {
     // 환영 메시지 표시 후 자동으로 가이드 단계로

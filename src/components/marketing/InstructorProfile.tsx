@@ -8,7 +8,7 @@ export default function InstructorProfile() {
   return (
     <div className="bg-white rounded-2xl border border-gray-200 p-4 md:p-8">
       <h2 className="text-xl md:text-2xl font-bold text-gray-800 mb-4 md:mb-6">
-        {t('marketing.instructor.sectionTitle', '강사 소개')}
+        {t('marketing.instructor.sectionTitle', '선생님 소개')}
       </h2>
 
       <div className="flex flex-col md:flex-row items-start gap-6">
@@ -23,7 +23,7 @@ export default function InstructorProfile() {
             {instructorProfile.name}
           </h3>
           <p className="text-blue-600 font-medium mb-3">
-            {t(instructorProfile.titleKey, '마케팅 역량강화 전문 강사')}
+            {t(instructorProfile.titleKey, '마케팅 역량강화 전문 선생님')}
           </p>
           <p className="text-gray-600 leading-relaxed mb-4">
             {t(instructorProfile.descriptionKey, '이주민과 유학생의 취업 역량을 키우는 마케팅 실무 교육 전문가입니다.')}

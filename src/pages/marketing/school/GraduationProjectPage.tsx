@@ -196,7 +196,7 @@ export default function GraduationProjectPage() {
           <div className="bg-gray-50 rounded-2xl border border-gray-200 p-5 text-center">
             <UsersRound className="w-8 h-8 text-gray-300 mx-auto mb-2" />
             <p className="text-sm text-gray-500">아직 팀이 배정되지 않았어요.</p>
-            <p className="text-xs text-gray-400 mt-1">강사님에게 문의하세요!</p>
+            <p className="text-xs text-gray-400 mt-1">선생님에게 문의하세요!</p>
           </div>
         )}
 
